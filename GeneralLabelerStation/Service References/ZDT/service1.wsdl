@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="sendDataToSer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="equid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="createDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendDataToSerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sendDataToSerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateDataToSerGrp">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="equid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="funid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterCondi" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="createDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateDataToSerGrpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="updateDataToSerGrpResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deleteDataToSerGrp">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="equid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="funid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="createDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deleteDataToSerGrpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="deleteDataToSerGrpResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDataFromSer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="equid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="funid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="createDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDataFromSerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getDataFromSerResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDataByPartnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="partnum" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="begindate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDataByPartnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getDataByPartnumResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendDataToSerGrp">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="equid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="funid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="createDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendDataToSerGrpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sendDataToSerGrpResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendDataToSerGrp2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="equid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameterValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="createDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendDataToSerGrp2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sendDataToSerGrp2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnSPIBarmark">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Barcode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Side" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReturnSPIBarmarkResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReturnSPIBarmarkResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="sendDataToSerSoapIn">
+    <wsdl:part name="parameters" element="tns:sendDataToSer" />
+  </wsdl:message>
+  <wsdl:message name="sendDataToSerSoapOut">
+    <wsdl:part name="parameters" element="tns:sendDataToSerResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateDataToSerGrpSoapIn">
+    <wsdl:part name="parameters" element="tns:updateDataToSerGrp" />
+  </wsdl:message>
+  <wsdl:message name="updateDataToSerGrpSoapOut">
+    <wsdl:part name="parameters" element="tns:updateDataToSerGrpResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteDataToSerGrpSoapIn">
+    <wsdl:part name="parameters" element="tns:deleteDataToSerGrp" />
+  </wsdl:message>
+  <wsdl:message name="deleteDataToSerGrpSoapOut">
+    <wsdl:part name="parameters" element="tns:deleteDataToSerGrpResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDataFromSerSoapIn">
+    <wsdl:part name="parameters" element="tns:getDataFromSer" />
+  </wsdl:message>
+  <wsdl:message name="getDataFromSerSoapOut">
+    <wsdl:part name="parameters" element="tns:getDataFromSerResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDataByPartnumSoapIn">
+    <wsdl:part name="parameters" element="tns:getDataByPartnum" />
+  </wsdl:message>
+  <wsdl:message name="getDataByPartnumSoapOut">
+    <wsdl:part name="parameters" element="tns:getDataByPartnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendDataToSerGrpSoapIn">
+    <wsdl:part name="parameters" element="tns:sendDataToSerGrp" />
+  </wsdl:message>
+  <wsdl:message name="sendDataToSerGrpSoapOut">
+    <wsdl:part name="parameters" element="tns:sendDataToSerGrpResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendDataToSerGrp2SoapIn">
+    <wsdl:part name="parameters" element="tns:sendDataToSerGrp2" />
+  </wsdl:message>
+  <wsdl:message name="sendDataToSerGrp2SoapOut">
+    <wsdl:part name="parameters" element="tns:sendDataToSerGrp2Response" />
+  </wsdl:message>
+  <wsdl:message name="ReturnSPIBarmarkSoapIn">
+    <wsdl:part name="parameters" element="tns:ReturnSPIBarmark" />
+  </wsdl:message>
+  <wsdl:message name="ReturnSPIBarmarkSoapOut">
+    <wsdl:part name="parameters" element="tns:ReturnSPIBarmarkResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Service1Soap">
+    <wsdl:operation name="sendDataToSer">
+      <wsdl:input message="tns:sendDataToSerSoapIn" />
+      <wsdl:output message="tns:sendDataToSerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateDataToSerGrp">
+      <wsdl:input message="tns:updateDataToSerGrpSoapIn" />
+      <wsdl:output message="tns:updateDataToSerGrpSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteDataToSerGrp">
+      <wsdl:input message="tns:deleteDataToSerGrpSoapIn" />
+      <wsdl:output message="tns:deleteDataToSerGrpSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDataFromSer">
+      <wsdl:input message="tns:getDataFromSerSoapIn" />
+      <wsdl:output message="tns:getDataFromSerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDataByPartnum">
+      <wsdl:input message="tns:getDataByPartnumSoapIn" />
+      <wsdl:output message="tns:getDataByPartnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendDataToSerGrp">
+      <wsdl:input message="tns:sendDataToSerGrpSoapIn" />
+      <wsdl:output message="tns:sendDataToSerGrpSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendDataToSerGrp2">
+      <wsdl:input message="tns:sendDataToSerGrp2SoapIn" />
+      <wsdl:output message="tns:sendDataToSerGrp2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnSPIBarmark">
+      <wsdl:input message="tns:ReturnSPIBarmarkSoapIn" />
+      <wsdl:output message="tns:ReturnSPIBarmarkSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Service1Soap" type="tns:Service1Soap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sendDataToSer">
+      <soap:operation soapAction="http://tempuri.org/sendDataToSer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateDataToSerGrp">
+      <soap:operation soapAction="http://tempuri.org/updateDataToSerGrp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteDataToSerGrp">
+      <soap:operation soapAction="http://tempuri.org/deleteDataToSerGrp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataFromSer">
+      <soap:operation soapAction="http://tempuri.org/getDataFromSer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataByPartnum">
+      <soap:operation soapAction="http://tempuri.org/getDataByPartnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendDataToSerGrp">
+      <soap:operation soapAction="http://tempuri.org/sendDataToSerGrp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendDataToSerGrp2">
+      <soap:operation soapAction="http://tempuri.org/sendDataToSerGrp2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnSPIBarmark">
+      <soap:operation soapAction="http://tempuri.org/ReturnSPIBarmark" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Service1Soap12" type="tns:Service1Soap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sendDataToSer">
+      <soap12:operation soapAction="http://tempuri.org/sendDataToSer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateDataToSerGrp">
+      <soap12:operation soapAction="http://tempuri.org/updateDataToSerGrp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteDataToSerGrp">
+      <soap12:operation soapAction="http://tempuri.org/deleteDataToSerGrp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataFromSer">
+      <soap12:operation soapAction="http://tempuri.org/getDataFromSer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataByPartnum">
+      <soap12:operation soapAction="http://tempuri.org/getDataByPartnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendDataToSerGrp">
+      <soap12:operation soapAction="http://tempuri.org/sendDataToSerGrp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendDataToSerGrp2">
+      <soap12:operation soapAction="http://tempuri.org/sendDataToSerGrp2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnSPIBarmark">
+      <soap12:operation soapAction="http://tempuri.org/ReturnSPIBarmark" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="Service1Soap" binding="tns:Service1Soap">
+      <soap:address location="http://qhecpw001.eavarytech.com:8001/webserviceforQHD/service1.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Service1Soap12" binding="tns:Service1Soap12">
+      <soap12:address location="http://qhecpw001.eavarytech.com:8001/webserviceforQHD/service1.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

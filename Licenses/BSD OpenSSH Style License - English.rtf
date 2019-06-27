@@ -1,0 +1,596 @@
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f4\froman\fprq0\fcharset1 monospace;}{\f5\fmodern\fprq0\fcharset1 monospace;}{\f6\froman\fprq0\fcharset1 Liberation Serif{\*\falt Times New Roman};}{\f7\fswiss\fprq0\fcharset1 Liberation Sans{\*\falt Arial};}{\f8\fmodern\fprq0\fcharset1 DejaVu Sans Mono;}{\f9\fnil\fprq2\fcharset0 DejaVu Sans;}{\f10\fnil\fprq2\fcharset0 Arial;}{\f11\fmodern\fprq1\fcharset0 DejaVu Sans Mono;}{\f12\fnil\fprq0\fcharset1 DejaVu Sans Mono;}{\f13\fnil\fprq0\fcharset1 Lohit Hindi;}}
+{\colortbl;\red0\green0\blue0;\red128\green128\blue128;}
+{\stylesheet{\s0\snext0\ql\nowidctlpar\ltrpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\dbch\af10\langfe2052\dbch\af13\afs24\alang1081\kerning1\loch\f6\fs24\lang1033 Normal;}
+{\s15\sbasedon0\snext16\ql\nowidctlpar\sb240\sa120\keepn\ltrpar\cf0\dbch\af9\langfe2052\dbch\af13\afs28\alang1081\loch\f7\fs28\lang1033 Heading;}
+{\s16\sbasedon0\snext16\ql\nowidctlpar\sb0\sa120\ltrpar\cf0\dbch\af10\langfe2052\dbch\af13\afs24\alang1081\loch\f6\fs24\lang1033 Text body;}
+{\s17\sbasedon16\snext17\ql\nowidctlpar\sb0\sa120\ltrpar\cf0\dbch\af10\langfe2052\dbch\af13\afs24\alang1081\loch\f6\fs24\lang1033 List;}
+{\s18\sbasedon0\snext18\ql\nowidctlpar\sb120\sa120\noline\ltrpar\cf0\i\dbch\af10\langfe2052\dbch\af13\afs24\alang1081\ai\loch\f6\fs24\lang1033 Caption;}
+{\s19\sbasedon0\snext19\ql\nowidctlpar\noline\ltrpar\cf0\dbch\af10\langfe2052\dbch\af13\afs24\alang1081\loch\f6\fs24\lang1033 Index;}
+{\s20\sbasedon0\snext20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033 Preformatted Text;}
+}{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr0\mo0\dy0\hr0\min0}{\printim\yr0\mo0\dy0\hr0\min0}{\comment LibreOffice}{\vern3600}}\deftab709
+\viewscale100
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse195\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\pgdscnxt0 Default;}}
+\formshade{\*\pgdscno0}\paperh15840\paperw12240\margl1134\margr1134\margt1134\margb1134\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+\pgndec\pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\sl285\slmult0\li0\ri0\lin0\rin0\fi0\sb0\sa0{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\dbch\af12\afs20\alang1025\rtlch \ltrch\loch\fs19\loch\f4
+This file is part of the OpenSSH software.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+The licences which components of this software fall under are as}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+follows.  First, we will summarize and say that all components}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+are under a BSD licence, or a licence more free than that.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+OpenSSH contains no GPL code.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+1)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*                    All rights reserved}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* As far as I am concerned, the code I have written for this software}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* can be used freely for any purpose.  Any derived versions of this}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* software must be clearly marked as such, and if the derived work is}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* incompatible with the protocol description in the RFC file, it must be}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* called by a name other than "ssh" or "Secure Shell".}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+[Tatu continues]}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*  However, I am not implying to give any licenses to any patents or}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* copyrights held by third parties, and the software includes parts that}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* are not under my direct control.  As far as I know, all included}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* source code is used in accordance with the relevant license agreements}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* and can be used freely for any purpose (the GNU license being the most}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* restrictive); see below for details.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+[However, none of that term is relevant at this point in time.  All of}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+these restrictively licenced software components which he talks about}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+have been removed from OpenSSH, i.e.,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- RSA is no longer included, found in the OpenSSL library}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- IDEA is no longer included, its use is deprecated}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- DES is now external, in the OpenSSL library}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- GMP is no longer used, and instead we call BN code from OpenSSL}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- Zlib is now external, in a library}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- The make-ssh-known-hosts script is no longer included}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- TSS has been removed}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- MD5 is now external, in the OpenSSL library}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- RC4 support has been replaced with ARC4 support from OpenSSL}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+- Blowfish is now external, in the OpenSSL library}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+[The licence continues]}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Note that any information and cryptographic algorithms used in this}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+software are publicly available on the Internet and at any major}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+bookstore, scientific library, and patent office worldwide.  More}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+information can be found e.g. at "http://www.cs.hut.fi/crypto".}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+The legal status of this program is some combination of all these}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+permissions and restrictions.  Use only at your own responsibility.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+You will be responsible for any legal consequences yourself; I am not}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+making any claims whether possessing or using this is legal or not in}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+your country, and I am not taking any responsibility on your behalf.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+                            }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+NO WARRANTY}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+REPAIR OR CORRECTION.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+POSSIBILITY OF SUCH DAMAGES.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+2)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+The 32-bit CRC compensation attack detector in deattack.c was}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+contributed by CORE SDI S.A. under a BSD-style license.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Cryptographic attack detector for ssh - source code}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Copyright (c) 1998 CORE SDI S.A., Buenos Aires, Argentina.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* All rights reserved. Redistribution and use in source and binary}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* forms, with or without modification, are permitted provided that}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* this copyright notice is retained.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* WARRANTIES ARE DISCLAIMED. IN NO EVENT SHALL CORE SDI S.A. BE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY OR}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* CONSEQUENTIAL DAMAGES RESULTING FROM THE USE OR MISUSE OF THIS}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* SOFTWARE.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Ariel Futoransky <futo@core-sdi.com>}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* <http://www.core-sdi.com>}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+3)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+ssh-keyscan was contributed by David Mazieres under a BSD-style}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+license.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Copyright 1995, 1996 by David Mazieres <dm@lcs.mit.edu>.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Modification and redistribution in source and binary forms is}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* permitted provided that due credit is given to the author and the}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* OpenBSD project by leaving this copyright notice intact.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+4)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+The Rijndael implementation by Vincent Rijmen, Antoon Bosselaers}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+and Paulo Barreto is in the public domain and distributed}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+with the following license:}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* @version 3.0 (December 2000)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Optimised ANSI C code for the Rijndael cipher (now AES)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* @author Vincent Rijmen <vincent.rijmen@esat.kuleuven.ac.be>}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* @author Antoon Bosselaers <antoon.bosselaers@esat.kuleuven.ac.be>}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* @author Paulo Barreto <paulo.barreto@terra.com.br>}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* This code is hereby placed in the public domain.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+5)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+One component of the ssh source code is under a 3-clause BSD license,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+held by the University of California, since we pulled these parts from}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+original Berkeley code.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Copyright (c) 1983, 1990, 1992, 1993, 1995}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*      The Regents of the University of California.  All rights reserved.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Redistribution and use in source and binary forms, with or without}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* modification, are permitted provided that the following conditions}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* are met:}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* 1. Redistributions of source code must retain the above copyright}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    notice, this list of conditions and the following disclaimer.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* 2. Redistributions in binary form must reproduce the above copyright}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    notice, this list of conditions and the following disclaimer in the}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    documentation and/or other materials provided with the distribution.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* 3. Neither the name of the University nor the names of its contributors}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    may be used to endorse or promote products derived from this software}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    without specific prior written permission.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* SUCH DAMAGE.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+6)}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Remaining components of the software are provided under a standard}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+    }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+2-term BSD licence with the following names as copyright holders:}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Markus Friedl}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Theo de Raadt}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Niels Provos}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Dug Song}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Aaron Campbell}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Damien Miller}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Kevin Steves}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Daniel Kouril}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Wesley Griffin}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Per Allansson}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Nils Nordman}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+        }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+Simon Wilkinson}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* Redistribution and use in source and binary forms, with or without}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* modification, are permitted provided that the following conditions}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* are met:}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* 1. Redistributions of source code must retain the above copyright}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    notice, this list of conditions and the following disclaimer.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* 2. Redistributions in binary form must reproduce the above copyright}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    notice, this list of conditions and the following disclaimer in the}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*    documentation and/or other materials provided with the distribution.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+*}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\rtlch \ltrch
+     }{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+* THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+------}
+\par \pard\plain \s20\ql\nowidctlpar\sb0\sa0\ltrpar\cf0\dbch\af11\langfe2052\dbch\af8\afs20\alang1081\loch\f8\fs20\lang1033\sb0\sa283{\scaps0\caps0\cf1\expnd0\expndtw0\i0\b0\rtlch \ltrch\loch
+$OpenBSD: LICENCE,v 1.19 2004/08/30 09:18:08 markus Exp $}
+\par }
