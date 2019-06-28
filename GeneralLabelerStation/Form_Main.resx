@@ -6869,7 +6869,7 @@
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabCalib.Parent" xml:space="preserve">
-    <value>Set0</value>
+    <value>SetCalibration</value>
   </data>
   <data name="&gt;&gt;tabCalib.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -6905,33 +6905,33 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cB_Cali.Parent" xml:space="preserve">
-    <value>Set0</value>
+    <value>SetCalibration</value>
   </data>
   <data name="&gt;&gt;cB_Cali.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="Set0.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SetCalibration.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 5</value>
   </data>
-  <data name="Set0.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SetCalibration.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="Set0.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SetCalibration.Size" type="System.Drawing.Size, System.Drawing">
     <value>760, 782</value>
   </data>
-  <data name="Set0.TabIndex" type="System.Int32, mscorlib">
+  <data name="SetCalibration.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;Set0.Name" xml:space="preserve">
-    <value>Set0</value>
+  <data name="&gt;&gt;SetCalibration.Name" xml:space="preserve">
+    <value>SetCalibration</value>
   </data>
-  <data name="&gt;&gt;Set0.Type" xml:space="preserve">
+  <data name="&gt;&gt;SetCalibration.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Set0.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SetCalibration.Parent" xml:space="preserve">
     <value>tabControl_Set</value>
   </data>
-  <data name="&gt;&gt;Set0.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SetCalibration.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="cB_PasteType.Font" type="System.Drawing.Font, System.Drawing">
@@ -6962,7 +6962,7 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cB_PasteType.Parent" xml:space="preserve">
-    <value>Set2</value>
+    <value>SetPasteInfo</value>
   </data>
   <data name="&gt;&gt;cB_PasteType.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -6992,7 +6992,7 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bCreateProgram.Parent" xml:space="preserve">
-    <value>Set2</value>
+    <value>SetPasteInfo</value>
   </data>
   <data name="&gt;&gt;bCreateProgram.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -15143,7 +15143,7 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;gB_PasteInfo.Parent" xml:space="preserve">
-    <value>Set2</value>
+    <value>SetPasteInfo</value>
   </data>
   <data name="&gt;&gt;gB_PasteInfo.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -15176,7 +15176,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label37.Parent" xml:space="preserve">
-    <value>Set2</value>
+    <value>SetPasteInfo</value>
   </data>
   <data name="&gt;&gt;label37.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -15206,7 +15206,7 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bOpenProgram.Parent" xml:space="preserve">
-    <value>Set2</value>
+    <value>SetPasteInfo</value>
   </data>
   <data name="&gt;&gt;bOpenProgram.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -15236,30 +15236,30 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lPasteInfo.Parent" xml:space="preserve">
-    <value>Set2</value>
+    <value>SetPasteInfo</value>
   </data>
   <data name="&gt;&gt;lPasteInfo.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="Set2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SetPasteInfo.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 5</value>
   </data>
-  <data name="Set2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SetPasteInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>760, 782</value>
   </data>
-  <data name="Set2.TabIndex" type="System.Int32, mscorlib">
+  <data name="SetPasteInfo.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;Set2.Name" xml:space="preserve">
-    <value>Set2</value>
+  <data name="&gt;&gt;SetPasteInfo.Name" xml:space="preserve">
+    <value>SetPasteInfo</value>
   </data>
-  <data name="&gt;&gt;Set2.Type" xml:space="preserve">
+  <data name="&gt;&gt;SetPasteInfo.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Set2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SetPasteInfo.Parent" xml:space="preserve">
     <value>tabControl_Set</value>
   </data>
-  <data name="&gt;&gt;Set2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SetPasteInfo.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="bGoCamXY.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -18278,7 +18278,7 @@
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabControl3.Parent" xml:space="preserve">
-    <value>Set3</value>
+    <value>SetAllProgramLoad</value>
   </data>
   <data name="&gt;&gt;tabControl3.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -18470,30 +18470,30 @@
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;panel18.Parent" xml:space="preserve">
-    <value>Set3</value>
+    <value>SetAllProgramLoad</value>
   </data>
   <data name="&gt;&gt;panel18.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="Set3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SetAllProgramLoad.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 5</value>
   </data>
-  <data name="Set3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SetAllProgramLoad.Size" type="System.Drawing.Size, System.Drawing">
     <value>760, 782</value>
   </data>
-  <data name="Set3.TabIndex" type="System.Int32, mscorlib">
+  <data name="SetAllProgramLoad.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;Set3.Name" xml:space="preserve">
-    <value>Set3</value>
+  <data name="&gt;&gt;SetAllProgramLoad.Name" xml:space="preserve">
+    <value>SetAllProgramLoad</value>
   </data>
-  <data name="&gt;&gt;Set3.Type" xml:space="preserve">
+  <data name="&gt;&gt;SetAllProgramLoad.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Set3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SetAllProgramLoad.Parent" xml:space="preserve">
     <value>tabControl_Set</value>
   </data>
-  <data name="&gt;&gt;Set3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SetAllProgramLoad.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="tableLayoutPanel3.ColumnCount" type="System.Int32, mscorlib">
@@ -28943,33 +28943,33 @@
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabControl4.Parent" xml:space="preserve">
-    <value>Set4</value>
+    <value>SetSystemPrams</value>
   </data>
   <data name="&gt;&gt;tabControl4.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="Set4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SetSystemPrams.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 5</value>
   </data>
-  <data name="Set4.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SetSystemPrams.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="Set4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SetSystemPrams.Size" type="System.Drawing.Size, System.Drawing">
     <value>760, 782</value>
   </data>
-  <data name="Set4.TabIndex" type="System.Int32, mscorlib">
+  <data name="SetSystemPrams.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;Set4.Name" xml:space="preserve">
-    <value>Set4</value>
+  <data name="&gt;&gt;SetSystemPrams.Name" xml:space="preserve">
+    <value>SetSystemPrams</value>
   </data>
-  <data name="&gt;&gt;Set4.Type" xml:space="preserve">
+  <data name="&gt;&gt;SetSystemPrams.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Set4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SetSystemPrams.Parent" xml:space="preserve">
     <value>tabControl_Set</value>
   </data>
-  <data name="&gt;&gt;Set4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SetSystemPrams.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="tabControl_Set.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">

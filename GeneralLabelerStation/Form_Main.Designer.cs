@@ -131,7 +131,7 @@
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl_Set = new System.Windows.Forms.TabControl();
-            this.Set0 = new System.Windows.Forms.TabPage();
+            this.SetCalibration = new System.Windows.Forms.TabPage();
             this.tabCalib = new System.Windows.Forms.TabControl();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.gB_Four = new System.Windows.Forms.GroupBox();
@@ -255,7 +255,7 @@
             this.label260 = new System.Windows.Forms.Label();
             this.label89 = new System.Windows.Forms.Label();
             this.cB_Cali = new System.Windows.Forms.CheckBox();
-            this.Set2 = new System.Windows.Forms.TabPage();
+            this.SetPasteInfo = new System.Windows.Forms.TabPage();
             this.cB_PasteType = new System.Windows.Forms.ComboBox();
             this.bCreateProgram = new System.Windows.Forms.Button();
             this.gB_PasteInfo = new System.Windows.Forms.GroupBox();
@@ -680,7 +680,7 @@
             this.label37 = new System.Windows.Forms.Label();
             this.bOpenProgram = new System.Windows.Forms.Button();
             this.lPasteInfo = new System.Windows.Forms.Label();
-            this.Set3 = new System.Windows.Forms.TabPage();
+            this.SetAllProgramLoad = new System.Windows.Forms.TabPage();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabFeeder = new System.Windows.Forms.TabPage();
             this.gB_Feeder = new System.Windows.Forms.GroupBox();
@@ -800,7 +800,7 @@
             this.bNewProgram = new System.Windows.Forms.Button();
             this.lProgramName = new System.Windows.Forms.Label();
             this.label329 = new System.Windows.Forms.Label();
-            this.Set4 = new System.Windows.Forms.TabPage();
+            this.SetSystemPrams = new System.Windows.Forms.TabPage();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tP_SystemSet2 = new System.Windows.Forms.TabPage();
             this.groupBox20 = new System.Windows.Forms.GroupBox();
@@ -1481,7 +1481,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabControl_Set.SuspendLayout();
-            this.Set0.SuspendLayout();
+            this.SetCalibration.SuspendLayout();
             this.tabCalib.SuspendLayout();
             this.tabPage12.SuspendLayout();
             this.gB_Four.SuspendLayout();
@@ -1494,7 +1494,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numPasteAngle)).BeginInit();
             this.tabPage27.SuspendLayout();
             this.gB_Nz2Read.SuspendLayout();
-            this.Set2.SuspendLayout();
+            this.SetPasteInfo.SuspendLayout();
             this.gB_PasteInfo.SuspendLayout();
             this.panel_PCB.SuspendLayout();
             this.panel_Label.SuspendLayout();
@@ -1537,7 +1537,7 @@
             this.panel10.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGV_Paste)).BeginInit();
-            this.Set3.SuspendLayout();
+            this.SetAllProgramLoad.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabFeeder.SuspendLayout();
             this.gB_Feeder.SuspendLayout();
@@ -1560,7 +1560,7 @@
             this.panel20.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel18.SuspendLayout();
-            this.Set4.SuspendLayout();
+            this.SetSystemPrams.SuspendLayout();
             this.tabControl4.SuspendLayout();
             this.tP_SystemSet2.SuspendLayout();
             this.groupBox20.SuspendLayout();
@@ -2441,23 +2441,23 @@
             // 
             // tabControl_Set
             // 
-            this.tabControl_Set.Controls.Add(this.Set0);
-            this.tabControl_Set.Controls.Add(this.Set2);
-            this.tabControl_Set.Controls.Add(this.Set3);
-            this.tabControl_Set.Controls.Add(this.Set4);
+            this.tabControl_Set.Controls.Add(this.SetCalibration);
+            this.tabControl_Set.Controls.Add(this.SetPasteInfo);
+            this.tabControl_Set.Controls.Add(this.SetAllProgramLoad);
+            this.tabControl_Set.Controls.Add(this.SetSystemPrams);
             resources.ApplyResources(this.tabControl_Set, "tabControl_Set");
             this.tabControl_Set.Name = "tabControl_Set";
             this.tabControl_Set.SelectedIndex = 0;
             this.tabControl_Set.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl_Set.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl_Set_KeyDown);
             // 
-            // Set0
+            // SetCalibration
             // 
-            this.Set0.Controls.Add(this.tabCalib);
-            this.Set0.Controls.Add(this.cB_Cali);
-            resources.ApplyResources(this.Set0, "Set0");
-            this.Set0.Name = "Set0";
-            this.Set0.UseVisualStyleBackColor = true;
+            this.SetCalibration.Controls.Add(this.tabCalib);
+            this.SetCalibration.Controls.Add(this.cB_Cali);
+            resources.ApplyResources(this.SetCalibration, "SetCalibration");
+            this.SetCalibration.Name = "SetCalibration";
+            this.SetCalibration.UseVisualStyleBackColor = true;
             // 
             // tabCalib
             // 
@@ -3402,17 +3402,17 @@
             this.cB_Cali.UseVisualStyleBackColor = true;
             this.cB_Cali.CheckedChanged += new System.EventHandler(this.cB_Cali_CheckedChanged);
             // 
-            // Set2
+            // SetPasteInfo
             // 
-            this.Set2.Controls.Add(this.cB_PasteType);
-            this.Set2.Controls.Add(this.bCreateProgram);
-            this.Set2.Controls.Add(this.gB_PasteInfo);
-            this.Set2.Controls.Add(this.label37);
-            this.Set2.Controls.Add(this.bOpenProgram);
-            this.Set2.Controls.Add(this.lPasteInfo);
-            resources.ApplyResources(this.Set2, "Set2");
-            this.Set2.Name = "Set2";
-            this.Set2.UseVisualStyleBackColor = true;
+            this.SetPasteInfo.Controls.Add(this.cB_PasteType);
+            this.SetPasteInfo.Controls.Add(this.bCreateProgram);
+            this.SetPasteInfo.Controls.Add(this.gB_PasteInfo);
+            this.SetPasteInfo.Controls.Add(this.label37);
+            this.SetPasteInfo.Controls.Add(this.bOpenProgram);
+            this.SetPasteInfo.Controls.Add(this.lPasteInfo);
+            resources.ApplyResources(this.SetPasteInfo, "SetPasteInfo");
+            this.SetPasteInfo.Name = "SetPasteInfo";
+            this.SetPasteInfo.UseVisualStyleBackColor = true;
             // 
             // cB_PasteType
             // 
@@ -6473,13 +6473,13 @@
             this.lPasteInfo.ForeColor = System.Drawing.Color.Lime;
             this.lPasteInfo.Name = "lPasteInfo";
             // 
-            // Set3
+            // SetAllProgramLoad
             // 
-            this.Set3.Controls.Add(this.tabControl3);
-            this.Set3.Controls.Add(this.panel18);
-            resources.ApplyResources(this.Set3, "Set3");
-            this.Set3.Name = "Set3";
-            this.Set3.UseVisualStyleBackColor = true;
+            this.SetAllProgramLoad.Controls.Add(this.tabControl3);
+            this.SetAllProgramLoad.Controls.Add(this.panel18);
+            resources.ApplyResources(this.SetAllProgramLoad, "SetAllProgramLoad");
+            this.SetAllProgramLoad.Name = "SetAllProgramLoad";
+            this.SetAllProgramLoad.UseVisualStyleBackColor = true;
             // 
             // tabControl3
             // 
@@ -7360,12 +7360,12 @@
             resources.ApplyResources(this.label329, "label329");
             this.label329.Name = "label329";
             // 
-            // Set4
+            // SetSystemPrams
             // 
-            this.Set4.Controls.Add(this.tabControl4);
-            resources.ApplyResources(this.Set4, "Set4");
-            this.Set4.Name = "Set4";
-            this.Set4.UseVisualStyleBackColor = true;
+            this.SetSystemPrams.Controls.Add(this.tabControl4);
+            resources.ApplyResources(this.SetSystemPrams, "SetSystemPrams");
+            this.SetSystemPrams.Name = "SetSystemPrams";
+            this.SetSystemPrams.UseVisualStyleBackColor = true;
             // 
             // tabControl4
             // 
@@ -12082,8 +12082,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabControl_Set.ResumeLayout(false);
-            this.Set0.ResumeLayout(false);
-            this.Set0.PerformLayout();
+            this.SetCalibration.ResumeLayout(false);
+            this.SetCalibration.PerformLayout();
             this.tabCalib.ResumeLayout(false);
             this.tabPage12.ResumeLayout(false);
             this.gB_Four.ResumeLayout(false);
@@ -12101,8 +12101,8 @@
             this.tabPage27.ResumeLayout(false);
             this.gB_Nz2Read.ResumeLayout(false);
             this.gB_Nz2Read.PerformLayout();
-            this.Set2.ResumeLayout(false);
-            this.Set2.PerformLayout();
+            this.SetPasteInfo.ResumeLayout(false);
+            this.SetPasteInfo.PerformLayout();
             this.gB_PasteInfo.ResumeLayout(false);
             this.panel_PCB.ResumeLayout(false);
             this.panel_PCB.PerformLayout();
@@ -12173,7 +12173,7 @@
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGV_Paste)).EndInit();
-            this.Set3.ResumeLayout(false);
+            this.SetAllProgramLoad.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tabFeeder.ResumeLayout(false);
             this.gB_Feeder.ResumeLayout(false);
@@ -12202,7 +12202,7 @@
             this.panel20.PerformLayout();
             this.panel21.ResumeLayout(false);
             this.panel18.ResumeLayout(false);
-            this.Set4.ResumeLayout(false);
+            this.SetSystemPrams.ResumeLayout(false);
             this.tabControl4.ResumeLayout(false);
             this.tP_SystemSet2.ResumeLayout(false);
             this.groupBox20.ResumeLayout(false);
@@ -12407,9 +12407,9 @@
         private System.Windows.Forms.ToolStripStatusLabel tSS_YPos;
         private System.Windows.Forms.ToolStripStatusLabel tSS_YPosN;
         private System.Windows.Forms.TabControl tabControl_Set;
-        private System.Windows.Forms.TabPage Set4;
-        private System.Windows.Forms.TabPage Set0;
-        private System.Windows.Forms.TabPage Set3;
+        private System.Windows.Forms.TabPage SetSystemPrams;
+        private System.Windows.Forms.TabPage SetCalibration;
+        private System.Windows.Forms.TabPage SetAllProgramLoad;
         private System.Windows.Forms.TextBox tAngle;
         public NationalInstruments.Vision.WindowsForms.ImageViewer imageSet;
         private System.Windows.Forms.Button bZoomFit;
@@ -12552,7 +12552,7 @@
         private System.Windows.Forms.TextBox tPath_PicSave;
         private System.Windows.Forms.Label lb_5;
         private System.Windows.Forms.PictureBox pMode_SysSet;
-        private System.Windows.Forms.TabPage Set2;
+        private System.Windows.Forms.TabPage SetPasteInfo;
         private System.Windows.Forms.TabControl tabControl4;
         private System.Windows.Forms.TabPage tP_SystemSet0;
         private System.Windows.Forms.TabPage tP_SystemSet2;

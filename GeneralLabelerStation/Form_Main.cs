@@ -8946,7 +8946,7 @@ namespace GeneralLabelerStation
                 pMode_Manual.Image = Properties.Resources.aotman;
                 pMode_SysSet.Image = Properties.Resources.sysset;
 
-                tabControl_Set.SelectedTab = Set0;
+                tabControl_Set.SelectedTab = SetCalibration;
                 tabControl_Main.SelectedTab = tabPage2;
             }
 
@@ -8963,7 +8963,7 @@ namespace GeneralLabelerStation
                 pMode_Manual.Image = Properties.Resources.aotman;
                 pMode_SysSet.Image = Properties.Resources.sysset;
 
-                tabControl_Set.SelectedTab = Set2;
+                tabControl_Set.SelectedTab = SetPasteInfo;
                 tabControl_Main.SelectedTab = tabPage2;
             }
 
@@ -8980,7 +8980,7 @@ namespace GeneralLabelerStation
             pMode_Manual.Image = Properties.Resources.aotman2;
             pMode_SysSet.Image = Properties.Resources.sysset;
 
-            tabControl_Set.SelectedTab = Set3;
+            tabControl_Set.SelectedTab = SetAllProgramLoad;
             tabControl_Main.SelectedTab = tabPage2;
             this.bInMainPage = false;
 
@@ -8997,7 +8997,7 @@ namespace GeneralLabelerStation
                 pMode_Manual.Image = Properties.Resources.aotman;
                 pMode_SysSet.Image = Properties.Resources.sysset2;
 
-                tabControl_Set.SelectedTab = Set4;
+                tabControl_Set.SelectedTab = SetSystemPrams;
                 tabControl_Main.SelectedTab = tabPage2;
             }
 
