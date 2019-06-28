@@ -27,7 +27,7 @@ namespace GeneralLabelerStation.UI
                 for (int i = 0; i < Form_Main.Instance.JOB.PasteName.Length; ++i)
                 {
                     bool isOk = false;
-                    PasteInfoList[i] = Form_Main.Instance.ReadXls2Paste(Variable.sPath_SYS_PASTE+"\\"+ Form_Main.Instance.JOB.PasteName[i], ref isOk);
+                    PasteInfoList[i] = Form_Main.Instance.ReadXls2Paste(Variable.sPath_SYS_PASTE + "\\" + Form_Main.Instance.JOB.PasteName[i], ref isOk);
                     if (!isOk)
                     {
                         PasteInfoList = null;
@@ -289,6 +289,8 @@ namespace GeneralLabelerStation.UI
                 {
                     this.PasteInfoList[curPcbIndex].OffsetX_Single[curPcsIndex] += double.Parse(this.tOffsetX.Text);
                     this.PasteInfoList[curPcbIndex].OffsetY_Single[curPcsIndex] += double.Parse(this.tOffsetY.Text);
+                    this.tOffsetX.Text = "0";
+                    this.tOffsetY.Text = "0";
                     this.bSetToSelect.BackColor = Color.LightGreen;
                 }
                 catch { }
@@ -356,6 +358,8 @@ namespace GeneralLabelerStation.UI
                         }
                     }
                 }
+                this.tOffsetX.Text = "0";
+                this.tOffsetY.Text = "0";
                 this.bSetLike.BackColor = Color.LightGreen;
             }
         }
@@ -373,6 +377,8 @@ namespace GeneralLabelerStation.UI
                     }
                 }
             }
+            this.tOffsetX.Text = "0";
+            this.tOffsetY.Text = "0";
             this.bSetAll.BackColor = Color.LightGreen;
         }
     }
