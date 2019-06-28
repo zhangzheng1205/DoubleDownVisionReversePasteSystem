@@ -463,7 +463,10 @@ namespace GeneralLabelerStation
             public bool bMark2Caled;//0-没有计算过 1-计算过
 
             public int[] iPasteED;//0-没有贴过 1-贴过 || 0-好的 1-坏的（SFCS）
-            public string[] PastePN;//同一组的号码 即 BadMark编号（同一组只有一个BadMark）
+            /// <summary>
+            /// 同一组的号码 即 BadMark编号（同一组只有一个BadMark）
+            /// </summary>
+            public string[] PastePN;
             public bool[] PasteEN;//贴附使能
             public PointF[] PastePoints;//贴附点XY坐标
             public double[] PasteAngle;//贴附点角度

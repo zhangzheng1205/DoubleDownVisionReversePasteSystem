@@ -71,6 +71,7 @@ namespace GeneralLabelerStation.UI
 
         private void bUpdate_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("是否更改到Feeder取料位上 Y/N", "提示", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             int labelIndex = this.cbLabelIndex.SelectedIndex;
             PointF camPoint = new PointF();
             camPoint.X = float.Parse(this.FeederCtrl.Rows[labelIndex].Cells[0].Value.ToString());
