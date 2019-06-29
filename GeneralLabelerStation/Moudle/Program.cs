@@ -27,7 +27,6 @@ namespace GeneralLabelerStation
 
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
-
                 Application.Run(new Form_Main());
             }
             else

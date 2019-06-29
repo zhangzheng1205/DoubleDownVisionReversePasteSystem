@@ -53,6 +53,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.bRealPaste = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnRevoke = new System.Windows.Forms.Button();
+            this.splitter1 = new System.Windows.Forms.Splitter();
             this.bSetAll = new System.Windows.Forms.Button();
             this.bSetLike = new System.Windows.Forms.Button();
             this.bNeedPaste = new System.Windows.Forms.Button();
@@ -173,6 +175,7 @@
             this.dGVPaste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dGVPaste.Size = new System.Drawing.Size(326, 436);
             this.dGVPaste.TabIndex = 1;
+            //this.dGVPaste.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVPaste_CellValueChanged);
             this.dGVPaste.SelectionChanged += new System.EventHandler(this.dGVPaste_SelectionChanged);
             // 
             // dataGridViewTextBoxColumn1
@@ -350,6 +353,8 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.btnRevoke);
+            this.panel4.Controls.Add(this.splitter1);
             this.panel4.Controls.Add(this.bSetAll);
             this.panel4.Controls.Add(this.bSetLike);
             this.panel4.Controls.Add(this.bNeedPaste);
@@ -364,6 +369,25 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(133, 624);
             this.panel4.TabIndex = 3;
+            // 
+            // btnRevoke
+            // 
+            this.btnRevoke.Enabled = false;
+            this.btnRevoke.Location = new System.Drawing.Point(9, 498);
+            this.btnRevoke.Name = "btnRevoke";
+            this.btnRevoke.Size = new System.Drawing.Size(49, 30);
+            this.btnRevoke.TabIndex = 22;
+            this.btnRevoke.Text = "撤销";
+            this.btnRevoke.UseVisualStyleBackColor = true;
+            this.btnRevoke.Click += new System.EventHandler(this.btnRevoke_Click);
+            // 
+            // splitter1
+            // 
+            this.splitter1.Location = new System.Drawing.Point(0, 0);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 624);
+            this.splitter1.TabIndex = 21;
+            this.splitter1.TabStop = false;
             // 
             // bSetAll
             // 
@@ -460,7 +484,6 @@
             // 
             this.tOffsetY.Location = new System.Drawing.Point(38, 58);
             this.tOffsetY.Name = "tOffsetY";
-            this.tOffsetY.ReadOnly = true;
             this.tOffsetY.Size = new System.Drawing.Size(68, 26);
             this.tOffsetY.TabIndex = 9;
             this.tOffsetY.Text = "0";
@@ -478,7 +501,6 @@
             // 
             this.tOffsetX.Location = new System.Drawing.Point(38, 25);
             this.tOffsetX.Name = "tOffsetX";
-            this.tOffsetX.ReadOnly = true;
             this.tOffsetX.Size = new System.Drawing.Size(68, 26);
             this.tOffsetX.TabIndex = 7;
             this.tOffsetX.Text = "0";
@@ -577,5 +599,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.Button btnRevoke;
+        private System.Windows.Forms.Splitter splitter1;
     }
 }
