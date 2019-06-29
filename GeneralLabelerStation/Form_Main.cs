@@ -267,11 +267,11 @@ namespace GeneralLabelerStation
             actPt.Y += VariableSys.pNozzle_2_Cam[zIndex].Y;
             actPt.X += (labelPt.X - centerPt.X);
             actPt.Y += (labelPt.Y - centerPt.Y);
-            
+
             RUN_PasteRealPoint = GlassHelper.ActPoint2MachinePoint(actPt);
-           
+
             //吸嘴单偏移_Fowindy_0613
-            RUN_PasteRealPoint.X += (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX_Single[zParam.RUN_PastePointIndex]) + (float)JOB.OffsetX[zParam.RUN_PasteInfoIndex] ;
+            RUN_PasteRealPoint.X += (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX_Single[zParam.RUN_PastePointIndex]) + (float)JOB.OffsetX[zParam.RUN_PasteInfoIndex];
             RUN_PasteRealPoint.Y += (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetY) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetY_Single[zParam.RUN_PastePointIndex]) + (float)JOB.OffsetY[zParam.RUN_PasteInfoIndex];
 
             RUN_PasteRealPoint = this.GetPasteOfffset(zIndex, JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex], RUN_PasteRealPoint);
@@ -378,7 +378,7 @@ namespace GeneralLabelerStation
             return rtn;
         }
         #endregion
-        
+
         #region 2017年12月8日13:35:39 by lichen 异常关闭时，释放相机 板卡等资源
         public new void Dispose()
         {
@@ -888,7 +888,7 @@ namespace GeneralLabelerStation
         }
         #endregion
 
-    
+
         #region 界面刷新
         /// <summary>
         /// UI 和 IO刷新Timer
@@ -1228,9 +1228,9 @@ namespace GeneralLabelerStation
             rtn = SystemInit();
 
 #if MACHINE_ZDT
-           this.bZDT_BJ.Visible = true;
-           this.bZDT_JY.Visible = true;
-           this.bMFlexMES.Visible = false;
+            this.bZDT_BJ.Visible = true;
+            this.bZDT_JY.Visible = true;
+            this.bMFlexMES.Visible = false;
             MFlex.MFlexHelper.Instance.EnableMES = false;
 #else
             ZDTHelper.Instance.EnableBJZS = false;
@@ -7228,7 +7228,7 @@ namespace GeneralLabelerStation
                     return 2;
                 }
 
-                if(this.SafeDoorOpen())
+                if (this.SafeDoorOpen())
                 {
                     MessageBox.Show("安全门打开回零失败!!,请重新回零");
                     StopAllAxis();
@@ -8841,10 +8841,9 @@ namespace GeneralLabelerStation
                         tabControl_Main.Visible = true;
                         pMode_Run.Visible = true;
                         pMode_Calibration.Visible = true;
-                        pMode_SysSet.Visible = false;
+                        pMode_SysSet.Visible = true;
                         pMode_PASTE.Visible = true;
                         pMode_Manual.Visible = true;
-                        pMode_SysSet.Visible = false;
                         bExit.Visible = true;
 
                         tabControl_Main.Enabled = true;
@@ -8863,7 +8862,7 @@ namespace GeneralLabelerStation
                         lb_1.Visible = true;
                         lb_2.Visible = true;
                         lb_3.Visible = true;
-                        lb_5.Visible = false;
+                        lb_5.Visible = true;
                     }
                     else if (Variable.PassWordOK == 4)//运行
                     {
@@ -10964,10 +10963,48 @@ namespace GeneralLabelerStation
 
         private void bRecrod3_Click(object sender, EventArgs e)
         {
-            int selectR = this.cbxSelectR.SelectedIndex;
-            Z_RunParam zParam = this.Z_RunParamMap[(uint)selectR];
-            tPasteHeight.Text = zParam.Pos.ToString();
-            zParam.PasteHeight = zParam.Pos;
+            if (tSSL_UserStatus.Text != "Manager" && tSSL_UserStatus.Text != "管理")
+            {
+                Form_Password fm_Password = new Form_Password();//密码提示
+                Variable.PassWordOK = 1;//密码确认 1-密码错误 2-管理员密码正确 3-工程师密码正确 4-操作员密码正确
+                //当前产品统计
+                fm_Password.StartPosition = FormStartPosition.CenterScreen;
+                fm_Password.TopMost = true;
+                fm_Password.ShowDialog();//模式对话框打开
+                if (Variable.PassWordOK != 2)
+                {
+                    return;
+                }
+                else
+                {
+                    if (VariableSys.LanguageFlag == 1)
+                    {
+                        PutInLog("Manager log in");
+                        tSSL_UserStatus.Text = "Manager";
+                    }
+                    else
+                    {
+                        PutInLog("进入管理模式");
+                        tSSL_UserStatus.Text = "管理";
+                    }
+                    gB_Manage.Visible = true;
+                    lSafeDoorEN.Visible = true;
+                    int selectR = this.cbxSelectR.SelectedIndex;
+                    Z_RunParam zParam = this.Z_RunParamMap[(uint)selectR];
+                    tPasteHeight.Text = zParam.Pos.ToString();
+                    zParam.PasteHeight = zParam.Pos;
+                    this.bRecrod3.BackColor = Color.GreenYellow;
+                }
+            }
+            else
+            {
+                int selectR = this.cbxSelectR.SelectedIndex;
+                Z_RunParam zParam = this.Z_RunParamMap[(uint)selectR];
+                tPasteHeight.Text = zParam.Pos.ToString();
+                zParam.PasteHeight = zParam.Pos;
+                this.bRecrod3.BackColor = Color.GreenYellow;
+            }
+
         }
 
         private void bRecrodCamZPos_Click(object sender, EventArgs e)
@@ -11128,6 +11165,7 @@ namespace GeneralLabelerStation
             #endregion
 
             bConfirmOption.BackColor = Color.GreenYellow;
+            this.bRecrod3.BackColor = Color.White;
         }
 
         private void bConfirmOption_MouseDown(object sender, MouseEventArgs e)
@@ -17654,7 +17692,7 @@ namespace GeneralLabelerStation
                 if (XI_Index >= feeder.PointCount)
                 {
                     XI_Index = 0;
-                    if(feeder.PointCount <= 4 && zIndex1 > 0)
+                    if (feeder.PointCount <= 4 && zIndex1 > 0)
                     {
                         feeder.NeedWaitReach = true;
                     }
@@ -17729,7 +17767,7 @@ namespace GeneralLabelerStation
             if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iTimeOut_Feeder)
             {
                 this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[贴标]10010:出标到位且XY到Feeder吸料位置超时" });//
-                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { $"X:{X.AxisEncPos - X.AxisPrfPos:N2} Y:{Y.AxisEncPos - Y.AxisPrfPos:N2} Z1{Z1.AxisEncPos - Z1.AxisEncPos:N2} Z2{Z4.AxisEncPos - Z4.AxisPrfPos:N2} R1{R1.AxisEncPos - R1.AxisPrfPos:N2} R2{R2.AxisEncPos - R2.AxisPrfPos:N2}"});
+                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { $"X:{X.AxisEncPos - X.AxisPrfPos:N2} Y:{Y.AxisEncPos - Y.AxisPrfPos:N2} Z1{Z1.AxisEncPos - Z1.AxisEncPos:N2} Z2{Z4.AxisEncPos - Z4.AxisPrfPos:N2} R1{R1.AxisEncPos - R1.AxisPrfPos:N2} R2{R2.AxisEncPos - R2.AxisPrfPos:N2}" });
             }
 
             if (FlowIndex != 10010)
@@ -21594,7 +21632,7 @@ namespace GeneralLabelerStation
 
                             if (FlowIndex_Conveyor != 300)
                             {
-                                    this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]300:减速到到位时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
+                                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]300:减速到到位时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
                             }
                             else
                             {
@@ -22351,7 +22389,7 @@ namespace GeneralLabelerStation
         {
             RUN_AlarmInfo[0] = 1;
 
-            if(!alarmInfo.Contains("安全门"))
+            if (!alarmInfo.Contains("安全门"))
             {
                 StatisticsHelper.Instance.Reoprt.Start(TimeDefine.DTTime, alarmInfo);
                 StatisticsHelper.Instance.Reoprt.Total.AlarmPcsCount += 1;
@@ -22371,7 +22409,8 @@ namespace GeneralLabelerStation
                 this.bAutoSinglePause_Click(this, new EventArgs());
                 RunMode = 2;
 
-                Task.Factory.StartNew(() => {
+                Task.Factory.StartNew(() =>
+                {
                     bool rtn = this.All_ZGoSafeTillStop(5000, VariableSys.VelMode_Current_Manual);
                     short rtn1 = 0;
                     if (rtn) rtn1 += this.XYGoPosTillStop(5000, VariableSys.pReadyPoint, VariableSys.VelMode_Current_Manual);
@@ -23802,7 +23841,7 @@ namespace GeneralLabelerStation
                 #endregion
 
                 #region 界面显示
-                if(this.RunMode != 1)
+                if (this.RunMode != 1)
                     ShowStatus();
 
                 if (tabControl_Main.SelectedIndex == 0)
@@ -25206,6 +25245,7 @@ namespace GeneralLabelerStation
             this.tCamZPos.Text = this.Z_RunParamMap[(uint)this.cbxSelectR.SelectedIndex].CamHeigh.ToString("f3");
             this.tPasteHeight.Text = this.Z_RunParamMap[(uint)this.cbxSelectR.SelectedIndex].PasteHeight.ToString("f3");
             this.tThrowHeight.Text = this.Z_RunParamMap[(uint)this.cbxSelectR.SelectedIndex].ThrowHeight.ToString("f3");
+            this.bRecrod3.BackColor = Color.White;
         }
 
         private void pTurnN_MouseDown(object sender, MouseEventArgs e)
@@ -26193,8 +26233,8 @@ namespace GeneralLabelerStation
 
         private void bLoadCell_Click(object sender, EventArgs e)
         {
-           // frmPressEdit frm = new frmPressEdit();
-          //  frm.Show();
+            // frmPressEdit frm = new frmPressEdit();
+            //  frm.Show();
         }
 
         private void cbVision_CheckedChanged(object sender, EventArgs e)
@@ -26394,7 +26434,7 @@ namespace GeneralLabelerStation
 
         private void bAutoSuck_Click(object sender, EventArgs e)
         {
-            new fmCheckXI(this.dGV_FeederLeft,this.cbSelectFeeder.SelectedIndex,this).Show();
+            new fmCheckXI(this.dGV_FeederLeft, this.cbSelectFeeder.SelectedIndex, this).Show();
         }
 
         private void bRefreshVisionList_Click(object sender, EventArgs e)
@@ -26418,7 +26458,7 @@ namespace GeneralLabelerStation
         private PointF nzOffsetPos = new PointF();
         private PointF DetectNzCenterOffset(int nz)
         {
-            if (string.IsNullOrEmpty(this.cbVisionList.Text)) return new PointF(0,0);
+            if (string.IsNullOrEmpty(this.cbVisionList.Text)) return new PointF(0, 0);
             bool readOK = false;
             string direct = $"{Variable.sPath_SYS_LABEL}\\{this.cbVisionList.Text}";
             Variable.PASTAE label = this.ReadXls2Label(direct, ref readOK);
@@ -26458,7 +26498,7 @@ namespace GeneralLabelerStation
         private void bChangeNzOffset_Click(object sender, EventArgs e)
         {
             if (this.cbNzStep4.SelectedIndex == 0) return;
-            if(MessageBox.Show("是否需要补偿取料位置? Y/N","警告",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("是否需要补偿取料位置? Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 NozzleCenterOffset[this.cbNzStep4.SelectedIndex].X -= (this.nzOffsetPos.X - this.standardPos.X);
                 NozzleCenterOffset[this.cbNzStep4.SelectedIndex].Y -= (this.nzOffsetPos.Y - this.standardPos.Y);
@@ -26597,7 +26637,7 @@ namespace GeneralLabelerStation
         private void bUpVisionCheck_Click(object sender, EventArgs e)
         {
             frmPasteReCheck fm = new frmPasteReCheck();
-            if(fm.CanShow)
+            if (fm.CanShow)
             {
                 fm.ShowDialog();
             }
