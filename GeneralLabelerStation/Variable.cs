@@ -964,6 +964,7 @@ namespace GeneralLabelerStation
         public static string sPath_ReadCodeBean = sPath_SYS_MachineNO + "\\ReadCodeBean\\";//
         public static string sPath_ZDTMESLog = "D:\\MES对接日志\\";//
         public static string sPath_ErrorCodeInfoConfig = sPath_SYS_MachineNO + "\\ErrorCode.xls";//
+        public short machineVersion = 3;
 
         //public int iProductCount = 0;//产品总数
         //public int iUpCCD_OK = 0;//上相机OK数目

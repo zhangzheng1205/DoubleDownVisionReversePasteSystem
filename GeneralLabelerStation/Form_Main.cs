@@ -6859,89 +6859,168 @@ namespace GeneralLabelerStation
             {
                 return 1;
             }
+            VariableSys.machineVersion = (short)Ini_Sys.IniReadNum("MachinType", "MachineVersion");
+            if (VariableSys.machineVersion == 3)
+            {
+                X = new Axis_RunParam(1);
+                Y = new Axis_RunParam(2);
+                Turn = new Axis_RunParam(3);
+                Axis4 = new Axis_RunParam(4);
+                R1 = new R_RunParam(5);
+                R2 = new R_RunParam(5);
+                R3 = new R_RunParam(6);
+                R4 = new R_RunParam(6);
+                Z1 = new Z_RunParam(7);
+                Z2 = new Z_RunParam(7);
+                Z3 = new Z_RunParam(8);
+                Z4 = new Z_RunParam(8);
+                //机台坐标
+                VariableSys.iAxisSource = (short)Ini_Sys.IniReadNum("RunOption", "AxisPosSource");
+                X.iAxisSource = 0;
+                Y.iAxisSource = 0;
+                Turn.iAxisSource = VariableSys.iAxisSource;
+                Z1.iAxisSource = 0;
+                Z2.iAxisSource = 0;
+                Z3.iAxisSource = 0;
+                Z4.iAxisSource = 0;
 
-            X = new Axis_RunParam(1);
-            Y = new Axis_RunParam(2);
-            Turn = new Axis_RunParam(3);
-            Axis4 = new Axis_RunParam(4);
-            R1 = new R_RunParam(5);
-            R2 = new R_RunParam(6);
-            R3 = new R_RunParam(7);
-            R4 = new R_RunParam(8);
-            Z1 = new Z_RunParam(9);
-            Z2 = new Z_RunParam(9);
-            Z3 = new Z_RunParam(10);
-            Z4 = new Z_RunParam(10);
-            //机台坐标
-            VariableSys.iAxisSource = (short)Ini_Sys.IniReadNum("RunOption", "AxisPosSource");
-            X.iAxisSource = VariableSys.iAxisSource;
-            Y.iAxisSource = VariableSys.iAxisSource;
-            Turn.iAxisSource = VariableSys.iAxisSource;
-            Z1.iAxisSource = 0;
-            Z2.iAxisSource = 0;
-            Z3.iAxisSource = 0;
-            Z2.iAxisSource = 0;
+                this.R_RunParamMap.Clear();
+                this.Z_RunParamMap.Clear();
 
-            this.R_RunParamMap.Clear();
-            this.Z_RunParamMap.Clear();
+                this.Z_RunParamMap.TryAdd(0, Z1);
+                this.Z_RunParamMap.TryAdd(1, Z2);
+                this.Z_RunParamMap.TryAdd(2, Z3);
+                this.Z_RunParamMap.TryAdd(3, Z4);
 
-            this.Z_RunParamMap.TryAdd(0, Z1);
-            this.Z_RunParamMap.TryAdd(1, Z2);
-            this.Z_RunParamMap.TryAdd(2, Z3);
-            this.Z_RunParamMap.TryAdd(3, Z4);
+                this.R_RunParamMap.TryAdd(0, R1);
+                this.R_RunParamMap.TryAdd(1, R2);
+                this.R_RunParamMap.TryAdd(2, R3);
+                this.R_RunParamMap.TryAdd(3, R4);
 
-            this.R_RunParamMap.TryAdd(0, R1);
-            this.R_RunParamMap.TryAdd(1, R2);
-            this.R_RunParamMap.TryAdd(2, R3);
-            this.R_RunParamMap.TryAdd(3, R4);
+                this.Z_RunParamMap[0].Check_vaccum = new IO.IOInput(1, 2);
+                this.Z_RunParamMap[0].XI_vaccum = new IO.IOOutput(7, 7);
+                this.Z_RunParamMap[0].PO_vaccum = new IO.IOOutput(8, 7);
+                this.Z_RunParamMap[0].HomeLimit = new IO.IOInput(7, 1);
 
-            this.Z_RunParamMap[0].Check_vaccum = new IO.IOInput(1, 2);
-            this.Z_RunParamMap[0].XI_vaccum = new IO.IOOutput(7, 7);
-            this.Z_RunParamMap[0].PO_vaccum = new IO.IOOutput(8, 7);
-            this.Z_RunParamMap[0].Svon = new IO.IOOutput(9, 6);
-            this.Z_RunParamMap[0].HomeLimit = new IO.IOInput(9, 1);
+                this.Z_RunParamMap[0].MoveDir = 1;
 
-            this.Z_RunParamMap[0].MoveDir = 1;
+                this.Z_RunParamMap[1].Check_vaccum = new IO.IOInput(1, 1);
+                this.Z_RunParamMap[1].XI_vaccum = new IO.IOOutput(7, 6);
+                this.Z_RunParamMap[1].PO_vaccum = new IO.IOOutput(8, 6);
+                this.Z_RunParamMap[1].HomeLimit = new IO.IOInput(7, 1);
+                this.Z_RunParamMap[1].MoveDir = -1;
 
-            this.Z_RunParamMap[1].Check_vaccum = new IO.IOInput(1, 1);
-            this.Z_RunParamMap[1].XI_vaccum = new IO.IOOutput(7, 6);
-            this.Z_RunParamMap[1].PO_vaccum = new IO.IOOutput(8, 6);
-            this.Z_RunParamMap[1].Svon = new IO.IOOutput(9, 6);
-            this.Z_RunParamMap[1].HomeLimit = new IO.IOInput(9, 1);
-            this.Z_RunParamMap[1].MoveDir = -1;
+                this.Z_RunParamMap[2].Check_vaccum = new IO.IOInput(1, 4);
+                this.Z_RunParamMap[2].XI_vaccum = new IO.IOOutput(7, 4);
+                this.Z_RunParamMap[2].PO_vaccum = new IO.IOOutput(8, 4);
+                this.Z_RunParamMap[2].HomeLimit = new IO.IOInput(8, 1);
+                this.Z_RunParamMap[2].MoveDir = -1;
 
-            this.Z_RunParamMap[2].Check_vaccum = new IO.IOInput(1, 4);
-            this.Z_RunParamMap[2].XI_vaccum = new IO.IOOutput(7, 4);
-            this.Z_RunParamMap[2].PO_vaccum = new IO.IOOutput(8, 4);
-            this.Z_RunParamMap[2].Svon = new IO.IOOutput(11, 6);
-            this.Z_RunParamMap[2].HomeLimit = new IO.IOInput(11, 1);
-            this.Z_RunParamMap[2].MoveDir = -1;
+                this.Z_RunParamMap[3].Check_vaccum = new IO.IOInput(1, 5);
+                this.Z_RunParamMap[3].XI_vaccum = new IO.IOOutput(7, 5);
+                this.Z_RunParamMap[3].PO_vaccum = new IO.IOOutput(8, 5);
+                this.Z_RunParamMap[3].HomeLimit = new IO.IOInput(8, 1);
+                this.Z_RunParamMap[3].MoveDir = 1;
 
-            this.Z_RunParamMap[3].Check_vaccum = new IO.IOInput(1, 5);
-            this.Z_RunParamMap[3].XI_vaccum = new IO.IOOutput(7, 5);
-            this.Z_RunParamMap[3].PO_vaccum = new IO.IOOutput(8, 5);
-            this.Z_RunParamMap[3].Svon = new IO.IOOutput(11, 6);
-            this.Z_RunParamMap[3].HomeLimit = new IO.IOInput(11, 1);
-            this.Z_RunParamMap[3].MoveDir = 1;
+                XY = new Axis_RunParam(1);
+                XY.CreateCrdXY(0, 1);
 
-            XY = new Axis_RunParam(1);
-            XY.CreateCrdXY(0, 1);
+                IO.IOManager.Instance.Card.TryAdd(0, X);
+                IO.IOManager.Instance.Card.TryAdd(1, Y);
+                IO.IOManager.Instance.Card.TryAdd(2, Turn);
+                IO.IOManager.Instance.Card.TryAdd(3, Axis4);
+                IO.IOManager.Instance.Card.TryAdd(4, R1);
+                IO.IOManager.Instance.Card.TryAdd(5, R4);
+                IO.IOManager.Instance.Card.TryAdd(6, Z1);
+                IO.IOManager.Instance.Card.TryAdd(7, Z4);
+                IO.IOManager.Instance.Card.TryAdd(8, R2);
+                IO.IOManager.Instance.Card.TryAdd(9, R3);
+                IO.IOManager.Instance.Card.TryAdd(10, Z2);
+                IO.IOManager.Instance.Card.TryAdd(11, Z3);
+            }
+            else
+            {
+                X = new Axis_RunParam(1);
+                Y = new Axis_RunParam(2);
+                Turn = new Axis_RunParam(3);
+                Axis4 = new Axis_RunParam(4);
+                R1 = new R_RunParam(5);
+                R2 = new R_RunParam(6);
+                R3 = new R_RunParam(7);
+                R4 = new R_RunParam(8);
+                Z1 = new Z_RunParam(9);
+                Z2 = new Z_RunParam(9);
+                Z3 = new Z_RunParam(10);
+                Z4 = new Z_RunParam(10);
+                //机台坐标
+                VariableSys.iAxisSource = (short)Ini_Sys.IniReadNum("RunOption", "AxisPosSource");
+                X.iAxisSource = VariableSys.iAxisSource;
+                Y.iAxisSource = VariableSys.iAxisSource;
+                Turn.iAxisSource = VariableSys.iAxisSource;
+                Z1.iAxisSource = 0;
+                Z2.iAxisSource = 0;
+                Z3.iAxisSource = 0;
+                Z4.iAxisSource = 0;
 
-            IO.IOManager.Instance.Card.TryAdd(0, X);
-            IO.IOManager.Instance.Card.TryAdd(1, Y);
-            IO.IOManager.Instance.Card.TryAdd(2, Turn);
-            IO.IOManager.Instance.Card.TryAdd(3, Axis4);
-            IO.IOManager.Instance.Card.TryAdd(4, R1);
-            IO.IOManager.Instance.Card.TryAdd(5, R2);
-            IO.IOManager.Instance.Card.TryAdd(6, R3);
-            IO.IOManager.Instance.Card.TryAdd(7, R4);
-            IO.IOManager.Instance.Card.TryAdd(8, Z1);
-            IO.IOManager.Instance.Card.TryAdd(9, Z2);
-            IO.IOManager.Instance.Card.TryAdd(10, Z3);
-            IO.IOManager.Instance.Card.TryAdd(11, Z4);
+                this.R_RunParamMap.Clear();
+                this.Z_RunParamMap.Clear();
 
+                this.Z_RunParamMap.TryAdd(0, Z1);
+                this.Z_RunParamMap.TryAdd(1, Z2);
+                this.Z_RunParamMap.TryAdd(2, Z3);
+                this.Z_RunParamMap.TryAdd(3, Z4);
+
+                this.R_RunParamMap.TryAdd(0, R1);
+                this.R_RunParamMap.TryAdd(1, R2);
+                this.R_RunParamMap.TryAdd(2, R3);
+                this.R_RunParamMap.TryAdd(3, R4);
+
+                this.Z_RunParamMap[0].Check_vaccum = new IO.IOInput(1, 2);
+                this.Z_RunParamMap[0].XI_vaccum = new IO.IOOutput(7, 7);
+                this.Z_RunParamMap[0].PO_vaccum = new IO.IOOutput(8, 7);
+                this.Z_RunParamMap[0].Svon = new IO.IOOutput(9, 6);
+                this.Z_RunParamMap[0].HomeLimit = new IO.IOInput(9, 1);
+
+                this.Z_RunParamMap[0].MoveDir = 1;
+
+                this.Z_RunParamMap[1].Check_vaccum = new IO.IOInput(1, 1);
+                this.Z_RunParamMap[1].XI_vaccum = new IO.IOOutput(7, 6);
+                this.Z_RunParamMap[1].PO_vaccum = new IO.IOOutput(8, 6);
+                this.Z_RunParamMap[1].Svon = new IO.IOOutput(9, 6);
+                this.Z_RunParamMap[1].HomeLimit = new IO.IOInput(9, 1);
+                this.Z_RunParamMap[1].MoveDir = -1;
+
+                this.Z_RunParamMap[2].Check_vaccum = new IO.IOInput(1, 4);
+                this.Z_RunParamMap[2].XI_vaccum = new IO.IOOutput(7, 4);
+                this.Z_RunParamMap[2].PO_vaccum = new IO.IOOutput(8, 4);
+                this.Z_RunParamMap[2].Svon = new IO.IOOutput(11, 6);
+                this.Z_RunParamMap[2].HomeLimit = new IO.IOInput(11, 1);
+                this.Z_RunParamMap[2].MoveDir = -1;
+
+                this.Z_RunParamMap[3].Check_vaccum = new IO.IOInput(1, 5);
+                this.Z_RunParamMap[3].XI_vaccum = new IO.IOOutput(7, 5);
+                this.Z_RunParamMap[3].PO_vaccum = new IO.IOOutput(8, 5);
+                this.Z_RunParamMap[3].Svon = new IO.IOOutput(11, 6);
+                this.Z_RunParamMap[3].HomeLimit = new IO.IOInput(11, 1);
+                this.Z_RunParamMap[3].MoveDir = 1;
+
+                XY = new Axis_RunParam(1);
+                XY.CreateCrdXY(0, 1);
+
+                IO.IOManager.Instance.Card.TryAdd(0, X);
+                IO.IOManager.Instance.Card.TryAdd(1, Y);
+                IO.IOManager.Instance.Card.TryAdd(2, Turn);
+                IO.IOManager.Instance.Card.TryAdd(3, Axis4);
+                IO.IOManager.Instance.Card.TryAdd(4, R1);
+                IO.IOManager.Instance.Card.TryAdd(5, R2);
+                IO.IOManager.Instance.Card.TryAdd(6, R3);
+                IO.IOManager.Instance.Card.TryAdd(7, R4);
+                IO.IOManager.Instance.Card.TryAdd(8, Z1);
+                IO.IOManager.Instance.Card.TryAdd(9, Z2);
+                IO.IOManager.Instance.Card.TryAdd(10, Z3);
+                IO.IOManager.Instance.Card.TryAdd(11, Z4);
+            }
             IO.IOManager.Instance.ResetAllOut(); // 释放所有IO
-
             bArr_IO_IN_Status.bIN_AirPressure = new IO.IOInput(4, 2);
             bArr_IO_IN_Status.bIN_Carry_Move = new IO.IOInput(5, 1);
             bArr_IO_IN_Status.bIN_Carry_Origin = new IO.IOInput(5, 2);

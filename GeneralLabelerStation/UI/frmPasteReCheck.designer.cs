@@ -175,7 +175,6 @@
             this.dGVPaste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dGVPaste.Size = new System.Drawing.Size(326, 436);
             this.dGVPaste.TabIndex = 1;
-            //this.dGVPaste.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVPaste_CellValueChanged);
             this.dGVPaste.SelectionChanged += new System.EventHandler(this.dGVPaste_SelectionChanged);
             // 
             // dataGridViewTextBoxColumn1
