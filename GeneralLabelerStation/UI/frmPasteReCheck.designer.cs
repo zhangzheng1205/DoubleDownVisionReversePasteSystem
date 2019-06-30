@@ -41,6 +41,8 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bGoMark2 = new System.Windows.Forms.Button();
             this.bGoMark1 = new System.Windows.Forms.Button();
@@ -164,7 +166,9 @@
             this.Column4,
             this.Column5,
             this.Column6,
-            this.Column7});
+            this.Column7,
+            this.Column8,
+            this.Column9});
             this.dGVPaste.Dock = System.Windows.Forms.DockStyle.Left;
             this.dGVPaste.Location = new System.Drawing.Point(0, 0);
             this.dGVPaste.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -180,18 +184,18 @@
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.FillWeight = 60F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "板号";
+            this.dataGridViewTextBoxColumn1.HeaderText = "大板号";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 50;
+            this.dataGridViewTextBoxColumn1.Width = 25;
             // 
             // Column4
             // 
-            this.Column4.FillWeight = 60F;
-            this.Column4.HeaderText = "穴位号";
+            this.Column4.FillWeight = 80F;
+            this.Column4.HeaderText = "小板号";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
-            this.Column4.Width = 50;
+            this.Column4.Width = 35;
             // 
             // Column5
             // 
@@ -199,7 +203,7 @@
             this.Column5.HeaderText = "贴附坐标";
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
-            this.Column5.Width = 70;
+            this.Column5.Width = 102;
             // 
             // Column6
             // 
@@ -207,14 +211,31 @@
             this.Column6.HeaderText = "吸嘴";
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
-            this.Column6.Width = 60;
+            this.Column6.Width = 25;
             // 
             // Column7
             // 
+            this.Column7.FillWeight = 80F;
             this.Column7.HeaderText = "角度";
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
-            this.Column7.Width = 50;
+            this.Column7.Width = 40;
+            // 
+            // Column8
+            // 
+            this.Column8.FillWeight = 60F;
+            this.Column8.HeaderText = "X偏移";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 55;
+            // 
+            // Column9
+            // 
+            this.Column9.FillWeight = 60F;
+            this.Column9.HeaderText = "Y偏移";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 55;
             // 
             // panel1
             // 
@@ -371,7 +392,6 @@
             // 
             // btnRevoke
             // 
-            this.btnRevoke.Enabled = false;
             this.btnRevoke.Location = new System.Drawing.Point(9, 498);
             this.btnRevoke.Name = "btnRevoke";
             this.btnRevoke.Size = new System.Drawing.Size(49, 30);
@@ -395,7 +415,7 @@
             this.bSetAll.Name = "bSetAll";
             this.bSetAll.Size = new System.Drawing.Size(126, 50);
             this.bSetAll.TabIndex = 20;
-            this.bSetAll.Text = "应用到所有";
+            this.bSetAll.Text = "应用到所有(同角度)";
             this.bSetAll.UseVisualStyleBackColor = false;
             this.bSetAll.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -593,12 +613,14 @@
         private System.Windows.Forms.Button bNeedPaste;
         private System.Windows.Forms.Button bSetLike;
         private System.Windows.Forms.Button bSetAll;
+        private System.Windows.Forms.Button btnRevoke;
+        private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.Button btnRevoke;
-        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
     }
 }

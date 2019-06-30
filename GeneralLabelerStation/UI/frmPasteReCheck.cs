@@ -88,6 +88,8 @@ namespace GeneralLabelerStation.UI
                         $"{Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PastePoints[pcsIndex].X:N2},{Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PastePoints[pcsIndex].Y:N2}";
                     this.dGVPaste.Rows[rowIndex].Cells[3].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].NozzleIndex[pcsIndex].ToString();
                     this.dGVPaste.Rows[rowIndex].Cells[4].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PasteAngle[pcsIndex].ToString();
+                    this.dGVPaste.Rows[rowIndex].Cells[5].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].OffsetX_Single[pcsIndex].ToString();
+                    this.dGVPaste.Rows[rowIndex].Cells[6].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].OffsetY_Single[pcsIndex].ToString();
                 }
             }
         }
@@ -329,6 +331,8 @@ namespace GeneralLabelerStation.UI
                                 pcsOffset += Form_Main.Instance.RUN_PASTEInfo[i].PastePoints.Length;
                             }
                         }
+                        this.dGVPaste.Rows[curPcsIndex + pcsOffset].Cells[5].Value = this.PasteInfoList[curPcbIndex].OffsetX_Single[curPcsIndex].ToString();
+                        this.dGVPaste.Rows[curPcsIndex + pcsOffset].Cells[6].Value = this.PasteInfoList[curPcbIndex].OffsetY_Single[curPcsIndex].ToString();
                         this.dGVPaste.Rows[curPcsIndex + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
                         this.bSetToSelect.BackColor = Color.LightGreen;
                     }
@@ -396,7 +400,7 @@ namespace GeneralLabelerStation.UI
                     {
                         int curNz = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].NozzleIndex[pcs];
                         double curAngle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[pcs];
-                        if (curNz == nz && Math.Abs(curAngle - angle) < 10 && (this.curPcbIndex + 1) == int.Parse(this.dGVPaste.Rows[this.dGVPaste.SelectedRows[0].Index].Cells[0].Value.ToString()))
+                        if (curNz == nz && Math.Abs(curAngle - angle) < 10)
                         {
                             double dx = double.Parse(this.tOffsetX.Text);
                             double dy = double.Parse(this.tOffsetY.Text);
@@ -412,6 +416,8 @@ namespace GeneralLabelerStation.UI
                                         pcsOffset += Form_Main.Instance.RUN_PASTEInfo[i].PastePoints.Length;
                                     }
                                 }
+                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[5].Value = this.PasteInfoList[curPcbIndex].OffsetX_Single[pcs].ToString();
+                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[6].Value = this.PasteInfoList[curPcbIndex].OffsetY_Single[pcs].ToString();
                                 this.dGVPaste.Rows[pcs + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
                                 this.bSetLike.BackColor = Color.LightGreen;
                             }
@@ -430,33 +436,40 @@ namespace GeneralLabelerStation.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            double angle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[curPcsIndex];
             if (MessageBox.Show($"是否将该补偿值应用到所有贴附位 ?Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 for (int pcb = 0; pcb < Form_Main.Instance.RUN_PASTEInfo.Length; pcb++)
                 {
                     for (int pcs = 0; pcs < Form_Main.Instance.RUN_PASTEInfo[pcb].PastePoints.Length; pcs++)
                     {
-                        this.PasteInfoList[pcb].OffsetX_Single[pcs] += double.Parse(this.tOffsetX.Text);
-                        this.PasteInfoList[pcb].OffsetY_Single[pcs] += double.Parse(this.tOffsetY.Text);
-                        if (this.tOffsetX.Text != "0" || this.tOffsetY.Text != "0")
+                        double curAngle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[pcs];
+                        if (Math.Abs(curAngle - angle) < 10)
                         {
-                            int pcsOffset = 0;
-                            if (curPcbIndex != 0)
+                            this.PasteInfoList[pcb].OffsetX_Single[pcs] += double.Parse(this.tOffsetX.Text);
+                            this.PasteInfoList[pcb].OffsetY_Single[pcs] += double.Parse(this.tOffsetY.Text);
+                            if (this.tOffsetX.Text != "0" || this.tOffsetY.Text != "0")
                             {
-                                for (int i = 0; i < curPcbIndex; i++)
+                                int pcsOffset = 0;
+                                if (curPcbIndex != 0)
                                 {
-                                    pcsOffset += Form_Main.Instance.RUN_PASTEInfo[i].PastePoints.Length;
+                                    for (int i = 0; i < curPcbIndex; i++)
+                                    {
+                                        pcsOffset += Form_Main.Instance.RUN_PASTEInfo[i].PastePoints.Length;
+                                    }
                                 }
+                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[5].Value = this.PasteInfoList[pcb].OffsetX_Single[pcs].ToString();
+                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[6].Value = this.PasteInfoList[pcb].OffsetY_Single[pcs].ToString();
+                                this.dGVPaste.Rows[pcs + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
+                                this.bSetAll.BackColor = Color.LightGreen;
                             }
-                            this.dGVPaste.Rows[pcs + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
-                            this.bSetAll.BackColor = Color.LightGreen;
                         }
                     }
                 }
             }
             this.tOffsetX.Text = "0";
             this.tOffsetY.Text = "0";
-            
+
         }
         //申明一个空栈
         Stack<string> beforeRtf = new Stack<string>();
