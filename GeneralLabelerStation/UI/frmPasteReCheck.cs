@@ -48,9 +48,10 @@ namespace GeneralLabelerStation.UI
 
         private void frmPasteReCheck_Load(object sender, EventArgs e)
         {
-
+            this.btnRevoke.Enabled = false;
             if (Form_Main.Instance.RUN_PASTEInfo == null && Form_Main.Instance.RUN_PASTEInfo.Length == 0
-                && Form_Main.Instance.JOB.PasteName == null && Form_Main.Instance.JOB.PasteName.Length == 0) return;
+                && Form_Main.Instance.JOB.PasteName == null && Form_Main.Instance.JOB.PasteName.Length == 0)
+                return;
 
             this.dGVMark.Rows.Clear();
             this.dGVMark.Rows.Add(Form_Main.Instance.JOB.PasteCount);
@@ -93,38 +94,6 @@ namespace GeneralLabelerStation.UI
                 }
             }
         }
-
-        ////定义一个删除某一行的操作
-        //public void delLine(int line)
-        //{
-        //    //记录操作之前的内容&入栈
-        //    beforeRtf.Push(richTextBox1.Text);
-        //    //执行操作
-        //    List<string> s = richTextBox1.Lines.ToList();
-        //    s.RemoveAt(line);
-        //    string str = string.Join("\r\n", s);
-        //    richTextBox1.Text = str;
-        //    //标记撤销可用
-        //    btnRevoke.Enabled = true;
-        //}
-        ////定义修改某一格的操作
-        //public void Changed(double[][] xyPos)
-        //{
-        //    //记录修改之前的内容&入栈
-        //    beforeRtf.Push(dGVPaste.)
-
-        //}
-        //public void Revoke()
-        //{
-        //    //取得上一步操作的内容&出栈
-        //    richTextBox1.Text = beforeRtf.Pop();
-        //    //如果栈内没有与元素 标记撤销不可用
-        //    if (beforeRtf.Count <= 0)
-        //    {
-        //        btnRevoke.Enabled = false;
-        //    }
-        //}
-
         private void bGoMark1_Click(object sender, EventArgs e)
         {
             if (this.dGVMark.SelectedRows.Count > 0)
@@ -317,6 +286,7 @@ namespace GeneralLabelerStation.UI
         {
             if (MessageBox.Show($"是否将应用该补偿值?Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                this.btnRevoke.Enabled = true;
                 var action = new List<Tuple<int, int, double, double>>();
                 try
                 {
@@ -395,12 +365,13 @@ namespace GeneralLabelerStation.UI
         {
             if (this.dGVPaste.SelectedRows.Count > 0)
             {
+                this.btnRevoke.Enabled = true;
+                var action = new List<Tuple<int, int, double, double>>();
                 if (MessageBox.Show($"是否将该补偿值应用到与该贴附位的镜像位 ?Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     //curPcbIndex板号-1;curPcsIndex穴位号-1
                     int nz = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].NozzleIndex[curPcsIndex];
                     double angle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[curPcsIndex];
-                    var action = new List<Tuple<int, int, double, double>>();
                     for (int pcs = 0; pcs < Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PastePoints.Length; pcs++)
                     {
                         int curNz = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].NozzleIndex[pcs];
@@ -425,12 +396,13 @@ namespace GeneralLabelerStation.UI
                                 this.dGVPaste.Rows[pcs + pcsOffset].Cells[6].Value = this.PasteInfoList[curPcbIndex].OffsetY_Single[pcs].ToString();
                                 this.dGVPaste.Rows[pcs + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
                                 this.bSetLike.BackColor = Color.LightGreen;
+                                action.Add(new Tuple<int, int, double, double>(curPcbIndex, pcs, dx, dy));
                             }
-                            action.Add(new Tuple<int, int, double, double>(curPcbIndex, pcs, dx, dy));
+
                         }
-                        Actions.Push(action);
                     }
                 }
+                Actions.Push(action);
                 this.tOffsetX.Text = "0";
                 this.tOffsetY.Text = "0";
             }
@@ -442,9 +414,10 @@ namespace GeneralLabelerStation.UI
         private void button1_Click(object sender, EventArgs e)
         {
             double angle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[curPcsIndex];
+            var action = new List<Tuple<int, int, double, double>>();
             if (MessageBox.Show($"是否将该补偿值应用到所有贴附位 ?Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                var action = new List<Tuple<int, int, double, double>>();
+                this.btnRevoke.Enabled = true;
                 for (int pcb = 0; pcb < Form_Main.Instance.RUN_PASTEInfo.Length; pcb++)
                 {
                     for (int pcs = 0; pcs < Form_Main.Instance.RUN_PASTEInfo[pcb].PastePoints.Length; pcs++)
@@ -470,21 +443,20 @@ namespace GeneralLabelerStation.UI
                                 this.dGVPaste.Rows[pcs + pcsOffset].Cells[6].Value = this.PasteInfoList[pcb].OffsetY_Single[pcs].ToString();
                                 this.dGVPaste.Rows[pcs + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
                                 this.bSetAll.BackColor = Color.LightGreen;
+                                if (curPcbIndex == pcb)
+                                {
+                                    action.Add(new Tuple<int, int, double, double>(pcb, pcs, dx, dy));
+
+                                }
                             }
-                            action.Add(new Tuple<int, int, double, double>(pcb, pcs, dx, dy));
                         }
                     }
-                    Actions.Push(action);
                 }
             }
             this.tOffsetX.Text = "0";
             this.tOffsetY.Text = "0";
-
+            Actions.Push(action);
         }
-        //申明一个空栈
-        Stack<string> beforeRtf = new Stack<string>();
-        ////初始状态撤销不可用
-        //this.btnRevoke.Enabled = false;
         private void btnRevoke_Click(object sender, EventArgs e)
         {
             if (Actions.Count != 0)
@@ -492,7 +464,6 @@ namespace GeneralLabelerStation.UI
                 var list = Actions.Pop();
                 for (int i = 0; i < list.Count; ++i)
                 {
-
                     this.PasteInfoList[list[i].Item1].OffsetX_Single[list[i].Item2] -= list[i].Item3;
                     this.PasteInfoList[list[i].Item1].OffsetY_Single[list[i].Item2] -= list[i].Item4;
                     int pcsOffset = 0;
@@ -505,8 +476,12 @@ namespace GeneralLabelerStation.UI
                     }
                     this.dGVPaste.Rows[list[i].Item2 + pcsOffset].Cells[5].Value = this.PasteInfoList[list[i].Item1].OffsetX_Single[list[i].Item2].ToString();
                     this.dGVPaste.Rows[list[i].Item2 + pcsOffset].Cells[6].Value = this.PasteInfoList[list[i].Item1].OffsetY_Single[list[i].Item2].ToString();
+                    this.dGVPaste.Rows[list[i].Item2 + pcsOffset].DefaultCellStyle.BackColor = Color.White;
+                    if (Actions.Count == 0)
+                    {
+                        this.btnRevoke.Enabled = false;
+                    }
                 }
-                list.Clear();
             }
         }
     }
