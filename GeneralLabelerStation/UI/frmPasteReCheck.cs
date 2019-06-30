@@ -317,10 +317,13 @@ namespace GeneralLabelerStation.UI
         {
             if (MessageBox.Show($"是否将应用该补偿值?Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                var action = new List<Tuple<int, int, double, double>>();
                 try
                 {
-                    this.PasteInfoList[curPcbIndex].OffsetX_Single[curPcsIndex] += double.Parse(this.tOffsetX.Text);
-                    this.PasteInfoList[curPcbIndex].OffsetY_Single[curPcsIndex] += double.Parse(this.tOffsetY.Text);
+                    double dx = double.Parse(this.tOffsetX.Text);
+                    double dy = double.Parse(this.tOffsetY.Text);
+                    this.PasteInfoList[curPcbIndex].OffsetX_Single[curPcsIndex] += dx;
+                    this.PasteInfoList[curPcbIndex].OffsetY_Single[curPcsIndex] += dy;
                     if (this.tOffsetX.Text != "0" || this.tOffsetY.Text != "0")
                     {
                         int pcsOffset = 0;
@@ -333,6 +336,8 @@ namespace GeneralLabelerStation.UI
                         }
                         this.dGVPaste.Rows[curPcsIndex + pcsOffset].Cells[5].Value = this.PasteInfoList[curPcbIndex].OffsetX_Single[curPcsIndex].ToString();
                         this.dGVPaste.Rows[curPcsIndex + pcsOffset].Cells[6].Value = this.PasteInfoList[curPcbIndex].OffsetY_Single[curPcsIndex].ToString();
+                        action.Add(new Tuple<int, int, double, double>(curPcbIndex, curPcsIndex, dx, dy));
+                        Actions.Push(action);
                         this.dGVPaste.Rows[curPcsIndex + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
                         this.bSetToSelect.BackColor = Color.LightGreen;
                     }
@@ -439,6 +444,7 @@ namespace GeneralLabelerStation.UI
             double angle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[curPcsIndex];
             if (MessageBox.Show($"是否将该补偿值应用到所有贴附位 ?Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                var action = new List<Tuple<int, int, double, double>>();
                 for (int pcb = 0; pcb < Form_Main.Instance.RUN_PASTEInfo.Length; pcb++)
                 {
                     for (int pcs = 0; pcs < Form_Main.Instance.RUN_PASTEInfo[pcb].PastePoints.Length; pcs++)
@@ -446,8 +452,10 @@ namespace GeneralLabelerStation.UI
                         double curAngle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[pcs];
                         if (Math.Abs(curAngle - angle) < 10)
                         {
-                            this.PasteInfoList[pcb].OffsetX_Single[pcs] += double.Parse(this.tOffsetX.Text);
-                            this.PasteInfoList[pcb].OffsetY_Single[pcs] += double.Parse(this.tOffsetY.Text);
+                            double dx = double.Parse(this.tOffsetX.Text);
+                            double dy = double.Parse(this.tOffsetY.Text);
+                            this.PasteInfoList[pcb].OffsetX_Single[pcs] += dx;
+                            this.PasteInfoList[pcb].OffsetY_Single[pcs] += dy;
                             if (this.tOffsetX.Text != "0" || this.tOffsetY.Text != "0")
                             {
                                 int pcsOffset = 0;
@@ -463,8 +471,10 @@ namespace GeneralLabelerStation.UI
                                 this.dGVPaste.Rows[pcs + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
                                 this.bSetAll.BackColor = Color.LightGreen;
                             }
+                            action.Add(new Tuple<int, int, double, double>(pcb, pcs, dx, dy));
                         }
                     }
+                    Actions.Push(action);
                 }
             }
             this.tOffsetX.Text = "0";
@@ -482,9 +492,21 @@ namespace GeneralLabelerStation.UI
                 var list = Actions.Pop();
                 for (int i = 0; i < list.Count; ++i)
                 {
+
                     this.PasteInfoList[list[i].Item1].OffsetX_Single[list[i].Item2] -= list[i].Item3;
                     this.PasteInfoList[list[i].Item1].OffsetY_Single[list[i].Item2] -= list[i].Item4;
+                    int pcsOffset = 0;
+                    if (list[i].Item1 != 0)
+                    {
+                        for (int j = 0; j < list[i].Item1; j++)
+                        {
+                            pcsOffset += Form_Main.Instance.RUN_PASTEInfo[j].PastePoints.Length;
+                        }
+                    }
+                    this.dGVPaste.Rows[list[i].Item2 + pcsOffset].Cells[5].Value = this.PasteInfoList[list[i].Item1].OffsetX_Single[list[i].Item2].ToString();
+                    this.dGVPaste.Rows[list[i].Item2 + pcsOffset].Cells[6].Value = this.PasteInfoList[list[i].Item1].OffsetY_Single[list[i].Item2].ToString();
                 }
+                list.Clear();
             }
         }
     }
