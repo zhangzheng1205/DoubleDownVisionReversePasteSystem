@@ -398,13 +398,13 @@ namespace GeneralLabelerStation.UI
                                 this.bSetLike.BackColor = Color.LightGreen;
                                 action.Add(new Tuple<int, int, double, double>(curPcbIndex, pcs, dx, dy));
                             }
-
                         }
                     }
+                    this.tOffsetX.Text = "0";
+                    this.tOffsetY.Text = "0";
                 }
                 Actions.Push(action);
-                this.tOffsetX.Text = "0";
-                this.tOffsetY.Text = "0";
+
             }
         }
 
@@ -423,7 +423,7 @@ namespace GeneralLabelerStation.UI
                     for (int pcs = 0; pcs < Form_Main.Instance.RUN_PASTEInfo[pcb].PastePoints.Length; pcs++)
                     {
                         double curAngle = Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PasteAngle[pcs];
-                        if (Math.Abs(curAngle - angle) < 10)
+                        if (Math.Abs(curAngle - angle) < 10 && curPcbIndex == pcb)
                         {
                             double dx = double.Parse(this.tOffsetX.Text);
                             double dy = double.Parse(this.tOffsetY.Text);
@@ -439,22 +439,18 @@ namespace GeneralLabelerStation.UI
                                         pcsOffset += Form_Main.Instance.RUN_PASTEInfo[i].PastePoints.Length;
                                     }
                                 }
-                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[5].Value = this.PasteInfoList[pcb].OffsetX_Single[pcs].ToString();
-                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[6].Value = this.PasteInfoList[pcb].OffsetY_Single[pcs].ToString();
+                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[5].Value = this.PasteInfoList[curPcbIndex].OffsetX_Single[pcs].ToString();
+                                this.dGVPaste.Rows[pcs + pcsOffset].Cells[6].Value = this.PasteInfoList[curPcbIndex].OffsetY_Single[pcs].ToString();
                                 this.dGVPaste.Rows[pcs + pcsOffset].DefaultCellStyle.BackColor = Color.LightGreen;
                                 this.bSetAll.BackColor = Color.LightGreen;
-                                if (curPcbIndex == pcb)
-                                {
-                                    action.Add(new Tuple<int, int, double, double>(pcb, pcs, dx, dy));
-
-                                }
+                                action.Add(new Tuple<int, int, double, double>(pcb, pcs, dx, dy));
                             }
                         }
                     }
                 }
+                this.tOffsetX.Text = "0";
+                this.tOffsetY.Text = "0";
             }
-            this.tOffsetX.Text = "0";
-            this.tOffsetY.Text = "0";
             Actions.Push(action);
         }
         private void btnRevoke_Click(object sender, EventArgs e)
@@ -480,6 +476,9 @@ namespace GeneralLabelerStation.UI
                     if (Actions.Count == 0)
                     {
                         this.btnRevoke.Enabled = false;
+                        this.bSetLike.BackColor = Color.Red;
+                        this.bSetAll.BackColor = Color.Red;
+                        this.bSetToSelect.BackColor = Color.Red;
                     }
                 }
             }
