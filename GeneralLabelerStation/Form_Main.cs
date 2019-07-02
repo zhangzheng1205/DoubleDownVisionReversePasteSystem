@@ -8317,17 +8317,35 @@ namespace GeneralLabelerStation
                         {
                             R1.ResetIO_OUT((ushort)(4 + i_Output));
                         }
-                        if (i_Output >= 4 && i_Output <= 7)
+                        if (VariableSys.machineVersion == 3)
                         {
-                            R2.ResetIO_OUT((ushort)(i_Output));
+                            if (i_Output >= 4 && i_Output <= 7)
+                            {
+                                R3.ResetIO_OUT((ushort)(i_Output));
+                            }
+                            if (i_Output >= 8 && i_Output <= 11)
+                            {
+                                Z1.ResetIO_OUT((ushort)(i_Output - 4));
+                            }
+                            if (i_Output >= 12 && i_Output <= 15)
+                            {
+                                Z3.ResetIO_OUT((ushort)(i_Output - 8));
+                            }
                         }
-                        if (i_Output >= 8 && i_Output <= 11)
+                        else
                         {
-                            R3.ResetIO_OUT((ushort)(i_Output - 4));
-                        }
-                        if (i_Output >= 12 && i_Output <= 15)
-                        {
-                            R4.ResetIO_OUT((ushort)(i_Output - 8));
+                            if (i_Output >= 4 && i_Output <= 7)
+                            {
+                                R2.ResetIO_OUT((ushort)(i_Output));
+                            }
+                            if (i_Output >= 8 && i_Output <= 11)
+                            {
+                                R3.ResetIO_OUT((ushort)(i_Output - 4));
+                            }
+                            if (i_Output >= 12 && i_Output <= 15)
+                            {
+                                R4.ResetIO_OUT((ushort)(i_Output - 8));
+                            }
                         }
                     }
                     else
@@ -8338,17 +8356,35 @@ namespace GeneralLabelerStation
                         {
                             R1.SetIO_OUT((ushort)(4 + i_Output));
                         }
-                        if (i_Output >= 4 && i_Output <= 7)
+                        if (VariableSys.machineVersion == 3)
                         {
-                            R2.SetIO_OUT((ushort)(i_Output));
+                            if (i_Output >= 4 && i_Output <= 7)
+                            {
+                                R3.SetIO_OUT((ushort)(i_Output));
+                            }
+                            if (i_Output >= 8 && i_Output <= 11)
+                            {
+                                Z1.SetIO_OUT((ushort)(i_Output - 4));
+                            }
+                            if (i_Output >= 12 && i_Output <= 15)
+                            {
+                                Z3.SetIO_OUT((ushort)(i_Output - 8));
+                            }
                         }
-                        if (i_Output >= 8 && i_Output <= 11)
+                        else
                         {
-                            R3.SetIO_OUT((ushort)(i_Output - 4));
-                        }
-                        if (i_Output >= 12 && i_Output <= 15)
-                        {
-                            R4.SetIO_OUT((ushort)(i_Output - 8));
+                            if (i_Output >= 4 && i_Output <= 7)
+                            {
+                                R2.SetIO_OUT((ushort)(i_Output));
+                            }
+                            if (i_Output >= 8 && i_Output <= 11)
+                            {
+                                R3.SetIO_OUT((ushort)(i_Output - 4));
+                            }
+                            if (i_Output >= 12 && i_Output <= 15)
+                            {
+                                R4.SetIO_OUT((ushort)(i_Output - 8));
+                            }
                         }
                     }
                     break;
@@ -8662,11 +8698,17 @@ namespace GeneralLabelerStation
 
         private short InformBackTake()
         {
-            return R2.SetIO_OUT(6);
+            if (VariableSys.machineVersion == 3)
+                return R3.SetIO_OUT(6);
+            else
+                return R2.SetIO_OUT(6);
         }
         private short ResetInformBackTake()
         {
-            return R2.ResetIO_OUT(6);
+            if (VariableSys.machineVersion == 3)
+                return R3.SetIO_OUT(6);
+            else
+                return R2.ResetIO_OUT(6);
         }
         /// <summary>
         /// 前轨道对接输出
@@ -8674,11 +8716,17 @@ namespace GeneralLabelerStation
         /// <returns></returns>
         private short InformBeforeGive()
         {
-            return R2.SetIO_OUT(7);
+            if (VariableSys.machineVersion == 3)
+                return R3.SetIO_OUT(7);
+            else
+                return R2.SetIO_OUT(7);
         }
         private short ResetInformBeforeGive()
         {
-            return R2.ResetIO_OUT(7);
+            if (VariableSys.machineVersion == 3)
+                return R3.SetIO_OUT(7);
+            else
+                return R2.ResetIO_OUT(7);
         }
 
         private short StopProduct_ON()
@@ -8727,7 +8775,10 @@ namespace GeneralLabelerStation
                     RTN = Axis4.SetIO_OUT(6);
                     break;
                 case 5:
-                    RTN = R3.SetIO_OUT(6);
+                    if (VariableSys.machineVersion == 3)
+                        RTN = Z1.SetIO_OUT(6);
+                    else
+                        RTN = R3.ResetIO_OUT(6);
                     break;
             }
             return RTN;
@@ -8752,7 +8803,10 @@ namespace GeneralLabelerStation
                     RTN = Axis4.ResetIO_OUT(6);
                     break;
                 case 5:
-                    RTN = R3.ResetIO_OUT(6);
+                    if (VariableSys.machineVersion == 3)
+                        RTN = Z1.SetIO_OUT(6);
+                    else
+                        RTN = R3.ResetIO_OUT(6);
                     break;
             }
             return RTN;
