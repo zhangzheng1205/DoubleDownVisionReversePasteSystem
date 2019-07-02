@@ -851,11 +851,20 @@ namespace GeneralLabelerStation
         public bool All_RGoHome(Axis_RunParam.HomeMode mode, Variable.VelMode velMode)
         {
             short rtn = 0;
-            for (uint i = 0; i < this.R_RunParamMap.Count; i++)
+            if (VariableSys.machineVersion == 3)
             {
-                rtn += R_RunParamMap[i].GoHome(mode, velMode, true);
+                for (uint i = 0; i < this.R_RunParamMap.Count; i += 2)
+                {
+                    rtn += R_RunParamMap[i].GoHome(mode, velMode, true);
+                }
             }
-
+            else
+            {
+                for (uint i = 0; i < this.R_RunParamMap.Count; i++)
+                {
+                    rtn += R_RunParamMap[i].GoHome(mode, velMode, true);
+                }
+            }
             return rtn == 0;
         }
 
@@ -6859,7 +6868,7 @@ namespace GeneralLabelerStation
             {
                 return 1;
             }
-            VariableSys.machineVersion = (short)Ini_Sys.IniReadNum("MachinType", "MachineVersion");
+            VariableSys.machineVersion = (short)Ini_Sys.IniReadNum("MachineType", "MachineVersion");
             if (VariableSys.machineVersion == 3)
             {
                 X = new Axis_RunParam(1);
@@ -7056,121 +7065,174 @@ namespace GeneralLabelerStation
             IO.IOManager.Instance.ResetAllAxis();
 
             Turn.SetIO_OUT(6);
-
-            for (uint i = 0; i < Variable.NOZZLE_NUM; ++i)
+            if (VariableSys.machineVersion == 3)
             {
-                this.Z_RunParamMap[i].PO_vaccum.ResetIO();
-                this.Z_RunParamMap[i].XI_vaccum.ResetIO();
-                this.Z_RunParamMap[i].Svon.SetIO();
-                Thread.Sleep(100);
+                for (uint i = 0; i < Variable.NOZZLE_NUM; i += 2)
+                {
+                    this.Z_RunParamMap[i].PO_vaccum.ResetIO();
+                    this.Z_RunParamMap[i].XI_vaccum.ResetIO();
+                    Thread.Sleep(100);
+                }
             }
-
+            else
+            {
+                for (uint i = 0; i < Variable.NOZZLE_NUM; ++i)
+                {
+                    this.Z_RunParamMap[i].PO_vaccum.ResetIO();
+                    this.Z_RunParamMap[i].XI_vaccum.ResetIO();
+                    this.Z_RunParamMap[i].Svon.SetIO();
+                    Thread.Sleep(100);
+                }
+            }
             Variable.VelMode Home_Z = new Variable.VelMode(0, 15, 50, 50);
             Variable.VelMode Home_R = new Variable.VelMode(0, 50, 150, 150);
             Variable.VelMode Home_XY = new Variable.VelMode(10, 15, 50, 50);
             Variable.VelMode Home_Turn = new Variable.VelMode(5, 10, 30, 30);
             Thread.Sleep(100);
-            if (VariableSys.iZHomeStyle == 0)
+            if (VariableSys.machineVersion == 3)
             {
                 #region 不带限位方式回原点
                 // Z轴一拖二
-                for (uint i = 0; i < 3; i += 2)
+                for (uint i = 0; i < Variable.NOZZLE_NUM; i += 2)
                 {
-                    if (Z_RunParamMap[i].bNegLimit)
+                    Z_RunParamMap[i].Jog(Home_Z, false);
+                    Thread.Sleep(100);
+                    Z_RunParamMap[i].GetAxisSts();
+                    while (!Z_RunParamMap[i].bNegLimit)
                     {
-                        rtn = Z_RunParamMap[i].Jog(Home_Z, true);
-                        Thread.Sleep(100);
+                        Thread.Sleep(10);
                         Z_RunParamMap[i].GetAxisSts();
-
-                        while (Z_RunParamMap[i].bNegLimit && a.ElapsedMilliseconds < timeout)
+                        if (a.ElapsedMilliseconds > timeout)
                         {
-                            Thread.Sleep(10);
-                            Z_RunParamMap[i].GetAxisSts();
+                            return 2;
                         }
                     }
 
+                    Z_RunParamMap[i].Stop();
                     Thread.Sleep(100);
-                    Z_RunParamMap[i].StopAxis();
-                    Thread.Sleep(100);
-                    rtn += this.Z_RunParamMap[i].GoHome(Axis_Advantech.HomeMode.MODE2_Lmt, Home_Z, false);
+                    rtn += this.Z_RunParamMap[i].GoHome(Axis_Advantech.HomeMode.MODE1_Abs, Home_Z, true);
                     Thread.Sleep(100);
                     Z_RunParamMap[i].GetAxisSts();
 
-                    while (this.Z_RunParamMap[i].bAxisIsHoming && a.ElapsedMilliseconds < timeout)
+                    while (this.Z_RunParamMap[i].bAxisIsHoming)
                     {
                         Thread.Sleep(10);
                         Z_RunParamMap[i].GetAxisSts();
+                        if (a.ElapsedMilliseconds > timeout)
+                        {
+                            return 2;
+                        }
                     }
 
-                    Thread.Sleep(100);
-                    this.Z_RunParamMap[i].ZeroAxis();
-                    Thread.Sleep(500);
-                    rtn += this.Z_RunParamMap[i].GoPos(20, Home_Z);
-                    Thread.Sleep(500);
-                    Z_RunParamMap[i].GetAxisSts();
-
-                    while (a.ElapsedMilliseconds < timeout
-                        && !this.Z_RunParamMap[i].AxisReach(20))
-                    {
-                        Z_RunParamMap[i].GetAxisSts();
-                        Thread.Sleep(10);
-                    }
-
-                    Z_RunParamMap[i].StopAxis();
-                    Thread.Sleep(100);
+                    this.Z_RunParamMap[i].StopAxis();
+                    Thread.Sleep(200);
                     this.Z_RunParamMap[i].ZeroAxis();
                 }
                 #endregion
             }
             else
             {
-                #region 带限位方式回原点
-                // Z轴一拖二
-                for (uint i = 0; i < 3; i += 2)
+                if (VariableSys.iZHomeStyle == 0)
                 {
-                    // 如果 感应到限位感应器 就向下回原点
-                    if (Z_RunParamMap[i].HomeLimit.GetIO())
+                    #region 不带限位方式回原点
+                    // Z轴一拖二
+                    for (uint i = 0; i < 3; i += 2)
                     {
-                        rtn += Z_RunParamMap[i].GoHome(Axis_Advantech.HomeMode.MODE7_AbsSearch, Home_Z, true);
-                        if (rtn != 0)
-                            return 2;
-
-                        while (Z_RunParamMap[i].bAxisIsHoming
-                            || !Z_RunParamMap[i].bHome)
+                        if (Z_RunParamMap[i].bNegLimit)
                         {
-                            if (a.ElapsedMilliseconds > timeout || Z_RunParamMap[i].bAxisServoWarning)
-                            {
-                                return 2;
-                            }
+                            rtn = Z_RunParamMap[i].Jog(Home_Z, true);
+                            Thread.Sleep(100);
+                            Z_RunParamMap[i].GetAxisSts();
 
-                            Thread.Sleep(1);
+                            while (Z_RunParamMap[i].bNegLimit && a.ElapsedMilliseconds < timeout)
+                            {
+                                Thread.Sleep(10);
+                                Z_RunParamMap[i].GetAxisSts();
+                            }
                         }
-                    }
-                    else
-                    {
-                        rtn += Z_RunParamMap[i].Jog(Home_Z, false);
 
-                        while (!Z_RunParamMap[i].HomeLimit.GetIO()
-                            && a.ElapsedMilliseconds < timeout)
+                        Thread.Sleep(100);
+                        Z_RunParamMap[i].StopAxis();
+                        Thread.Sleep(100);
+                        rtn += this.Z_RunParamMap[i].GoHome(Axis_Advantech.HomeMode.MODE2_Lmt, Home_Z, false);
+                        Thread.Sleep(100);
+                        Z_RunParamMap[i].GetAxisSts();
+
+                        while (this.Z_RunParamMap[i].bAxisIsHoming && a.ElapsedMilliseconds < timeout)
                         {
-                            if (a.ElapsedMilliseconds > timeout || Z_RunParamMap[i].bAxisServoWarning)
-                            {
-                                return 2;
-                            }
+                            Thread.Sleep(10);
+                            Z_RunParamMap[i].GetAxisSts();
+                        }
 
-                            Thread.Sleep(1);
+                        Thread.Sleep(100);
+                        this.Z_RunParamMap[i].ZeroAxis();
+                        Thread.Sleep(500);
+                        rtn += this.Z_RunParamMap[i].GoPos(20, Home_Z);
+                        Thread.Sleep(500);
+                        Z_RunParamMap[i].GetAxisSts();
+
+                        while (a.ElapsedMilliseconds < timeout
+                            && !this.Z_RunParamMap[i].AxisReach(20))
+                        {
+                            Z_RunParamMap[i].GetAxisSts();
+                            Thread.Sleep(10);
                         }
 
                         Z_RunParamMap[i].StopAxis();
-                        Z_RunParamMap[i].CleSts();
                         Thread.Sleep(100);
-                        i -= 2;
-                        continue;
+                        this.Z_RunParamMap[i].ZeroAxis();
                     }
+                    #endregion
                 }
-                #endregion
-            }
+                else
+                {
+                    #region 带限位方式回原点
+                    // Z轴一拖二
+                    for (uint i = 0; i < 3; i += 2)
+                    {
+                        // 如果 感应到限位感应器 就向下回原点
+                        if (Z_RunParamMap[i].HomeLimit.GetIO())
+                        {
+                            rtn += Z_RunParamMap[i].GoHome(Axis_Advantech.HomeMode.MODE7_AbsSearch, Home_Z, true);
+                            if (rtn != 0)
+                                return 2;
 
+                            while (Z_RunParamMap[i].bAxisIsHoming
+                                || !Z_RunParamMap[i].bHome)
+                            {
+                                if (a.ElapsedMilliseconds > timeout || Z_RunParamMap[i].bAxisServoWarning)
+                                {
+                                    return 2;
+                                }
+
+                                Thread.Sleep(1);
+                            }
+                        }
+                        else
+                        {
+                            rtn += Z_RunParamMap[i].Jog(Home_Z, false);
+
+                            while (!Z_RunParamMap[i].HomeLimit.GetIO()
+                                && a.ElapsedMilliseconds < timeout)
+                            {
+                                if (a.ElapsedMilliseconds > timeout || Z_RunParamMap[i].bAxisServoWarning)
+                                {
+                                    return 2;
+                                }
+
+                                Thread.Sleep(1);
+                            }
+
+                            Z_RunParamMap[i].StopAxis();
+                            Z_RunParamMap[i].CleSts();
+                            Thread.Sleep(100);
+                            i -= 2;
+                            continue;
+                        }
+                    }
+                    #endregion
+                }
+            }
             if (a.ElapsedMilliseconds > timeout)
             {
                 StopAllAxis();
