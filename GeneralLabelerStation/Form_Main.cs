@@ -553,8 +553,16 @@ namespace GeneralLabelerStation
         /// </summary>
         private short ConveyorStop()
         {
-            short rtn = R2.ResetIO_OUT(4);
-            rtn += R2.ResetIO_OUT(5);
+            if (VariableSys.machineVersion == 3)
+            {
+                short rtn = R3.ResetIO_OUT(4);
+                rtn += R3.ResetIO_OUT(5);
+            }
+            else
+            {
+                short rtn = R2.ResetIO_OUT(4);
+                rtn += R2.ResetIO_OUT(5);
+            }
             return rtn;
         }
 
@@ -567,17 +575,32 @@ namespace GeneralLabelerStation
         private short ConveyorJog(Variable.VelMode velMode, bool dir)
         {
             short rtn = 0;
-            if (dir)
+            if (VariableSys.machineVersion == 3)
             {
-                rtn += R2.SetIO_OUT(4);
-                rtn += R2.ResetIO_OUT(5);
+                if (dir)
+                {
+                    rtn += R3.SetIO_OUT(4);
+                    rtn += R3.ResetIO_OUT(5);
+                }
+                else
+                {
+                    rtn += R3.SetIO_OUT(4);
+                    rtn += R3.SetIO_OUT(5);
+                }
             }
             else
             {
-                rtn += R2.SetIO_OUT(4);
-                rtn += R2.SetIO_OUT(5);
+                if (dir)
+                {
+                    rtn += R2.SetIO_OUT(4);
+                    rtn += R2.ResetIO_OUT(5);
+                }
+                else
+                {
+                    rtn += R2.SetIO_OUT(4);
+                    rtn += R2.SetIO_OUT(5);
+                }
             }
-
             return rtn;
         }
 
