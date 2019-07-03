@@ -6495,7 +6495,9 @@ namespace GeneralLabelerStation
             {
                 camreturn.Angle = gpmResults[0].Rotation;
             }
-            //camreturn.Angle = gpmResults[0].Rotation;
+            //解决边缘算法角度补反的问题_OK_Fowindy_0703
+            camreturn.Angle = -camreturn.Angle;
+            // camreturn.Angle = gpmResults[0].Rotation;
             //进行点位偏移
             //sourceImage.Overlays.Default.AddText(camreturn.Angle.ToString("F2"), new PointContour(500, 800), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
             camreturn.X = gpmResults[0].Position.X + Math.Sqrt(Math.Pow(offsetX, 2) + Math.Pow(offsetY, 2)) * Math.Cos(Math.Atan2(offsetY, offsetX) - gpmResults[0].Rotation * 2 * Math.PI / 360);
@@ -7782,7 +7784,8 @@ namespace GeneralLabelerStation
 
         public void NeedCloseLight()
         {
-            if (this.DownLightWatch.ElapsedMilliseconds > 120000)
+            //更改自动关闭灯源时间为5分钟(原120秒)_Fowindy_0703
+            if (this.DownLightWatch.ElapsedMilliseconds > 300000/*120000*/)
             {
                 this.LightOFF_D();
             }
@@ -23558,12 +23561,12 @@ namespace GeneralLabelerStation
             if (zParam.CamResult.IsOK)//
             {
                 zParam.Nozzle_DownXY_Pos = new PointContour(zParam.CamResult.X, zParam.CamResult.Y);
-
+//屏蔽if_else解决算法2抓边下视觉OK但贴附角度补反的问题_Fowindy_190703
                 if (feeder.Label.AlinIndex1 == 1 || feeder.Label.AlinIndex1 == 2)
                 {
-                    if (feeder.Label.GrabLine_Enable1)
-                        zParam.Nozzle_Down_Angle = zParam.CamResult.Angle;//SEARCH
-                    else
+                    // if (feeder.Label.GrabLine_Enable1)
+                    //     zParam.Nozzle_Down_Angle = zParam.CamResult.Angle;//SEARCH
+                    // else
                         zParam.Nozzle_Down_Angle = -zParam.CamResult.Angle;//SEARCH
                 }
                 else

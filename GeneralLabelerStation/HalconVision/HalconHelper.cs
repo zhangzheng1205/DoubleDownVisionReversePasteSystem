@@ -71,12 +71,30 @@ namespace GeneralLabelerStation.HalconVision
                     cam.Y = row[0].D;
                     cam.X = column[0].D;
                     cam.Angle = new HTuple(angle[0].D).TupleDeg();
-                    if (Math.Abs(cam.Angle) > 90)
+                    
+                    if (Math.Abs(cam.Angle) > 45/*90 */)
                     {
                         if (cam.Angle > 0)
+                        {
                             cam.Angle -= 180;
+                            #region 解决轮廓算法对方型料角度计算错误的Bug_1_Fowindy_190703
+                            if (cam.Angle < -45)
+                            {
+                                cam.Angle += 90;
+                            }
+                            #endregion
+                        }
                         else
+                        {
                             cam.Angle += 180;
+                            #region 解决轮廓算法对方型料角度计算错误的Bug_2_Fowindy_190703
+                            if (cam.Angle > 45)
+                            {
+                                cam.Angle -= 90;
+                            }
+                            #endregion
+                        }
+
                     }
 
                     cam.Angle = -cam.Angle;
