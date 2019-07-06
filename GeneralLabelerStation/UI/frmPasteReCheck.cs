@@ -150,6 +150,7 @@ namespace GeneralLabelerStation.UI
                 int pcbIndex = int.Parse(this.dGVPaste.Rows[rowIndex].Cells[0].Value.ToString()) - 1;
                 int pcsIndex = int.Parse(this.dGVPaste.Rows[rowIndex].Cells[1].Value.ToString()) - 1;
                 Form_Main.Instance.XYGoPos(Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PastePoints[pcsIndex], Form_Main.VariableSys.VelMode_Current_Manual);
+                Form_Main.Instance.LightON_RedU();
                 this.curPcbIndex = pcbIndex;
                 this.curPcsIndex = pcsIndex;
                 this.GoTo();

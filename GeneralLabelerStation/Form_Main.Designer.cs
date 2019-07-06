@@ -1145,11 +1145,51 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.panel24 = new System.Windows.Forms.Panel();
             this.tabTools = new System.Windows.Forms.TabControl();
+            this.Operate0 = new System.Windows.Forms.TabPage();
+            this.bOperVaccum = new System.Windows.Forms.Button();
+            this.bGoCamPos = new System.Windows.Forms.Button();
+            this.tZPosKeyIn = new System.Windows.Forms.TextBox();
+            this.bGoZPos = new System.Windows.Forms.Button();
+            this.cB_KeyBoard = new System.Windows.Forms.CheckBox();
+            this.lZ = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Menu_Z1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Z2 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Z3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Z4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.lY = new System.Windows.Forms.Label();
+            this.lX = new System.Windows.Forms.Label();
+            this.groupBox42 = new System.Windows.Forms.GroupBox();
+            this.cB_Trim = new System.Windows.Forms.ComboBox();
+            this.rB_Jog = new System.Windows.Forms.RadioButton();
+            this.rB_Trim = new System.Windows.Forms.RadioButton();
+            this.lKey_F = new System.Windows.Forms.Label();
+            this.lKey_R = new System.Windows.Forms.Label();
+            this.lKey_D = new System.Windows.Forms.Label();
+            this.lKey_S = new System.Windows.Forms.Label();
+            this.lKey_A = new System.Windows.Forms.Label();
+            this.lKey_W = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.tYPosKeyIn = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.pJog_XPFast = new System.Windows.Forms.PictureBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.pJog_YPFast = new System.Windows.Forms.PictureBox();
+            this.pJog_YNFast = new System.Windows.Forms.PictureBox();
+            this.pJog_XPSlow = new System.Windows.Forms.PictureBox();
+            this.pJog_YNSlow = new System.Windows.Forms.PictureBox();
+            this.pJog_XNSlow = new System.Windows.Forms.PictureBox();
+            this.bYPosGo = new System.Windows.Forms.Button();
+            this.bXPosGo = new System.Windows.Forms.Button();
+            this.bStopAxis = new System.Windows.Forms.Button();
+            this.pJog_ZNSlow = new System.Windows.Forms.PictureBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.pJog_YPSlow = new System.Windows.Forms.PictureBox();
+            this.tXPosKeyIn = new System.Windows.Forms.TextBox();
+            this.pJog_ZPSlow = new System.Windows.Forms.PictureBox();
+            this.pJog_XNFast = new System.Windows.Forms.PictureBox();
             this.Operate1 = new System.Windows.Forms.TabPage();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.bTurnPaste = new System.Windows.Forms.Button();
@@ -1412,46 +1452,6 @@
             this.pMode_Run = new System.Windows.Forms.PictureBox();
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
-            this.pJog_XNFast = new System.Windows.Forms.PictureBox();
-            this.pJog_ZPSlow = new System.Windows.Forms.PictureBox();
-            this.tXPosKeyIn = new System.Windows.Forms.TextBox();
-            this.pJog_YPSlow = new System.Windows.Forms.PictureBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.pJog_ZNSlow = new System.Windows.Forms.PictureBox();
-            this.bStopAxis = new System.Windows.Forms.Button();
-            this.bXPosGo = new System.Windows.Forms.Button();
-            this.bYPosGo = new System.Windows.Forms.Button();
-            this.pJog_XNSlow = new System.Windows.Forms.PictureBox();
-            this.pJog_YNSlow = new System.Windows.Forms.PictureBox();
-            this.pJog_XPSlow = new System.Windows.Forms.PictureBox();
-            this.pJog_YNFast = new System.Windows.Forms.PictureBox();
-            this.pJog_YPFast = new System.Windows.Forms.PictureBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.pJog_XPFast = new System.Windows.Forms.PictureBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tYPosKeyIn = new System.Windows.Forms.TextBox();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.groupBox42 = new System.Windows.Forms.GroupBox();
-            this.lKey_W = new System.Windows.Forms.Label();
-            this.lKey_A = new System.Windows.Forms.Label();
-            this.lKey_S = new System.Windows.Forms.Label();
-            this.lKey_D = new System.Windows.Forms.Label();
-            this.lKey_R = new System.Windows.Forms.Label();
-            this.lKey_F = new System.Windows.Forms.Label();
-            this.rB_Trim = new System.Windows.Forms.RadioButton();
-            this.rB_Jog = new System.Windows.Forms.RadioButton();
-            this.cB_Trim = new System.Windows.Forms.ComboBox();
-            this.lX = new System.Windows.Forms.Label();
-            this.lY = new System.Windows.Forms.Label();
-            this.lZ = new System.Windows.Forms.Label();
-            this.cB_KeyBoard = new System.Windows.Forms.CheckBox();
-            this.bGoZPos = new System.Windows.Forms.Button();
-            this.tZPosKeyIn = new System.Windows.Forms.TextBox();
-            this.bGoCamPos = new System.Windows.Forms.Button();
-            this.bOperVaccum = new System.Windows.Forms.Button();
-            this.Operate0 = new System.Windows.Forms.TabPage();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -1602,7 +1602,19 @@
             this.groupBox32.SuspendLayout();
             this.panel24.SuspendLayout();
             this.tabTools.SuspendLayout();
+            this.Operate0.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.groupBox42.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPFast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPFast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNFast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPSlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNSlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNSlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZNSlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPSlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZPSlow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNFast)).BeginInit();
             this.Operate1.SuspendLayout();
             this.groupBox17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pTurnN)).BeginInit();
@@ -1687,18 +1699,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).BeginInit();
             this.panel23.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNFast)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZPSlow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPSlow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZNSlow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNSlow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNSlow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPSlow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNFast)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPFast)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPFast)).BeginInit();
-            this.groupBox42.SuspendLayout();
-            this.Operate0.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl_Main
@@ -9710,6 +9710,85 @@
             this.tabTools.SelectedIndex = 0;
             this.tabTools.Tag = "工具箱";
             // 
+            // Operate0
+            // 
+            this.Operate0.Controls.Add(this.bOperVaccum);
+            this.Operate0.Controls.Add(this.bGoCamPos);
+            this.Operate0.Controls.Add(this.tZPosKeyIn);
+            this.Operate0.Controls.Add(this.bGoZPos);
+            this.Operate0.Controls.Add(this.cB_KeyBoard);
+            this.Operate0.Controls.Add(this.lZ);
+            this.Operate0.Controls.Add(this.lY);
+            this.Operate0.Controls.Add(this.lX);
+            this.Operate0.Controls.Add(this.groupBox42);
+            this.Operate0.Controls.Add(this.label32);
+            this.Operate0.Controls.Add(this.label13);
+            this.Operate0.Controls.Add(this.label42);
+            this.Operate0.Controls.Add(this.tYPosKeyIn);
+            this.Operate0.Controls.Add(this.label14);
+            this.Operate0.Controls.Add(this.pJog_XPFast);
+            this.Operate0.Controls.Add(this.label41);
+            this.Operate0.Controls.Add(this.pJog_YPFast);
+            this.Operate0.Controls.Add(this.pJog_YNFast);
+            this.Operate0.Controls.Add(this.pJog_XPSlow);
+            this.Operate0.Controls.Add(this.pJog_YNSlow);
+            this.Operate0.Controls.Add(this.pJog_XNSlow);
+            this.Operate0.Controls.Add(this.bYPosGo);
+            this.Operate0.Controls.Add(this.bXPosGo);
+            this.Operate0.Controls.Add(this.bStopAxis);
+            this.Operate0.Controls.Add(this.pJog_ZNSlow);
+            this.Operate0.Controls.Add(this.label15);
+            this.Operate0.Controls.Add(this.pJog_YPSlow);
+            this.Operate0.Controls.Add(this.tXPosKeyIn);
+            this.Operate0.Controls.Add(this.pJog_ZPSlow);
+            this.Operate0.Controls.Add(this.pJog_XNFast);
+            resources.ApplyResources(this.Operate0, "Operate0");
+            this.Operate0.Name = "Operate0";
+            this.Operate0.UseVisualStyleBackColor = true;
+            // 
+            // bOperVaccum
+            // 
+            this.bOperVaccum.BackColor = System.Drawing.Color.YellowGreen;
+            resources.ApplyResources(this.bOperVaccum, "bOperVaccum");
+            this.bOperVaccum.Name = "bOperVaccum";
+            this.bOperVaccum.UseVisualStyleBackColor = false;
+            this.bOperVaccum.Click += new System.EventHandler(this.bOperVaccum_Click);
+            // 
+            // bGoCamPos
+            // 
+            this.bGoCamPos.BackColor = System.Drawing.Color.YellowGreen;
+            resources.ApplyResources(this.bGoCamPos, "bGoCamPos");
+            this.bGoCamPos.Name = "bGoCamPos";
+            this.bGoCamPos.UseVisualStyleBackColor = false;
+            this.bGoCamPos.Click += new System.EventHandler(this.bGoCamPos_Click);
+            // 
+            // tZPosKeyIn
+            // 
+            resources.ApplyResources(this.tZPosKeyIn, "tZPosKeyIn");
+            this.tZPosKeyIn.Name = "tZPosKeyIn";
+            // 
+            // bGoZPos
+            // 
+            resources.ApplyResources(this.bGoZPos, "bGoZPos");
+            this.bGoZPos.Name = "bGoZPos";
+            this.bGoZPos.UseVisualStyleBackColor = true;
+            this.bGoZPos.Click += new System.EventHandler(this.bGoZPos_Click);
+            // 
+            // cB_KeyBoard
+            // 
+            resources.ApplyResources(this.cB_KeyBoard, "cB_KeyBoard");
+            this.cB_KeyBoard.ForeColor = System.Drawing.Color.Teal;
+            this.cB_KeyBoard.Name = "cB_KeyBoard";
+            this.cB_KeyBoard.UseVisualStyleBackColor = true;
+            this.cB_KeyBoard.CheckedChanged += new System.EventHandler(this.cB_KeyBoard_CheckedChanged);
+            // 
+            // lZ
+            // 
+            this.lZ.BackColor = System.Drawing.Color.Yellow;
+            this.lZ.ContextMenuStrip = this.contextMenuStrip1;
+            resources.ApplyResources(this.lZ, "lZ");
+            this.lZ.Name = "lZ";
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -9743,6 +9822,262 @@
             this.Menu_Z4.Name = "Menu_Z4";
             resources.ApplyResources(this.Menu_Z4, "Menu_Z4");
             this.Menu_Z4.Click += new System.EventHandler(this.Z4ToolStripMenuItem_Click);
+            // 
+            // lY
+            // 
+            this.lY.BackColor = System.Drawing.Color.Yellow;
+            resources.ApplyResources(this.lY, "lY");
+            this.lY.Name = "lY";
+            // 
+            // lX
+            // 
+            this.lX.BackColor = System.Drawing.Color.Yellow;
+            resources.ApplyResources(this.lX, "lX");
+            this.lX.Name = "lX";
+            // 
+            // groupBox42
+            // 
+            this.groupBox42.Controls.Add(this.cB_Trim);
+            this.groupBox42.Controls.Add(this.rB_Jog);
+            this.groupBox42.Controls.Add(this.rB_Trim);
+            this.groupBox42.Controls.Add(this.lKey_F);
+            this.groupBox42.Controls.Add(this.lKey_R);
+            this.groupBox42.Controls.Add(this.lKey_D);
+            this.groupBox42.Controls.Add(this.lKey_S);
+            this.groupBox42.Controls.Add(this.lKey_A);
+            this.groupBox42.Controls.Add(this.lKey_W);
+            resources.ApplyResources(this.groupBox42, "groupBox42");
+            this.groupBox42.Name = "groupBox42";
+            this.groupBox42.TabStop = false;
+            this.groupBox42.Enter += new System.EventHandler(this.groupBox42_Enter);
+            // 
+            // cB_Trim
+            // 
+            this.cB_Trim.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Trim.FormattingEnabled = true;
+            this.cB_Trim.Items.AddRange(new object[] {
+            resources.GetString("cB_Trim.Items"),
+            resources.GetString("cB_Trim.Items1"),
+            resources.GetString("cB_Trim.Items2"),
+            resources.GetString("cB_Trim.Items3"),
+            resources.GetString("cB_Trim.Items4"),
+            resources.GetString("cB_Trim.Items5"),
+            resources.GetString("cB_Trim.Items6"),
+            resources.GetString("cB_Trim.Items7"),
+            resources.GetString("cB_Trim.Items8"),
+            resources.GetString("cB_Trim.Items9")});
+            resources.ApplyResources(this.cB_Trim, "cB_Trim");
+            this.cB_Trim.Name = "cB_Trim";
+            // 
+            // rB_Jog
+            // 
+            resources.ApplyResources(this.rB_Jog, "rB_Jog");
+            this.rB_Jog.Checked = true;
+            this.rB_Jog.Name = "rB_Jog";
+            this.rB_Jog.TabStop = true;
+            this.rB_Jog.UseVisualStyleBackColor = true;
+            this.rB_Jog.CheckedChanged += new System.EventHandler(this.rB_Jog_CheckedChanged);
+            // 
+            // rB_Trim
+            // 
+            resources.ApplyResources(this.rB_Trim, "rB_Trim");
+            this.rB_Trim.Name = "rB_Trim";
+            this.rB_Trim.UseVisualStyleBackColor = true;
+            this.rB_Trim.CheckedChanged += new System.EventHandler(this.rB_Trim_CheckedChanged);
+            // 
+            // lKey_F
+            // 
+            resources.ApplyResources(this.lKey_F, "lKey_F");
+            this.lKey_F.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lKey_F.Name = "lKey_F";
+            // 
+            // lKey_R
+            // 
+            resources.ApplyResources(this.lKey_R, "lKey_R");
+            this.lKey_R.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lKey_R.Name = "lKey_R";
+            // 
+            // lKey_D
+            // 
+            resources.ApplyResources(this.lKey_D, "lKey_D");
+            this.lKey_D.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lKey_D.Name = "lKey_D";
+            // 
+            // lKey_S
+            // 
+            resources.ApplyResources(this.lKey_S, "lKey_S");
+            this.lKey_S.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lKey_S.Name = "lKey_S";
+            // 
+            // lKey_A
+            // 
+            resources.ApplyResources(this.lKey_A, "lKey_A");
+            this.lKey_A.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lKey_A.Name = "lKey_A";
+            // 
+            // lKey_W
+            // 
+            resources.ApplyResources(this.lKey_W, "lKey_W");
+            this.lKey_W.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lKey_W.Name = "lKey_W";
+            // 
+            // label32
+            // 
+            resources.ApplyResources(this.label32, "label32");
+            this.label32.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label32.Name = "label32";
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label13.Name = "label13";
+            // 
+            // label42
+            // 
+            resources.ApplyResources(this.label42, "label42");
+            this.label42.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label42.Name = "label42";
+            // 
+            // tYPosKeyIn
+            // 
+            resources.ApplyResources(this.tYPosKeyIn, "tYPosKeyIn");
+            this.tYPosKeyIn.Name = "tYPosKeyIn";
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label14.Name = "label14";
+            // 
+            // pJog_XPFast
+            // 
+            this.pJog_XPFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_XPFast, "pJog_XPFast");
+            this.pJog_XPFast.Name = "pJog_XPFast";
+            this.pJog_XPFast.TabStop = false;
+            this.pJog_XPFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XPFast_MouseDown);
+            this.pJog_XPFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XPFast_MouseUp);
+            // 
+            // label41
+            // 
+            resources.ApplyResources(this.label41, "label41");
+            this.label41.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label41.Name = "label41";
+            // 
+            // pJog_YPFast
+            // 
+            this.pJog_YPFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_YPFast, "pJog_YPFast");
+            this.pJog_YPFast.Name = "pJog_YPFast";
+            this.pJog_YPFast.TabStop = false;
+            this.pJog_YPFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YPFast_MouseDown);
+            this.pJog_YPFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YPFast_MouseUp);
+            // 
+            // pJog_YNFast
+            // 
+            this.pJog_YNFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_YNFast, "pJog_YNFast");
+            this.pJog_YNFast.Name = "pJog_YNFast";
+            this.pJog_YNFast.TabStop = false;
+            this.pJog_YNFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YNFast_MouseDown);
+            this.pJog_YNFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YNFast_MouseUp);
+            // 
+            // pJog_XPSlow
+            // 
+            this.pJog_XPSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_XPSlow, "pJog_XPSlow");
+            this.pJog_XPSlow.Name = "pJog_XPSlow";
+            this.pJog_XPSlow.TabStop = false;
+            this.pJog_XPSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XPSlow_MouseDown);
+            this.pJog_XPSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XPSlow_MouseUp);
+            // 
+            // pJog_YNSlow
+            // 
+            this.pJog_YNSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_YNSlow, "pJog_YNSlow");
+            this.pJog_YNSlow.Name = "pJog_YNSlow";
+            this.pJog_YNSlow.TabStop = false;
+            this.pJog_YNSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YNSlow_MouseDown);
+            this.pJog_YNSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YNSlow_MouseUp);
+            // 
+            // pJog_XNSlow
+            // 
+            this.pJog_XNSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_XNSlow, "pJog_XNSlow");
+            this.pJog_XNSlow.Name = "pJog_XNSlow";
+            this.pJog_XNSlow.TabStop = false;
+            this.pJog_XNSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XNSlow_MouseDown);
+            this.pJog_XNSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XNSlow_MouseUp);
+            // 
+            // bYPosGo
+            // 
+            resources.ApplyResources(this.bYPosGo, "bYPosGo");
+            this.bYPosGo.Name = "bYPosGo";
+            this.bYPosGo.UseVisualStyleBackColor = true;
+            this.bYPosGo.Click += new System.EventHandler(this.bYPosGo_Click);
+            // 
+            // bXPosGo
+            // 
+            resources.ApplyResources(this.bXPosGo, "bXPosGo");
+            this.bXPosGo.Name = "bXPosGo";
+            this.bXPosGo.UseVisualStyleBackColor = true;
+            this.bXPosGo.Click += new System.EventHandler(this.bXPosGo_Click);
+            // 
+            // bStopAxis
+            // 
+            this.bStopAxis.BackColor = System.Drawing.Color.GhostWhite;
+            resources.ApplyResources(this.bStopAxis, "bStopAxis");
+            this.bStopAxis.Name = "bStopAxis";
+            this.bStopAxis.UseVisualStyleBackColor = false;
+            this.bStopAxis.Click += new System.EventHandler(this.bStopAxis_Click);
+            // 
+            // pJog_ZNSlow
+            // 
+            this.pJog_ZNSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_ZNSlow, "pJog_ZNSlow");
+            this.pJog_ZNSlow.Name = "pJog_ZNSlow";
+            this.pJog_ZNSlow.TabStop = false;
+            this.pJog_ZNSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_ZNSlow_MouseDown);
+            this.pJog_ZNSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_ZNSlow_MouseUp);
+            // 
+            // label15
+            // 
+            resources.ApplyResources(this.label15, "label15");
+            this.label15.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label15.Name = "label15";
+            // 
+            // pJog_YPSlow
+            // 
+            this.pJog_YPSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_YPSlow, "pJog_YPSlow");
+            this.pJog_YPSlow.Name = "pJog_YPSlow";
+            this.pJog_YPSlow.TabStop = false;
+            this.pJog_YPSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YPSlow_MouseDown);
+            this.pJog_YPSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YPSlow_MouseUp);
+            // 
+            // tXPosKeyIn
+            // 
+            resources.ApplyResources(this.tXPosKeyIn, "tXPosKeyIn");
+            this.tXPosKeyIn.Name = "tXPosKeyIn";
+            // 
+            // pJog_ZPSlow
+            // 
+            this.pJog_ZPSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_ZPSlow, "pJog_ZPSlow");
+            this.pJog_ZPSlow.Name = "pJog_ZPSlow";
+            this.pJog_ZPSlow.TabStop = false;
+            this.pJog_ZPSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_ZPSlow_MouseDown);
+            this.pJog_ZPSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_ZPSlow_MouseUp);
+            // 
+            // pJog_XNFast
+            // 
+            this.pJog_XNFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pJog_XNFast, "pJog_XNFast");
+            this.pJog_XNFast.Name = "pJog_XNFast";
+            this.pJog_XNFast.TabStop = false;
+            this.pJog_XNFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XNFast_MouseDown);
+            this.pJog_XNFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XNFast_MouseUp);
             // 
             // Operate1
             // 
@@ -11216,6 +11551,7 @@
             resources.ApplyResources(this.button10, "button10");
             this.button10.Name = "button10";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // groupBox24
             // 
@@ -11697,341 +12033,6 @@
             resources.ApplyResources(this.panel23, "panel23");
             this.panel23.Name = "panel23";
             // 
-            // pJog_XNFast
-            // 
-            this.pJog_XNFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_XNFast, "pJog_XNFast");
-            this.pJog_XNFast.Name = "pJog_XNFast";
-            this.pJog_XNFast.TabStop = false;
-            this.pJog_XNFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XNFast_MouseDown);
-            this.pJog_XNFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XNFast_MouseUp);
-            // 
-            // pJog_ZPSlow
-            // 
-            this.pJog_ZPSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_ZPSlow, "pJog_ZPSlow");
-            this.pJog_ZPSlow.Name = "pJog_ZPSlow";
-            this.pJog_ZPSlow.TabStop = false;
-            this.pJog_ZPSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_ZPSlow_MouseDown);
-            this.pJog_ZPSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_ZPSlow_MouseUp);
-            // 
-            // tXPosKeyIn
-            // 
-            resources.ApplyResources(this.tXPosKeyIn, "tXPosKeyIn");
-            this.tXPosKeyIn.Name = "tXPosKeyIn";
-            // 
-            // pJog_YPSlow
-            // 
-            this.pJog_YPSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_YPSlow, "pJog_YPSlow");
-            this.pJog_YPSlow.Name = "pJog_YPSlow";
-            this.pJog_YPSlow.TabStop = false;
-            this.pJog_YPSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YPSlow_MouseDown);
-            this.pJog_YPSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YPSlow_MouseUp);
-            // 
-            // label15
-            // 
-            resources.ApplyResources(this.label15, "label15");
-            this.label15.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label15.Name = "label15";
-            // 
-            // pJog_ZNSlow
-            // 
-            this.pJog_ZNSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_ZNSlow, "pJog_ZNSlow");
-            this.pJog_ZNSlow.Name = "pJog_ZNSlow";
-            this.pJog_ZNSlow.TabStop = false;
-            this.pJog_ZNSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_ZNSlow_MouseDown);
-            this.pJog_ZNSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_ZNSlow_MouseUp);
-            // 
-            // bStopAxis
-            // 
-            this.bStopAxis.BackColor = System.Drawing.Color.GhostWhite;
-            resources.ApplyResources(this.bStopAxis, "bStopAxis");
-            this.bStopAxis.Name = "bStopAxis";
-            this.bStopAxis.UseVisualStyleBackColor = false;
-            this.bStopAxis.Click += new System.EventHandler(this.bStopAxis_Click);
-            // 
-            // bXPosGo
-            // 
-            resources.ApplyResources(this.bXPosGo, "bXPosGo");
-            this.bXPosGo.Name = "bXPosGo";
-            this.bXPosGo.UseVisualStyleBackColor = true;
-            this.bXPosGo.Click += new System.EventHandler(this.bXPosGo_Click);
-            // 
-            // bYPosGo
-            // 
-            resources.ApplyResources(this.bYPosGo, "bYPosGo");
-            this.bYPosGo.Name = "bYPosGo";
-            this.bYPosGo.UseVisualStyleBackColor = true;
-            this.bYPosGo.Click += new System.EventHandler(this.bYPosGo_Click);
-            // 
-            // pJog_XNSlow
-            // 
-            this.pJog_XNSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_XNSlow, "pJog_XNSlow");
-            this.pJog_XNSlow.Name = "pJog_XNSlow";
-            this.pJog_XNSlow.TabStop = false;
-            this.pJog_XNSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XNSlow_MouseDown);
-            this.pJog_XNSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XNSlow_MouseUp);
-            // 
-            // pJog_YNSlow
-            // 
-            this.pJog_YNSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_YNSlow, "pJog_YNSlow");
-            this.pJog_YNSlow.Name = "pJog_YNSlow";
-            this.pJog_YNSlow.TabStop = false;
-            this.pJog_YNSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YNSlow_MouseDown);
-            this.pJog_YNSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YNSlow_MouseUp);
-            // 
-            // pJog_XPSlow
-            // 
-            this.pJog_XPSlow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_XPSlow, "pJog_XPSlow");
-            this.pJog_XPSlow.Name = "pJog_XPSlow";
-            this.pJog_XPSlow.TabStop = false;
-            this.pJog_XPSlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XPSlow_MouseDown);
-            this.pJog_XPSlow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XPSlow_MouseUp);
-            // 
-            // pJog_YNFast
-            // 
-            this.pJog_YNFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_YNFast, "pJog_YNFast");
-            this.pJog_YNFast.Name = "pJog_YNFast";
-            this.pJog_YNFast.TabStop = false;
-            this.pJog_YNFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YNFast_MouseDown);
-            this.pJog_YNFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YNFast_MouseUp);
-            // 
-            // pJog_YPFast
-            // 
-            this.pJog_YPFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_YPFast, "pJog_YPFast");
-            this.pJog_YPFast.Name = "pJog_YPFast";
-            this.pJog_YPFast.TabStop = false;
-            this.pJog_YPFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_YPFast_MouseDown);
-            this.pJog_YPFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_YPFast_MouseUp);
-            // 
-            // label41
-            // 
-            resources.ApplyResources(this.label41, "label41");
-            this.label41.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label41.Name = "label41";
-            // 
-            // pJog_XPFast
-            // 
-            this.pJog_XPFast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pJog_XPFast, "pJog_XPFast");
-            this.pJog_XPFast.Name = "pJog_XPFast";
-            this.pJog_XPFast.TabStop = false;
-            this.pJog_XPFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pJog_XPFast_MouseDown);
-            this.pJog_XPFast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pJog_XPFast_MouseUp);
-            // 
-            // label14
-            // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label14.Name = "label14";
-            // 
-            // tYPosKeyIn
-            // 
-            resources.ApplyResources(this.tYPosKeyIn, "tYPosKeyIn");
-            this.tYPosKeyIn.Name = "tYPosKeyIn";
-            // 
-            // label42
-            // 
-            resources.ApplyResources(this.label42, "label42");
-            this.label42.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label42.Name = "label42";
-            // 
-            // label13
-            // 
-            resources.ApplyResources(this.label13, "label13");
-            this.label13.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label13.Name = "label13";
-            // 
-            // label32
-            // 
-            resources.ApplyResources(this.label32, "label32");
-            this.label32.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label32.Name = "label32";
-            // 
-            // groupBox42
-            // 
-            this.groupBox42.Controls.Add(this.cB_Trim);
-            this.groupBox42.Controls.Add(this.rB_Jog);
-            this.groupBox42.Controls.Add(this.rB_Trim);
-            this.groupBox42.Controls.Add(this.lKey_F);
-            this.groupBox42.Controls.Add(this.lKey_R);
-            this.groupBox42.Controls.Add(this.lKey_D);
-            this.groupBox42.Controls.Add(this.lKey_S);
-            this.groupBox42.Controls.Add(this.lKey_A);
-            this.groupBox42.Controls.Add(this.lKey_W);
-            resources.ApplyResources(this.groupBox42, "groupBox42");
-            this.groupBox42.Name = "groupBox42";
-            this.groupBox42.TabStop = false;
-            this.groupBox42.Enter += new System.EventHandler(this.groupBox42_Enter);
-            // 
-            // lKey_W
-            // 
-            resources.ApplyResources(this.lKey_W, "lKey_W");
-            this.lKey_W.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lKey_W.Name = "lKey_W";
-            // 
-            // lKey_A
-            // 
-            resources.ApplyResources(this.lKey_A, "lKey_A");
-            this.lKey_A.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lKey_A.Name = "lKey_A";
-            // 
-            // lKey_S
-            // 
-            resources.ApplyResources(this.lKey_S, "lKey_S");
-            this.lKey_S.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lKey_S.Name = "lKey_S";
-            // 
-            // lKey_D
-            // 
-            resources.ApplyResources(this.lKey_D, "lKey_D");
-            this.lKey_D.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lKey_D.Name = "lKey_D";
-            // 
-            // lKey_R
-            // 
-            resources.ApplyResources(this.lKey_R, "lKey_R");
-            this.lKey_R.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lKey_R.Name = "lKey_R";
-            // 
-            // lKey_F
-            // 
-            resources.ApplyResources(this.lKey_F, "lKey_F");
-            this.lKey_F.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lKey_F.Name = "lKey_F";
-            // 
-            // rB_Trim
-            // 
-            resources.ApplyResources(this.rB_Trim, "rB_Trim");
-            this.rB_Trim.Name = "rB_Trim";
-            this.rB_Trim.UseVisualStyleBackColor = true;
-            this.rB_Trim.CheckedChanged += new System.EventHandler(this.rB_Trim_CheckedChanged);
-            // 
-            // rB_Jog
-            // 
-            resources.ApplyResources(this.rB_Jog, "rB_Jog");
-            this.rB_Jog.Checked = true;
-            this.rB_Jog.Name = "rB_Jog";
-            this.rB_Jog.TabStop = true;
-            this.rB_Jog.UseVisualStyleBackColor = true;
-            this.rB_Jog.CheckedChanged += new System.EventHandler(this.rB_Jog_CheckedChanged);
-            // 
-            // cB_Trim
-            // 
-            this.cB_Trim.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_Trim.FormattingEnabled = true;
-            this.cB_Trim.Items.AddRange(new object[] {
-            resources.GetString("cB_Trim.Items"),
-            resources.GetString("cB_Trim.Items1"),
-            resources.GetString("cB_Trim.Items2"),
-            resources.GetString("cB_Trim.Items3"),
-            resources.GetString("cB_Trim.Items4"),
-            resources.GetString("cB_Trim.Items5"),
-            resources.GetString("cB_Trim.Items6"),
-            resources.GetString("cB_Trim.Items7"),
-            resources.GetString("cB_Trim.Items8"),
-            resources.GetString("cB_Trim.Items9")});
-            resources.ApplyResources(this.cB_Trim, "cB_Trim");
-            this.cB_Trim.Name = "cB_Trim";
-            // 
-            // lX
-            // 
-            this.lX.BackColor = System.Drawing.Color.Yellow;
-            resources.ApplyResources(this.lX, "lX");
-            this.lX.Name = "lX";
-            // 
-            // lY
-            // 
-            this.lY.BackColor = System.Drawing.Color.Yellow;
-            resources.ApplyResources(this.lY, "lY");
-            this.lY.Name = "lY";
-            // 
-            // lZ
-            // 
-            this.lZ.BackColor = System.Drawing.Color.Yellow;
-            this.lZ.ContextMenuStrip = this.contextMenuStrip1;
-            resources.ApplyResources(this.lZ, "lZ");
-            this.lZ.Name = "lZ";
-            // 
-            // cB_KeyBoard
-            // 
-            resources.ApplyResources(this.cB_KeyBoard, "cB_KeyBoard");
-            this.cB_KeyBoard.ForeColor = System.Drawing.Color.Teal;
-            this.cB_KeyBoard.Name = "cB_KeyBoard";
-            this.cB_KeyBoard.UseVisualStyleBackColor = true;
-            this.cB_KeyBoard.CheckedChanged += new System.EventHandler(this.cB_KeyBoard_CheckedChanged);
-            // 
-            // bGoZPos
-            // 
-            resources.ApplyResources(this.bGoZPos, "bGoZPos");
-            this.bGoZPos.Name = "bGoZPos";
-            this.bGoZPos.UseVisualStyleBackColor = true;
-            this.bGoZPos.Click += new System.EventHandler(this.bGoZPos_Click);
-            // 
-            // tZPosKeyIn
-            // 
-            resources.ApplyResources(this.tZPosKeyIn, "tZPosKeyIn");
-            this.tZPosKeyIn.Name = "tZPosKeyIn";
-            // 
-            // bGoCamPos
-            // 
-            this.bGoCamPos.BackColor = System.Drawing.Color.YellowGreen;
-            resources.ApplyResources(this.bGoCamPos, "bGoCamPos");
-            this.bGoCamPos.Name = "bGoCamPos";
-            this.bGoCamPos.UseVisualStyleBackColor = false;
-            this.bGoCamPos.Click += new System.EventHandler(this.bGoCamPos_Click);
-            // 
-            // bOperVaccum
-            // 
-            this.bOperVaccum.BackColor = System.Drawing.Color.YellowGreen;
-            resources.ApplyResources(this.bOperVaccum, "bOperVaccum");
-            this.bOperVaccum.Name = "bOperVaccum";
-            this.bOperVaccum.UseVisualStyleBackColor = false;
-            this.bOperVaccum.Click += new System.EventHandler(this.bOperVaccum_Click);
-            // 
-            // Operate0
-            // 
-            this.Operate0.Controls.Add(this.bOperVaccum);
-            this.Operate0.Controls.Add(this.bGoCamPos);
-            this.Operate0.Controls.Add(this.tZPosKeyIn);
-            this.Operate0.Controls.Add(this.bGoZPos);
-            this.Operate0.Controls.Add(this.cB_KeyBoard);
-            this.Operate0.Controls.Add(this.lZ);
-            this.Operate0.Controls.Add(this.lY);
-            this.Operate0.Controls.Add(this.lX);
-            this.Operate0.Controls.Add(this.groupBox42);
-            this.Operate0.Controls.Add(this.label32);
-            this.Operate0.Controls.Add(this.label13);
-            this.Operate0.Controls.Add(this.label42);
-            this.Operate0.Controls.Add(this.tYPosKeyIn);
-            this.Operate0.Controls.Add(this.label14);
-            this.Operate0.Controls.Add(this.pJog_XPFast);
-            this.Operate0.Controls.Add(this.label41);
-            this.Operate0.Controls.Add(this.pJog_YPFast);
-            this.Operate0.Controls.Add(this.pJog_YNFast);
-            this.Operate0.Controls.Add(this.pJog_XPSlow);
-            this.Operate0.Controls.Add(this.pJog_YNSlow);
-            this.Operate0.Controls.Add(this.pJog_XNSlow);
-            this.Operate0.Controls.Add(this.bYPosGo);
-            this.Operate0.Controls.Add(this.bXPosGo);
-            this.Operate0.Controls.Add(this.bStopAxis);
-            this.Operate0.Controls.Add(this.pJog_ZNSlow);
-            this.Operate0.Controls.Add(this.label15);
-            this.Operate0.Controls.Add(this.pJog_YPSlow);
-            this.Operate0.Controls.Add(this.tXPosKeyIn);
-            this.Operate0.Controls.Add(this.pJog_ZPSlow);
-            this.Operate0.Controls.Add(this.pJog_XNFast);
-            resources.ApplyResources(this.Operate0, "Operate0");
-            this.Operate0.Name = "Operate0";
-            this.Operate0.UseVisualStyleBackColor = true;
-            // 
             // Form_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -12262,7 +12263,21 @@
             this.groupBox32.PerformLayout();
             this.panel24.ResumeLayout(false);
             this.tabTools.ResumeLayout(false);
+            this.Operate0.ResumeLayout(false);
+            this.Operate0.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.groupBox42.ResumeLayout(false);
+            this.groupBox42.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPFast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPFast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNFast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPSlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNSlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNSlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZNSlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPSlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZPSlow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNFast)).EndInit();
             this.Operate1.ResumeLayout(false);
             this.groupBox17.ResumeLayout(false);
             this.groupBox17.PerformLayout();
@@ -12360,20 +12375,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).EndInit();
             this.panel23.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNFast)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZPSlow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPSlow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_ZNSlow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XNSlow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNSlow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPSlow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YNFast)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_YPFast)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pJog_XPFast)).EndInit();
-            this.groupBox42.ResumeLayout(false);
-            this.groupBox42.PerformLayout();
-            this.Operate0.ResumeLayout(false);
-            this.Operate0.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

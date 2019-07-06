@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿#define LHFS
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace GeneralLabelerStation.Tool
     /// <summary>
     /// 压力传感器----立讯底部贴
     /// </summary>
-    public class PressSensorHelper:Common.SingletionProvider<PressSensorHelper>
+    public class PressSensorHelper : Common.SingletionProvider<PressSensorHelper>
     {
         public PressSensorHelper()
         {
@@ -35,6 +36,8 @@ namespace GeneralLabelerStation.Tool
             get;
             set;
         } = 8088;
+
+
 
         /// <summary>
         /// 压力报警记录保存行数
@@ -112,7 +115,7 @@ namespace GeneralLabelerStation.Tool
         {
             try
             {
-                lock(this.sendLock)
+                lock (this.sendLock)
                 {
                     IPAddress iPAddress = IPAddress.Parse(this.SensorIP);
                     IPEndPoint iPEnd = new IPEndPoint(iPAddress, this.SensorProt);
@@ -154,7 +157,7 @@ namespace GeneralLabelerStation.Tool
         {
             if (this.Socket == null)
             {
-                 new Thread(ThreadRecive).Start();
+                new Thread(ThreadRecive).Start();
             }
         }
 
@@ -167,6 +170,17 @@ namespace GeneralLabelerStation.Tool
             {
                 try
                 {
+#if LHFS
+                    byte[] sendByte = new byte[8];
+                    sendByte[0] = 0X01;
+                    sendByte[1] = 0X03;
+                    sendByte[2] = 0X00;
+                    sendByte[3] = 0X00;
+                    sendByte[4] = 0X00;
+                    sendByte[5] = 0X06;
+                    sendByte[6] = 0XC5;
+                    sendByte[7] = 0XC8;
+#else
                     // CRC 校验需要改
                     byte[] sendByte = new byte[8];
                     sendByte[0] = 0X01;
@@ -177,8 +191,10 @@ namespace GeneralLabelerStation.Tool
                     sendByte[5] = 0X18;
                     sendByte[6] = 0X45;
                     sendByte[7] = 0XC0;
+#endif
 
-                    lock(this.sendLock)
+
+                    lock (this.sendLock)
                     {
                         this.Socket.Send(sendByte);
                     }
@@ -186,12 +202,58 @@ namespace GeneralLabelerStation.Tool
                 catch { }
             }
         }
-        
+
         public void SendZero(int channel)
         {
             if (this.Socket == null || !this.Socket.Connected)
                 return;
+#if LHFS
+            byte[] sendByte = new byte[11];
+            sendByte[0] = 0X01;
+            sendByte[1] = 0X10;
+            sendByte[2] = 0X03;
+            sendByte[3] = 0XED;
+            sendByte[4] = 0X00;
+            sendByte[5] = 0X01;
+            sendByte[6] = 0X02;
+            sendByte[7] = 0X00;
+            switch (channel)
+            {
+                case 0:
+                    sendByte[8] = 0X01;
+                    sendByte[9] = 0X43;
+                    sendByte[10] = 0XED;
+                    break;
+                case 1:
+                    sendByte[8] = 0X02;
+                    sendByte[9] = 0X03;
+                    sendByte[10] = 0XEC;
+                    break;
+                case 2:
+                    sendByte[8] = 0X03;
+                    sendByte[9] = 0XC2;
+                    sendByte[10] = 0X2C;
+                    break;
+                case 3:
+                    sendByte[8] = 0X04;
+                    sendByte[9] = 0X83;
+                    sendByte[10] = 0XEE;
+                    break;
+            }
 
+            byte[] SendByteZero = new byte[11];
+            SendByteZero[0] = 0X01;
+            SendByteZero[1] = 0X10;
+            SendByteZero[2] = 0X03;
+            SendByteZero[3] = 0XEF;
+            SendByteZero[4] = 0X00;
+            SendByteZero[5] = 0X01;
+            SendByteZero[6] = 0X02;
+            SendByteZero[7] = 0X00;
+            SendByteZero[8] = 0X01;
+            SendByteZero[9] = 0X42;
+            SendByteZero[10] = 0X0F;
+#else
             byte[] sendByte = new byte[9];
             sendByte[0] = 0X01;
             sendByte[1] = 0X10;
@@ -199,8 +261,8 @@ namespace GeneralLabelerStation.Tool
             sendByte[3] = 0X18;
             sendByte[4] = 0X00;
             sendByte[5] = 0X18;
-       
-            for(int i = 0; i < 12;i+=4)
+
+            for (int i = 0; i < 12; i += 4)
             {
                 if (channel == i)
                 {
@@ -220,10 +282,18 @@ namespace GeneralLabelerStation.Tool
 
             sendByte[54] = 0X50;
             sendByte[55] = 0X5C;
+#endif
 
-            lock(this.sendLock)
+
+            lock (this.sendLock)
             {
+#if LHFS
                 this.Socket.Send(sendByte);
+                Thread.Sleep(10);
+                this.Socket.Send(SendByteZero);
+#else
+                this.Socket.Send(sendByte);
+#endif
             }
         }
 
@@ -244,8 +314,11 @@ namespace GeneralLabelerStation.Tool
             sendByte[8] = 0XB0;
             lock (this.sendLock)
             {
-                this.Socket.Send(sendByte);
-                Thread.Sleep(10);
+                for (int channel = 0; channel < 4; channel++)
+                {
+                    SendZero(channel);
+                    Thread.Sleep(200);
+                }
             }
         }
 
@@ -263,6 +336,26 @@ namespace GeneralLabelerStation.Tool
                 {
                     int count = 0;
                     double[] Temp = new double[12];
+#if LHFS
+                    for (int i = 7; i < 14; i += 2)
+                    {
+                        int r3 = 0;
+                        int r4 = 0;
+                        int IsPos = 1;
+                        if (recBytes[i] == 0xFF) // 负数
+                        {
+                            IsPos = -1;
+                            recBytes[i] ^= 0xFF;
+                            recBytes[i + 1] ^= 0xFF;
+                            //buffer[i + 1] += 0x01;
+                        }
+
+                        r3 = recBytes[i];
+                        r4 = recBytes[i + 1];
+                        Temp[count] = IsPos * (r3 * 255 + r4);
+                        count++;
+                    }
+#else
                     for (int i = 3; i < 19; i += 4)
                     {
                         int r3 = 0;
@@ -281,17 +374,19 @@ namespace GeneralLabelerStation.Tool
                         r3 = recBytes[i + 2];
                         r4 = recBytes[i + 3];
 
-                        Temp[count] = IsPos * (r3*255 + r4) / 10.0;
+                        Temp[count] = IsPos * (r3 * 255 + r4) / 10.0;
                         count++;
                     }
+#endif
+
 
                     for (int i = 0; i < 4; ++i)
                     {
                         this.CurPress[i] = Math.Abs(Temp[this.ZChannel[i]]);
 
-                        if(Form_Main.Instance.RunMode  == 1)
+                        if (Form_Main.Instance.RunMode == 1)
                         {
-                            if(this.CurPress[i] > 500)
+                            if (this.CurPress[i] > 500)
                             {
                                 this.CurPress[i] = 500 / this.CurPress[i] * 500;
                             }
@@ -305,7 +400,7 @@ namespace GeneralLabelerStation.Tool
                                 this.PastePress[i] = this.CurPress[i];
                             }
                         }
-                        else if(IsCailb)
+                        else if (IsCailb)
                         {
                             if ((this.CurPress[i] - this.PastePress[i]) > 0.2)
                             {
@@ -317,7 +412,8 @@ namespace GeneralLabelerStation.Tool
                     }
                 }
             }
-            catch {
+            catch
+            {
                 this.DisConnected();
             }
         }
@@ -329,7 +425,7 @@ namespace GeneralLabelerStation.Tool
 
         public void ClearAllPastePress()
         {
-            for(int i = 0; i < 4; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 this.ClearPastePress(i);
             }
@@ -337,11 +433,11 @@ namespace GeneralLabelerStation.Tool
 
         public void ThreadRecive()
         {
-            while(!Form_Main.Instance.bSystemExit)
+            while (!Form_Main.Instance.bSystemExit)
             {
                 Thread.Sleep(15);
 
-                if(this.NeedConnected && (this.Socket == null || !this.Socket.Connected))
+                if (this.NeedConnected && (this.Socket == null || !this.Socket.Connected))
                 {
                     this.DisConnected();
                     this.ReConnected();
@@ -363,7 +459,7 @@ namespace GeneralLabelerStation.Tool
                 view.Rows[rowIndex].Cells[0].Value = DateTime.Now.ToString();
                 view.Rows[rowIndex].Cells[1].Value = (zIndex + 1).ToString();
                 view.Rows[rowIndex].Cells[2].Value = press.ToString("f1");
-                view.Rows[rowIndex].Cells[3].Value = $"{pcbIndex + 1}-{pasteIndex+1}";
+                view.Rows[rowIndex].Cells[3].Value = $"{pcbIndex + 1}-{pasteIndex + 1}";
             }
         }
 
@@ -404,7 +500,7 @@ namespace GeneralLabelerStation.Tool
 
         public static void Load()
         {
-           SerializableHelper<PressSensorHelper> helper = new SerializableHelper<PressSensorHelper>();
+            SerializableHelper<PressSensorHelper> helper = new SerializableHelper<PressSensorHelper>();
             PressSensorHelper.Instance = helper.DeJsonSerialize(Variable.sPath_Configure + "PressSensor.json");
             if (PressSensorHelper.Instance == null)
                 PressSensorHelper.Instance = new PressSensorHelper();

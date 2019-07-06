@@ -6496,8 +6496,8 @@ namespace GeneralLabelerStation
                 camreturn.Angle = gpmResults[0].Rotation;
             }
             //解决边缘算法角度补反的问题_OK_Fowindy_0703
-            camreturn.Angle = -camreturn.Angle;
-            // camreturn.Angle = gpmResults[0].Rotation;
+            //camreturn.Angle = -camreturn.Angle;
+            camreturn.Angle = gpmResults[0].Rotation;
             //进行点位偏移
             //sourceImage.Overlays.Default.AddText(camreturn.Angle.ToString("F2"), new PointContour(500, 800), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
             camreturn.X = gpmResults[0].Position.X + Math.Sqrt(Math.Pow(offsetX, 2) + Math.Pow(offsetY, 2)) * Math.Cos(Math.Atan2(offsetY, offsetX) - gpmResults[0].Rotation * 2 * Math.PI / 360);
@@ -11677,13 +11677,15 @@ namespace GeneralLabelerStation
             }
 
             StatisticsHelper.Instance.Reoprt.Start(TimeDefine.ProductTime, $"生产[{VariableSys.sProgramName}]");
-
             foreach (CAM cam in Enum.GetValues(typeof(CAM)))
             {
-                if (CameraDefine.Instance.Config.ContainsKey(cam))
+                if (cam != CAM.Label)
                 {
-                    CameraDefine.Instance[cam]._Session.Acquisition.Unconfigure();
-                    CameraDefine.Instance[cam]._Session.ConfigureGrab();
+                    if (CameraDefine.Instance.Config.ContainsKey(cam))
+                    {
+                        CameraDefine.Instance[cam]._Session.Acquisition.Unconfigure();
+                        CameraDefine.Instance[cam]._Session.ConfigureGrab();
+                    }
                 }
             }
             Thread.Sleep(500);
@@ -23561,12 +23563,12 @@ namespace GeneralLabelerStation
             if (zParam.CamResult.IsOK)//
             {
                 zParam.Nozzle_DownXY_Pos = new PointContour(zParam.CamResult.X, zParam.CamResult.Y);
-//屏蔽if_else解决算法2抓边下视觉OK但贴附角度补反的问题_Fowindy_190703
+                //屏蔽if_else解决算法2抓边下视觉OK但贴附角度补反的问题_Fowindy_190703
                 if (feeder.Label.AlinIndex1 == 1 || feeder.Label.AlinIndex1 == 2)
                 {
-                    // if (feeder.Label.GrabLine_Enable1)
-                    //     zParam.Nozzle_Down_Angle = zParam.CamResult.Angle;//SEARCH
-                    // else
+                    if (feeder.Label.GrabLine_Enable1)
+                        zParam.Nozzle_Down_Angle = zParam.CamResult.Angle;//SEARCH
+                    else
                         zParam.Nozzle_Down_Angle = -zParam.CamResult.Angle;//SEARCH
                 }
                 else
@@ -26375,8 +26377,8 @@ namespace GeneralLabelerStation
 
         private void bLoadCell_Click(object sender, EventArgs e)
         {
-            // frmPressEdit frm = new frmPressEdit();
-            //  frm.Show();
+            frmPressEdit frm = new frmPressEdit();
+            frm.Show();
         }
 
         private void cbVision_CheckedChanged(object sender, EventArgs e)
@@ -26653,6 +26655,11 @@ namespace GeneralLabelerStation
             if (this.cbNzStep4.SelectedIndex < 0) return;
 
             this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void bMoveRotateCamXY_Click(object sender, EventArgs e)

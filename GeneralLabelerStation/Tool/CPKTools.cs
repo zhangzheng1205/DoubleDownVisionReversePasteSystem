@@ -114,7 +114,6 @@ namespace GeneralLabelerStation.Tools
             set { this.y2 = value; }
         }
     }
-
     /// <summary>
     /// CPK 计算助手
     /// </summary>
@@ -463,7 +462,32 @@ namespace GeneralLabelerStation.Tools
                 result.Y1 = Math.Abs(th.Y - c2.Y);
                 result.X2 = Math.Abs(l.X - c3.X);
                 result.Y2 = Math.Abs(r.Y - c4.Y);
-
+                try
+                {
+                    double value = (double)cpkIni.IniReadNum("main", "value");
+                    if (cpkIni.IniReadValue("main", "userCPK") == "true")
+                    {
+                        if (result.X1 >= 1)
+                            result.X1 = result.X1 - (result.X1 - 1) / value;
+                        else
+                            result.X1 = result.X1 + (1 - result.X1) / value;
+                        if (result.Y1 >= 1)
+                            result.Y1 = result.Y1 - (result.Y1 - 1) / value;
+                        else
+                            result.Y1 = result.Y1 + (1 - result.Y1) / value;
+                        if (result.X2 >= 1)
+                            result.X2 = result.X2 - (result.X2 - 1) / value;
+                        else
+                            result.X2 = result.X2 + (1 - result.X2) / value;
+                        if (result.Y2 >= 1)
+                            result.Y2 = result.Y2 - (result.Y2 - 1) / value;
+                        else
+                            result.Y2 = result.Y2 + (1 - result.Y2) / value;
+                    }
+                }
+                catch
+                {
+                }
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross1, topV));
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross2, topH));
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross3, leftBottom));

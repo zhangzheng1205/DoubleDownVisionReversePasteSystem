@@ -312,6 +312,12 @@
     <Compile Include="UI\fmSetMachineOrg.Designer.cs">
       <DependentUpon>fmSetMachineOrg.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\frmPressEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmPressEdit.Designer.cs">
+      <DependentUpon>frmPressEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frm_SetMaintain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -435,6 +441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tool\UI\ReadCodeBeanCtrl.resx">
       <DependentUpon>ReadCodeBeanCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmPressEdit.resx">
+      <DependentUpon>frmPressEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frm_SetMaintain.resx">
       <DependentUpon>frm_SetMaintain.cs</DependentUpon>
