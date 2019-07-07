@@ -35,7 +35,7 @@ namespace GeneralLabelerStation.Param
         {
             get;
             set;
-        } = 0.2;
+        } = 1;
 
         /// <summary>
         /// R 到指定角度 附带初始值

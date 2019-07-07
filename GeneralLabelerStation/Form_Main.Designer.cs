@@ -1452,6 +1452,8 @@
             this.pMode_Run = new System.Windows.Forms.PictureBox();
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
+            this.numRotateStep = new System.Windows.Forms.NumericUpDown();
+            this.label214 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -1699,6 +1701,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).BeginInit();
             this.panel23.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRotateStep)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl_Main
@@ -2632,6 +2635,8 @@
             // 
             // gB_Rotate
             // 
+            this.gB_Rotate.Controls.Add(this.label214);
+            this.gB_Rotate.Controls.Add(this.numRotateStep);
             this.gB_Rotate.Controls.Add(this.bAuto);
             this.gB_Rotate.Controls.Add(this.groupBox6);
             this.gB_Rotate.Controls.Add(this.tEdgeStrength);
@@ -12033,6 +12038,32 @@
             resources.ApplyResources(this.panel23, "panel23");
             this.panel23.Name = "panel23";
             // 
+            // numRotateStep
+            // 
+            resources.ApplyResources(this.numRotateStep, "numRotateStep");
+            this.numRotateStep.Maximum = new decimal(new int[] {
+            36,
+            0,
+            0,
+            0});
+            this.numRotateStep.Minimum = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.numRotateStep.Name = "numRotateStep";
+            this.numRotateStep.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
+            // label214
+            // 
+            resources.ApplyResources(this.label214, "label214");
+            this.label214.ForeColor = System.Drawing.Color.Black;
+            this.label214.Name = "label214";
+            // 
             // Form_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -12375,6 +12406,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).EndInit();
             this.panel23.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numRotateStep)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -13805,6 +13837,8 @@
         private System.Windows.Forms.TextBox tXPosKeyIn;
         private System.Windows.Forms.PictureBox pJog_ZPSlow;
         private System.Windows.Forms.PictureBox pJog_XNFast;
+        private System.Windows.Forms.Label label214;
+        private System.Windows.Forms.NumericUpDown numRotateStep;
     }
 }
 

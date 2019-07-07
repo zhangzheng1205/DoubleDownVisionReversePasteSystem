@@ -77,7 +77,7 @@ namespace GeneralLabelerStation.Param
         {
             get;
             set;
-        } = 0.2;
+        } = 1;
         #endregion
 
         #region 运动控制相关

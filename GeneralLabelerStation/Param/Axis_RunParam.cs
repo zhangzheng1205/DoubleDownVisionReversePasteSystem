@@ -120,7 +120,7 @@ namespace GeneralLabelerStation.Param
         /// <summary>
         /// 到位精度
         /// </summary>
-        public virtual double MinDiff { get; set; } = 0.05;
+        public virtual double MinDiff { get; set; } = 0.03;
 
         /// <summary>
         /// 脉冲比较 判断是否到位

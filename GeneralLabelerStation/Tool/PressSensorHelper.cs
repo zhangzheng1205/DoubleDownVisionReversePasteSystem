@@ -284,7 +284,7 @@ namespace GeneralLabelerStation.Tool
             sendByte[55] = 0X5C;
 #endif
 
-
+            return;
             lock (this.sendLock)
             {
 #if LHFS
@@ -299,6 +299,8 @@ namespace GeneralLabelerStation.Tool
 
         public void SendZeroAll()
         {
+            return;
+
             if (this.Socket == null || !this.Socket.Connected)
                 return;
 

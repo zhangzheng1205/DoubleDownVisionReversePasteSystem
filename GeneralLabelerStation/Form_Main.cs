@@ -457,7 +457,7 @@ namespace GeneralLabelerStation
 
         private int[] CalibrationImageIndex = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };//九点校验
         private Collection<PointContour> PixelCoordPoints, WorldCoordPoints;
-        private PointContour[] PointRotateArr = new PointContour[6];//
+        private Collection<PointContour> PointRotateArr = new Collection<PointContour>();//
         private PointContour PixelPoint1, PixelPoint2, PixelPoint3, PixelPoint4, PixelPoint5, PixelPoint6, PixelPoint7, PixelPoint8, PixelPoint9, WorldPoint1, WorldPoint2, WorldPoint3, WorldPoint4, WorldPoint5, WorldPoint6, WorldPoint7, WorldPoint8, WorldPoint9;//像数坐标 世界坐标
         private Variable.CamReturn CamReturnInfo = new Variable.CamReturn();
         #endregion
@@ -1613,14 +1613,6 @@ namespace GeneralLabelerStation
 
             cB_CardIO_Index.SelectedIndex = 0;
 
-            #region rotateInfo
-            PointRotateArr[0] = new PointContour(0, 0);
-            PointRotateArr[1] = new PointContour(0, 0);
-            PointRotateArr[2] = new PointContour(0, 0);
-            PointRotateArr[3] = new PointContour(0, 0);
-            PointRotateArr[4] = new PointContour(0, 0);
-            PointRotateArr[5] = new PointContour(0, 0);
-            #endregion
             #endregion
             #region 读系统文件 & 光源控制
 
@@ -7314,13 +7306,6 @@ namespace GeneralLabelerStation
                     PutInLog("R1 R2 回零， X Y 到正极限 出错");
                     return 2;
                 }
-
-                if (this.SafeDoorOpen())
-                {
-                    MessageBox.Show("安全门打开回零失败!!,请重新回零");
-                    StopAllAxis();
-                    return 2;
-                }
             }
             #endregion
             X.StopAxis();
@@ -7350,12 +7335,6 @@ namespace GeneralLabelerStation
                     PutInLog("X 回零 出错");
                     return 3;
                 }
-                if (this.SafeDoorOpen())
-                {
-                    MessageBox.Show("安全门打开回零失败!!,请重新回零");
-                    StopAllAxis();
-                    return 3;
-                }
             }
             #endregion
 
@@ -7383,12 +7362,6 @@ namespace GeneralLabelerStation
                     PutInLog("Turn 到负极限 出错");
                     return 2;
                 }
-                if (this.SafeDoorOpen())
-                {
-                    MessageBox.Show("安全门打开回零失败!!,请重新回零");
-                    StopAllAxis();
-                    return 3;
-                }
             }
 
             Turn.StopAxis();
@@ -7408,12 +7381,6 @@ namespace GeneralLabelerStation
                 {
                     rtn = 2;
                     return rtn;
-                }
-                if (this.SafeDoorOpen())
-                {
-                    MessageBox.Show("安全门打开回零失败!!,请重新回零");
-                    StopAllAxis();
-                    return 3;
                 }
             }
             #endregion
@@ -7447,12 +7414,6 @@ namespace GeneralLabelerStation
                     PutInLog("Y 到负极限 出错");
                     return 2;
                 }
-                if (this.SafeDoorOpen())
-                {
-                    MessageBox.Show("安全门打开回零失败!!,请重新回零");
-                    StopAllAxis();
-                    return 3;
-                }
             }
 
             Y.StopAxis();
@@ -7478,12 +7439,6 @@ namespace GeneralLabelerStation
                 {
                     a.Stop();
                     PutInLog("Y  回零 出错");
-                    return 3;
-                }
-                if (this.SafeDoorOpen())
-                {
-                    MessageBox.Show("安全门打开回零失败!!,请重新回零");
-                    StopAllAxis();
                     return 3;
                 }
             }
@@ -7541,12 +7496,6 @@ namespace GeneralLabelerStation
             //}
 
             return 0;
-        }
-
-        private bool SafeDoorOpen()
-        {
-            return !this.bArr_IO_IN_Status.bIN_SafeDoor.GetIO()
-                    || !this.bArr_IO_IN_Status.bIN_SafeGrant.GetIO();
         }
         #region 灯光控制
         //汇林光源 & OPT
@@ -11679,7 +11628,7 @@ namespace GeneralLabelerStation
             StatisticsHelper.Instance.Reoprt.Start(TimeDefine.ProductTime, $"生产[{VariableSys.sProgramName}]");
             foreach (CAM cam in Enum.GetValues(typeof(CAM)))
             {
-                if (cam != CAM.Label)
+                if (cam == CAM.Bottom1 || cam == CAM.Bottom2)
                 {
                     if (CameraDefine.Instance.Config.ContainsKey(cam))
                     {
@@ -19074,7 +19023,7 @@ namespace GeneralLabelerStation
                     && RUN_bReachOK)
                 {
                     Thread.Sleep(VariableSys.iUpCamDelay);
-                    CameraDefine.Instance[CAM.Top]._Session.Grab(ImageCapture_BadMark, false);
+                    CameraDefine.Instance[CAM.Top]._Session.Snap(ImageCapture_BadMark);
 
                     FlowInit = false;
                     FlowDoneIndex = FlowIndex;
@@ -19360,7 +19309,7 @@ namespace GeneralLabelerStation
                     {
                         int runPasteIndex = this.GetRUNPasteIndex(pasteIndex);
 
-                        CameraDefine.Instance[CAM.Top]._Session.Grab(ImageCapture_Up1, false);
+                       CameraDefine.Instance[CAM.Top]._Session.Snap(ImageCapture_Up1);
                         FlowInit = false;
                         FlowDoneIndex = FlowIndex;
                         //上视觉拍照次数 
@@ -21839,6 +21788,8 @@ namespace GeneralLabelerStation
                                 {
                                     FlowIndex_ConveyorName = "等待定位气缸";
                                 }
+
+                                ConveyorStop();
                                 FlowInit_Conveyor = true;
                                 RestartStopwatch_Conveyor();
                             }
@@ -21846,10 +21797,7 @@ namespace GeneralLabelerStation
                             {
                                 if (/*bArr_IO_IN_Status_Work.bIN_Carry_Move.GetIO() && */StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > VariableSys.iDelayReached)//贴装OK
                                 {
-                                    ConveyorStop();
-
                                     StopProduct_OFF();
-
                                     RUN_bReachOK = true;
                                     FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
                                     FlowInit_Conveyor = false;
@@ -24194,18 +24142,20 @@ namespace GeneralLabelerStation
             bool Init = false;
             short rtn = 0;
             R_RunParam rParam = this.R_RunParamMap[uint.Parse(caliNozzle.ToString())];
-
+            PointRotateArr = new Collection<PointContour>();
             int cali_index = 0;
-            while (cali_index < 6)
+            int step = (int)this.numRotateStep.Value;
+            double stepAngle = 360 / step;
+            while (cali_index < step)
             {
                 if (!Init)
                 {
                     Init = true;
-                    rParam.GoPos(60 * cali_index, VariableSys.VelMode_Current_Manual);
+                    rParam.GoPos(stepAngle * cali_index, VariableSys.VelMode_Current_Manual);
                 }
                 else
                 {
-                    if (rParam.AxisReach(60 * cali_index) && !rParam.bAxisIsRunning)
+                    if (rParam.AxisReach(stepAngle * cali_index) && !rParam.bAxisIsRunning)
                     {
                         rtn = (short)this.Invoke(new Func<int, short>(Cali_DetectRotate), new object[] { cali_index });//
                         if (rtn != 0)
@@ -24241,8 +24191,7 @@ namespace GeneralLabelerStation
                 return 1;
             }
 
-            PointRotateArr[sPointIndex].X = gpmResults[0].Position.X;
-            PointRotateArr[sPointIndex].Y = gpmResults[0].Position.Y;
+            PointRotateArr.Add(gpmResults[0].Position);
             return 0;
         }//自动校验吸嘴流程
 
@@ -24253,18 +24202,11 @@ namespace GeneralLabelerStation
         private short Cali_RotateDone()
         {
             FitCircleReport FR = new FitCircleReport();
-            //计算
-            Collection<PointContour> collPoint = new Collection<PointContour>();
-            collPoint.Add(PointRotateArr[0]);
-            collPoint.Add(PointRotateArr[1]);
-            collPoint.Add(PointRotateArr[2]);
-            collPoint.Add(PointRotateArr[3]);
-            collPoint.Add(PointRotateArr[4]);
-            collPoint.Add(PointRotateArr[5]);
             try
             {
-                FR = Algorithms.FitCircle(collPoint);
-                imageSet.Image.Overlays.Default.AddArc(new Arc(FR.Center, FR.Radius, 0, 360), Rgb32Value.GreenColor);
+                FR = Algorithms.FitCircle(PointRotateArr);
+                imageSet.Image.Overlays.Default.AddArc(new Arc(FR.Center, FR.Radius, 0, 359), Rgb32Value.RedColor);
+                imageSet.Image.Overlays.Default.AddPoints(PointRotateArr, Rgb32Value.YellowColor);
             }
             catch
             {
