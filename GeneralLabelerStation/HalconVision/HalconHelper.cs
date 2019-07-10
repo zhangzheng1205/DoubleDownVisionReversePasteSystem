@@ -46,7 +46,7 @@ namespace GeneralLabelerStation.HalconVision
         public static void FindShapeModel(HObject image, RectangleContour roi, HTuple modeID, ref Variable.CamReturn cam,
             HTuple windowTuple = null, double minScore = 0.7, int matchNum = 1)
         {
-            minScore = 0.6;
+            minScore = 0.5;
             HTuple row, column, angle, scaleR, scaleC, score;
             HObject reduceImage = new HObject();
             try
@@ -60,7 +60,7 @@ namespace GeneralLabelerStation.HalconVision
                     HOperatorSet.ReduceDomain(image, region, out reduceImage);
                 }
 
-                HOperatorSet.FindAnisoShapeModel(reduceImage, modeID, startAngle, endAngle, 1,1,1,1, minScore, matchNum,
+                HOperatorSet.FindAnisoShapeModel(reduceImage, modeID, startAngle, endAngle, 0.8,1.2,0.8,1.2, minScore, matchNum,
                     0.5, "least_squares", 0, 0.9, out row, out column, out angle, out scaleR, out scaleC, out score);
                 image?.Dispose();
                 if (score.Length > 0)
@@ -77,22 +77,22 @@ namespace GeneralLabelerStation.HalconVision
                         if (cam.Angle > 0)
                         {
                             cam.Angle -= 180;
-                            #region 解决轮廓算法对方型料角度计算错误的Bug_1_Fowindy_190703
-                            if (cam.Angle < -45)
-                            {
-                                cam.Angle += 90;
-                            }
-                            #endregion
+                            //#region 解决轮廓算法对方型料角度计算错误的Bug_1_Fowindy_190703
+                            //if (cam.Angle < -45)
+                            //{
+                            //    cam.Angle += 90;
+                            //}
+                            //#endregion
                         }
                         else
                         {
                             cam.Angle += 180;
-                            #region 解决轮廓算法对方型料角度计算错误的Bug_2_Fowindy_190703
-                            if (cam.Angle > 45)
-                            {
-                                cam.Angle -= 90;
-                            }
-                            #endregion
+                            //#region 解决轮廓算法对方型料角度计算错误的Bug_2_Fowindy_190703
+                            //if (cam.Angle > 45)
+                            //{
+                            //    cam.Angle -= 90;
+                            //}
+                            //#endregion
                         }
 
                     }

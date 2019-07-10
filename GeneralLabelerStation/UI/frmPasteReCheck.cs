@@ -63,6 +63,7 @@ namespace GeneralLabelerStation.UI
                 PointF mark1 = new PointF();
                 PointF mark2 = new PointF();
 
+                bool isMarked = false;
                 if (Form_Main.Instance.JOB.UpCCDResult1 != null && Form_Main.Instance.JOB.UpCCDResult1.Length == Form_Main.Instance.JOB.PasteCount)
                 {
                     mark1 = Form_Main.Instance.Point2CCDCenter(Form_Main.Instance.JOB.Cam_Mark1Point[pcbIndex],
@@ -70,12 +71,16 @@ namespace GeneralLabelerStation.UI
 
                     mark2 = Form_Main.Instance.Point2CCDCenter(Form_Main.Instance.JOB.Cam_Mark2Point[pcbIndex],
                new PointContour(Form_Main.Instance.JOB.UpCCDResult2[pcbIndex].X, Form_Main.Instance.JOB.UpCCDResult2[pcbIndex].Y), 0);
+
+                    isMarked = true;
                 }
                 else
                 {
                     mark1 = Form_Main.Instance.JOB.Cam_Mark1Point[pcbIndex];
                     mark2 = Form_Main.Instance.JOB.Cam_Mark2Point[pcbIndex];
                 }
+
+
 
                 this.dGVMark.Rows[pcbIndex].Cells[1].Value = $"{mark1.X:N2},{mark1.Y:N2}";
                 this.dGVMark.Rows[pcbIndex].Cells[2].Value = $"{mark2.X:N2},{mark2.Y:N2}";
@@ -85,8 +90,9 @@ namespace GeneralLabelerStation.UI
                     int rowIndex = this.dGVPaste.Rows.Add();
                     this.dGVPaste.Rows[rowIndex].Cells[0].Value = pcbIndex + 1;
                     this.dGVPaste.Rows[rowIndex].Cells[1].Value = pcsIndex + 1;
+
                     this.dGVPaste.Rows[rowIndex].Cells[2].Value =
-                        $"{Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PastePoints[pcsIndex].X:N2},{Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PastePoints[pcsIndex].Y:N2}";
+                                     $"{Form_Main.Instance.JOB.PASTEInfo[pcbIndex].TransformedPoints[pcsIndex].X:N2},{Form_Main.Instance.JOB.PASTEInfo[pcbIndex].TransformedPoints[pcsIndex].Y:N2}";
                     this.dGVPaste.Rows[rowIndex].Cells[3].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].NozzleIndex[pcsIndex].ToString();
                     this.dGVPaste.Rows[rowIndex].Cells[4].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PasteAngle[pcsIndex].ToString();
                     this.dGVPaste.Rows[rowIndex].Cells[5].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].OffsetX_Single[pcsIndex].ToString();
@@ -126,10 +132,10 @@ namespace GeneralLabelerStation.UI
                 {
                     int pcbIndex = this.dGVMark.SelectedRows[0].Index;
                     PointF mark = new PointF();
-                    if (Form_Main.Instance.JOB.UpCCDResult1 != null && Form_Main.Instance.JOB.UpCCDResult1.Length == Form_Main.Instance.JOB.PasteCount)
+                    if (Form_Main.Instance.JOB.UpCCDResult2 != null && Form_Main.Instance.JOB.UpCCDResult2.Length == Form_Main.Instance.JOB.PasteCount)
                     {
                         mark = Form_Main.Instance.Point2CCDCenter(Form_Main.Instance.JOB.Cam_Mark2Point[pcbIndex],
-                                   new PointContour(Form_Main.Instance.JOB.UpCCDResult2[pcbIndex].X, Form_Main.Instance.JOB.UpCCDResult1[pcbIndex].Y), 0);
+                                   new PointContour(Form_Main.Instance.JOB.UpCCDResult2[pcbIndex].X, Form_Main.Instance.JOB.UpCCDResult2[pcbIndex].Y), 0);
                     }
                     else
                     {
@@ -149,7 +155,7 @@ namespace GeneralLabelerStation.UI
                 int rowIndex = this.dGVPaste.SelectedRows[0].Index;
                 int pcbIndex = int.Parse(this.dGVPaste.Rows[rowIndex].Cells[0].Value.ToString()) - 1;
                 int pcsIndex = int.Parse(this.dGVPaste.Rows[rowIndex].Cells[1].Value.ToString()) - 1;
-                Form_Main.Instance.XYGoPos(Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PastePoints[pcsIndex], Form_Main.VariableSys.VelMode_Current_Manual);
+                Form_Main.Instance.XYGoPos(Form_Main.Instance.JOB.PASTEInfo[pcbIndex].TransformedPoints[pcsIndex], Form_Main.VariableSys.VelMode_Current_Manual);
                 Form_Main.Instance.LightON_RedU();
                 this.curPcbIndex = pcbIndex;
                 this.curPcsIndex = pcsIndex;
@@ -180,7 +186,7 @@ namespace GeneralLabelerStation.UI
 
         private void GoTo()
         {
-            Form_Main.Instance.XYGoPosTillStop(5000, Form_Main.Instance.RUN_PASTEInfo[curPcbIndex].PastePoints[curPcsIndex], Form_Main.VariableSys.VelMode_Current_Manual);
+            Form_Main.Instance.XYGoPosTillStop(5000, Form_Main.Instance.JOB.PASTEInfo[curPcbIndex].TransformedPoints[curPcsIndex], Form_Main.VariableSys.VelMode_Current_Manual);
             Thread.Sleep(200);
             var image = CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
             this.lCur.Text = $"当前第 [{curPcbIndex + 1}] 板第 [{curPcsIndex + 1}] 个";

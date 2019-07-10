@@ -50,9 +50,13 @@
             this.startStep2 = new WizardBase.StartStep();
             this.panel5 = new System.Windows.Forms.Panel();
             this.axisOffsetItem1 = new GeneralLabelerStation.AxisOffsetItem();
+            this.axisOffsetItem1.IsX = true;
+
             this.startStep3 = new WizardBase.StartStep();
             this.panel6 = new System.Windows.Forms.Panel();
             this.axisOffsetItem2 = new GeneralLabelerStation.AxisOffsetItem();
+            this.axisOffsetItem2.IsX = false;
+
             this.startStep4 = new WizardBase.StartStep();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
@@ -314,7 +318,7 @@
             // 
             // wizardControl1
             // 
-            this.wizardControl1.BackButtonEnabled = false;
+            this.wizardControl1.BackButtonEnabled = true;
             this.wizardControl1.BackButtonVisible = true;
             this.wizardControl1.CancelButtonEnabled = true;
             this.wizardControl1.CancelButtonVisible = true;
@@ -325,7 +329,7 @@
             this.wizardControl1.Name = "wizardControl1";
             this.wizardControl1.NextButtonEnabled = true;
             this.wizardControl1.NextButtonVisible = true;
-            this.wizardControl1.Size = new System.Drawing.Size(834, 573);
+            this.wizardControl1.Size = new System.Drawing.Size(818, 535);
             this.wizardControl1.WizardSteps.Add(this.startStep1);
             this.wizardControl1.WizardSteps.Add(this.startStep2);
             this.wizardControl1.WizardSteps.Add(this.startStep3);
@@ -392,6 +396,7 @@
             this.axisOffsetItem2.Size = new System.Drawing.Size(604, 481);
             this.axisOffsetItem2.TabIndex = 2;
             this.axisOffsetItem2.Tilte = "Y轴直线度";
+
             // 
             // startStep4
             // 
@@ -580,9 +585,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(818, 535);
             this.Controls.Add(this.wizardControl1);
             this.Name = "fm_Hardware";
-            this.Size = new System.Drawing.Size(834, 573);
             this.startStep1.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

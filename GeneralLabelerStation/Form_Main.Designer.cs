@@ -135,6 +135,14 @@
             this.tabCalib = new System.Windows.Forms.TabControl();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.gB_Four = new System.Windows.Forms.GroupBox();
+            this.groupBox34 = new System.Windows.Forms.GroupBox();
+            this.bAutoStart = new System.Windows.Forms.Button();
+            this.label231 = new System.Windows.Forms.Label();
+            this.numRow = new System.Windows.Forms.NumericUpDown();
+            this.label215 = new System.Windows.Forms.Label();
+            this.numCol = new System.Windows.Forms.NumericUpDown();
+            this.bSetCalibEnd = new System.Windows.Forms.Button();
+            this.bSetCliabStart = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.cbxSelectCam = new System.Windows.Forms.ComboBox();
             this.bLearnPattern_Cali = new System.Windows.Forms.Button();
@@ -153,6 +161,8 @@
             this.image_Calibration = new NationalInstruments.Vision.WindowsForms.ImageViewer();
             this.tabPage13 = new System.Windows.Forms.TabPage();
             this.gB_Rotate = new System.Windows.Forms.GroupBox();
+            this.label214 = new System.Windows.Forms.Label();
+            this.numRotateStep = new System.Windows.Forms.NumericUpDown();
             this.bAuto = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.bShowNzRoi = new System.Windows.Forms.Button();
@@ -193,6 +203,11 @@
             this.imageRotate = new NationalInstruments.Vision.WindowsForms.ImageViewer();
             this.tabPage14 = new System.Windows.Forms.TabPage();
             this.gB_UpDown = new System.Windows.Forms.GroupBox();
+            this.cbAutoCalib = new System.Windows.Forms.CheckBox();
+            this.groupBox31 = new System.Windows.Forms.GroupBox();
+            this.bAutoCalib = new System.Windows.Forms.Button();
+            this.bSetRealPaste = new System.Windows.Forms.Button();
+            this.bMoveUpCenter = new System.Windows.Forms.Button();
             this.label166 = new System.Windows.Forms.Label();
             this.bRefreshLabelList = new System.Windows.Forms.Button();
             this.cbLabel = new System.Windows.Forms.ComboBox();
@@ -1452,8 +1467,6 @@
             this.pMode_Run = new System.Windows.Forms.PictureBox();
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
-            this.numRotateStep = new System.Windows.Forms.NumericUpDown();
-            this.label214 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -1487,12 +1500,17 @@
             this.tabCalib.SuspendLayout();
             this.tabPage12.SuspendLayout();
             this.gB_Four.SuspendLayout();
+            this.groupBox34.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCol)).BeginInit();
             this.groupBox44.SuspendLayout();
             this.tabPage13.SuspendLayout();
             this.gB_Rotate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRotateStep)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.tabPage14.SuspendLayout();
             this.gB_UpDown.SuspendLayout();
+            this.groupBox31.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPasteAngle)).BeginInit();
             this.tabPage27.SuspendLayout();
             this.gB_Nz2Read.SuspendLayout();
@@ -1701,7 +1719,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).BeginInit();
             this.panel23.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numRotateStep)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl_Main
@@ -2481,6 +2498,7 @@
             // 
             // gB_Four
             // 
+            this.gB_Four.Controls.Add(this.groupBox34);
             this.gB_Four.Controls.Add(this.label5);
             this.gB_Four.Controls.Add(this.cbxSelectCam);
             this.gB_Four.Controls.Add(this.bLearnPattern_Cali);
@@ -2489,6 +2507,91 @@
             resources.ApplyResources(this.gB_Four, "gB_Four");
             this.gB_Four.Name = "gB_Four";
             this.gB_Four.TabStop = false;
+            // 
+            // groupBox34
+            // 
+            this.groupBox34.Controls.Add(this.bAutoStart);
+            this.groupBox34.Controls.Add(this.label231);
+            this.groupBox34.Controls.Add(this.numRow);
+            this.groupBox34.Controls.Add(this.label215);
+            this.groupBox34.Controls.Add(this.numCol);
+            this.groupBox34.Controls.Add(this.bSetCalibEnd);
+            this.groupBox34.Controls.Add(this.bSetCliabStart);
+            resources.ApplyResources(this.groupBox34, "groupBox34");
+            this.groupBox34.Name = "groupBox34";
+            this.groupBox34.TabStop = false;
+            // 
+            // bAutoStart
+            // 
+            this.bAutoStart.BackColor = System.Drawing.Color.GreenYellow;
+            resources.ApplyResources(this.bAutoStart, "bAutoStart");
+            this.bAutoStart.Name = "bAutoStart";
+            this.bAutoStart.UseVisualStyleBackColor = false;
+            this.bAutoStart.Click += new System.EventHandler(this.bAutoStart_Click);
+            // 
+            // label231
+            // 
+            resources.ApplyResources(this.label231, "label231");
+            this.label231.Name = "label231";
+            // 
+            // numRow
+            // 
+            resources.ApplyResources(this.numRow, "numRow");
+            this.numRow.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numRow.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numRow.Name = "numRow";
+            this.numRow.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // label215
+            // 
+            resources.ApplyResources(this.label215, "label215");
+            this.label215.Name = "label215";
+            // 
+            // numCol
+            // 
+            resources.ApplyResources(this.numCol, "numCol");
+            this.numCol.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numCol.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numCol.Name = "numCol";
+            this.numCol.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // bSetCalibEnd
+            // 
+            resources.ApplyResources(this.bSetCalibEnd, "bSetCalibEnd");
+            this.bSetCalibEnd.Name = "bSetCalibEnd";
+            this.bSetCalibEnd.UseVisualStyleBackColor = true;
+            this.bSetCalibEnd.Click += new System.EventHandler(this.bSetCalibEnd_Click);
+            // 
+            // bSetCliabStart
+            // 
+            resources.ApplyResources(this.bSetCliabStart, "bSetCliabStart");
+            this.bSetCliabStart.Name = "bSetCliabStart";
+            this.bSetCliabStart.UseVisualStyleBackColor = true;
+            this.bSetCliabStart.Click += new System.EventHandler(this.bSetCliabStart_Click);
             // 
             // label5
             // 
@@ -2651,6 +2754,32 @@
             resources.ApplyResources(this.gB_Rotate, "gB_Rotate");
             this.gB_Rotate.Name = "gB_Rotate";
             this.gB_Rotate.TabStop = false;
+            // 
+            // label214
+            // 
+            resources.ApplyResources(this.label214, "label214");
+            this.label214.ForeColor = System.Drawing.Color.Black;
+            this.label214.Name = "label214";
+            // 
+            // numRotateStep
+            // 
+            resources.ApplyResources(this.numRotateStep, "numRotateStep");
+            this.numRotateStep.Maximum = new decimal(new int[] {
+            36,
+            0,
+            0,
+            0});
+            this.numRotateStep.Minimum = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.numRotateStep.Name = "numRotateStep";
+            this.numRotateStep.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             // 
             // bAuto
             // 
@@ -2924,6 +3053,9 @@
             // 
             // gB_UpDown
             // 
+            this.gB_UpDown.Controls.Add(this.cbAutoCalib);
+            this.gB_UpDown.Controls.Add(this.groupBox31);
+            this.gB_UpDown.Controls.Add(this.bMoveUpCenter);
             this.gB_UpDown.Controls.Add(this.label166);
             this.gB_UpDown.Controls.Add(this.bRefreshLabelList);
             this.gB_UpDown.Controls.Add(this.cbLabel);
@@ -2955,6 +3087,44 @@
             resources.ApplyResources(this.gB_UpDown, "gB_UpDown");
             this.gB_UpDown.Name = "gB_UpDown";
             this.gB_UpDown.TabStop = false;
+            // 
+            // cbAutoCalib
+            // 
+            resources.ApplyResources(this.cbAutoCalib, "cbAutoCalib");
+            this.cbAutoCalib.Name = "cbAutoCalib";
+            this.cbAutoCalib.UseVisualStyleBackColor = true;
+            this.cbAutoCalib.CheckedChanged += new System.EventHandler(this.cbAutoCalib_CheckedChanged);
+            // 
+            // groupBox31
+            // 
+            this.groupBox31.Controls.Add(this.bAutoCalib);
+            this.groupBox31.Controls.Add(this.bSetRealPaste);
+            resources.ApplyResources(this.groupBox31, "groupBox31");
+            this.groupBox31.Name = "groupBox31";
+            this.groupBox31.TabStop = false;
+            // 
+            // bAutoCalib
+            // 
+            this.bAutoCalib.BackColor = System.Drawing.Color.Yellow;
+            resources.ApplyResources(this.bAutoCalib, "bAutoCalib");
+            this.bAutoCalib.Name = "bAutoCalib";
+            this.bAutoCalib.UseVisualStyleBackColor = false;
+            this.bAutoCalib.Click += new System.EventHandler(this.bAutoCalib_Click);
+            // 
+            // bSetRealPaste
+            // 
+            resources.ApplyResources(this.bSetRealPaste, "bSetRealPaste");
+            this.bSetRealPaste.Name = "bSetRealPaste";
+            this.bSetRealPaste.UseVisualStyleBackColor = true;
+            this.bSetRealPaste.Click += new System.EventHandler(this.bSetRealPaste_Click);
+            // 
+            // bMoveUpCenter
+            // 
+            this.bMoveUpCenter.BackColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.bMoveUpCenter, "bMoveUpCenter");
+            this.bMoveUpCenter.Name = "bMoveUpCenter";
+            this.bMoveUpCenter.UseVisualStyleBackColor = false;
+            this.bMoveUpCenter.Click += new System.EventHandler(this.bMoveUpCenter_Click);
             // 
             // label166
             // 
@@ -12038,32 +12208,6 @@
             resources.ApplyResources(this.panel23, "panel23");
             this.panel23.Name = "panel23";
             // 
-            // numRotateStep
-            // 
-            resources.ApplyResources(this.numRotateStep, "numRotateStep");
-            this.numRotateStep.Maximum = new decimal(new int[] {
-            36,
-            0,
-            0,
-            0});
-            this.numRotateStep.Minimum = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-            this.numRotateStep.Name = "numRotateStep";
-            this.numRotateStep.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            // 
-            // label214
-            // 
-            resources.ApplyResources(this.label214, "label214");
-            this.label214.ForeColor = System.Drawing.Color.Black;
-            this.label214.Name = "label214";
-            // 
             // Form_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -12120,15 +12264,21 @@
             this.tabPage12.ResumeLayout(false);
             this.gB_Four.ResumeLayout(false);
             this.gB_Four.PerformLayout();
+            this.groupBox34.ResumeLayout(false);
+            this.groupBox34.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCol)).EndInit();
             this.groupBox44.ResumeLayout(false);
             this.tabPage13.ResumeLayout(false);
             this.gB_Rotate.ResumeLayout(false);
             this.gB_Rotate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRotateStep)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.tabPage14.ResumeLayout(false);
             this.gB_UpDown.ResumeLayout(false);
             this.gB_UpDown.PerformLayout();
+            this.groupBox31.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numPasteAngle)).EndInit();
             this.tabPage27.ResumeLayout(false);
             this.gB_Nz2Read.ResumeLayout(false);
@@ -12406,7 +12556,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).EndInit();
             this.panel23.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numRotateStep)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -13839,6 +13988,19 @@
         private System.Windows.Forms.PictureBox pJog_XNFast;
         private System.Windows.Forms.Label label214;
         private System.Windows.Forms.NumericUpDown numRotateStep;
+        private System.Windows.Forms.GroupBox groupBox31;
+        private System.Windows.Forms.Button bAutoCalib;
+        private System.Windows.Forms.Button bSetRealPaste;
+        private System.Windows.Forms.Button bMoveUpCenter;
+        private System.Windows.Forms.CheckBox cbAutoCalib;
+        private System.Windows.Forms.GroupBox groupBox34;
+        private System.Windows.Forms.Button bAutoStart;
+        private System.Windows.Forms.Label label231;
+        private System.Windows.Forms.NumericUpDown numRow;
+        private System.Windows.Forms.Label label215;
+        private System.Windows.Forms.NumericUpDown numCol;
+        private System.Windows.Forms.Button bSetCalibEnd;
+        private System.Windows.Forms.Button bSetCliabStart;
     }
 }
 

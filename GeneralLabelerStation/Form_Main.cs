@@ -127,19 +127,12 @@ namespace GeneralLabelerStation
         #region 2017年11月3日14:15:30 自动标定
         public void StartGrabImage()
         {
-            foreach (var camera in CameraDefine.Instance.Entiys.Values)
-            {
-                camera._Session.Acquisition.Unconfigure();
-                camera._Session.ConfigureGrab();
-            }
+            return;
         }
 
         public void StopGrabImage()
         {
-            foreach (var camera in CameraDefine.Instance.Entiys.Values)
-            {
-                camera._Session.Acquisition.Unconfigure();
-            }
+            return;
         }
 
         /// <summary>
@@ -161,7 +154,7 @@ namespace GeneralLabelerStation
 
         public VisionImage GrabImage2View(CAM camera)
         {
-            return CameraDefine.Instance[camera]._Session.Grab(imageSet.Image, false);
+            return CameraDefine.Instance[camera]._Session.Snap(imageSet.Image);
         }
         #endregion
 
@@ -241,60 +234,35 @@ namespace GeneralLabelerStation
                 return;
             }
         }
-        private void CalPastePoint(uint zIndex, double camAngle)
+        private PointF CalPastePoint(uint zIndex, double camAngle)
         {
             Z_RunParam zParam = this.Z_RunParamMap[(uint)zIndex];
 
             PointContour temp = new PointContour();
-            zParam.RUN_PasteRealAngle = RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PasteAngle[zParam.RUN_PastePointIndex]
-                + JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation
-                + zParam.Nozzle_Down_Angle
+            zParam.RUN_PasteRealAngle = zParam.Nozzle_Down_Angle
                 + JOB.OffsetR[zParam.RUN_PasteInfoIndex] + camAngle + RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].BaseAngle;
 
             temp = PtRotateDown(zParam.Nozzle_DownXY_Pos, VariableSys.pDownRotateCenter[zIndex], zParam.RUN_PasteRealAngle);
 
             var cam = Nozzle2Cam((int)zIndex);
             // label 矫正之后在下视觉中的坐标
-            PointF labelPt = CameraDefine.Instance[cam].ImagePt2WorldPt(VariableSys.pDownRotateCam[zIndex], temp);
-            PointF centerPt = VariableSys.pDownMarkCoord[zIndex];
+            PointF labelPt = this.Point2CCDCenter(VariableSys.pReadyPoint,temp, cam);
+            PointF centerPt = VariableSys.pReadyPoint;
             // 计算出 label距离相机 到下视觉中心的偏差
 
-            #region 已验证算法1 ---误差直接阵列误差在0.1 mm
-            PointF actPt = new PointF();
-            actPt = GlassHelper.MachinePoint2ActPoint(JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex]);
-            PointF upPt = actPt;
-            actPt.X += VariableSys.pNozzle_2_Cam[zIndex].X;
-            actPt.Y += VariableSys.pNozzle_2_Cam[zIndex].Y;
-            actPt.X += (labelPt.X - centerPt.X);
-            actPt.Y += (labelPt.Y - centerPt.Y);
+            PointF pastePt = new PointF();
 
-            RUN_PasteRealPoint = GlassHelper.ActPoint2MachinePoint(actPt);
+            PointF upPt = GlassHelper.MachinePoint2ActPoint(JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex]);
+            pastePt.X = upPt.X + (labelPt.X - centerPt.X) + VariableSys.pNozzle_2_Cam[zIndex].X;
+            pastePt.Y = upPt.Y + (labelPt.Y - centerPt.Y) + VariableSys.pNozzle_2_Cam[zIndex].Y;
 
-            //吸嘴单偏移_Fowindy_0613
-            RUN_PasteRealPoint.X += (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX_Single[zParam.RUN_PastePointIndex]) + (float)JOB.OffsetX[zParam.RUN_PasteInfoIndex];
-            RUN_PasteRealPoint.Y += (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetY) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetY_Single[zParam.RUN_PastePointIndex]) + (float)JOB.OffsetY[zParam.RUN_PasteInfoIndex];
+            pastePt = GlassHelper.ActPoint2MachinePoint(pastePt);
+            pastePt = this.GetPasteOfffset(zIndex, upPt, pastePt);
 
-            RUN_PasteRealPoint = this.GetPasteOfffset(zIndex, JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex], RUN_PasteRealPoint);
-            #endregion
-
-            #region 待验证算法2
-            //PointF machinePos = new PointF();
-            //machinePos.X = JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex].X + VariableSys.pNozzle_2_Cam[zIndex].X + (temp.X - VariableSys.pDownRotateCenter[zIndex].X) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX) + (float)JOB.OffsetX[zParam.RUN_PasteInfoIndex];
-            //machinePos.Y = JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex].Y + VariableSys.pNozzle_2_Cam[zIndex].Y + (temp.Y - VariableSys.pDownRotateCenter[zIndex].Y) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetY) + (float)JOB.OffsetY[zParam.RUN_PasteInfoIndex];
-            //PointF nzOffset = NozzleOffsetItem.GetOffset(zIndex, zParam.RUN_PasteRealAngle);
-            //machinePos.X += nzOffset.X;
-            //machinePos.Y += nzOffset.Y;
-
-            //PointF mark = new PointF();
-            //mark = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(JOB.UpCCDResult1[zParam.RUN_PasteInfoIndex].X, JOB.UpCCDResult1[zParam.RUN_PasteInfoIndex].Y),0); //;JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex].X;
-            ////mark.Y = //;JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex].Y;
-            //RUN_PasteRealPoint = GlassHelper.GetDisCmpMarkPointF(machinePos, mark);
-
-            //this.Invoke(new Action(() =>
-            //{
-            //    this.PutInLog($"玻璃杯补偿 吸嘴{zIndex + 1} 小板号:{zParam.RUN_PastePointIndex} OffsetX:{machinePos.X - RUN_PasteRealPoint.X:N3} OffsetY{machinePos.Y - RUN_PasteRealPoint.Y:N3} DownAngle:{zParam.Nozzle_Down_Angle:n3}\n");
-            //}));
-            #endregion
+            //吸嘴单偏移
+            pastePt.X += (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetX_Single[zParam.RUN_PastePointIndex]) + (float)JOB.OffsetX[zParam.RUN_PasteInfoIndex];
+            pastePt.Y += (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetY) + (float)(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].OffsetY_Single[zParam.RUN_PastePointIndex]) + (float)JOB.OffsetY[zParam.RUN_PasteInfoIndex];
+            return pastePt;
         }
         /// 玻璃板扩展
         #endregion
@@ -603,80 +571,6 @@ namespace GeneralLabelerStation
             }
             return rtn;
         }
-
-        /// <summary>
-        /// 根据吸嘴 个数 初始化吸嘴相关参数
-        /// </summary>
-        //private void InitNoozle()
-        //{
-        //    //! Init Param
-        //    VariableSys.iNozzleCount = (short)Variable.NOZZLE_NUM;
-        //    VariableSys.pNozzle_2_Cam = new PointF[Variable.NOZZLE_NUM];
-        //    VariableSys.pDownMarkCoord = new PointF[Variable.NOZZLE_NUM];
-        //    VariableSys.pPasteCoord = new PointF[Variable.NOZZLE_NUM];
-        //    VariableSys.pUpMarkCoord = new PointF[Variable.NOZZLE_NUM];
-        //    VariableSys.pDownRotateCenter = new PointF[Variable.NOZZLE_NUM];
-        //    VariableSys.pDownRotateCam = new PointF[Variable.NOZZLE_NUM];
-        //    VariableSys.rDownROI = new RectangleContour[Variable.NOZZLE_NUM];
-
-        //    //! Init Configure
-        //    Ini_Sys.IniWriteNumber("VisionCalibration", "NozzleCount", VariableSys.iNozzleCount);
-        //    cB_NozzleIndex2.Items.Clear();
-        //    cB_NozzleIndex3.Items.Clear();
-        //    Ini_Sys.IniWriteNumber("VisionCalibration", "NozzleCount", VariableSys.iNozzleCount);
-        //    cB_NozzleIndex2.Items.Clear();
-        //    cB_NozzleIndex3.Items.Clear();
-        //    for (int ii = 0; ii < VariableSys.iNozzleCount; ii++)
-        //    {
-        //        cB_NozzleIndex2.Items.Add("Nozzle" + (ii + 1));
-        //        cB_NozzleIndex3.Items.Add("Nozzle" + (ii + 1));
-        //        try
-        //        {
-        //            VariableSys.pNozzle_2_Cam[ii] = new PointF((float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_2_Cam_X"), (float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_2_Cam_Y"));
-        //            VariableSys.pDownMarkCoord[ii] = new PointF((float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_DownCam_MarkX"), (float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_DownCam_MarkY"));
-        //            VariableSys.pPasteCoord[ii] = new PointF((float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_Paste_X"), (float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_Paste_Y"));
-        //            VariableSys.pUpMarkCoord[ii] = new PointF((float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_UpCam_MarkX"), (float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_UpCam_MarkY"));
-        //            VariableSys.pDownRotateCenter[ii] = new PointF((float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_RotateCenterX"), (float)Ini_Sys.IniReadNum("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_RotateCenterY"));
-        //            VariableSys.pDownRotateCam[ii].X = (float)Ini_Sys.IniReadNum("VisionCalibration", $"Nozzle{ii + 1}_RotateCamX");
-        //            VariableSys.pDownRotateCam[ii].Y = (float)Ini_Sys.IniReadNum("VisionCalibration", $"Nozzle{ii + 1}_RotateCamY");
-
-        //            VariableSys.rDownROI[ii] = Ini_Sys.IniReadCamResolution("VisionCalibration", $"Nozzle{ii + 1}_ROI");
-        //        }
-        //        catch
-        //        {
-        //            VariableSys.pNozzle_2_Cam[ii].X = 0f;
-        //            VariableSys.pNozzle_2_Cam[ii].Y = 0f;
-        //            VariableSys.pDownMarkCoord[ii].X = 0f;
-        //            VariableSys.pDownMarkCoord[ii].Y = 0f;
-        //            VariableSys.pPasteCoord[ii].X = 0f;
-        //            VariableSys.pPasteCoord[ii].Y = 0f;
-        //            VariableSys.pUpMarkCoord[ii].X = 0f;
-        //            VariableSys.pUpMarkCoord[ii].Y = 0f;
-        //            VariableSys.pDownRotateCenter[ii].X = 0f;
-        //            VariableSys.pDownRotateCenter[ii].Y = 0f;
-        //            VariableSys.pDownRotateCam[ii].X = 0f;
-        //            VariableSys.pDownRotateCam[ii].Y = 0f;
-
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_2_Cam_X", VariableSys.pNozzle_2_Cam[ii].X.ToString());
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_2_Cam_Y", VariableSys.pNozzle_2_Cam[ii].Y.ToString());
-
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_DownCam_MarkX", VariableSys.pDownMarkCoord[ii].X.ToString());
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_DownCam_MarkY", VariableSys.pDownMarkCoord[ii].Y.ToString());
-
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_Paste_X", VariableSys.pPasteCoord[ii].X.ToString());
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_Paste_Y", VariableSys.pPasteCoord[ii].Y.ToString());
-
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_UpCam_MarkX", VariableSys.pUpMarkCoord[ii].X.ToString());
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_UpCam_MarkY", VariableSys.pUpMarkCoord[ii].Y.ToString());
-
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_RotateCenterX", VariableSys.pDownRotateCenter[ii].X.ToString());
-        //            Ini_Sys.IniWriteValue("VisionCalibration", "Nozzle" + (ii + 1).ToString() + "_RotateCenterY", VariableSys.pDownRotateCenter[ii].Y.ToString());
-
-        //            Ini_Sys.IniWriteNumber("VisionCalibration", $"Nozzle{ii + 1}_RotateCamX", VariableSys.pDownRotateCam[ii].X);
-        //            Ini_Sys.IniWriteNumber("VisionCalibration", $"Nozzle{ii+1}_RotateCamY",VariableSys.pDownRotateCam[ii].Y);
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// Z 轴 的运行参数
@@ -1147,6 +1041,7 @@ namespace GeneralLabelerStation
         /// <param name="e"></param>
         private void bInitNozzleOffset_Click(object sender, EventArgs e)
         {
+            if (this.cbNzStep4.SelectedIndex < 0) return;
             NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
             SaveNozzleOffsetConfig();
         }
@@ -8515,6 +8410,8 @@ namespace GeneralLabelerStation
                 short rtn = 0;
                 Variable.VelMode xVel = new Variable.VelMode();
                 Variable.VelMode yVel = new Variable.VelMode();
+                this.X.GetAxisSts();
+                this.Y.GetAxisSts();
 
                 DistVel(x_y_mm, velMode, ref xVel, ref yVel);
                 rtn = X.GoPos(x_y_mm.X, xVel);
@@ -8526,6 +8423,23 @@ namespace GeneralLabelerStation
                 this.All_ZGoSafe(VariableSys.VelMode_Debug_Manual);
                 return 1;
             }
+        }
+
+        public void TurnGo(double pos, Variable.VelMode velMode)
+        {
+            if(VariableSys.machineVersion == 3)
+            {
+                Turn.GoPos(pos, velMode);
+            }
+        }
+
+        public  bool TurnReach(double pos)
+        {
+            if(VariableSys.machineVersion == 3)
+            {
+                return Turn.AxisReach(pos);
+            }
+            return true;
         }
 
         public short XYGoPosNoSafe(PointF x_y_mm, Variable.VelMode velMode)//XY插补运动下指令
@@ -9844,15 +9758,7 @@ namespace GeneralLabelerStation
             }
             else
             {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Camera Calibration is not done completly!", "Info");
-                }
-                else
-                {
                     MessageBox.Show("校验未全部完成！", "提示");
-                }
-
             }
         }
 
@@ -10014,35 +9920,29 @@ namespace GeneralLabelerStation
         private void bCalCenter_Click(object sender, EventArgs e)
         {
             int selectNz = cB_NozzleIndex2.SelectedIndex;
-            //VariableSys.pDownUpCenter[selectNz].X = VariableSys.pDownMarkCoord[selectNz].X - (VariableSys.pPasteCoord[selectNz].X - VariableSys.pUpMarkCoord[selectNz].X);
-            //VariableSys.pDownUpCenter[selectNz].Y = VariableSys.pDownMarkCoord[selectNz].Y - (VariableSys.pPasteCoord[selectNz].Y - VariableSys.pUpMarkCoord[selectNz].Y);
-            //PointF d1 = GlassHelper.GetDisCmpMarkOffset(VariableSys.pUpMarkCoord[selectNz], VariableSys.pPasteCoord[selectNz]);
-            //PointF UpDown = new PointF();
-            //UpDown.X = (VariableSys.pPasteCoord[selectNz].X - VariableSys.pUpMarkCoord[selectNz].X)
-            //           - (VariableSys.pDownMarkCoord[selectNz].X - VariableSys.pDownRotateCenter[selectNz].X) + d1.X;
-
-            //UpDown.Y = (VariableSys.pPasteCoord[selectNz].Y - VariableSys.pUpMarkCoord[selectNz].Y)
-            //- (VariableSys.pDownMarkCoord[selectNz].Y - VariableSys.pDownRotateCenter[selectNz].Y) + d1.Y;
-            ////double offsetX = d
+        
             var pastePt = GlassHelper.MachinePoint2ActPoint(VariableSys.pPasteCoord[selectNz]);
             var upPt = GlassHelper.MachinePoint2ActPoint(VariableSys.pUpMarkCoord[selectNz]);
-            //var downPt = GlassHelper.MachinePoint2ActPoint(VariableSys.pDownMarkCoord[selectNz]);
 
-            VariableSys.pNozzle_2_Cam[selectNz].X = pastePt.X - upPt.X;
-            VariableSys.pNozzle_2_Cam[selectNz].Y = pastePt.Y - upPt.Y;
+            var downPt = GlassHelper.MachinePoint2ActPoint(VariableSys.pDownMarkCoord[selectNz]);
+            float offsetX = downPt.X - VariableSys.pReadyPoint.X;
+            float offsetY = downPt.Y - VariableSys.pReadyPoint.Y;
 
-            //   VariableSys.pNozzle_2_Cam[selectNz].X =
-            //       (VariableSys.pPasteCoord[selectNz].X - VariableSys.pUpMarkCoord[selectNz].X)
-            //       - (VariableSys.pDownMarkCoord[selectNz].X - VariableSys.pDownRotateCenter[selectNz].X);
-
-            //   VariableSys.pNozzle_2_Cam[selectNz].Y =
-            //(VariableSys.pPasteCoord[selectNz].Y - VariableSys.pUpMarkCoord[selectNz].Y)
-            //- (VariableSys.pDownMarkCoord[selectNz].Y - VariableSys.pDownRotateCenter[selectNz].Y);
-
+            VariableSys.pNozzle_2_Cam[selectNz].X = pastePt.X - upPt.X - offsetX;
+            VariableSys.pNozzle_2_Cam[selectNz].Y = pastePt.Y - upPt.Y - offsetY;
+          
             tDownCenterX.Text = VariableSys.pNozzle_2_Cam[selectNz].X.ToString();
             tDownCenterY.Text = VariableSys.pNozzle_2_Cam[selectNz].Y.ToString();
             Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_2_Cam_X", selectNz + 1), VariableSys.pNozzle_2_Cam[selectNz].X);
             Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_2_Cam_Y", selectNz + 1), VariableSys.pNozzle_2_Cam[selectNz].Y);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_DownCam_MarkX", selectNz + 1), VariableSys.pDownMarkCoord[selectNz].X);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_DownCam_MarkY", selectNz + 1), VariableSys.pDownMarkCoord[selectNz].Y);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_Paste_X", selectNz + 1), VariableSys.pPasteCoord[selectNz].X);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_Paste_Y", selectNz + 1), VariableSys.pPasteCoord[selectNz].Y);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_DownCam_MarkX", selectNz + 1), VariableSys.pDownMarkCoord[selectNz].X);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_DownCam_MarkY", selectNz + 1), VariableSys.pDownMarkCoord[selectNz].Y);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_UpCam_MarkX", selectNz + 1), VariableSys.pUpMarkCoord[selectNz].X);
+            Ini_Sys.IniWriteNumber("VisionCalibration", string.Format("Nozzle{0}_UpCam_MarkY", selectNz + 1), VariableSys.pUpMarkCoord[selectNz].Y);
         }
         #endregion
 
@@ -11562,7 +11462,8 @@ namespace GeneralLabelerStation
             }
 
             // 翻转轴到
-            this.FlowIndex = 10100;
+            if(VariableSys.machineVersion == 2)
+                this.FlowIndex = 10100;
 
             //安全位置
             if (!this.All_ZReachOrg())
@@ -17650,7 +17551,8 @@ namespace GeneralLabelerStation
         //private short RUN_PastePointIndexLeft = 0;//当次左吸嘴在贴板子的第几个点
         //private short RUN_PastePointIndexRight = 0;//当次右吸嘴在贴板子的第几个点
 
-        private PointF RUN_PasteRealPoint = new PointF();//吸嘴大概贴附位置（提前走）
+        private PointF RUN_PrePastePoint = new PointF();//吸嘴大概贴附位置（提前走）
+        private PointF RUN_PastePoint = new PointF();//最终贴付位置
         //private double RUN_PasteRealAngle = 0;//吸嘴真正贴附角度
 
         //private PointF Nozzle1_DownXY_Pos = new PointF();//吸嘴1 MARK
@@ -17813,6 +17715,7 @@ namespace GeneralLabelerStation
                     XYGoPos(XIPOINT_, VariableSys.VelMode_Current);
                     rParam1.GoPos(feeder.XI_Degree[XI_Index], VariableSys.VelMode_Current);
                     rParam2.GoPos(feeder.XI_Degree[XI_Index], VariableSys.VelMode_Current);
+                    this.TurnGo(VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
                     if (feeder.bReachXI || VariableSys.bEnableVacuumCheck)
                     {
                         zParam1.XI_vaccum.SetIO();
@@ -17828,7 +17731,8 @@ namespace GeneralLabelerStation
                 #region 是否到达 吸标位
                 if (rParam1.AxisReach(feeder.XI_Degree[XI_Index])
                     && rParam2.AxisReach(feeder.XI_Degree[XI_Index])
-                    && AxisReach(XIPOINT_))
+                    && AxisReach(XIPOINT_)
+                    && this.TurnReach(VariableSys.dTurnXIAngle))
                 {
                     if (feeder.NeedWaitReach)
                     {
@@ -18225,7 +18129,20 @@ namespace GeneralLabelerStation
         /// <returns></returns>
         private bool DoPointPhoto_GoPos()
         {
-            if (AxisReach(VariableSys.pReadyPoint))
+            if(!FlowInit)
+            {
+                if(VariableSys.machineVersion == 3)
+                {
+                    Task.Factory.StartNew(() => {
+                        SetLightAndShutter();
+                    });
+                }
+
+                FlowInit = true;
+            }
+
+            if (AxisReach(VariableSys.pReadyPoint)
+                && TurnReach(VariableSys.dTurnPasteAngle))
             {
                 FlowInit = false;
                 FlowDoneIndex = FlowIndex;
@@ -18235,6 +18152,9 @@ namespace GeneralLabelerStation
             {
                 if (!X.bAxisIsRunning || !Y.bAxisIsRunning)
                     XYGoPos(VariableSys.pReadyPoint, VariableSys.VelMode_Current);
+
+                if (!Turn.bAxisIsRunning)
+                    this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
             }
             return true;
         }
@@ -18334,24 +18254,32 @@ namespace GeneralLabelerStation
                 RestartStopwatch();
                 FlowInit = true;
 
-                RUN_PasteRealPoint = zParam.ThrowPoint1;
+                RUN_PrePastePoint = zParam.ThrowPoint1;
 
-                RUN_PasteRealPoint.X += (StatisticsHelper.Instance.Reoprt.Total.TotalDrop % 4 * 8);
-                RUN_PasteRealPoint.Y -= ((StatisticsHelper.Instance.Reoprt.Total.TotalDrop / 4 % 4) * 8);
+                RUN_PrePastePoint.X += (StatisticsHelper.Instance.Reoprt.Total.TotalDrop % 4 * 8);
+                RUN_PrePastePoint.Y -= ((StatisticsHelper.Instance.Reoprt.Total.TotalDrop / 4 % 4) * 8);
 
-                iGG_rtn = XYGoPos(RUN_PasteRealPoint, VariableSys.VelMode_Current);
+                XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
+                TurnGo(VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
                 zParam.ThrowLabelCount++;
                 if (!this.CardExceptionHandle())
                     return false;
             }
             else
             {
-                if (AxisReach(RUN_PasteRealPoint))//
+                if (AxisReach(RUN_PrePastePoint)
+                    && TurnReach(VariableSys.dTurnXIAngle))//
                 {
                     FlowInit = false;
                     FlowDoneIndex = FlowIndex;
                     FlowIndex = 20212;
                 }
+
+                if(!X.bAxisIsRunning || !Y.bAxisIsRunning)
+                    XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
+
+                if(!this.TurnReach(VariableSys.dTurnXIAngle))
+                    TurnGo(VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
             }
             if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iTimeOut_Normal)
             {
@@ -18600,9 +18528,8 @@ namespace GeneralLabelerStation
 
                 double angle = Feeder[zParam.RUN_Nozzle_FeederIndex - 1].Cam_Degree;
 
-                this.CalPastePoint(zIndex, angle);
-
-                if (RUN_PasteRealPoint.X < VariableSys.dXSafeMinX || RUN_PasteRealPoint.X > VariableSys.dXSafeMaxX)
+                RUN_PastePoint = this.CalPastePoint(zIndex, angle);
+                if (RUN_PastePoint.X < VariableSys.dXSafeMinX || RUN_PastePoint.X > VariableSys.dXSafeMaxX)
                 {
                     this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "X轴贴服位置超过安全位置 请检查 选择的贴标吸嘴" });//
                     return false;
@@ -18610,7 +18537,8 @@ namespace GeneralLabelerStation
                 else
                 {
                     PressSensorHelper.Instance.SendZeroAll();
-                    XYGoPos(RUN_PasteRealPoint, VariableSys.VelMode_Current);
+                    XYGoPos(RUN_PastePoint, VariableSys.VelMode_Current);
+                    TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                 }
 
                 rParam.GoPos(zParam.RUN_PasteRealAngle, VariableSys.VelMode_Current);
@@ -18628,7 +18556,8 @@ namespace GeneralLabelerStation
             else
             {
                 if (rParam.AxisReach(zParam.RUN_PasteRealAngle)
-                    && AxisReach(RUN_PasteRealPoint))
+                    && AxisReach(RUN_PastePoint)
+                    && TurnReach(VariableSys.dTurnPasteAngle))
                 {
                     FlowInit = false;
                     FlowDoneIndex = FlowIndex;
@@ -18642,7 +18571,7 @@ namespace GeneralLabelerStation
                     }
                     if (!X.bAxisIsRunning || !Y.bAxisIsRunning)
                     {
-                        XYGoPos(RUN_PasteRealPoint, VariableSys.VelMode_Current);
+                        XYGoPos(RUN_PastePoint, VariableSys.VelMode_Current);
                     }
                 }
             }
@@ -19012,7 +18941,7 @@ namespace GeneralLabelerStation
                 RestartStopwatch();
                 FlowInit = true;
                 XYGoPos(RUN_BadMarkPoint, VariableSys.VelMode_Current);
-
+                this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                 if (!this.CardExceptionHandle())
                     return false;
             }
@@ -19020,7 +18949,8 @@ namespace GeneralLabelerStation
             {
                 if (AxisReach(RUN_BadMarkPoint)
                     && !RUN_bPasteOK
-                    && RUN_bReachOK)
+                    && RUN_bReachOK
+                    && this.TurnReach(VariableSys.dTurnPasteAngle))
                 {
                     Thread.Sleep(VariableSys.iUpCamDelay);
                     CameraDefine.Instance[CAM.Top]._Session.Snap(ImageCapture_BadMark);
@@ -19032,9 +18962,10 @@ namespace GeneralLabelerStation
                 else
                 {
                     if (!X.bAxisIsRunning || !Y.bAxisIsRunning)
-                    {
                         XYGoPos(RUN_BadMarkPoint, VariableSys.VelMode_Current);
-                    }
+
+                    if (!Turn.bAxisIsRunning)
+                        this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                 }
             }
 
@@ -19240,6 +19171,7 @@ namespace GeneralLabelerStation
                 RestartStopwatch();
                 FlowInit = true;
                 XYGoPos(RUN_Mark1Point, VariableSys.VelMode_Current);
+                this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
 
                 if (!this.CardExceptionHandle())
                     return false;
@@ -19248,7 +19180,8 @@ namespace GeneralLabelerStation
             {
                 if (AxisReach(RUN_Mark1Point)
                     && !RUN_bPasteOK
-                    && RUN_bReachOK)
+                    && RUN_bReachOK
+                    && this.TurnReach(VariableSys.dTurnPasteAngle))
                 {
                     FlowInit = false;
                     FlowDoneIndex = FlowIndex;
@@ -19257,9 +19190,10 @@ namespace GeneralLabelerStation
                 else
                 {
                     if (!X.bAxisIsRunning || !Y.bAxisIsRunning)
-                    {
                         XYGoPos(RUN_Mark1Point, VariableSys.VelMode_Current);
-                    }
+
+                    if (!Turn.bAxisIsRunning)
+                        this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                 }
             }
 
@@ -19322,6 +19256,8 @@ namespace GeneralLabelerStation
                         else
                         {
                             UpCCDResult[markIndex] = Auto_Detect2(ref RUN_PASTEInfo[runPasteIndex], ImageCapture_Up1);
+                            var pt = this.Point2CCDCenter(JOB.Cam_Mark2Point[pasteIndex],
+                                new PointContour(UpCCDResult[markIndex].X, UpCCDResult[markIndex].Y), CAM.Top);
                             JOB.UpCCDResult2[pasteIndex] = UpCCDResult[markIndex]; ;
                         }
 
@@ -19754,6 +19690,7 @@ namespace GeneralLabelerStation
                 FlowIndex_Name = "到读码位置";
                 RestartStopwatch();
                 this.XYGoPos(codeBean.BarcodePos, VariableSys.VelMode_Current);
+                this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                 codeBean.OpenLight();
 
                 this.SetShutter((int)codeBean.Shutter, CAM.Top);
@@ -19761,7 +19698,8 @@ namespace GeneralLabelerStation
             }
             else
             {
-                if (this.AxisReach(codeBean.BarcodePos) && RUN_bReachOK)
+                if (this.AxisReach(codeBean.BarcodePos) && RUN_bReachOK
+                    && this.TurnReach(VariableSys.dTurnPasteAngle))
                 {
                     Thread.Sleep(VariableSys.iUpCamDelay);
                     CameraDefine.Instance[CAM.Top]._Session.Grab(ImageCapture_Up1, false);
@@ -19778,6 +19716,7 @@ namespace GeneralLabelerStation
                 else
                 {
                     this.XYGoPos(codeBean.BarcodePos, VariableSys.VelMode_Current);
+                    this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                 }
             }
         }
@@ -20323,7 +20262,7 @@ namespace GeneralLabelerStation
                                 FlowIndex_Name = "吸标参数准备";
 
                                 //! 吸标时 翻转气缸没有翻转
-                                if (!Turn.AxisReach(VariableSys.dTurnXIAngle))
+                                if (VariableSys.machineVersion == 2 && !Turn.AxisReach(VariableSys.dTurnXIAngle))
                                 {
                                     this.FlowDoneIndex = this.FlowIndex;
                                     this.FlowIndex = 10100;
@@ -20501,6 +20440,12 @@ namespace GeneralLabelerStation
                         //*************************************************[翻转-下视觉-抛料-吸标]********************************************************************************************
                         #region 10100-到翻转位
                         case 10100:
+                            if(VariableSys.machineVersion == 3)
+                            {
+                                this.FlowIndex = this.FlowDoneIndex;
+                                break;
+                            }
+
                             if (!this.FlowInit)
                             {
                                 if ((this.FlowDoneIndex >= 20000 && this.FlowDoneIndex < 20200) || this.FlowDoneIndex > 20300) // 在贴标流程中
@@ -20522,8 +20467,6 @@ namespace GeneralLabelerStation
 
                                 RestartStopwatch();
                                 FlowIndex_Name = "轨道翻转";
-
-                                // 到待料位
                                 XYGoPos(VariableSys.pReadyPoint, VariableSys.VelMode_Current);
 
                                 if (IsDownPhoto) // 设置相机曝光 和 光源
@@ -20543,7 +20486,7 @@ namespace GeneralLabelerStation
                                 }
                                 else
                                 {
-                                    XYGoPos(VariableSys.pReadyPoint, VariableSys.VelMode_Current);
+                                        XYGoPos(VariableSys.pReadyPoint, VariableSys.VelMode_Current); // 到待料位
                                 }
 
                                 if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iTimeOut_Normal)
@@ -20622,7 +20565,7 @@ namespace GeneralLabelerStation
                         #region 20000-判别 （飞行模式 or 普通走停模式） 和 拍摄顺序
                         case 20000: //判别 （飞行模式 or 普通走停模式） 和 拍摄顺序
                                     //! 过下视觉时 翻转气缸没有翻转
-                            if (!Turn.AxisReach(VariableSys.dTurnPasteAngle))
+                            if (VariableSys.machineVersion == 2 && !Turn.AxisReach(VariableSys.dTurnPasteAngle))
                             {
                                 IsDownPhoto = true;
                                 this.FlowDoneIndex = this.FlowIndex;
@@ -20680,14 +20623,14 @@ namespace GeneralLabelerStation
                                     #region 上视觉拍照
                                     if (JOB.bLocalMode && JOB.iLocalAlign == 1)
                                     {
-                                        RUN_PasteRealPoint = JOB.GlobalConfig.Mark[0].CamPos;
-                                        iGG_rtn = XYGoPos(RUN_PasteRealPoint, VariableSys.VelMode_Current);
+                                        RUN_PrePastePoint = JOB.GlobalConfig.Mark[0].CamPos;
+                                        iGG_rtn = XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
                                     }
                                     else
                                     {
-                                        RUN_PasteRealPoint.X = JOB.Cam_Mark1Point[0].X;
-                                        RUN_PasteRealPoint.Y = JOB.Cam_Mark1Point[0].Y;
-                                        iGG_rtn = XYGoPos(RUN_PasteRealPoint, VariableSys.VelMode_Current);
+                                        RUN_PrePastePoint.X = JOB.Cam_Mark1Point[0].X;
+                                        RUN_PrePastePoint.Y = JOB.Cam_Mark1Point[0].Y;
+                                        iGG_rtn = XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
                                     }
 
                                     // R 轴提前到 贴标角度
@@ -20739,21 +20682,21 @@ namespace GeneralLabelerStation
                                         #endregion
                                     }
 
-                                    PointF upPt = JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex];
-                                    upPt = GlassHelper.MachinePoint2ActPoint(upPt);
-                                    RUN_PasteRealPoint.X = upPt.X + VariableSys.pNozzle_2_Cam[zIndex].X;
-                                    RUN_PasteRealPoint.Y = upPt.Y + VariableSys.pNozzle_2_Cam[zIndex].Y;
-                                    var cam = Nozzle2Cam((int)zIndex);
-                                    PointF labelPt = CameraDefine.Instance[cam].ImagePt2WorldPt(VariableSys.pDownRotateCam[zIndex], VariableSys.pDownRotateCenter[zIndex]);
-                                    PointF centerPt = VariableSys.pDownMarkCoord[zIndex];
+                                    //PointF upPt = JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex];
+                                    //upPt = GlassHelper.MachinePoint2ActPoint(upPt);
+                                    //RUN_PrePastePoint.X = upPt.X + VariableSys.pNozzle_2_Cam[zIndex].X;
+                                    //RUN_PrePastePoint.Y = upPt.Y + VariableSys.pNozzle_2_Cam[zIndex].Y;
+                                    //var cam = Nozzle2Cam((int)zIndex);
+                                    //PointF labelPt = CameraDefine.Instance[cam].ImagePt2WorldPt(VariableSys.pDownRotateCam[zIndex], VariableSys.pDownRotateCenter[zIndex]);
+                                    //PointF centerPt = VariableSys.pDownMarkCoord[zIndex];
 
-                                    //MK:
-                                    RUN_PasteRealPoint.X += (labelPt.X - centerPt.X);
-                                    RUN_PasteRealPoint.Y += (labelPt.Y - centerPt.Y);
-                                    RUN_PasteRealPoint = GlassHelper.ActPoint2MachinePoint(RUN_PasteRealPoint);
+                                    ////MK:
+                                    //RUN_PrePastePoint.X += (labelPt.X - centerPt.X);
+                                    //RUN_PrePastePoint.Y += (labelPt.Y - centerPt.Y);
+                                    //RUN_PrePastePoint = GlassHelper.ActPoint2MachinePoint(RUN_PrePastePoint);
 
-                                    XYGoPos(RUN_PasteRealPoint, VariableSys.VelMode_Current);
-                                    Turn.GoPos(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
+                                    //XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
+                                    //Turn.GoPos(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                                     this.FlowInit = false;
                                     this.FlowIndex = 20310;
                                 }
@@ -20765,7 +20708,7 @@ namespace GeneralLabelerStation
                             {
                                 if (!JOB.bCalMark)
                                 {
-                                    if (AxisReach(RUN_PasteRealPoint))
+                                    if (AxisReach(RUN_PrePastePoint))
                                     {
                                         this.FlowDoneIndex = this.FlowIndex;
                                         this.FlowIndex = 20120;
@@ -20775,7 +20718,7 @@ namespace GeneralLabelerStation
                                     {
                                         if (!X.bAxisIsRunning || !Y.bAxisIsRunning)
                                         {
-                                            XYGoPos(RUN_PasteRealPoint, VariableSys.VelMode_Current);
+                                            XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
                                         }
                                     }
                                 }
@@ -21248,13 +21191,15 @@ namespace GeneralLabelerStation
                                 {
                                     FlowIndex_Name = "到回拍位置";
                                     this.XYGoPos(VariableSys.pReadyPoint, VariableSys.VelMode_Current);
+                                    this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
 
                                     this.SetLightAndShutter();
                                     this.FlowInit = true;
                                 }
                                 else
                                 {
-                                    if (this.AxisReach(VariableSys.pReadyPoint))
+                                    if (this.AxisReach(VariableSys.pReadyPoint)
+                                        && this.TurnReach(VariableSys.dTurnPasteAngle))
                                     {
                                         var image1 = new VisionImage();
                                         var image2 = new VisionImage();
@@ -21265,10 +21210,9 @@ namespace GeneralLabelerStation
                                         this.FlowIndex = 20214;
                                         this.FlowInit = false;
                                     }
-                                    else if (!this.X.bAxisIsRunning || !this.Y.bAxisIsRunning)
-                                    {
+
+                                    if (!this.X.bAxisIsRunning || !this.Y.bAxisIsRunning)
                                         this.XYGoPos(VariableSys.pReadyPoint, VariableSys.VelMode_Current);
-                                    }
                                 }
                             }
                             else
@@ -21282,7 +21226,7 @@ namespace GeneralLabelerStation
                         #region 20210-抛料
                         case 20210:
                             //! 抛料时 翻转气缸没有翻转
-                            if (!Turn.AxisReach(VariableSys.dTurnXIAngle))
+                            if (VariableSys.machineVersion  == 2 && !Turn.AxisReach(VariableSys.dTurnXIAngle))
                             {
                                 this.FlowDoneIndex = this.FlowIndex;
                                 this.FlowIndex = 10100;
@@ -23056,7 +23000,13 @@ namespace GeneralLabelerStation
             else
             {
                 camreturn.State = Variable.VisionState.OK;
-                Image.Overlays.Default.AddPoint(new PointContour(camreturn.X, camreturn.Y));
+
+                Image.Overlays.Default.AddLine(new LineContour(new PointContour( camreturn.X- 50, camreturn.Y)
+                    , new PointContour(camreturn.X + 50, camreturn.Y)),Rgb32Value.RedColor);
+
+                Image.Overlays.Default.AddLine(new LineContour(new PointContour(camreturn.X, camreturn.Y-50)
+                 , new PointContour(camreturn.X, camreturn.Y+50)), Rgb32Value.RedColor);
+
                 Image.Overlays.Default.AddText("X:" + camreturn.X.ToString("F3"), new PointContour(100 + dist, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
                 Image.Overlays.Default.AddText("Y:" + camreturn.Y.ToString("F3"), new PointContour(100 + dist, 200), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
                 Image.Overlays.Default.AddText("Angle:" + camreturn.Angle.ToString("F3"), new PointContour(100 + dist, 300), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
@@ -26222,7 +26172,9 @@ namespace GeneralLabelerStation
                 PointContour rotated = this.PtRotateDown(new PointContour(camresult.X, camresult.Y), VariableSys.pDownRotateCenter[selectNz], camresult.Angle + angle);
 
                 PointF labelPt = CameraDefine.Instance[cam].ImagePt2WorldPt(VariableSys.pDownRotateCam[selectNz], rotated);
-                PointF centerPt = VariableSys.pDownMarkCoord[selectNz];
+                this.downMark = labelPt;
+
+                PointF centerPt = VariableSys.pReadyPoint;
 
                 PointF offset = new PointF();
                 offset.X = labelPt.X - centerPt.X;
@@ -26234,9 +26186,13 @@ namespace GeneralLabelerStation
                 pastePt.X = pastePt.X + offset.X + VariableSys.pNozzle_2_Cam[selectNz].X;
                 pastePt.Y = pastePt.Y + offset.Y + VariableSys.pNozzle_2_Cam[selectNz].Y;
 
+                if(!this.cbAutoCalib.Checked)
+                {
+                    pastePt = GlassHelper.ActPoint2MachinePoint(pastePt);
+                    pastePt = this.GetPasteOfffset((uint)selectNz, upPt, pastePt);
+                }
 
-                pastePt = GlassHelper.ActPoint2MachinePoint(pastePt);
-                pastePt = this.GetPasteOfffset((uint)selectNz, upPt, pastePt);
+                this.pasteMark = pastePt;
 
                 if (pastePt.X < VariableSys.dXSafeMaxX && pastePt.X > VariableSys.dXSafeMinX)
                 {
@@ -26602,6 +26558,134 @@ namespace GeneralLabelerStation
         private void button10_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void bMoveUpCenter_Click(object sender, EventArgs e)
+        {
+            if (this.cB_NozzleIndex2.SelectedIndex < 0) return;
+            this.XYGoPos(VariableSys.pUpMarkCoord[this.cB_NozzleIndex2.SelectedIndex], VariableSys.VelMode_Current_Manual);
+        }
+
+        private PointF upMark = new PointF();
+        private PointF downMark = new PointF();
+        private PointF pasteMark = new PointF();
+
+        private void bSetRealPaste_Click(object sender, EventArgs e)
+        {
+            upMark = this.XYPos;
+        }
+
+        private void bAutoCalib_Click(object sender, EventArgs e)
+        {
+            VariableSys.pPasteCoord[this.cB_NozzleIndex2.SelectedIndex] = this.pasteMark;
+            VariableSys.pUpMarkCoord[this.cB_NozzleIndex2.SelectedIndex] = this.upMark;
+            VariableSys.pDownMarkCoord[this.cB_NozzleIndex2.SelectedIndex] = this.downMark;
+            this.bCalCenter_Click(this, new EventArgs());
+        }
+
+        private void cbAutoCalib_CheckedChanged(object sender, EventArgs e)
+        {
+            this.groupBox31.Enabled = this.cbAutoCalib.Checked;
+        }
+
+        private PointF cliabStart = new PointF();
+        private PointF cliabEnd = new PointF();
+
+        private void bSetCliabStart_Click(object sender, EventArgs e)
+        {
+            this.cliabStart = this.XYPos;
+        }
+
+        private void bSetCalibEnd_Click(object sender, EventArgs e)
+        {
+            this.cliabEnd = this.XYPos;
+        }
+
+        private void bAutoStart_Click(object sender, EventArgs e)
+        {
+            if (cbxSelectCam.SelectedIndex < 0) return;
+
+            int row = (int)this.numRow.Value;
+            int col = (int)this.numCol.Value;
+            float dx = (this.cliabEnd.X - this.cliabStart.X) / (col-1);
+            float dy = (this.cliabEnd.Y - this.cliabStart.Y) / (row-1);
+            CAM cam = (CAM)this.cbxSelectCam.SelectedIndex;
+            PixelCoordPoints = new Collection<PointContour>();
+            WorldCoordPoints = new Collection<PointContour>();
+
+            #region 自动寻找
+            for (int rowIndex =0; rowIndex < row; rowIndex++)
+            {
+                for (int colIndex = 0; colIndex < col; colIndex++)
+                {
+                    PointF wrold = new PointF();
+                    wrold.X = this.cliabStart.X + colIndex * dx;
+                    wrold.Y = this.cliabStart.Y + rowIndex * dy;
+
+                    this.XYGoPosTillStop(3000, wrold, VariableSys.VelMode_Current_Manual);
+                    Thread.Sleep(200);
+
+                    CameraDefine.Instance[cam]._Session.Snap(imageSet.Image);
+                    //计算Mark1点在图像中的坐标
+                    short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
+                    if (rtn != 0)
+                    {
+                        if (VariableSys.LanguageFlag == 1)
+                        {
+                            MessageBox.Show("Detect Fail!", "Info");
+                        }
+                        else
+                        {
+                            MessageBox.Show("特征获取失败!", "提示");
+                        }
+                        return;
+                    }
+
+                    Application.DoEvents();
+                    Thread.Sleep(200);
+                    PixelCoordPoints.Add(new PointContour(CamReturnInfo.X, CamReturnInfo.Y));
+                    WorldCoordPoints.Add(new PointContour(wrold.X, wrold.Y));
+                }
+            }
+            #endregion
+
+            #region 寻找成功标定
+            double source = 0;
+            try
+            {
+                source = Algorithms.LearnCalibrationPoints(imageSet.Image, PixelCoordPoints, WorldCoordPoints); //四点校验函数
+            }
+            catch
+            {
+                MessageBox.Show("相机校验失败！", "提示");
+                return;
+            }
+            if (source < 999)
+            {
+                MessageBox.Show("相机校验失败！", "提示");
+                return;
+            }
+            else
+            {
+                string direct = string.Format(Variable.sPath_CaliPath, (int)cam);
+                if (!Directory.Exists(direct))
+                {
+                    Directory.CreateDirectory(direct);
+                }
+
+                try
+                {
+                    imageSet.Image.WriteVisionFile(direct + Variable.sPath_CaliImage);
+                    CameraDefine.Instance[cam].LoadCalibImage(cam);
+                }
+                catch
+                {
+                    MessageBox.Show("相机校验失败！", "提示");
+                    return;
+                }
+                MessageBox.Show("相机校验成功！", "提示");
+            }
+            #endregion
         }
 
         private void bMoveRotateCamXY_Click(object sender, EventArgs e)

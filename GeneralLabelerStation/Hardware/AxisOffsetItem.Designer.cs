@@ -34,6 +34,11 @@
             this.bFit = new System.Windows.Forms.Button();
             this.bStart = new System.Windows.Forms.Button();
             this.gCheck = new System.Windows.Forms.GroupBox();
+            this.bDetect = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.bGoSelect = new System.Windows.Forms.Button();
             this.bConfig = new System.Windows.Forms.Button();
@@ -54,20 +59,16 @@
             this.dAxis = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.bDetect = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.gAxis.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gCheck.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPoint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dAxis)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // gAxis
@@ -96,6 +97,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.bEnable);
             this.panel1.Controls.Add(this.bFit);
             this.panel1.Controls.Add(this.bStart);
@@ -166,6 +168,78 @@
             this.gCheck.TabIndex = 12;
             this.gCheck.TabStop = false;
             this.gCheck.Text = "量测";
+            // 
+            // bDetect
+            // 
+            this.bDetect.Location = new System.Drawing.Point(235, 91);
+            this.bDetect.Name = "bDetect";
+            this.bDetect.Size = new System.Drawing.Size(54, 27);
+            this.bDetect.TabIndex = 23;
+            this.bDetect.Text = "侦测";
+            this.bDetect.UseVisualStyleBackColor = true;
+            this.bDetect.Click += new System.EventHandler(this.bDetect_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(10, 122);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 20);
+            this.label8.TabIndex = 22;
+            this.label8.Text = "R:0";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(167, 91);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(61, 26);
+            this.numericUpDown2.TabIndex = 21;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(151, 94);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(15, 20);
+            this.label7.TabIndex = 20;
+            this.label7.Text = "-";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(86, 91);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(61, 26);
+            this.numericUpDown1.TabIndex = 19;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
             // label6
             // 
@@ -382,77 +456,18 @@
             this.Column2.ReadOnly = true;
             this.Column2.Width = 80;
             // 
-            // numericUpDown1
+            // button2
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(86, 91);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(61, 26);
-            this.numericUpDown1.TabIndex = 19;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(151, 94);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(15, 20);
-            this.label7.TabIndex = 20;
-            this.label7.Text = "-";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Location = new System.Drawing.Point(167, 91);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(61, 26);
-            this.numericUpDown2.TabIndex = 21;
-            this.numericUpDown2.Value = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(10, 122);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 20);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "R:0";
-            // 
-            // bDetect
-            // 
-            this.bDetect.Location = new System.Drawing.Point(235, 91);
-            this.bDetect.Name = "bDetect";
-            this.bDetect.Size = new System.Drawing.Size(54, 27);
-            this.bDetect.TabIndex = 23;
-            this.bDetect.Text = "侦测";
-            this.bDetect.UseVisualStyleBackColor = true;
-            this.bDetect.Click += new System.EventHandler(this.bDetect_Click);
+            this.button2.BackColor = System.Drawing.Color.Transparent;
+            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(0, 135);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(87, 50);
+            this.button2.TabIndex = 16;
+            this.button2.Text = "导出Excel";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // AxisOffsetItem
             // 
@@ -470,12 +485,12 @@
             this.panel1.ResumeLayout(false);
             this.gCheck.ResumeLayout(false);
             this.gCheck.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPoint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dAxis)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -513,5 +528,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button bDetect;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button2;
     }
 }

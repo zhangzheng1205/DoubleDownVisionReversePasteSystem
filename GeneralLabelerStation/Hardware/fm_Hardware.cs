@@ -16,8 +16,6 @@ namespace GeneralLabelerStation
         {
             InitializeComponent();
             this.wizardControl1.CancelButtonClick += WizardControl1_CancelButtonClick;
-            this.axisOffsetItem1.IsX = true;
-            this.axisOffsetItem2.IsX = false;
         }
 
         private void WizardControl1_CancelButtonClick(object sender, EventArgs e)

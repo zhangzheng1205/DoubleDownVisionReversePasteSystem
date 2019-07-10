@@ -13,6 +13,7 @@ using MathNet.Numerics;
 using GeneralLabelerStation;
 using GeneralLabelerStation.Common;
 using HalconDotNet;
+using System.IO;
 
 namespace GeneralLabelerStation
 {
@@ -23,7 +24,11 @@ namespace GeneralLabelerStation
             InitializeComponent();
         }
 
-        public bool IsX = true;
+        public bool IsX
+        {
+            get;
+            set;
+        }
 
         public double[] rx = null;
         public double[] x = null;
@@ -107,16 +112,17 @@ namespace GeneralLabelerStation
         private Polynomial poly = null;
         private void bFit_Click(object sender, EventArgs e)
         {
+            this.button2.Enabled = true;
             if (this.IsX)
             {
-                HardwareOrgHelper.Instance.HardWare.X = x;
-                HardwareOrgHelper.Instance.HardWare.RX = rx;
+                HardwareOrgHelper.Instance.HardWare.X = (double[])x;
+                HardwareOrgHelper.Instance.HardWare.RX = (double[])rx;
                 HardwareOrgHelper.Instance.HardWare.XPoly = new Polynomial();
             }
             else
             {
-                HardwareOrgHelper.Instance.HardWare.Y = x;
-                HardwareOrgHelper.Instance.HardWare.RY = rx;
+                HardwareOrgHelper.Instance.HardWare.Y = (double[])x;
+                HardwareOrgHelper.Instance.HardWare.RY = (double[])rx;
                 HardwareOrgHelper.Instance.HardWare.YPoly = new Polynomial();
             }
             HardwareOrgHelper.Save();
@@ -144,6 +150,7 @@ namespace GeneralLabelerStation
                 HardwareOrgHelper.Instance.HardWare.RY = rx;
                 HardwareOrgHelper.Instance.HardWare.YPoly = poly;
             }
+
             HardwareOrgHelper.Save();
             this.bEnable.Enabled = false;
         }
@@ -200,18 +207,42 @@ namespace GeneralLabelerStation
 
         private void AxisOffsetItem_Load(object sender, EventArgs e)
         {
-            if (this.IsX)
+            try
             {
-                x = HardwareOrgHelper.Instance.HardWare.X;
-                rx = HardwareOrgHelper.Instance.HardWare.RX;
-                poly = HardwareOrgHelper.Instance.HardWare.XPoly;
+                if (this.IsX)
+                {
+                    x = (double[])HardwareOrgHelper.Instance.HardWare.X;
+                    rx = (double[])HardwareOrgHelper.Instance.HardWare.RX;
+                    poly = HardwareOrgHelper.Instance.HardWare.XPoly;
+                }
+                else
+                {
+                    x = (double[])HardwareOrgHelper.Instance.HardWare.Y;
+                    rx = (double[])HardwareOrgHelper.Instance.HardWare.RY;
+                    poly = HardwareOrgHelper.Instance.HardWare.YPoly;
+                }
+
+                this.dAxis.Rows.Clear();
+                if (x != null && rx != null && x.Length > 0)
+                {
+                    for (int i = 0; i < x.Length; ++i)
+                    {
+                        this.dAxis.Rows.Add();
+                        this.dAxis.Rows[i].Cells[0].Value = x[i].ToString("f3");
+                        this.dAxis.Rows[i].Cells[1].Value = rx[i].ToString("f3");
+                    }
+                }
+
+                if (poly != null)
+                {
+                    this.argList.Items.Clear();
+                    for (int i = 0; i < poly.Coefficients.Length; ++i)
+                    {
+                        this.argList.Items.Add(poly.Coefficients[i].ToString());
+                    }
+                }
             }
-            else
-            {
-                x = HardwareOrgHelper.Instance.HardWare.Y;
-                rx = HardwareOrgHelper.Instance.HardWare.RY;
-                poly = HardwareOrgHelper.Instance.HardWare.YPoly;
-            }
+            catch { }
         }
 
         private void bDetect_Click(object sender, EventArgs e)
@@ -222,5 +253,17 @@ namespace GeneralLabelerStation
         }
 
         public static event Func<short, short,Tuple<PointF,double>> VisionDetect;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (x == null) return;
+            File.Delete("D://机械.csv");
+            for (int i = 0; i < x.Length; ++i)
+            {
+                File.AppendAllText("D://机械.csv", $"{x[i]:N3},{rx[i]:N3}\r\n");
+            }
+
+            MessageBox.Show("导出成功!!! D://机械.csv");
+        }
     }
 }
