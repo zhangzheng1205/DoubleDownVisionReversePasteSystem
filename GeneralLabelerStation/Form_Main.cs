@@ -239,8 +239,13 @@ namespace GeneralLabelerStation
             Z_RunParam zParam = this.Z_RunParamMap[(uint)zIndex];
 
             PointContour temp = new PointContour();
-            zParam.RUN_PasteRealAngle = zParam.Nozzle_Down_Angle
-                + JOB.OffsetR[zParam.RUN_PasteInfoIndex] + camAngle + RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].BaseAngle;
+            zParam.RUN_PasteRealAngle =
+                +JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation
+                + zParam.Nozzle_Down_Angle
+                + JOB.OffsetR[zParam.RUN_PasteInfoIndex]
+                + camAngle
+                + RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].BaseAngle
+                + RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PasteAngle[zParam.RUN_PastePointIndex];
 
             temp = PtRotateDown(zParam.Nozzle_DownXY_Pos, VariableSys.pDownRotateCenter[zIndex], zParam.RUN_PasteRealAngle);
 
@@ -18066,15 +18071,15 @@ namespace GeneralLabelerStation
             }
             else
             {
-                if (FlowInit == false)
-                {
-                    RestartStopwatch();
-                    FlowInit = true;
-                }
-                else
-                {
-                    if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iDelay_BeforeXI)
-                    {
+                // if (FlowInit == false)
+                // {
+                //     RestartStopwatch();
+                //     FlowInit = true;
+                // }
+                // else
+                // {
+                //     if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iDelay_BeforeXI)
+                //     {
                         SuckTime++;
                         if (SuckTime >= VariableSys.iXIRetry)
                         {
@@ -18104,8 +18109,8 @@ namespace GeneralLabelerStation
                             FlowIndex = 10010;//重新吸取
                         }
                     }
-                }
-            }
+            //     }
+            // }
             if (FlowIndex != 10014)
             {
                 if (VariableSys.LanguageFlag == 1)
@@ -18119,7 +18124,6 @@ namespace GeneralLabelerStation
             }
             return false;
         }
-
         #endregion
 
         #region 点拍下视觉动作
@@ -18502,6 +18506,7 @@ namespace GeneralLabelerStation
         }
         #endregion
 
+        //todo 贴标动作
         #region 贴标动作
         /// <summary>
         /// 贴标-到贴标位
@@ -21289,6 +21294,7 @@ namespace GeneralLabelerStation
                         #endregion
 
                         //*************************************************[贴标]********************************************************************************************
+                        //todo 贴标流程
                         #region 20310-贴标
                         case 20310:
                             #region 20310-贴附信息解析  根据上视觉结果判断是否要贴标
@@ -26137,6 +26143,7 @@ namespace GeneralLabelerStation
             OffsetXY2 = this.GetROIPoint();
         }
 
+        //todo 贴附测试
         private void tPasteTest_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(this.cbLabel.Text)) return;

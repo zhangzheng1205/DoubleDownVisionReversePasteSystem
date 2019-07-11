@@ -333,12 +333,7 @@
             this.numericUpDown1.DecimalPlaces = 1;
             this.numericUpDown1.Location = new System.Drawing.Point(99, 10);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            135,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            45,
+            180,
             0,
             0,
             0});
