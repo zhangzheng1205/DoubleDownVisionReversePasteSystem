@@ -1988,6 +1988,7 @@ namespace GeneralLabelerStation
             this.cb_EnableCheck.Checked = VariableSys.bEnableVacuumCheck;
             this.cbLineOffset.Checked = VariableSys.bEnableLineOffset;
             this.cbThrowPut.Checked = VariableSys.bEnableThrowPut;
+            this.cbOnlineDebug.Checked = VariableSys.bEnableOnlineDebug;
 
             imageSet.ShowToolbar = true;
             imageSet.ToolsShown = ViewerTools.All;
@@ -11097,6 +11098,7 @@ namespace GeneralLabelerStation
             VariableSys.bEnableVacuumCheck = this.cb_EnableCheck.Checked;
             VariableSys.bEnableLineOffset = this.cbLineOffset.Checked;
             VariableSys.bEnableThrowPut = this.cbThrowPut.Checked;
+            VariableSys.bEnableOnlineDebug = this.cbOnlineDebug.Checked;
 
             for (uint i = 0; i < Variable.NOZZLE_NUM; ++i)
             {
@@ -11724,7 +11726,7 @@ namespace GeneralLabelerStation
             bReset.Enabled = cB_EnableReset.Checked;
             bClear.Enabled = cB_EnableReset.Checked;
         }
-
+        //todo 暂停按钮
         private void bAutoSinglePause_Click(object sender, EventArgs e)
         {
             RunMode = 2;
@@ -20238,7 +20240,17 @@ namespace GeneralLabelerStation
                                     this.panelAlarmed = false;
                                     JOB.bCalMark = false;
                                     RUN_bPasteOK = true;
+                                    //todo 在线调试功能_Fowindy
+                                    if (VariableSys.bEnableOnlineDebug)
+                                    {
+                                        frmPasteReCheck fm = new frmPasteReCheck();
+                                        if (fm.CanShow)
+                                        {
+                                            fm.ShowDialog();
+                                        }
+                                    }
                                     FlowInit = false;
+
                                     FlowDoneIndex = FlowIndex;
                                     FlowIndex = 0;
                                 }
@@ -26815,7 +26827,7 @@ namespace GeneralLabelerStation
             fm_Statstics statstics = new fm_Statstics();
             statstics.Show();
         }
-
+        //todo 上视觉校正按钮
         private void bUpVisionCheck_Click(object sender, EventArgs e)
         {
             frmPasteReCheck fm = new frmPasteReCheck();

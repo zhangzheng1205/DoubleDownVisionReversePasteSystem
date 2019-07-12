@@ -172,6 +172,7 @@ namespace GeneralLabelerStation.UI
         private int curPcsIndex = 0;
         private void bPrev_Click(object sender, EventArgs e)
         {
+            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.White;
             curPcsIndex--;
             if (curPcsIndex < 0)
             {
@@ -180,7 +181,7 @@ namespace GeneralLabelerStation.UI
                 if (curPcbIndex < 0)
                     curPcbIndex = 0;
             }
-
+            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.DarkBlue;
             this.GoTo();
         }
 
@@ -210,7 +211,7 @@ namespace GeneralLabelerStation.UI
                 if (curPcbIndex >= Form_Main.Instance.JOB.PasteCount)
                     curPcbIndex--;
             }
-
+            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.BlueViolet;
             this.GoTo();
         }
 

@@ -807,6 +807,7 @@ namespace GeneralLabelerStation
         public bool bEnableVacuumCheck = false; // 启用真空检测
         public bool bEnableLineOffset = false; // 启用线性矫正
         public bool bEnableThrowPut = false; // 启用抛料下压功能
+        public bool bEnableOnlineDebug = false;//启用在线调试模式
 
         public bool bPressureEN = false;//false-不启用压力反馈 true-启用压力反馈
         

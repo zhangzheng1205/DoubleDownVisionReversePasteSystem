@@ -816,6 +816,11 @@
             this.lProgramName = new System.Windows.Forms.Label();
             this.label329 = new System.Windows.Forms.Label();
             this.SetSystemPrams = new System.Windows.Forms.TabPage();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.Menu_Z1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Z2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Z3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Z4 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tP_SystemSet2 = new System.Windows.Forms.TabPage();
             this.groupBox20 = new System.Windows.Forms.GroupBox();
@@ -845,6 +850,7 @@
             this.bRecordMaxX = new System.Windows.Forms.Button();
             this.bRecordMinX = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cbOnlineDebug = new System.Windows.Forms.CheckBox();
             this.cbThrowPut = new System.Windows.Forms.CheckBox();
             this.cbVision = new System.Windows.Forms.CheckBox();
             this.bLineStyle = new System.Windows.Forms.Button();
@@ -1167,11 +1173,6 @@
             this.bGoZPos = new System.Windows.Forms.Button();
             this.cB_KeyBoard = new System.Windows.Forms.CheckBox();
             this.lZ = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Menu_Z1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Z2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Z3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Z4 = new System.Windows.Forms.ToolStripMenuItem();
             this.lY = new System.Windows.Forms.Label();
             this.lX = new System.Windows.Forms.Label();
             this.groupBox42 = new System.Windows.Forms.GroupBox();
@@ -1249,72 +1250,6 @@
             this.Operate2 = new System.Windows.Forms.TabPage();
             this.label109 = new System.Windows.Forms.Label();
             this.cB_CardIO_Index = new System.Windows.Forms.ComboBox();
-            this.gB_DI = new System.Windows.Forms.GroupBox();
-            this.lIN15 = new System.Windows.Forms.Label();
-            this.lIN14 = new System.Windows.Forms.Label();
-            this.lIN13 = new System.Windows.Forms.Label();
-            this.lIN12 = new System.Windows.Forms.Label();
-            this.lIN11 = new System.Windows.Forms.Label();
-            this.lIN10 = new System.Windows.Forms.Label();
-            this.lIN9 = new System.Windows.Forms.Label();
-            this.lIN8 = new System.Windows.Forms.Label();
-            this.lIN7 = new System.Windows.Forms.Label();
-            this.lIN6 = new System.Windows.Forms.Label();
-            this.lIN5 = new System.Windows.Forms.Label();
-            this.lIN4 = new System.Windows.Forms.Label();
-            this.lIN3 = new System.Windows.Forms.Label();
-            this.lIN2 = new System.Windows.Forms.Label();
-            this.lIN1 = new System.Windows.Forms.Label();
-            this.lIN0 = new System.Windows.Forms.Label();
-            this.pIN15 = new System.Windows.Forms.PictureBox();
-            this.pIN14 = new System.Windows.Forms.PictureBox();
-            this.pIN13 = new System.Windows.Forms.PictureBox();
-            this.pIN12 = new System.Windows.Forms.PictureBox();
-            this.pIN11 = new System.Windows.Forms.PictureBox();
-            this.pIN10 = new System.Windows.Forms.PictureBox();
-            this.pIN9 = new System.Windows.Forms.PictureBox();
-            this.pIN8 = new System.Windows.Forms.PictureBox();
-            this.pIN7 = new System.Windows.Forms.PictureBox();
-            this.pIN6 = new System.Windows.Forms.PictureBox();
-            this.pIN5 = new System.Windows.Forms.PictureBox();
-            this.pIN4 = new System.Windows.Forms.PictureBox();
-            this.pIN3 = new System.Windows.Forms.PictureBox();
-            this.pIN2 = new System.Windows.Forms.PictureBox();
-            this.pIN1 = new System.Windows.Forms.PictureBox();
-            this.pIN0 = new System.Windows.Forms.PictureBox();
-            this.gB_DO = new System.Windows.Forms.GroupBox();
-            this.lOUT15 = new System.Windows.Forms.Label();
-            this.lOUT14 = new System.Windows.Forms.Label();
-            this.lOUT13 = new System.Windows.Forms.Label();
-            this.lOUT12 = new System.Windows.Forms.Label();
-            this.lOUT11 = new System.Windows.Forms.Label();
-            this.lOUT10 = new System.Windows.Forms.Label();
-            this.lOUT9 = new System.Windows.Forms.Label();
-            this.lOUT8 = new System.Windows.Forms.Label();
-            this.lOUT7 = new System.Windows.Forms.Label();
-            this.lOUT6 = new System.Windows.Forms.Label();
-            this.lOUT5 = new System.Windows.Forms.Label();
-            this.lOUT4 = new System.Windows.Forms.Label();
-            this.lOUT3 = new System.Windows.Forms.Label();
-            this.lOUT2 = new System.Windows.Forms.Label();
-            this.lOUT1 = new System.Windows.Forms.Label();
-            this.lOUT0 = new System.Windows.Forms.Label();
-            this.pOUT15 = new System.Windows.Forms.PictureBox();
-            this.pOUT14 = new System.Windows.Forms.PictureBox();
-            this.pOUT13 = new System.Windows.Forms.PictureBox();
-            this.pOUT12 = new System.Windows.Forms.PictureBox();
-            this.pOUT11 = new System.Windows.Forms.PictureBox();
-            this.pOUT10 = new System.Windows.Forms.PictureBox();
-            this.pOUT9 = new System.Windows.Forms.PictureBox();
-            this.pOUT8 = new System.Windows.Forms.PictureBox();
-            this.pOUT7 = new System.Windows.Forms.PictureBox();
-            this.pOUT6 = new System.Windows.Forms.PictureBox();
-            this.pOUT5 = new System.Windows.Forms.PictureBox();
-            this.pOUT4 = new System.Windows.Forms.PictureBox();
-            this.pOUT3 = new System.Windows.Forms.PictureBox();
-            this.pOUT2 = new System.Windows.Forms.PictureBox();
-            this.pOUT1 = new System.Windows.Forms.PictureBox();
-            this.pOUT0 = new System.Windows.Forms.PictureBox();
             this.Operate4 = new System.Windows.Forms.TabPage();
             this.bConnectD = new System.Windows.Forms.Button();
             this.bConnectU = new System.Windows.Forms.Button();
@@ -1467,6 +1402,96 @@
             this.pMode_Run = new System.Windows.Forms.PictureBox();
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
+            this.gB_DI = new System.Windows.Forms.GroupBox();
+            this.lInIndex15 = new System.Windows.Forms.Label();
+            this.lInIndex14 = new System.Windows.Forms.Label();
+            this.lInIndex13 = new System.Windows.Forms.Label();
+            this.lInIndex12 = new System.Windows.Forms.Label();
+            this.lInIndex11 = new System.Windows.Forms.Label();
+            this.lInIndex10 = new System.Windows.Forms.Label();
+            this.lInIndex9 = new System.Windows.Forms.Label();
+            this.lInIndex8 = new System.Windows.Forms.Label();
+            this.lIN15 = new System.Windows.Forms.Label();
+            this.lIN14 = new System.Windows.Forms.Label();
+            this.lIN13 = new System.Windows.Forms.Label();
+            this.lIN12 = new System.Windows.Forms.Label();
+            this.lIN11 = new System.Windows.Forms.Label();
+            this.lIN10 = new System.Windows.Forms.Label();
+            this.lIN9 = new System.Windows.Forms.Label();
+            this.lIN8 = new System.Windows.Forms.Label();
+            this.lIN7 = new System.Windows.Forms.Label();
+            this.lIN6 = new System.Windows.Forms.Label();
+            this.lIN5 = new System.Windows.Forms.Label();
+            this.lIN4 = new System.Windows.Forms.Label();
+            this.lIN3 = new System.Windows.Forms.Label();
+            this.lIN2 = new System.Windows.Forms.Label();
+            this.lIN1 = new System.Windows.Forms.Label();
+            this.lIN0 = new System.Windows.Forms.Label();
+            this.pIN15 = new System.Windows.Forms.PictureBox();
+            this.pIN14 = new System.Windows.Forms.PictureBox();
+            this.pIN13 = new System.Windows.Forms.PictureBox();
+            this.pIN12 = new System.Windows.Forms.PictureBox();
+            this.pIN11 = new System.Windows.Forms.PictureBox();
+            this.pIN10 = new System.Windows.Forms.PictureBox();
+            this.pIN9 = new System.Windows.Forms.PictureBox();
+            this.pIN8 = new System.Windows.Forms.PictureBox();
+            this.pIN7 = new System.Windows.Forms.PictureBox();
+            this.pIN6 = new System.Windows.Forms.PictureBox();
+            this.pIN5 = new System.Windows.Forms.PictureBox();
+            this.pIN4 = new System.Windows.Forms.PictureBox();
+            this.pIN3 = new System.Windows.Forms.PictureBox();
+            this.pIN2 = new System.Windows.Forms.PictureBox();
+            this.pIN1 = new System.Windows.Forms.PictureBox();
+            this.pIN0 = new System.Windows.Forms.PictureBox();
+            this.gB_DO = new System.Windows.Forms.GroupBox();
+            this.label232 = new System.Windows.Forms.Label();
+            this.label234 = new System.Windows.Forms.Label();
+            this.label236 = new System.Windows.Forms.Label();
+            this.label237 = new System.Windows.Forms.Label();
+            this.label238 = new System.Windows.Forms.Label();
+            this.label245 = new System.Windows.Forms.Label();
+            this.label247 = new System.Windows.Forms.Label();
+            this.label258 = new System.Windows.Forms.Label();
+            this.label259 = new System.Windows.Forms.Label();
+            this.lOutIndex6 = new System.Windows.Forms.Label();
+            this.lOutIndex5 = new System.Windows.Forms.Label();
+            this.lOutIndex4 = new System.Windows.Forms.Label();
+            this.lOutIndex3 = new System.Windows.Forms.Label();
+            this.lOutIndex2 = new System.Windows.Forms.Label();
+            this.lOutIndex1 = new System.Windows.Forms.Label();
+            this.lOutIndex0 = new System.Windows.Forms.Label();
+            this.lOUT15 = new System.Windows.Forms.Label();
+            this.lOUT14 = new System.Windows.Forms.Label();
+            this.lOUT13 = new System.Windows.Forms.Label();
+            this.lOUT12 = new System.Windows.Forms.Label();
+            this.lOUT11 = new System.Windows.Forms.Label();
+            this.lOUT10 = new System.Windows.Forms.Label();
+            this.lOUT9 = new System.Windows.Forms.Label();
+            this.lOUT8 = new System.Windows.Forms.Label();
+            this.lOUT7 = new System.Windows.Forms.Label();
+            this.lOUT6 = new System.Windows.Forms.Label();
+            this.lOUT5 = new System.Windows.Forms.Label();
+            this.lOUT4 = new System.Windows.Forms.Label();
+            this.lOUT3 = new System.Windows.Forms.Label();
+            this.lOUT2 = new System.Windows.Forms.Label();
+            this.lOUT1 = new System.Windows.Forms.Label();
+            this.lOUT0 = new System.Windows.Forms.Label();
+            this.pOUT15 = new System.Windows.Forms.PictureBox();
+            this.pOUT14 = new System.Windows.Forms.PictureBox();
+            this.pOUT13 = new System.Windows.Forms.PictureBox();
+            this.pOUT12 = new System.Windows.Forms.PictureBox();
+            this.pOUT11 = new System.Windows.Forms.PictureBox();
+            this.pOUT10 = new System.Windows.Forms.PictureBox();
+            this.pOUT9 = new System.Windows.Forms.PictureBox();
+            this.pOUT8 = new System.Windows.Forms.PictureBox();
+            this.pOUT7 = new System.Windows.Forms.PictureBox();
+            this.pOUT6 = new System.Windows.Forms.PictureBox();
+            this.pOUT5 = new System.Windows.Forms.PictureBox();
+            this.pOUT4 = new System.Windows.Forms.PictureBox();
+            this.pOUT3 = new System.Windows.Forms.PictureBox();
+            this.pOUT2 = new System.Windows.Forms.PictureBox();
+            this.pOUT1 = new System.Windows.Forms.PictureBox();
+            this.pOUT0 = new System.Windows.Forms.PictureBox();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -1581,6 +1606,7 @@
             this.panel21.SuspendLayout();
             this.panel18.SuspendLayout();
             this.SetSystemPrams.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.tabControl4.SuspendLayout();
             this.tP_SystemSet2.SuspendLayout();
             this.groupBox20.SuspendLayout();
@@ -1623,7 +1649,6 @@
             this.panel24.SuspendLayout();
             this.tabTools.SuspendLayout();
             this.Operate0.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.groupBox42.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pJog_XPFast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pJog_YPFast)).BeginInit();
@@ -1649,40 +1674,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pR1P)).BeginInit();
             this.R_SelectMenu.SuspendLayout();
             this.Operate2.SuspendLayout();
-            this.gB_DI.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN0)).BeginInit();
-            this.gB_DO.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT0)).BeginInit();
             this.Operate4.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDown_BlueD)).BeginInit();
@@ -1719,6 +1710,40 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).BeginInit();
             this.panel23.SuspendLayout();
+            this.gB_DI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN0)).BeginInit();
+            this.gB_DO.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT0)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl_Main
@@ -7537,10 +7562,45 @@
             // 
             // SetSystemPrams
             // 
+            this.SetSystemPrams.ContextMenuStrip = this.contextMenuStrip1;
             this.SetSystemPrams.Controls.Add(this.tabControl4);
             resources.ApplyResources(this.SetSystemPrams, "SetSystemPrams");
             this.SetSystemPrams.Name = "SetSystemPrams";
             this.SetSystemPrams.UseVisualStyleBackColor = true;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Z1,
+            this.Menu_Z2,
+            this.Menu_Z3,
+            this.Menu_Z4});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
+            // 
+            // Menu_Z1
+            // 
+            this.Menu_Z1.Name = "Menu_Z1";
+            resources.ApplyResources(this.Menu_Z1, "Menu_Z1");
+            this.Menu_Z1.Click += new System.EventHandler(this.Z1ToolStripMenuItem_Click);
+            // 
+            // Menu_Z2
+            // 
+            this.Menu_Z2.Name = "Menu_Z2";
+            resources.ApplyResources(this.Menu_Z2, "Menu_Z2");
+            this.Menu_Z2.Click += new System.EventHandler(this.Z2ToolStripMenuItem_Click);
+            // 
+            // Menu_Z3
+            // 
+            this.Menu_Z3.Name = "Menu_Z3";
+            resources.ApplyResources(this.Menu_Z3, "Menu_Z3");
+            this.Menu_Z3.Click += new System.EventHandler(this.Z3ToolStripMenuItem_Click);
+            // 
+            // Menu_Z4
+            // 
+            this.Menu_Z4.Name = "Menu_Z4";
+            resources.ApplyResources(this.Menu_Z4, "Menu_Z4");
+            this.Menu_Z4.Click += new System.EventHandler(this.Z4ToolStripMenuItem_Click);
             // 
             // tabControl4
             // 
@@ -7730,6 +7790,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.cbOnlineDebug);
             this.panel2.Controls.Add(this.cbThrowPut);
             this.panel2.Controls.Add(this.cbVision);
             this.panel2.Controls.Add(this.bLineStyle);
@@ -7743,6 +7804,12 @@
             this.panel2.Controls.Add(this.cbxEnableAnscXI);
             resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
+            // 
+            // cbOnlineDebug
+            // 
+            resources.ApplyResources(this.cbOnlineDebug, "cbOnlineDebug");
+            this.cbOnlineDebug.Name = "cbOnlineDebug";
+            this.cbOnlineDebug.UseVisualStyleBackColor = true;
             // 
             // cbThrowPut
             // 
@@ -9964,40 +10031,6 @@
             resources.ApplyResources(this.lZ, "lZ");
             this.lZ.Name = "lZ";
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_Z1,
-            this.Menu_Z2,
-            this.Menu_Z3,
-            this.Menu_Z4});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
-            // 
-            // Menu_Z1
-            // 
-            this.Menu_Z1.Name = "Menu_Z1";
-            resources.ApplyResources(this.Menu_Z1, "Menu_Z1");
-            this.Menu_Z1.Click += new System.EventHandler(this.Z1ToolStripMenuItem_Click);
-            // 
-            // Menu_Z2
-            // 
-            this.Menu_Z2.Name = "Menu_Z2";
-            resources.ApplyResources(this.Menu_Z2, "Menu_Z2");
-            this.Menu_Z2.Click += new System.EventHandler(this.Z2ToolStripMenuItem_Click);
-            // 
-            // Menu_Z3
-            // 
-            this.Menu_Z3.Name = "Menu_Z3";
-            resources.ApplyResources(this.Menu_Z3, "Menu_Z3");
-            this.Menu_Z3.Click += new System.EventHandler(this.Z3ToolStripMenuItem_Click);
-            // 
-            // Menu_Z4
-            // 
-            this.Menu_Z4.Name = "Menu_Z4";
-            resources.ApplyResources(this.Menu_Z4, "Menu_Z4");
-            this.Menu_Z4.Click += new System.EventHandler(this.Z4ToolStripMenuItem_Click);
-            // 
             // lY
             // 
             this.lY.BackColor = System.Drawing.Color.Yellow;
@@ -10573,10 +10606,10 @@
             // 
             // Operate2
             // 
+            this.Operate2.Controls.Add(this.gB_DO);
+            this.Operate2.Controls.Add(this.gB_DI);
             this.Operate2.Controls.Add(this.label109);
             this.Operate2.Controls.Add(this.cB_CardIO_Index);
-            this.Operate2.Controls.Add(this.gB_DI);
-            this.Operate2.Controls.Add(this.gB_DO);
             resources.ApplyResources(this.Operate2, "Operate2");
             this.Operate2.Name = "Operate2";
             this.Operate2.UseVisualStyleBackColor = true;
@@ -10597,434 +10630,6 @@
             resources.GetString("cB_CardIO_Index.Items1")});
             this.cB_CardIO_Index.Name = "cB_CardIO_Index";
             this.cB_CardIO_Index.SelectedIndexChanged += new System.EventHandler(this.cB_CardIO_Index_SelectedIndexChanged);
-            // 
-            // gB_DI
-            // 
-            this.gB_DI.Controls.Add(this.lIN15);
-            this.gB_DI.Controls.Add(this.lIN14);
-            this.gB_DI.Controls.Add(this.lIN13);
-            this.gB_DI.Controls.Add(this.lIN12);
-            this.gB_DI.Controls.Add(this.lIN11);
-            this.gB_DI.Controls.Add(this.lIN10);
-            this.gB_DI.Controls.Add(this.lIN9);
-            this.gB_DI.Controls.Add(this.lIN8);
-            this.gB_DI.Controls.Add(this.lIN7);
-            this.gB_DI.Controls.Add(this.lIN6);
-            this.gB_DI.Controls.Add(this.lIN5);
-            this.gB_DI.Controls.Add(this.lIN4);
-            this.gB_DI.Controls.Add(this.lIN3);
-            this.gB_DI.Controls.Add(this.lIN2);
-            this.gB_DI.Controls.Add(this.lIN1);
-            this.gB_DI.Controls.Add(this.lIN0);
-            this.gB_DI.Controls.Add(this.pIN15);
-            this.gB_DI.Controls.Add(this.pIN14);
-            this.gB_DI.Controls.Add(this.pIN13);
-            this.gB_DI.Controls.Add(this.pIN12);
-            this.gB_DI.Controls.Add(this.pIN11);
-            this.gB_DI.Controls.Add(this.pIN10);
-            this.gB_DI.Controls.Add(this.pIN9);
-            this.gB_DI.Controls.Add(this.pIN8);
-            this.gB_DI.Controls.Add(this.pIN7);
-            this.gB_DI.Controls.Add(this.pIN6);
-            this.gB_DI.Controls.Add(this.pIN5);
-            this.gB_DI.Controls.Add(this.pIN4);
-            this.gB_DI.Controls.Add(this.pIN3);
-            this.gB_DI.Controls.Add(this.pIN2);
-            this.gB_DI.Controls.Add(this.pIN1);
-            this.gB_DI.Controls.Add(this.pIN0);
-            resources.ApplyResources(this.gB_DI, "gB_DI");
-            this.gB_DI.Name = "gB_DI";
-            this.gB_DI.TabStop = false;
-            // 
-            // lIN15
-            // 
-            resources.ApplyResources(this.lIN15, "lIN15");
-            this.lIN15.Name = "lIN15";
-            // 
-            // lIN14
-            // 
-            resources.ApplyResources(this.lIN14, "lIN14");
-            this.lIN14.Name = "lIN14";
-            // 
-            // lIN13
-            // 
-            resources.ApplyResources(this.lIN13, "lIN13");
-            this.lIN13.Name = "lIN13";
-            // 
-            // lIN12
-            // 
-            resources.ApplyResources(this.lIN12, "lIN12");
-            this.lIN12.Name = "lIN12";
-            // 
-            // lIN11
-            // 
-            resources.ApplyResources(this.lIN11, "lIN11");
-            this.lIN11.Name = "lIN11";
-            // 
-            // lIN10
-            // 
-            resources.ApplyResources(this.lIN10, "lIN10");
-            this.lIN10.Name = "lIN10";
-            // 
-            // lIN9
-            // 
-            resources.ApplyResources(this.lIN9, "lIN9");
-            this.lIN9.Name = "lIN9";
-            // 
-            // lIN8
-            // 
-            resources.ApplyResources(this.lIN8, "lIN8");
-            this.lIN8.Name = "lIN8";
-            // 
-            // lIN7
-            // 
-            resources.ApplyResources(this.lIN7, "lIN7");
-            this.lIN7.Name = "lIN7";
-            // 
-            // lIN6
-            // 
-            resources.ApplyResources(this.lIN6, "lIN6");
-            this.lIN6.Name = "lIN6";
-            // 
-            // lIN5
-            // 
-            resources.ApplyResources(this.lIN5, "lIN5");
-            this.lIN5.Name = "lIN5";
-            // 
-            // lIN4
-            // 
-            resources.ApplyResources(this.lIN4, "lIN4");
-            this.lIN4.Name = "lIN4";
-            // 
-            // lIN3
-            // 
-            resources.ApplyResources(this.lIN3, "lIN3");
-            this.lIN3.Name = "lIN3";
-            // 
-            // lIN2
-            // 
-            resources.ApplyResources(this.lIN2, "lIN2");
-            this.lIN2.Name = "lIN2";
-            // 
-            // lIN1
-            // 
-            resources.ApplyResources(this.lIN1, "lIN1");
-            this.lIN1.Name = "lIN1";
-            // 
-            // lIN0
-            // 
-            resources.ApplyResources(this.lIN0, "lIN0");
-            this.lIN0.Name = "lIN0";
-            // 
-            // pIN15
-            // 
-            resources.ApplyResources(this.pIN15, "pIN15");
-            this.pIN15.Name = "pIN15";
-            this.pIN15.TabStop = false;
-            // 
-            // pIN14
-            // 
-            resources.ApplyResources(this.pIN14, "pIN14");
-            this.pIN14.Name = "pIN14";
-            this.pIN14.TabStop = false;
-            // 
-            // pIN13
-            // 
-            resources.ApplyResources(this.pIN13, "pIN13");
-            this.pIN13.Name = "pIN13";
-            this.pIN13.TabStop = false;
-            // 
-            // pIN12
-            // 
-            resources.ApplyResources(this.pIN12, "pIN12");
-            this.pIN12.Name = "pIN12";
-            this.pIN12.TabStop = false;
-            // 
-            // pIN11
-            // 
-            resources.ApplyResources(this.pIN11, "pIN11");
-            this.pIN11.Name = "pIN11";
-            this.pIN11.TabStop = false;
-            // 
-            // pIN10
-            // 
-            resources.ApplyResources(this.pIN10, "pIN10");
-            this.pIN10.Name = "pIN10";
-            this.pIN10.TabStop = false;
-            // 
-            // pIN9
-            // 
-            resources.ApplyResources(this.pIN9, "pIN9");
-            this.pIN9.Name = "pIN9";
-            this.pIN9.TabStop = false;
-            // 
-            // pIN8
-            // 
-            resources.ApplyResources(this.pIN8, "pIN8");
-            this.pIN8.Name = "pIN8";
-            this.pIN8.TabStop = false;
-            // 
-            // pIN7
-            // 
-            resources.ApplyResources(this.pIN7, "pIN7");
-            this.pIN7.Name = "pIN7";
-            this.pIN7.TabStop = false;
-            // 
-            // pIN6
-            // 
-            resources.ApplyResources(this.pIN6, "pIN6");
-            this.pIN6.Name = "pIN6";
-            this.pIN6.TabStop = false;
-            // 
-            // pIN5
-            // 
-            resources.ApplyResources(this.pIN5, "pIN5");
-            this.pIN5.Name = "pIN5";
-            this.pIN5.TabStop = false;
-            // 
-            // pIN4
-            // 
-            resources.ApplyResources(this.pIN4, "pIN4");
-            this.pIN4.Name = "pIN4";
-            this.pIN4.TabStop = false;
-            // 
-            // pIN3
-            // 
-            resources.ApplyResources(this.pIN3, "pIN3");
-            this.pIN3.Name = "pIN3";
-            this.pIN3.TabStop = false;
-            // 
-            // pIN2
-            // 
-            resources.ApplyResources(this.pIN2, "pIN2");
-            this.pIN2.Name = "pIN2";
-            this.pIN2.TabStop = false;
-            // 
-            // pIN1
-            // 
-            resources.ApplyResources(this.pIN1, "pIN1");
-            this.pIN1.Name = "pIN1";
-            this.pIN1.TabStop = false;
-            // 
-            // pIN0
-            // 
-            resources.ApplyResources(this.pIN0, "pIN0");
-            this.pIN0.Name = "pIN0";
-            this.pIN0.TabStop = false;
-            // 
-            // gB_DO
-            // 
-            this.gB_DO.Controls.Add(this.lOUT15);
-            this.gB_DO.Controls.Add(this.lOUT14);
-            this.gB_DO.Controls.Add(this.lOUT13);
-            this.gB_DO.Controls.Add(this.lOUT12);
-            this.gB_DO.Controls.Add(this.lOUT11);
-            this.gB_DO.Controls.Add(this.lOUT10);
-            this.gB_DO.Controls.Add(this.lOUT9);
-            this.gB_DO.Controls.Add(this.lOUT8);
-            this.gB_DO.Controls.Add(this.lOUT7);
-            this.gB_DO.Controls.Add(this.lOUT6);
-            this.gB_DO.Controls.Add(this.lOUT5);
-            this.gB_DO.Controls.Add(this.lOUT4);
-            this.gB_DO.Controls.Add(this.lOUT3);
-            this.gB_DO.Controls.Add(this.lOUT2);
-            this.gB_DO.Controls.Add(this.lOUT1);
-            this.gB_DO.Controls.Add(this.lOUT0);
-            this.gB_DO.Controls.Add(this.pOUT15);
-            this.gB_DO.Controls.Add(this.pOUT14);
-            this.gB_DO.Controls.Add(this.pOUT13);
-            this.gB_DO.Controls.Add(this.pOUT12);
-            this.gB_DO.Controls.Add(this.pOUT11);
-            this.gB_DO.Controls.Add(this.pOUT10);
-            this.gB_DO.Controls.Add(this.pOUT9);
-            this.gB_DO.Controls.Add(this.pOUT8);
-            this.gB_DO.Controls.Add(this.pOUT7);
-            this.gB_DO.Controls.Add(this.pOUT6);
-            this.gB_DO.Controls.Add(this.pOUT5);
-            this.gB_DO.Controls.Add(this.pOUT4);
-            this.gB_DO.Controls.Add(this.pOUT3);
-            this.gB_DO.Controls.Add(this.pOUT2);
-            this.gB_DO.Controls.Add(this.pOUT1);
-            this.gB_DO.Controls.Add(this.pOUT0);
-            resources.ApplyResources(this.gB_DO, "gB_DO");
-            this.gB_DO.Name = "gB_DO";
-            this.gB_DO.TabStop = false;
-            // 
-            // lOUT15
-            // 
-            resources.ApplyResources(this.lOUT15, "lOUT15");
-            this.lOUT15.Name = "lOUT15";
-            // 
-            // lOUT14
-            // 
-            resources.ApplyResources(this.lOUT14, "lOUT14");
-            this.lOUT14.Name = "lOUT14";
-            // 
-            // lOUT13
-            // 
-            resources.ApplyResources(this.lOUT13, "lOUT13");
-            this.lOUT13.Name = "lOUT13";
-            // 
-            // lOUT12
-            // 
-            resources.ApplyResources(this.lOUT12, "lOUT12");
-            this.lOUT12.Name = "lOUT12";
-            // 
-            // lOUT11
-            // 
-            resources.ApplyResources(this.lOUT11, "lOUT11");
-            this.lOUT11.Name = "lOUT11";
-            // 
-            // lOUT10
-            // 
-            resources.ApplyResources(this.lOUT10, "lOUT10");
-            this.lOUT10.Name = "lOUT10";
-            // 
-            // lOUT9
-            // 
-            resources.ApplyResources(this.lOUT9, "lOUT9");
-            this.lOUT9.Name = "lOUT9";
-            // 
-            // lOUT8
-            // 
-            resources.ApplyResources(this.lOUT8, "lOUT8");
-            this.lOUT8.Name = "lOUT8";
-            // 
-            // lOUT7
-            // 
-            resources.ApplyResources(this.lOUT7, "lOUT7");
-            this.lOUT7.Name = "lOUT7";
-            // 
-            // lOUT6
-            // 
-            resources.ApplyResources(this.lOUT6, "lOUT6");
-            this.lOUT6.Name = "lOUT6";
-            // 
-            // lOUT5
-            // 
-            resources.ApplyResources(this.lOUT5, "lOUT5");
-            this.lOUT5.Name = "lOUT5";
-            // 
-            // lOUT4
-            // 
-            resources.ApplyResources(this.lOUT4, "lOUT4");
-            this.lOUT4.Name = "lOUT4";
-            // 
-            // lOUT3
-            // 
-            resources.ApplyResources(this.lOUT3, "lOUT3");
-            this.lOUT3.Name = "lOUT3";
-            // 
-            // lOUT2
-            // 
-            resources.ApplyResources(this.lOUT2, "lOUT2");
-            this.lOUT2.Name = "lOUT2";
-            // 
-            // lOUT1
-            // 
-            resources.ApplyResources(this.lOUT1, "lOUT1");
-            this.lOUT1.Name = "lOUT1";
-            // 
-            // lOUT0
-            // 
-            resources.ApplyResources(this.lOUT0, "lOUT0");
-            this.lOUT0.Name = "lOUT0";
-            // 
-            // pOUT15
-            // 
-            resources.ApplyResources(this.pOUT15, "pOUT15");
-            this.pOUT15.Name = "pOUT15";
-            this.pOUT15.TabStop = false;
-            // 
-            // pOUT14
-            // 
-            resources.ApplyResources(this.pOUT14, "pOUT14");
-            this.pOUT14.Name = "pOUT14";
-            this.pOUT14.TabStop = false;
-            // 
-            // pOUT13
-            // 
-            resources.ApplyResources(this.pOUT13, "pOUT13");
-            this.pOUT13.Name = "pOUT13";
-            this.pOUT13.TabStop = false;
-            // 
-            // pOUT12
-            // 
-            resources.ApplyResources(this.pOUT12, "pOUT12");
-            this.pOUT12.Name = "pOUT12";
-            this.pOUT12.TabStop = false;
-            // 
-            // pOUT11
-            // 
-            resources.ApplyResources(this.pOUT11, "pOUT11");
-            this.pOUT11.Name = "pOUT11";
-            this.pOUT11.TabStop = false;
-            // 
-            // pOUT10
-            // 
-            resources.ApplyResources(this.pOUT10, "pOUT10");
-            this.pOUT10.Name = "pOUT10";
-            this.pOUT10.TabStop = false;
-            // 
-            // pOUT9
-            // 
-            resources.ApplyResources(this.pOUT9, "pOUT9");
-            this.pOUT9.Name = "pOUT9";
-            this.pOUT9.TabStop = false;
-            // 
-            // pOUT8
-            // 
-            resources.ApplyResources(this.pOUT8, "pOUT8");
-            this.pOUT8.Name = "pOUT8";
-            this.pOUT8.TabStop = false;
-            // 
-            // pOUT7
-            // 
-            resources.ApplyResources(this.pOUT7, "pOUT7");
-            this.pOUT7.Name = "pOUT7";
-            this.pOUT7.TabStop = false;
-            // 
-            // pOUT6
-            // 
-            resources.ApplyResources(this.pOUT6, "pOUT6");
-            this.pOUT6.Name = "pOUT6";
-            this.pOUT6.TabStop = false;
-            // 
-            // pOUT5
-            // 
-            resources.ApplyResources(this.pOUT5, "pOUT5");
-            this.pOUT5.Name = "pOUT5";
-            this.pOUT5.TabStop = false;
-            // 
-            // pOUT4
-            // 
-            resources.ApplyResources(this.pOUT4, "pOUT4");
-            this.pOUT4.Name = "pOUT4";
-            this.pOUT4.TabStop = false;
-            // 
-            // pOUT3
-            // 
-            resources.ApplyResources(this.pOUT3, "pOUT3");
-            this.pOUT3.Name = "pOUT3";
-            this.pOUT3.TabStop = false;
-            // 
-            // pOUT2
-            // 
-            resources.ApplyResources(this.pOUT2, "pOUT2");
-            this.pOUT2.Name = "pOUT2";
-            this.pOUT2.TabStop = false;
-            // 
-            // pOUT1
-            // 
-            resources.ApplyResources(this.pOUT1, "pOUT1");
-            this.pOUT1.Name = "pOUT1";
-            this.pOUT1.TabStop = false;
-            // 
-            // pOUT0
-            // 
-            resources.ApplyResources(this.pOUT0, "pOUT0");
-            this.pOUT0.Name = "pOUT0";
-            this.pOUT0.TabStop = false;
             // 
             // Operate4
             // 
@@ -12208,6 +11813,578 @@
             resources.ApplyResources(this.panel23, "panel23");
             this.panel23.Name = "panel23";
             // 
+            // gB_DI
+            // 
+            this.gB_DI.Controls.Add(this.lInIndex15);
+            this.gB_DI.Controls.Add(this.lInIndex14);
+            this.gB_DI.Controls.Add(this.lInIndex13);
+            this.gB_DI.Controls.Add(this.lInIndex12);
+            this.gB_DI.Controls.Add(this.lInIndex11);
+            this.gB_DI.Controls.Add(this.lInIndex10);
+            this.gB_DI.Controls.Add(this.lInIndex9);
+            this.gB_DI.Controls.Add(this.lInIndex8);
+            this.gB_DI.Controls.Add(this.lIN15);
+            this.gB_DI.Controls.Add(this.lIN14);
+            this.gB_DI.Controls.Add(this.lIN13);
+            this.gB_DI.Controls.Add(this.lIN12);
+            this.gB_DI.Controls.Add(this.lIN11);
+            this.gB_DI.Controls.Add(this.lIN10);
+            this.gB_DI.Controls.Add(this.lIN9);
+            this.gB_DI.Controls.Add(this.lIN8);
+            this.gB_DI.Controls.Add(this.lIN7);
+            this.gB_DI.Controls.Add(this.lIN6);
+            this.gB_DI.Controls.Add(this.lIN5);
+            this.gB_DI.Controls.Add(this.lIN4);
+            this.gB_DI.Controls.Add(this.lIN3);
+            this.gB_DI.Controls.Add(this.lIN2);
+            this.gB_DI.Controls.Add(this.lIN1);
+            this.gB_DI.Controls.Add(this.lIN0);
+            this.gB_DI.Controls.Add(this.pIN15);
+            this.gB_DI.Controls.Add(this.pIN14);
+            this.gB_DI.Controls.Add(this.pIN13);
+            this.gB_DI.Controls.Add(this.pIN12);
+            this.gB_DI.Controls.Add(this.pIN11);
+            this.gB_DI.Controls.Add(this.pIN10);
+            this.gB_DI.Controls.Add(this.pIN9);
+            this.gB_DI.Controls.Add(this.pIN8);
+            this.gB_DI.Controls.Add(this.pIN7);
+            this.gB_DI.Controls.Add(this.pIN6);
+            this.gB_DI.Controls.Add(this.pIN5);
+            this.gB_DI.Controls.Add(this.pIN4);
+            this.gB_DI.Controls.Add(this.pIN3);
+            this.gB_DI.Controls.Add(this.pIN2);
+            this.gB_DI.Controls.Add(this.pIN1);
+            this.gB_DI.Controls.Add(this.pIN0);
+            resources.ApplyResources(this.gB_DI, "gB_DI");
+            this.gB_DI.Name = "gB_DI";
+            this.gB_DI.TabStop = false;
+            // 
+            // lInIndex15
+            // 
+            resources.ApplyResources(this.lInIndex15, "lInIndex15");
+            this.lInIndex15.Name = "lInIndex15";
+            // 
+            // lInIndex14
+            // 
+            resources.ApplyResources(this.lInIndex14, "lInIndex14");
+            this.lInIndex14.Name = "lInIndex14";
+            // 
+            // lInIndex13
+            // 
+            resources.ApplyResources(this.lInIndex13, "lInIndex13");
+            this.lInIndex13.Name = "lInIndex13";
+            // 
+            // lInIndex12
+            // 
+            resources.ApplyResources(this.lInIndex12, "lInIndex12");
+            this.lInIndex12.Name = "lInIndex12";
+            // 
+            // lInIndex11
+            // 
+            resources.ApplyResources(this.lInIndex11, "lInIndex11");
+            this.lInIndex11.Name = "lInIndex11";
+            // 
+            // lInIndex10
+            // 
+            resources.ApplyResources(this.lInIndex10, "lInIndex10");
+            this.lInIndex10.Name = "lInIndex10";
+            // 
+            // lInIndex9
+            // 
+            resources.ApplyResources(this.lInIndex9, "lInIndex9");
+            this.lInIndex9.Name = "lInIndex9";
+            // 
+            // lInIndex8
+            // 
+            resources.ApplyResources(this.lInIndex8, "lInIndex8");
+            this.lInIndex8.Name = "lInIndex8";
+            // 
+            // lIN15
+            // 
+            resources.ApplyResources(this.lIN15, "lIN15");
+            this.lIN15.Name = "lIN15";
+            // 
+            // lIN14
+            // 
+            resources.ApplyResources(this.lIN14, "lIN14");
+            this.lIN14.Name = "lIN14";
+            // 
+            // lIN13
+            // 
+            resources.ApplyResources(this.lIN13, "lIN13");
+            this.lIN13.Name = "lIN13";
+            // 
+            // lIN12
+            // 
+            resources.ApplyResources(this.lIN12, "lIN12");
+            this.lIN12.Name = "lIN12";
+            // 
+            // lIN11
+            // 
+            resources.ApplyResources(this.lIN11, "lIN11");
+            this.lIN11.Name = "lIN11";
+            // 
+            // lIN10
+            // 
+            resources.ApplyResources(this.lIN10, "lIN10");
+            this.lIN10.Name = "lIN10";
+            // 
+            // lIN9
+            // 
+            resources.ApplyResources(this.lIN9, "lIN9");
+            this.lIN9.Name = "lIN9";
+            // 
+            // lIN8
+            // 
+            resources.ApplyResources(this.lIN8, "lIN8");
+            this.lIN8.Name = "lIN8";
+            // 
+            // lIN7
+            // 
+            resources.ApplyResources(this.lIN7, "lIN7");
+            this.lIN7.Name = "lIN7";
+            // 
+            // lIN6
+            // 
+            resources.ApplyResources(this.lIN6, "lIN6");
+            this.lIN6.Name = "lIN6";
+            // 
+            // lIN5
+            // 
+            resources.ApplyResources(this.lIN5, "lIN5");
+            this.lIN5.Name = "lIN5";
+            // 
+            // lIN4
+            // 
+            resources.ApplyResources(this.lIN4, "lIN4");
+            this.lIN4.Name = "lIN4";
+            // 
+            // lIN3
+            // 
+            resources.ApplyResources(this.lIN3, "lIN3");
+            this.lIN3.Name = "lIN3";
+            // 
+            // lIN2
+            // 
+            resources.ApplyResources(this.lIN2, "lIN2");
+            this.lIN2.Name = "lIN2";
+            // 
+            // lIN1
+            // 
+            resources.ApplyResources(this.lIN1, "lIN1");
+            this.lIN1.Name = "lIN1";
+            // 
+            // lIN0
+            // 
+            resources.ApplyResources(this.lIN0, "lIN0");
+            this.lIN0.Name = "lIN0";
+            // 
+            // pIN15
+            // 
+            resources.ApplyResources(this.pIN15, "pIN15");
+            this.pIN15.Name = "pIN15";
+            this.pIN15.TabStop = false;
+            // 
+            // pIN14
+            // 
+            resources.ApplyResources(this.pIN14, "pIN14");
+            this.pIN14.Name = "pIN14";
+            this.pIN14.TabStop = false;
+            // 
+            // pIN13
+            // 
+            resources.ApplyResources(this.pIN13, "pIN13");
+            this.pIN13.Name = "pIN13";
+            this.pIN13.TabStop = false;
+            // 
+            // pIN12
+            // 
+            resources.ApplyResources(this.pIN12, "pIN12");
+            this.pIN12.Name = "pIN12";
+            this.pIN12.TabStop = false;
+            // 
+            // pIN11
+            // 
+            resources.ApplyResources(this.pIN11, "pIN11");
+            this.pIN11.Name = "pIN11";
+            this.pIN11.TabStop = false;
+            // 
+            // pIN10
+            // 
+            resources.ApplyResources(this.pIN10, "pIN10");
+            this.pIN10.Name = "pIN10";
+            this.pIN10.TabStop = false;
+            // 
+            // pIN9
+            // 
+            resources.ApplyResources(this.pIN9, "pIN9");
+            this.pIN9.Name = "pIN9";
+            this.pIN9.TabStop = false;
+            // 
+            // pIN8
+            // 
+            resources.ApplyResources(this.pIN8, "pIN8");
+            this.pIN8.Name = "pIN8";
+            this.pIN8.TabStop = false;
+            // 
+            // pIN7
+            // 
+            resources.ApplyResources(this.pIN7, "pIN7");
+            this.pIN7.Name = "pIN7";
+            this.pIN7.TabStop = false;
+            // 
+            // pIN6
+            // 
+            resources.ApplyResources(this.pIN6, "pIN6");
+            this.pIN6.Name = "pIN6";
+            this.pIN6.TabStop = false;
+            // 
+            // pIN5
+            // 
+            resources.ApplyResources(this.pIN5, "pIN5");
+            this.pIN5.Name = "pIN5";
+            this.pIN5.TabStop = false;
+            // 
+            // pIN4
+            // 
+            resources.ApplyResources(this.pIN4, "pIN4");
+            this.pIN4.Name = "pIN4";
+            this.pIN4.TabStop = false;
+            // 
+            // pIN3
+            // 
+            resources.ApplyResources(this.pIN3, "pIN3");
+            this.pIN3.Name = "pIN3";
+            this.pIN3.TabStop = false;
+            // 
+            // pIN2
+            // 
+            resources.ApplyResources(this.pIN2, "pIN2");
+            this.pIN2.Name = "pIN2";
+            this.pIN2.TabStop = false;
+            // 
+            // pIN1
+            // 
+            resources.ApplyResources(this.pIN1, "pIN1");
+            this.pIN1.Name = "pIN1";
+            this.pIN1.TabStop = false;
+            // 
+            // pIN0
+            // 
+            resources.ApplyResources(this.pIN0, "pIN0");
+            this.pIN0.Name = "pIN0";
+            this.pIN0.TabStop = false;
+            // 
+            // gB_DO
+            // 
+            this.gB_DO.Controls.Add(this.label232);
+            this.gB_DO.Controls.Add(this.label234);
+            this.gB_DO.Controls.Add(this.label236);
+            this.gB_DO.Controls.Add(this.label237);
+            this.gB_DO.Controls.Add(this.label238);
+            this.gB_DO.Controls.Add(this.label245);
+            this.gB_DO.Controls.Add(this.label247);
+            this.gB_DO.Controls.Add(this.label258);
+            this.gB_DO.Controls.Add(this.label259);
+            this.gB_DO.Controls.Add(this.lOutIndex6);
+            this.gB_DO.Controls.Add(this.lOutIndex5);
+            this.gB_DO.Controls.Add(this.lOutIndex4);
+            this.gB_DO.Controls.Add(this.lOutIndex3);
+            this.gB_DO.Controls.Add(this.lOutIndex2);
+            this.gB_DO.Controls.Add(this.lOutIndex1);
+            this.gB_DO.Controls.Add(this.lOutIndex0);
+            this.gB_DO.Controls.Add(this.lOUT15);
+            this.gB_DO.Controls.Add(this.lOUT14);
+            this.gB_DO.Controls.Add(this.lOUT13);
+            this.gB_DO.Controls.Add(this.lOUT12);
+            this.gB_DO.Controls.Add(this.lOUT11);
+            this.gB_DO.Controls.Add(this.lOUT10);
+            this.gB_DO.Controls.Add(this.lOUT9);
+            this.gB_DO.Controls.Add(this.lOUT8);
+            this.gB_DO.Controls.Add(this.lOUT7);
+            this.gB_DO.Controls.Add(this.lOUT6);
+            this.gB_DO.Controls.Add(this.lOUT5);
+            this.gB_DO.Controls.Add(this.lOUT4);
+            this.gB_DO.Controls.Add(this.lOUT3);
+            this.gB_DO.Controls.Add(this.lOUT2);
+            this.gB_DO.Controls.Add(this.lOUT1);
+            this.gB_DO.Controls.Add(this.lOUT0);
+            this.gB_DO.Controls.Add(this.pOUT15);
+            this.gB_DO.Controls.Add(this.pOUT14);
+            this.gB_DO.Controls.Add(this.pOUT13);
+            this.gB_DO.Controls.Add(this.pOUT12);
+            this.gB_DO.Controls.Add(this.pOUT11);
+            this.gB_DO.Controls.Add(this.pOUT10);
+            this.gB_DO.Controls.Add(this.pOUT9);
+            this.gB_DO.Controls.Add(this.pOUT8);
+            this.gB_DO.Controls.Add(this.pOUT7);
+            this.gB_DO.Controls.Add(this.pOUT6);
+            this.gB_DO.Controls.Add(this.pOUT5);
+            this.gB_DO.Controls.Add(this.pOUT4);
+            this.gB_DO.Controls.Add(this.pOUT3);
+            this.gB_DO.Controls.Add(this.pOUT2);
+            this.gB_DO.Controls.Add(this.pOUT1);
+            this.gB_DO.Controls.Add(this.pOUT0);
+            resources.ApplyResources(this.gB_DO, "gB_DO");
+            this.gB_DO.Name = "gB_DO";
+            this.gB_DO.TabStop = false;
+            // 
+            // label232
+            // 
+            resources.ApplyResources(this.label232, "label232");
+            this.label232.Name = "label232";
+            // 
+            // label234
+            // 
+            resources.ApplyResources(this.label234, "label234");
+            this.label234.Name = "label234";
+            // 
+            // label236
+            // 
+            resources.ApplyResources(this.label236, "label236");
+            this.label236.Name = "label236";
+            // 
+            // label237
+            // 
+            resources.ApplyResources(this.label237, "label237");
+            this.label237.Name = "label237";
+            // 
+            // label238
+            // 
+            resources.ApplyResources(this.label238, "label238");
+            this.label238.Name = "label238";
+            // 
+            // label245
+            // 
+            resources.ApplyResources(this.label245, "label245");
+            this.label245.Name = "label245";
+            // 
+            // label247
+            // 
+            resources.ApplyResources(this.label247, "label247");
+            this.label247.Name = "label247";
+            // 
+            // label258
+            // 
+            resources.ApplyResources(this.label258, "label258");
+            this.label258.Name = "label258";
+            // 
+            // label259
+            // 
+            resources.ApplyResources(this.label259, "label259");
+            this.label259.Name = "label259";
+            // 
+            // lOutIndex6
+            // 
+            resources.ApplyResources(this.lOutIndex6, "lOutIndex6");
+            this.lOutIndex6.Name = "lOutIndex6";
+            // 
+            // lOutIndex5
+            // 
+            resources.ApplyResources(this.lOutIndex5, "lOutIndex5");
+            this.lOutIndex5.Name = "lOutIndex5";
+            // 
+            // lOutIndex4
+            // 
+            resources.ApplyResources(this.lOutIndex4, "lOutIndex4");
+            this.lOutIndex4.Name = "lOutIndex4";
+            // 
+            // lOutIndex3
+            // 
+            resources.ApplyResources(this.lOutIndex3, "lOutIndex3");
+            this.lOutIndex3.Name = "lOutIndex3";
+            // 
+            // lOutIndex2
+            // 
+            resources.ApplyResources(this.lOutIndex2, "lOutIndex2");
+            this.lOutIndex2.Name = "lOutIndex2";
+            // 
+            // lOutIndex1
+            // 
+            resources.ApplyResources(this.lOutIndex1, "lOutIndex1");
+            this.lOutIndex1.Name = "lOutIndex1";
+            // 
+            // lOutIndex0
+            // 
+            resources.ApplyResources(this.lOutIndex0, "lOutIndex0");
+            this.lOutIndex0.Name = "lOutIndex0";
+            // 
+            // lOUT15
+            // 
+            resources.ApplyResources(this.lOUT15, "lOUT15");
+            this.lOUT15.Name = "lOUT15";
+            // 
+            // lOUT14
+            // 
+            resources.ApplyResources(this.lOUT14, "lOUT14");
+            this.lOUT14.Name = "lOUT14";
+            // 
+            // lOUT13
+            // 
+            resources.ApplyResources(this.lOUT13, "lOUT13");
+            this.lOUT13.Name = "lOUT13";
+            // 
+            // lOUT12
+            // 
+            resources.ApplyResources(this.lOUT12, "lOUT12");
+            this.lOUT12.Name = "lOUT12";
+            // 
+            // lOUT11
+            // 
+            resources.ApplyResources(this.lOUT11, "lOUT11");
+            this.lOUT11.Name = "lOUT11";
+            // 
+            // lOUT10
+            // 
+            resources.ApplyResources(this.lOUT10, "lOUT10");
+            this.lOUT10.Name = "lOUT10";
+            // 
+            // lOUT9
+            // 
+            resources.ApplyResources(this.lOUT9, "lOUT9");
+            this.lOUT9.Name = "lOUT9";
+            // 
+            // lOUT8
+            // 
+            resources.ApplyResources(this.lOUT8, "lOUT8");
+            this.lOUT8.Name = "lOUT8";
+            // 
+            // lOUT7
+            // 
+            resources.ApplyResources(this.lOUT7, "lOUT7");
+            this.lOUT7.Name = "lOUT7";
+            // 
+            // lOUT6
+            // 
+            resources.ApplyResources(this.lOUT6, "lOUT6");
+            this.lOUT6.Name = "lOUT6";
+            // 
+            // lOUT5
+            // 
+            resources.ApplyResources(this.lOUT5, "lOUT5");
+            this.lOUT5.Name = "lOUT5";
+            // 
+            // lOUT4
+            // 
+            resources.ApplyResources(this.lOUT4, "lOUT4");
+            this.lOUT4.Name = "lOUT4";
+            // 
+            // lOUT3
+            // 
+            resources.ApplyResources(this.lOUT3, "lOUT3");
+            this.lOUT3.Name = "lOUT3";
+            // 
+            // lOUT2
+            // 
+            resources.ApplyResources(this.lOUT2, "lOUT2");
+            this.lOUT2.Name = "lOUT2";
+            // 
+            // lOUT1
+            // 
+            resources.ApplyResources(this.lOUT1, "lOUT1");
+            this.lOUT1.Name = "lOUT1";
+            // 
+            // lOUT0
+            // 
+            resources.ApplyResources(this.lOUT0, "lOUT0");
+            this.lOUT0.Name = "lOUT0";
+            // 
+            // pOUT15
+            // 
+            resources.ApplyResources(this.pOUT15, "pOUT15");
+            this.pOUT15.Name = "pOUT15";
+            this.pOUT15.TabStop = false;
+            // 
+            // pOUT14
+            // 
+            resources.ApplyResources(this.pOUT14, "pOUT14");
+            this.pOUT14.Name = "pOUT14";
+            this.pOUT14.TabStop = false;
+            // 
+            // pOUT13
+            // 
+            resources.ApplyResources(this.pOUT13, "pOUT13");
+            this.pOUT13.Name = "pOUT13";
+            this.pOUT13.TabStop = false;
+            // 
+            // pOUT12
+            // 
+            resources.ApplyResources(this.pOUT12, "pOUT12");
+            this.pOUT12.Name = "pOUT12";
+            this.pOUT12.TabStop = false;
+            // 
+            // pOUT11
+            // 
+            resources.ApplyResources(this.pOUT11, "pOUT11");
+            this.pOUT11.Name = "pOUT11";
+            this.pOUT11.TabStop = false;
+            // 
+            // pOUT10
+            // 
+            resources.ApplyResources(this.pOUT10, "pOUT10");
+            this.pOUT10.Name = "pOUT10";
+            this.pOUT10.TabStop = false;
+            // 
+            // pOUT9
+            // 
+            resources.ApplyResources(this.pOUT9, "pOUT9");
+            this.pOUT9.Name = "pOUT9";
+            this.pOUT9.TabStop = false;
+            // 
+            // pOUT8
+            // 
+            resources.ApplyResources(this.pOUT8, "pOUT8");
+            this.pOUT8.Name = "pOUT8";
+            this.pOUT8.TabStop = false;
+            // 
+            // pOUT7
+            // 
+            resources.ApplyResources(this.pOUT7, "pOUT7");
+            this.pOUT7.Name = "pOUT7";
+            this.pOUT7.TabStop = false;
+            // 
+            // pOUT6
+            // 
+            resources.ApplyResources(this.pOUT6, "pOUT6");
+            this.pOUT6.Name = "pOUT6";
+            this.pOUT6.TabStop = false;
+            // 
+            // pOUT5
+            // 
+            resources.ApplyResources(this.pOUT5, "pOUT5");
+            this.pOUT5.Name = "pOUT5";
+            this.pOUT5.TabStop = false;
+            // 
+            // pOUT4
+            // 
+            resources.ApplyResources(this.pOUT4, "pOUT4");
+            this.pOUT4.Name = "pOUT4";
+            this.pOUT4.TabStop = false;
+            // 
+            // pOUT3
+            // 
+            resources.ApplyResources(this.pOUT3, "pOUT3");
+            this.pOUT3.Name = "pOUT3";
+            this.pOUT3.TabStop = false;
+            // 
+            // pOUT2
+            // 
+            resources.ApplyResources(this.pOUT2, "pOUT2");
+            this.pOUT2.Name = "pOUT2";
+            this.pOUT2.TabStop = false;
+            // 
+            // pOUT1
+            // 
+            resources.ApplyResources(this.pOUT1, "pOUT1");
+            this.pOUT1.Name = "pOUT1";
+            this.pOUT1.TabStop = false;
+            // 
+            // pOUT0
+            // 
+            resources.ApplyResources(this.pOUT0, "pOUT0");
+            this.pOUT0.Name = "pOUT0";
+            this.pOUT0.TabStop = false;
+            // 
             // Form_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -12385,6 +12562,7 @@
             this.panel21.ResumeLayout(false);
             this.panel18.ResumeLayout(false);
             this.SetSystemPrams.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.tabControl4.ResumeLayout(false);
             this.tP_SystemSet2.ResumeLayout(false);
             this.groupBox20.ResumeLayout(false);
@@ -12446,7 +12624,6 @@
             this.tabTools.ResumeLayout(false);
             this.Operate0.ResumeLayout(false);
             this.Operate0.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox42.ResumeLayout(false);
             this.groupBox42.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pJog_XPFast)).EndInit();
@@ -12478,40 +12655,6 @@
             this.R_SelectMenu.ResumeLayout(false);
             this.Operate2.ResumeLayout(false);
             this.Operate2.PerformLayout();
-            this.gB_DI.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pIN15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pIN0)).EndInit();
-            this.gB_DO.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pOUT0)).EndInit();
             this.Operate4.ResumeLayout(false);
             this.Operate4.PerformLayout();
             this.panel4.ResumeLayout(false);
@@ -12556,6 +12699,40 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).EndInit();
             this.panel23.ResumeLayout(false);
+            this.gB_DI.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pIN15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pIN0)).EndInit();
+            this.gB_DO.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pOUT0)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12617,72 +12794,6 @@
         private System.Windows.Forms.TabPage Operate2;
         private System.Windows.Forms.Label label109;
         private System.Windows.Forms.ComboBox cB_CardIO_Index;
-        private System.Windows.Forms.GroupBox gB_DI;
-        private System.Windows.Forms.Label lIN15;
-        private System.Windows.Forms.Label lIN14;
-        private System.Windows.Forms.Label lIN13;
-        private System.Windows.Forms.Label lIN12;
-        private System.Windows.Forms.Label lIN11;
-        private System.Windows.Forms.Label lIN10;
-        private System.Windows.Forms.Label lIN9;
-        private System.Windows.Forms.Label lIN8;
-        private System.Windows.Forms.Label lIN7;
-        private System.Windows.Forms.Label lIN6;
-        private System.Windows.Forms.Label lIN5;
-        private System.Windows.Forms.Label lIN4;
-        private System.Windows.Forms.Label lIN3;
-        private System.Windows.Forms.Label lIN2;
-        private System.Windows.Forms.Label lIN1;
-        private System.Windows.Forms.Label lIN0;
-        private System.Windows.Forms.PictureBox pIN15;
-        private System.Windows.Forms.PictureBox pIN14;
-        private System.Windows.Forms.PictureBox pIN13;
-        private System.Windows.Forms.PictureBox pIN12;
-        private System.Windows.Forms.PictureBox pIN11;
-        private System.Windows.Forms.PictureBox pIN10;
-        private System.Windows.Forms.PictureBox pIN9;
-        private System.Windows.Forms.PictureBox pIN8;
-        private System.Windows.Forms.PictureBox pIN7;
-        private System.Windows.Forms.PictureBox pIN6;
-        private System.Windows.Forms.PictureBox pIN5;
-        private System.Windows.Forms.PictureBox pIN4;
-        private System.Windows.Forms.PictureBox pIN3;
-        private System.Windows.Forms.PictureBox pIN2;
-        private System.Windows.Forms.PictureBox pIN1;
-        private System.Windows.Forms.PictureBox pIN0;
-        private System.Windows.Forms.GroupBox gB_DO;
-        private System.Windows.Forms.Label lOUT15;
-        private System.Windows.Forms.Label lOUT14;
-        private System.Windows.Forms.Label lOUT13;
-        private System.Windows.Forms.Label lOUT12;
-        private System.Windows.Forms.Label lOUT11;
-        private System.Windows.Forms.Label lOUT10;
-        private System.Windows.Forms.Label lOUT9;
-        private System.Windows.Forms.Label lOUT8;
-        private System.Windows.Forms.Label lOUT7;
-        private System.Windows.Forms.Label lOUT6;
-        private System.Windows.Forms.Label lOUT5;
-        private System.Windows.Forms.Label lOUT4;
-        private System.Windows.Forms.Label lOUT3;
-        private System.Windows.Forms.Label lOUT2;
-        private System.Windows.Forms.Label lOUT1;
-        private System.Windows.Forms.Label lOUT0;
-        private System.Windows.Forms.PictureBox pOUT15;
-        private System.Windows.Forms.PictureBox pOUT14;
-        private System.Windows.Forms.PictureBox pOUT13;
-        private System.Windows.Forms.PictureBox pOUT12;
-        private System.Windows.Forms.PictureBox pOUT11;
-        private System.Windows.Forms.PictureBox pOUT10;
-        private System.Windows.Forms.PictureBox pOUT9;
-        private System.Windows.Forms.PictureBox pOUT8;
-        private System.Windows.Forms.PictureBox pOUT7;
-        private System.Windows.Forms.PictureBox pOUT6;
-        private System.Windows.Forms.PictureBox pOUT5;
-        private System.Windows.Forms.PictureBox pOUT4;
-        private System.Windows.Forms.PictureBox pOUT3;
-        private System.Windows.Forms.PictureBox pOUT2;
-        private System.Windows.Forms.PictureBox pOUT1;
-        private System.Windows.Forms.PictureBox pOUT0;
         private System.Windows.Forms.GroupBox groupBox64;
         private System.Windows.Forms.Button bLowVelOK;
         private System.Windows.Forms.TextBox tLowVelRatio_R;
@@ -14001,6 +14112,97 @@
         private System.Windows.Forms.NumericUpDown numCol;
         private System.Windows.Forms.Button bSetCalibEnd;
         private System.Windows.Forms.Button bSetCliabStart;
+        private System.Windows.Forms.CheckBox cbOnlineDebug;
+        private System.Windows.Forms.GroupBox gB_DO;
+        private System.Windows.Forms.Label label232;
+        private System.Windows.Forms.Label label234;
+        private System.Windows.Forms.Label label236;
+        private System.Windows.Forms.Label label237;
+        private System.Windows.Forms.Label label238;
+        private System.Windows.Forms.Label label245;
+        private System.Windows.Forms.Label label247;
+        private System.Windows.Forms.Label label258;
+        private System.Windows.Forms.Label label259;
+        private System.Windows.Forms.Label lOutIndex6;
+        private System.Windows.Forms.Label lOutIndex5;
+        private System.Windows.Forms.Label lOutIndex4;
+        private System.Windows.Forms.Label lOutIndex3;
+        private System.Windows.Forms.Label lOutIndex2;
+        private System.Windows.Forms.Label lOutIndex1;
+        private System.Windows.Forms.Label lOutIndex0;
+        private System.Windows.Forms.Label lOUT15;
+        private System.Windows.Forms.Label lOUT14;
+        private System.Windows.Forms.Label lOUT13;
+        private System.Windows.Forms.Label lOUT12;
+        private System.Windows.Forms.Label lOUT11;
+        private System.Windows.Forms.Label lOUT10;
+        private System.Windows.Forms.Label lOUT9;
+        private System.Windows.Forms.Label lOUT8;
+        private System.Windows.Forms.Label lOUT7;
+        private System.Windows.Forms.Label lOUT6;
+        private System.Windows.Forms.Label lOUT5;
+        private System.Windows.Forms.Label lOUT4;
+        private System.Windows.Forms.Label lOUT3;
+        private System.Windows.Forms.Label lOUT2;
+        private System.Windows.Forms.Label lOUT1;
+        private System.Windows.Forms.Label lOUT0;
+        private System.Windows.Forms.PictureBox pOUT15;
+        private System.Windows.Forms.PictureBox pOUT14;
+        private System.Windows.Forms.PictureBox pOUT13;
+        private System.Windows.Forms.PictureBox pOUT12;
+        private System.Windows.Forms.PictureBox pOUT11;
+        private System.Windows.Forms.PictureBox pOUT10;
+        private System.Windows.Forms.PictureBox pOUT9;
+        private System.Windows.Forms.PictureBox pOUT8;
+        private System.Windows.Forms.PictureBox pOUT7;
+        private System.Windows.Forms.PictureBox pOUT6;
+        private System.Windows.Forms.PictureBox pOUT5;
+        private System.Windows.Forms.PictureBox pOUT4;
+        private System.Windows.Forms.PictureBox pOUT3;
+        private System.Windows.Forms.PictureBox pOUT2;
+        private System.Windows.Forms.PictureBox pOUT1;
+        private System.Windows.Forms.PictureBox pOUT0;
+        private System.Windows.Forms.GroupBox gB_DI;
+        private System.Windows.Forms.Label lInIndex15;
+        private System.Windows.Forms.Label lInIndex14;
+        private System.Windows.Forms.Label lInIndex13;
+        private System.Windows.Forms.Label lInIndex12;
+        private System.Windows.Forms.Label lInIndex11;
+        private System.Windows.Forms.Label lInIndex10;
+        private System.Windows.Forms.Label lInIndex9;
+        private System.Windows.Forms.Label lInIndex8;
+        private System.Windows.Forms.Label lIN15;
+        private System.Windows.Forms.Label lIN14;
+        private System.Windows.Forms.Label lIN13;
+        private System.Windows.Forms.Label lIN12;
+        private System.Windows.Forms.Label lIN11;
+        private System.Windows.Forms.Label lIN10;
+        private System.Windows.Forms.Label lIN9;
+        private System.Windows.Forms.Label lIN8;
+        private System.Windows.Forms.Label lIN7;
+        private System.Windows.Forms.Label lIN6;
+        private System.Windows.Forms.Label lIN5;
+        private System.Windows.Forms.Label lIN4;
+        private System.Windows.Forms.Label lIN3;
+        private System.Windows.Forms.Label lIN2;
+        private System.Windows.Forms.Label lIN1;
+        private System.Windows.Forms.Label lIN0;
+        private System.Windows.Forms.PictureBox pIN15;
+        private System.Windows.Forms.PictureBox pIN14;
+        private System.Windows.Forms.PictureBox pIN13;
+        private System.Windows.Forms.PictureBox pIN12;
+        private System.Windows.Forms.PictureBox pIN11;
+        private System.Windows.Forms.PictureBox pIN10;
+        private System.Windows.Forms.PictureBox pIN9;
+        private System.Windows.Forms.PictureBox pIN8;
+        private System.Windows.Forms.PictureBox pIN7;
+        private System.Windows.Forms.PictureBox pIN6;
+        private System.Windows.Forms.PictureBox pIN5;
+        private System.Windows.Forms.PictureBox pIN4;
+        private System.Windows.Forms.PictureBox pIN3;
+        private System.Windows.Forms.PictureBox pIN2;
+        private System.Windows.Forms.PictureBox pIN1;
+        private System.Windows.Forms.PictureBox pIN0;
     }
 }
 
