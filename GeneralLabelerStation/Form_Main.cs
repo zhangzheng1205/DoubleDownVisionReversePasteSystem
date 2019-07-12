@@ -8578,7 +8578,7 @@ namespace GeneralLabelerStation
         private short ResetInformBackTake()
         {
             if (VariableSys.machineVersion == 3)
-                return R3.SetIO_OUT(6);
+                return R3.ResetIO_OUT(6);
             else
                 return R2.ResetIO_OUT(6);
         }
@@ -8596,7 +8596,7 @@ namespace GeneralLabelerStation
         private short ResetInformBeforeGive()
         {
             if (VariableSys.machineVersion == 3)
-                return R3.SetIO_OUT(7);
+                return R3.ResetIO_OUT(7);
             else
                 return R2.ResetIO_OUT(7);
         }
@@ -15713,6 +15713,7 @@ namespace GeneralLabelerStation
         }
         #endregion
 
+        //todo IO表界面
         #region IO表
         private void cB_CardIO_Index_SelectedIndexChanged(object sender, EventArgs e)
         {
