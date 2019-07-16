@@ -466,6 +466,7 @@ namespace GeneralLabelerStation
             /// <summary>
             /// 同一组的号码 即 BadMark编号（同一组只有一个BadMark）
             /// </summary>
+            //todo BadMark编号字段
             public string[] PastePN;
             public bool[] PasteEN;//贴附使能
             public PointF[] PastePoints;//贴附点XY坐标

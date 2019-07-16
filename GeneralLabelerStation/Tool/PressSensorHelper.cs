@@ -283,8 +283,6 @@ namespace GeneralLabelerStation.Tool
             sendByte[54] = 0X50;
             sendByte[55] = 0X5C;
 #endif
-
-            return;
             lock (this.sendLock)
             {
 #if LHFS
@@ -299,8 +297,6 @@ namespace GeneralLabelerStation.Tool
 
         public void SendZeroAll()
         {
-            return;
-
             if (this.Socket == null || !this.Socket.Connected)
                 return;
 
@@ -316,11 +312,16 @@ namespace GeneralLabelerStation.Tool
             sendByte[8] = 0XB0;
             lock (this.sendLock)
             {
+#if LHFS
                 for (int channel = 0; channel < 4; channel++)
                 {
                     SendZero(channel);
                     Thread.Sleep(200);
                 }
+#else
+                this.Socket.Send(sendByte);
+                Thread.Sleep(20);
+#endif
             }
         }
 
@@ -465,7 +466,7 @@ namespace GeneralLabelerStation.Tool
             }
         }
 
-        #endregion
+#endregion
 
         public bool ShowPastePress(int nozzle, int pcbIndex, int pcsIndex)
         {

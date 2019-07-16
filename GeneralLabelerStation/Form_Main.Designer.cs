@@ -3442,13 +3442,11 @@
             // 
             resources.ApplyResources(this.tNzCenterOffsetY, "tNzCenterOffsetY");
             this.tNzCenterOffsetY.Name = "tNzCenterOffsetY";
-            this.tNzCenterOffsetY.ReadOnly = true;
             // 
             // tNzCenterOffsetX
             // 
             resources.ApplyResources(this.tNzCenterOffsetX, "tNzCenterOffsetX");
             this.tNzCenterOffsetX.Name = "tNzCenterOffsetX";
-            this.tNzCenterOffsetX.ReadOnly = true;
             // 
             // label209
             // 

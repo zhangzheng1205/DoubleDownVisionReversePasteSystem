@@ -136,7 +136,7 @@
             // 
             this.label5.BackColor = System.Drawing.Color.White;
             this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.Location = new System.Drawing.Point(400, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(130, 62);
@@ -148,7 +148,7 @@
             // 
             this.lZ4.BackColor = System.Drawing.Color.LightGreen;
             this.lZ4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lZ4.Font = new System.Drawing.Font("Microsoft YaHei", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lZ4.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lZ4.Location = new System.Drawing.Point(300, 0);
             this.lZ4.Name = "lZ4";
             this.lZ4.Size = new System.Drawing.Size(100, 62);
@@ -160,7 +160,7 @@
             // 
             this.lZ3.BackColor = System.Drawing.Color.LightGreen;
             this.lZ3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lZ3.Font = new System.Drawing.Font("Microsoft YaHei", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lZ3.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lZ3.Location = new System.Drawing.Point(200, 0);
             this.lZ3.Name = "lZ3";
             this.lZ3.Size = new System.Drawing.Size(100, 62);
@@ -172,7 +172,7 @@
             // 
             this.lZ2.BackColor = System.Drawing.Color.LightGreen;
             this.lZ2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lZ2.Font = new System.Drawing.Font("Microsoft YaHei", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lZ2.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lZ2.Location = new System.Drawing.Point(100, 0);
             this.lZ2.Name = "lZ2";
             this.lZ2.Size = new System.Drawing.Size(100, 62);
@@ -184,7 +184,7 @@
             // 
             this.lZ1.BackColor = System.Drawing.Color.LightGreen;
             this.lZ1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lZ1.Font = new System.Drawing.Font("Microsoft YaHei", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lZ1.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lZ1.Location = new System.Drawing.Point(0, 0);
             this.lZ1.Name = "lZ1";
             this.lZ1.Size = new System.Drawing.Size(100, 62);
@@ -246,7 +246,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(159, 284);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(241, 147);
@@ -278,7 +278,7 @@
             // label9
             // 
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label9.Location = new System.Drawing.Point(3, 80);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(111, 42);
@@ -312,7 +312,7 @@
             // label2
             // 
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(3, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(111, 40);
@@ -323,7 +323,7 @@
             // label1
             // 
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 40);
@@ -366,7 +366,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox2.Location = new System.Drawing.Point(159, 68);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(235, 210);
@@ -534,7 +534,7 @@
             // 
             this.groupBox3.Controls.Add(this.listPress);
             this.groupBox3.Controls.Add(this.panel3);
-            this.groupBox3.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox3.Location = new System.Drawing.Point(397, 115);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(342, 493);
@@ -595,7 +595,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label6.Location = new System.Drawing.Point(429, 81);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 21);
@@ -605,7 +605,7 @@
             // cbSelectNz
             // 
             this.cbSelectNz.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSelectNz.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbSelectNz.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbSelectNz.FormattingEnabled = true;
             this.cbSelectNz.Items.AddRange(new object[] {
             "Z1",

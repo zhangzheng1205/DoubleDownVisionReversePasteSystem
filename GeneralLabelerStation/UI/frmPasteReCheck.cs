@@ -46,6 +46,7 @@ namespace GeneralLabelerStation.UI
             }
         }
 
+        //todo 上视觉校正加载贴附点
         private void frmPasteReCheck_Load(object sender, EventArgs e)
         {
             this.btnRevoke.Enabled = false;
@@ -181,7 +182,7 @@ namespace GeneralLabelerStation.UI
                 if (curPcbIndex < 0)
                     curPcbIndex = 0;
             }
-            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.DarkBlue;
+            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.Blue;
             this.GoTo();
         }
 
@@ -203,6 +204,7 @@ namespace GeneralLabelerStation.UI
         }
         private void bNext_Click(object sender, EventArgs e)
         {
+            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.White;
             curPcsIndex++;
             if (curPcsIndex >= Form_Main.Instance.JOB.PASTEInfo[curPcbIndex].iPasteED.Length)
             {
@@ -211,7 +213,7 @@ namespace GeneralLabelerStation.UI
                 if (curPcbIndex >= Form_Main.Instance.JOB.PasteCount)
                     curPcbIndex--;
             }
-            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.BlueViolet;
+            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.Blue;
             this.GoTo();
         }
 
@@ -461,6 +463,7 @@ namespace GeneralLabelerStation.UI
             }
             Actions.Push(action);
         }
+        //todo 撤销按钮
         private void btnRevoke_Click(object sender, EventArgs e)
         {
             if (Actions.Count != 0)
