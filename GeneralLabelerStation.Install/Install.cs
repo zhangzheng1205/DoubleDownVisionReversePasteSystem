@@ -32,5 +32,19 @@ namespace GeneralLabelerStation.Install
             ini.IniWriteNumber("MachineType", "MachineVersion", 3);
             this.btnThirdMachine.BackColor = Color.YellowGreen;
         }
+
+        private void btnBD_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定是比得压力传感器?", "重要提示", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            ini.IniWriteNumber("PressSensorType", "PressSensorVersion", 0);
+            this.btnBD.BackColor = Color.YellowGreen;
+        }
+
+        private void btnLH_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定是力恒压力传感器?", "重要提示", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            ini.IniWriteNumber("PressSensorType", "PressSensorVersion", 1);
+            this.btnLH.BackColor = Color.YellowGreen;
+        }
     }
 }

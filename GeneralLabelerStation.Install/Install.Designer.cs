@@ -31,11 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Install));
             this.btnSecondMachine = new System.Windows.Forms.Button();
             this.btnThirdMachine = new System.Windows.Forms.Button();
+            this.btnLH = new System.Windows.Forms.Button();
+            this.btnBD = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSecondMachine
             // 
-            this.btnSecondMachine.Location = new System.Drawing.Point(100, 104);
+            this.btnSecondMachine.Location = new System.Drawing.Point(102, 78);
             this.btnSecondMachine.Name = "btnSecondMachine";
             this.btnSecondMachine.Size = new System.Drawing.Size(75, 23);
             this.btnSecondMachine.TabIndex = 0;
@@ -45,7 +47,7 @@
             // 
             // btnThirdMachine
             // 
-            this.btnThirdMachine.Location = new System.Drawing.Point(259, 104);
+            this.btnThirdMachine.Location = new System.Drawing.Point(261, 78);
             this.btnThirdMachine.Name = "btnThirdMachine";
             this.btnThirdMachine.Size = new System.Drawing.Size(75, 23);
             this.btnThirdMachine.TabIndex = 1;
@@ -53,11 +55,33 @@
             this.btnThirdMachine.UseVisualStyleBackColor = true;
             this.btnThirdMachine.Click += new System.EventHandler(this.btnThirdMachine_Click);
             // 
+            // btnLH
+            // 
+            this.btnLH.Location = new System.Drawing.Point(261, 129);
+            this.btnLH.Name = "btnLH";
+            this.btnLH.Size = new System.Drawing.Size(87, 23);
+            this.btnLH.TabIndex = 3;
+            this.btnLH.Text = "力恒压力传感器";
+            this.btnLH.UseVisualStyleBackColor = true;
+            this.btnLH.Click += new System.EventHandler(this.btnLH_Click);
+            // 
+            // btnBD
+            // 
+            this.btnBD.Location = new System.Drawing.Point(102, 129);
+            this.btnBD.Name = "btnBD";
+            this.btnBD.Size = new System.Drawing.Size(87, 23);
+            this.btnBD.TabIndex = 2;
+            this.btnBD.Text = "比淂压力传感器";
+            this.btnBD.UseVisualStyleBackColor = true;
+            this.btnBD.Click += new System.EventHandler(this.btnBD_Click);
+            // 
             // Install
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(476, 263);
+            this.Controls.Add(this.btnLH);
+            this.Controls.Add(this.btnBD);
             this.Controls.Add(this.btnThirdMachine);
             this.Controls.Add(this.btnSecondMachine);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -71,6 +95,8 @@
 
         private System.Windows.Forms.Button btnSecondMachine;
         private System.Windows.Forms.Button btnThirdMachine;
+        private System.Windows.Forms.Button btnLH;
+        private System.Windows.Forms.Button btnBD;
     }
 }
 

@@ -1,5 +1,4 @@
-﻿//#define LHFS
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +20,7 @@ namespace GeneralLabelerStation.Tool
     {
         public PressSensorHelper()
         {
+            VariableSys.PressSensorVersion = (short)Ini_Sys.IniReadNum("PressSensorType", "PressSensorVersion");
         }
 
 
@@ -37,7 +37,8 @@ namespace GeneralLabelerStation.Tool
             set;
         } = 8088;
 
-
+        public static Variable VariableSys = new Variable();
+        public IniFile Ini_Sys = new IniFile(Variable.sPath_BaseProgram + "\\Configure\\System.ini");
 
         /// <summary>
         /// 压力报警记录保存行数
@@ -158,6 +159,7 @@ namespace GeneralLabelerStation.Tool
             if (this.Socket == null)
             {
                 new Thread(ThreadRecive).Start();
+
             }
         }
 
@@ -170,30 +172,30 @@ namespace GeneralLabelerStation.Tool
             {
                 try
                 {
-#if LHFS
                     byte[] sendByte = new byte[8];
-                    sendByte[0] = 0X01;
-                    sendByte[1] = 0X03;
-                    sendByte[2] = 0X00;
-                    sendByte[3] = 0X00;
-                    sendByte[4] = 0X00;
-                    sendByte[5] = 0X06;
-                    sendByte[6] = 0XC5;
-                    sendByte[7] = 0XC8;
-#else
-                    // CRC 校验需要改
-                    byte[] sendByte = new byte[8];
-                    sendByte[0] = 0X01;
-                    sendByte[1] = 0X03;
-                    sendByte[2] = 0X00;
-                    sendByte[3] = 0X00;
-                    sendByte[4] = 0X00;
-                    sendByte[5] = 0X18;
-                    sendByte[6] = 0X45;
-                    sendByte[7] = 0XC0;
-#endif
-
-
+                    if (VariableSys.PressSensorVersion == 1)
+                    {
+                        sendByte[0] = 0X01;
+                        sendByte[1] = 0X03;
+                        sendByte[2] = 0X00;
+                        sendByte[3] = 0X00;
+                        sendByte[4] = 0X00;
+                        sendByte[5] = 0X06;
+                        sendByte[6] = 0XC5;
+                        sendByte[7] = 0XC8;
+                    }
+                    else
+                    {
+                        // CRC 校验需要改
+                        sendByte[0] = 0X01;
+                        sendByte[1] = 0X03;
+                        sendByte[2] = 0X00;
+                        sendByte[3] = 0X00;
+                        sendByte[4] = 0X00;
+                        sendByte[5] = 0X18;
+                        sendByte[6] = 0X45;
+                        sendByte[7] = 0XC0;
+                    }
                     lock (this.sendLock)
                     {
                         this.Socket.Send(sendByte);
@@ -207,92 +209,98 @@ namespace GeneralLabelerStation.Tool
         {
             if (this.Socket == null || !this.Socket.Connected)
                 return;
-#if LHFS
-            byte[] sendByte = new byte[11];
-            sendByte[0] = 0X01;
-            sendByte[1] = 0X10;
-            sendByte[2] = 0X03;
-            sendByte[3] = 0XED;
-            sendByte[4] = 0X00;
-            sendByte[5] = 0X01;
-            sendByte[6] = 0X02;
-            sendByte[7] = 0X00;
-            switch (channel)
+            if (VariableSys.PressSensorVersion == 1)
             {
-                case 0:
-                    sendByte[8] = 0X01;
-                    sendByte[9] = 0X43;
-                    sendByte[10] = 0XED;
-                    break;
-                case 1:
-                    sendByte[8] = 0X02;
-                    sendByte[9] = 0X03;
-                    sendByte[10] = 0XEC;
-                    break;
-                case 2:
-                    sendByte[8] = 0X03;
-                    sendByte[9] = 0XC2;
-                    sendByte[10] = 0X2C;
-                    break;
-                case 3:
-                    sendByte[8] = 0X04;
-                    sendByte[9] = 0X83;
-                    sendByte[10] = 0XEE;
-                    break;
-            }
-
-            byte[] SendByteZero = new byte[11];
-            SendByteZero[0] = 0X01;
-            SendByteZero[1] = 0X10;
-            SendByteZero[2] = 0X03;
-            SendByteZero[3] = 0XEF;
-            SendByteZero[4] = 0X00;
-            SendByteZero[5] = 0X01;
-            SendByteZero[6] = 0X02;
-            SendByteZero[7] = 0X00;
-            SendByteZero[8] = 0X01;
-            SendByteZero[9] = 0X42;
-            SendByteZero[10] = 0X0F;
-#else
-            byte[] sendByte = new byte[9];
-            sendByte[0] = 0X01;
-            sendByte[1] = 0X10;
-            sendByte[2] = 0X00;
-            sendByte[3] = 0X18;
-            sendByte[4] = 0X00;
-            sendByte[5] = 0X18;
-
-            for (int i = 0; i < 12; i += 4)
-            {
-                if (channel == i)
+                byte[] sendByte = new byte[11];
+                sendByte[0] = 0X01;
+                sendByte[1] = 0X10;
+                sendByte[2] = 0X03;
+                sendByte[3] = 0XED;
+                sendByte[4] = 0X00;
+                sendByte[5] = 0X01;
+                sendByte[6] = 0X02;
+                sendByte[7] = 0X00;
+                switch (channel)
                 {
-                    sendByte[i] = 00;
-                    sendByte[i + 1] = 00;
-                    sendByte[i + 2] = 00;
-                    sendByte[i + 3] = 01;
+                    case 0:
+                        sendByte[8] = 0X01;
+                        sendByte[9] = 0X43;
+                        sendByte[10] = 0XED;
+                        break;
+                    case 1:
+                        sendByte[8] = 0X02;
+                        sendByte[9] = 0X03;
+                        sendByte[10] = 0XEC;
+                        break;
+                    case 2:
+                        sendByte[8] = 0X03;
+                        sendByte[9] = 0XC2;
+                        sendByte[10] = 0X2C;
+                        break;
+                    case 3:
+                        sendByte[8] = 0X04;
+                        sendByte[9] = 0X83;
+                        sendByte[10] = 0XEE;
+                        break;
                 }
-                else
+
+                byte[] SendByteZero = new byte[11];
+                SendByteZero[0] = 0X01;
+                SendByteZero[1] = 0X10;
+                SendByteZero[2] = 0X03;
+                SendByteZero[3] = 0XEF;
+                SendByteZero[4] = 0X00;
+                SendByteZero[5] = 0X01;
+                SendByteZero[6] = 0X02;
+                SendByteZero[7] = 0X00;
+                SendByteZero[8] = 0X01;
+                SendByteZero[9] = 0X42;
+                SendByteZero[10] = 0X0F;
+
+                lock (this.sendLock)
                 {
-                    sendByte[i] = 00;
-                    sendByte[i + 1] = 00;
-                    sendByte[i + 2] = 00;
-                    sendByte[i + 3] = 00;
+
+                    this.Socket.Send(sendByte);
+                    Thread.Sleep(10);
+                    this.Socket.Send(SendByteZero);
+                    this.Socket.Send(sendByte);
                 }
             }
-
-            sendByte[54] = 0X50;
-            sendByte[55] = 0X5C;
-#endif
-            lock (this.sendLock)
+            else
             {
-#if LHFS
-                this.Socket.Send(sendByte);
-                Thread.Sleep(10);
-                this.Socket.Send(SendByteZero);
-#else
-                this.Socket.Send(sendByte);
-#endif
+                byte[] sendByte = new byte[9];
+                sendByte[0] = 0X01;
+                sendByte[1] = 0X10;
+                sendByte[2] = 0X00;
+                sendByte[3] = 0X18;
+                sendByte[4] = 0X00;
+                sendByte[5] = 0X18;
+
+                for (int i = 0; i < 12; i += 4)
+                {
+                    if (channel == i)
+                    {
+                        sendByte[i] = 00;
+                        sendByte[i + 1] = 00;
+                        sendByte[i + 2] = 00;
+                        sendByte[i + 3] = 01;
+                    }
+                    else
+                    {
+                        sendByte[i] = 00;
+                        sendByte[i + 1] = 00;
+                        sendByte[i + 2] = 00;
+                        sendByte[i + 3] = 00;
+                    }
+                }
+                sendByte[54] = 0X50;
+                sendByte[55] = 0X5C;
+                lock (this.sendLock)
+                {
+                    this.Socket.Send(sendByte);
+                }
             }
+
         }
 
         public void SendZeroAll()
@@ -312,16 +320,19 @@ namespace GeneralLabelerStation.Tool
             sendByte[8] = 0XB0;
             lock (this.sendLock)
             {
-#if LHFS
-                for (int channel = 0; channel < 4; channel++)
+                if (VariableSys.PressSensorVersion == 1)
                 {
-                    SendZero(channel);
-                    Thread.Sleep(200);
+                    for (int channel = 0; channel < 4; channel++)
+                    {
+                        SendZero(channel);
+                        Thread.Sleep(200);
+                    }
                 }
-#else
-                this.Socket.Send(sendByte);
-                Thread.Sleep(20);
-#endif
+                else
+                {
+                    this.Socket.Send(sendByte);
+                    Thread.Sleep(20);
+                }
             }
         }
 
@@ -339,50 +350,52 @@ namespace GeneralLabelerStation.Tool
                 {
                     int count = 0;
                     double[] Temp = new double[12];
-#if LHFS
-                    for (int i = 7; i < 14; i += 2)
+                    //
+                    if (VariableSys.PressSensorVersion == 1)
                     {
-                        int r3 = 0;
-                        int r4 = 0;
-                        int IsPos = 1;
-                        if (recBytes[i] == 0xFF) // 负数
+                        for (int i = 7; i < 14; i += 2)
                         {
-                            IsPos = -1;
-                            recBytes[i] ^= 0xFF;
-                            recBytes[i + 1] ^= 0xFF;
-                            //buffer[i + 1] += 0x01;
-                        }
+                            int r3 = 0;
+                            int r4 = 0;
+                            int IsPos = 1;
+                            if (recBytes[i] == 0xFF) // 负数
+                            {
+                                IsPos = -1;
+                                recBytes[i] ^= 0xFF;
+                                recBytes[i + 1] ^= 0xFF;
+                                //buffer[i + 1] += 0x01;
+                            }
 
-                        r3 = recBytes[i];
-                        r4 = recBytes[i + 1];
-                        Temp[count] = IsPos * (r3 * 255 + r4);
-                        count++;
+                            r3 = recBytes[i];
+                            r4 = recBytes[i + 1];
+                            Temp[count] = IsPos * (r3 * 255 + r4);
+                            count++;
+                        }
                     }
-#else
-                    for (int i = 3; i < 19; i += 4)
+                    else
                     {
-                        int r3 = 0;
-                        int r4 = 0;
-                        int IsPos = 1;
-                        if (recBytes[i] == 0xFF) // 负数
+                        for (int i = 3; i < 19; i += 4)
                         {
-                            IsPos = -1;
-                            recBytes[i] ^= 0xFF;
-                            recBytes[i + 1] ^= 0xFF;
-                            recBytes[i + 2] ^= 0xFF;
-                            recBytes[i + 3] ^= 0xFF;
-                            recBytes[i + 3] += 0x01;
+                            int r3 = 0;
+                            int r4 = 0;
+                            int IsPos = 1;
+                            if (recBytes[i] == 0xFF) // 负数
+                            {
+                                IsPos = -1;
+                                recBytes[i] ^= 0xFF;
+                                recBytes[i + 1] ^= 0xFF;
+                                recBytes[i + 2] ^= 0xFF;
+                                recBytes[i + 3] ^= 0xFF;
+                                recBytes[i + 3] += 0x01;
+                            }
+
+                            r3 = recBytes[i + 2];
+                            r4 = recBytes[i + 3];
+
+                            Temp[count] = IsPos * (r3 * 255 + r4) / 10.0;
+                            count++;
                         }
-
-                        r3 = recBytes[i + 2];
-                        r4 = recBytes[i + 3];
-
-                        Temp[count] = IsPos * (r3 * 255 + r4) / 10.0;
-                        count++;
                     }
-#endif
-
-
                     for (int i = 0; i < 4; ++i)
                     {
                         this.CurPress[i] = Math.Abs(Temp[this.ZChannel[i]]);
@@ -466,7 +479,7 @@ namespace GeneralLabelerStation.Tool
             }
         }
 
-#endregion
+        #endregion
 
         public bool ShowPastePress(int nozzle, int pcbIndex, int pcsIndex)
         {
