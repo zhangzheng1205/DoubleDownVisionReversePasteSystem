@@ -307,32 +307,39 @@ namespace GeneralLabelerStation.Tool
         {
             if (this.Socket == null || !this.Socket.Connected)
                 return;
-
-            byte[] sendByte = new byte[9];
-            sendByte[0] = 0X01;
-            sendByte[1] = 0X11;
-            sendByte[2] = 0X00;
-            sendByte[3] = 0XC8;
-            sendByte[4] = 0X00;
-            sendByte[5] = 0X01;
-            sendByte[6] = 0X02;
-            sendByte[7] = 0XB6;
-            sendByte[8] = 0XB0;
+            byte[] sendByte = null;
+            if (VariableSys.PressSensorVersion == 1)
+            {
+                sendByte = new byte[11];
+                sendByte[0] = 0X01;
+                sendByte[1] = 0X10;
+                sendByte[2] = 0X03;
+                sendByte[3] = 0XEF;
+                sendByte[4] = 0X00;
+                sendByte[5] = 0X01;
+                sendByte[6] = 0X02;
+                sendByte[7] = 0X00;
+                sendByte[8] = 0X20;
+                sendByte[9] = 0X82;
+                sendByte[10] = 0X17;
+            }
+            else
+            {
+                sendByte = new byte[9];
+                sendByte[0] = 0X01;
+                sendByte[1] = 0X11;
+                sendByte[2] = 0X00;
+                sendByte[3] = 0XC8;
+                sendByte[4] = 0X00;
+                sendByte[5] = 0X01;
+                sendByte[6] = 0X02;
+                sendByte[7] = 0XB6;
+                sendByte[8] = 0XB0;
+            }
             lock (this.sendLock)
             {
-                if (VariableSys.PressSensorVersion == 1)
-                {
-                    for (int channel = 0; channel < 4; channel++)
-                    {
-                        SendZero(channel);
-                        Thread.Sleep(200);
-                    }
-                }
-                else
-                {
                     this.Socket.Send(sendByte);
                     Thread.Sleep(20);
-                }
             }
         }
 
@@ -358,12 +365,9 @@ namespace GeneralLabelerStation.Tool
                             int r3 = 0;
                             int r4 = 0;
                             int IsPos = 1;
-                            if (recBytes[i] == 0xFF) // 负数
+                            if (recBytes[i] > 128) // 负数
                             {
-                                IsPos = -1;
-                                recBytes[i] ^= 0xFF;
-                                recBytes[i + 1] ^= 0xFF;
-                                //buffer[i + 1] += 0x01;
+                                recBytes[i] = 0;
                             }
 
                             r3 = recBytes[i];
