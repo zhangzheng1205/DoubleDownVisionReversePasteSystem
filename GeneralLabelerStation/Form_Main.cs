@@ -11562,7 +11562,7 @@ namespace GeneralLabelerStation
         private void bByPASS_Click(object sender, EventArgs e)
         {
             //在安全位置时候 BYPASS
-            if (AxisReach(VariableSys.pReadyPoint) && this.All_ZReachOrg())
+            if ( ClearFinished/*AxisReach(VariableSys.pReadyPoint)*/ && this.All_ZReachOrg())
             {
                 if (VariableSys.dFlowIN_OUT != 1 && VariableSys.dFlowIN_OUT != 2)
                 {
@@ -11682,7 +11682,7 @@ namespace GeneralLabelerStation
                 }
             }
         }
-
+        bool ClearFinished = false;
         private void bClear_Click(object sender, EventArgs e)
         {
             if (bMachineAlarm)
@@ -11724,6 +11724,7 @@ namespace GeneralLabelerStation
                 MessageBox.Show("Pls be outside!");
                 Thread Thread_Clear = new Thread(new ThreadStart(thread_Clear));
                 Thread_Clear.Start();
+                ClearFinished = true;
                 #endregion
             }
         }
@@ -11739,7 +11740,15 @@ namespace GeneralLabelerStation
             RunMode = 2;
             if (RUN_AlarmInfo[0] == 0)
                 StatisticsHelper.Instance.Reoprt.Start(TimeDefine.PauseTime, "暂停");
-
+            //hack 暂停按下停止向前要板_Fowindy
+            if (VariableSys.machineVersion == 3)
+            {
+                R3.ResetIO_OUT(7);
+            }
+            else
+            {
+                R2.ResetIO_OUT(7);
+            }    
             StopWatch_FlowIndex.Stop();
             StopWatch_FlowIndex_Conveyor.Stop();
             this.CloseBtnLight(3);
@@ -15849,23 +15858,23 @@ namespace GeneralLabelerStation
                 {
                     LIO_In[0].Text = "夹板动点\r\nB0-IN1";
                     LIO_In[1].Text = "夹板原点\r\nB0-IN2";
-                    LIO_In[2].Text = "备用\r\nB0-IN5";
-                    LIO_In[3].Text = "阻板动点\r\nB0-IN4";
+                    LIO_In[2].Text = "阻板原点\r\nB0-IN4";
+                    LIO_In[3].Text = "备用\r\nB0-IN5";
 
                     LIO_In[4].Text = "后要板\r\nB1-IN1";
                     LIO_In[5].Text = "前Ready\r\nB1-IN2";
                     LIO_In[6].Text = "轨道入口\r\nB1-IN4";
                     LIO_In[7].Text = "轨道出口\r\nB1-IN5";
 
-                    LIO_In[8].Text = "左光纤1\r\nB2-IN1";
+                    LIO_In[8].Text = "左光纤2\r\nB2-IN1";
                     LIO_In[9].Text = "备用\r\nB2-IN2";
-                    LIO_In[10].Text = "左光纤2\r\nB2-IN4";
-                    LIO_In[11].Text = "左光纤3\r\nB2-IN5";
+                    LIO_In[10].Text = "左光纤3\r\nB2-IN4";
+                    LIO_In[11].Text = "左光纤4\r\nB2-IN5";
 
-                    LIO_In[12].Text = "右光纤1\r\nB3-IN1";
+                    LIO_In[12].Text = "右光纤2\r\nB3-IN1";
                     LIO_In[13].Text = "备用\r\nB3-IN2";
-                    LIO_In[14].Text = "右光纤2\r\nB3-IN4";
-                    LIO_In[15].Text = "右光纤3\r\nB3-IN5";
+                    LIO_In[14].Text = "右光纤3\r\nB3-IN4";
+                    LIO_In[15].Text = "右光纤4\r\nB3-IN5";
 
                     LIO_Out[0].Text = "阻板原点\r\nB0-OUT4";
                     LIO_Out[1].Text = "阻板动点\r\nB0-OUT5";
@@ -21574,11 +21583,11 @@ namespace GeneralLabelerStation
                                 ConveyorStop();
                                 StopProduct_ON();//挡板下降
                                 //todo 阻挡动点未感应报警_Fowindy
-                                Thread.Sleep(100);
-                                if (!bArr_IO_IN_Status.bIN_Stop_Move.GetIO())
-                                {
-                                    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "阻挡动点未感应，请检查阻挡动点是否到位！" });
-                                }
+                                //Thread.Sleep(100);
+                                //if (!bArr_IO_IN_Status.bIN_Stop_Move.GetIO())
+                                //{
+                                //    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "阻挡动点未感应，请检查阻挡动点是否到位！" });
+                                //}
                                 if (!this.CardExceptionHandle()) continue;
                             }
                             else
@@ -21735,9 +21744,6 @@ namespace GeneralLabelerStation
                                 if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > VariableSys.iDelayReach)//轨道到位sensor
                                 {
                                     CarryProduct_ON();
-                                    //Stopwatch a = new Stopwatch();
-                                    //a.Start();
-                                    //if (a.ElapsedMilliseconds > 10000 && !bArr_IO_IN_Status.bIN_Carry_Move.GetIO())
                                     //todo 夹板动点未感应报警_Fowindy
                                     Thread.Sleep(100);
                                     if (!bArr_IO_IN_Status.bIN_Carry_Move.GetIO())
