@@ -41,6 +41,7 @@
             this.lProductOut = new System.Windows.Forms.Label();
             this.lReIN = new System.Windows.Forms.Label();
             this.panel29 = new System.Windows.Forms.Panel();
+            this.bCycleStop = new System.Windows.Forms.CheckBox();
             this.bOutput = new System.Windows.Forms.Button();
             this.bInput = new System.Windows.Forms.Button();
             this.bUpVisionCheck = new System.Windows.Forms.Button();
@@ -1823,11 +1824,18 @@
             // 
             // panel29
             // 
+            this.panel29.Controls.Add(this.bCycleStop);
             this.panel29.Controls.Add(this.bOutput);
             this.panel29.Controls.Add(this.bInput);
             this.panel29.Controls.Add(this.bUpVisionCheck);
             resources.ApplyResources(this.panel29, "panel29");
             this.panel29.Name = "panel29";
+            // 
+            // bCycleStop
+            // 
+            resources.ApplyResources(this.bCycleStop, "bCycleStop");
+            this.bCycleStop.Name = "bCycleStop";
+            this.bCycleStop.UseVisualStyleBackColor = true;
             // 
             // bOutput
             // 
@@ -12405,6 +12413,7 @@
             this.gbMachineState.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel29.ResumeLayout(false);
+            this.panel29.PerformLayout();
             this.panel28.ResumeLayout(false);
             this.gB_FeederRight.ResumeLayout(false);
             this.gB_FeederRight.PerformLayout();
@@ -14201,6 +14210,7 @@
         private System.Windows.Forms.PictureBox pIN2;
         private System.Windows.Forms.PictureBox pIN1;
         private System.Windows.Forms.PictureBox pIN0;
+        private System.Windows.Forms.CheckBox bCycleStop;
     }
 }
 

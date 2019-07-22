@@ -774,7 +774,6 @@ namespace GeneralLabelerStation
         public PointF[] pDownRotateCam;//选择中心拍照中心
         public RectangleContour[] rDownROI; // 下视觉搜索区域
         //RunOption
-        public short ConveyorStyle = 0;//0-一段式 1-三段式
         public short LanguageFlag = 0;//0-chinese 1-english
         public short iAddress_FeederDelay1 = 0;
         public short iAddress_FeederDelay2 = 0;
@@ -808,7 +807,6 @@ namespace GeneralLabelerStation
         public bool bEnableVacuumCheck = false; // 启用真空检测
         public bool bEnableLineOffset = false; // 启用线性矫正
         public bool bEnableThrowPut = false; // 启用抛料下压功能
-        public bool bEnableOnlineDebug = false;//启用在线调试模式
 
         public bool bPressureEN = false;//false-不启用压力反馈 true-启用压力反馈
         

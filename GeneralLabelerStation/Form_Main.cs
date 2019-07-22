@@ -117,7 +117,6 @@ namespace GeneralLabelerStation
                 }
             }
         }
-
         #endregion
 
         #region 单例 方便模块间交互
@@ -546,7 +545,7 @@ namespace GeneralLabelerStation
         /// <param name="velMode"></param>
         /// <param name="dir">true:正转  false:反转</param>
         /// <returns></returns>
-        private short ConveyorJog(Variable.VelMode velMode, bool dir)
+        private short ConveyorJog(bool dir)
         {
             short rtn = 0;
             if (VariableSys.machineVersion == 3)
@@ -820,7 +819,6 @@ namespace GeneralLabelerStation
         }
         #endregion
 
-
         #region 界面刷新
         /// <summary>
         /// UI 和 IO刷新Timer
@@ -1031,10 +1029,6 @@ namespace GeneralLabelerStation
             SelectLabel[3] = this.lShowZ3;
             SelectLabel[4] = this.lShowZ4;
         }
-
-        #endregion
-
-        #region 2019年3月25日21:50:47 新算法验证
 
         #endregion
 
@@ -1518,8 +1512,6 @@ namespace GeneralLabelerStation
             #region 读系统文件 & 光源控制
 
             bAlrmIgnore = false;
-            //bAlrmIgnore = Ini_Sys.IniReadValue("RunOption", "NoiseIgnore") == "1" ? true : false;
-            VariableSys.ConveyorStyle = (short)Ini_Sys.IniReadNum("RunOption", "ConveyorStyle");//0-一段式 1-三段式 
 
             VariableSys.sProgramName = Ini_Sys.IniReadValue("LastProgram", "ProgramName");
             VariableSys.sFeederLeftName = Ini_Sys.IniReadValue("Feeder", "FeederLeft");
@@ -1771,31 +1763,11 @@ namespace GeneralLabelerStation
             this.ReadZDTConfig();
 
             #region 显示UI
-            //主页面
-            if (VariableSys.LanguageFlag == 1)
-            {
-                pLanguage.Image = Properties.Resources.english;
-                cB_Conveyor.Items.Add("MiddleConveyor");
-                if (VariableSys.ConveyorStyle == 1)
-                {
-                    cB_Conveyor.Items.Add("LeftConveyor");
-                    cB_Conveyor.Items.Add("RightConveyor");
-                }
-                cB_Conveyor.SelectedIndex = 0;
-                ChartPane.GraphPane.Title.Text = "Program:" + VariableSys.sProgramName;
-            }
-            else
-            {
-                pLanguage.Image = Properties.Resources.china;
-                cB_Conveyor.Items.Add("中轨道");
-                if (VariableSys.ConveyorStyle == 1)
-                {
-                    cB_Conveyor.Items.Add("左轨道");
-                    cB_Conveyor.Items.Add("右轨道");
-                }
-                cB_Conveyor.SelectedIndex = 0;
-                ChartPane.GraphPane.Title.Text = "机种名称:" + VariableSys.sProgramName;
-            }
+
+            pLanguage.Image = Properties.Resources.china;
+            cB_Conveyor.Items.Add("中轨道");
+            cB_Conveyor.SelectedIndex = 0;
+            ChartPane.GraphPane.Title.Text = "机种名称:" + VariableSys.sProgramName;
 
             VariableSys.iNozzleCount = (short)Variable.NOZZLE_NUM;
 
@@ -1989,7 +1961,6 @@ namespace GeneralLabelerStation
             this.cb_EnableCheck.Checked = VariableSys.bEnableVacuumCheck;
             this.cbLineOffset.Checked = VariableSys.bEnableLineOffset;
             this.cbThrowPut.Checked = VariableSys.bEnableThrowPut;
-            this.cbOnlineDebug.Checked = VariableSys.bEnableOnlineDebug;
 
             imageSet.ShowToolbar = true;
             imageSet.ToolsShown = ViewerTools.All;
@@ -11105,7 +11076,6 @@ namespace GeneralLabelerStation
             VariableSys.bEnableVacuumCheck = this.cb_EnableCheck.Checked;
             VariableSys.bEnableLineOffset = this.cbLineOffset.Checked;
             VariableSys.bEnableThrowPut = this.cbThrowPut.Checked;
-            VariableSys.bEnableOnlineDebug = this.cbOnlineDebug.Checked;
 
             for (uint i = 0; i < Variable.NOZZLE_NUM; ++i)
             {
@@ -11423,6 +11393,8 @@ namespace GeneralLabelerStation
             Ini_Sys.IniWriteValue("RunOption", "NoiseIgnore", bAlrmIgnore == true ? "1" : "0");
         }
 
+        private bool CycleStop = false;
+
         private void bAutoRun_Click(object sender, EventArgs e)
         {
             this.CloseBtnLight(0);
@@ -11483,26 +11455,10 @@ namespace GeneralLabelerStation
             if (!this.All_ZReachOrg())
             {
                 this.All_ZGoSafe(VariableSys.VelMode_Debug_Manual);
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Run until Z Axes reaching the safe height!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("待 Z1Z2 复位到安全位置停止后再启动", "提示");
-                }
+                MessageBox.Show("待 Z1Z2 复位到安全位置停止后再启动", "提示");
                 return;
             }
-
-            // 激活轨道继续运行
-            if (FlowIndex_Conveyor != 100 && FlowIndex_Conveyor != 500)
-            {
-                if (VariableSys.dFlowIN_OUT == 1 || VariableSys.dFlowIN_OUT == 3)
-                    ConveyorJog(VariableSys.VelMode_Conveyor, true);
-                else
-                    ConveyorJog(VariableSys.VelMode_Conveyor, false);
-            }
-
+           
             gB_FeederLeft.Enabled = false;
             gB_FeederRight.Enabled = false;
             gB_Reset.Enabled = false;
@@ -11552,32 +11508,27 @@ namespace GeneralLabelerStation
                     }
                 }
             }
-            Thread.Sleep(500);
+
+            CycleStop = this.bCycleStop.Checked;
 
             RunMode = 1;
-
+            
             this.OpenBtnLight(3);
         }
 
         private void bByPASS_Click(object sender, EventArgs e)
         {
             //在安全位置时候 BYPASS
-            if ( ClearFinished/*AxisReach(VariableSys.pReadyPoint)*/ && this.All_ZReachOrg())
+            if (this.All_ZReachOrg())
             {
                 if (VariableSys.dFlowIN_OUT != 1 && VariableSys.dFlowIN_OUT != 2)
                 {
-                    if (VariableSys.LanguageFlag == 1)
-                    {
-                        MessageBox.Show("ByPass Mode should be Left-In-Right-Out or Right-In-Left-Out!", "Info");
-                    }
-                    else
-                    {
-                        MessageBox.Show("ByPass 模式下必须为 左进右出 或者 右进左出!", "提示");
-                    }
+                    MessageBox.Show("ByPass 模式下必须为 左进右出 或者 右进左出!", "提示");
                     return;
                 }
+
                 FlowInit_Conveyor = false;
-                FlowIndex_Conveyor = 1000;
+                FlowIndex_Conveyor = 100;
                 RunMode = 3;
                 bExit.Enabled = true;
                 pMode_Login.Enabled = true;
@@ -11599,14 +11550,7 @@ namespace GeneralLabelerStation
             }
             else
             {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Pls clean-out or wait for clean-out done!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("请先清料或等待清料完成", "提示");
-                }
+                MessageBox.Show("请先清料或等待清料完成", "提示");
             }
         }
 
@@ -11682,7 +11626,7 @@ namespace GeneralLabelerStation
                 }
             }
         }
-        bool ClearFinished = false;
+
         private void bClear_Click(object sender, EventArgs e)
         {
             if (bMachineAlarm)
@@ -11724,7 +11668,6 @@ namespace GeneralLabelerStation
                 MessageBox.Show("Pls be outside!");
                 Thread Thread_Clear = new Thread(new ThreadStart(thread_Clear));
                 Thread_Clear.Start();
-                ClearFinished = true;
                 #endregion
             }
         }
@@ -11740,15 +11683,7 @@ namespace GeneralLabelerStation
             RunMode = 2;
             if (RUN_AlarmInfo[0] == 0)
                 StatisticsHelper.Instance.Reoprt.Start(TimeDefine.PauseTime, "暂停");
-            //hack 暂停按下停止向前要板_Fowindy
-            if (VariableSys.machineVersion == 3)
-            {
-                R3.ResetIO_OUT(7);
-            }
-            else
-            {
-                R2.ResetIO_OUT(7);
-            }    
+
             StopWatch_FlowIndex.Stop();
             StopWatch_FlowIndex_Conveyor.Stop();
             this.CloseBtnLight(3);
@@ -15858,23 +15793,23 @@ namespace GeneralLabelerStation
                 {
                     LIO_In[0].Text = "夹板动点\r\nB0-IN1";
                     LIO_In[1].Text = "夹板原点\r\nB0-IN2";
-                    LIO_In[2].Text = "阻板原点\r\nB0-IN4";
-                    LIO_In[3].Text = "备用\r\nB0-IN5";
+                    LIO_In[2].Text = "备用\r\nB0-IN5";
+                    LIO_In[3].Text = "阻板动点\r\nB0-IN4";
 
                     LIO_In[4].Text = "后要板\r\nB1-IN1";
                     LIO_In[5].Text = "前Ready\r\nB1-IN2";
                     LIO_In[6].Text = "轨道入口\r\nB1-IN4";
                     LIO_In[7].Text = "轨道出口\r\nB1-IN5";
 
-                    LIO_In[8].Text = "左光纤2\r\nB2-IN1";
+                    LIO_In[8].Text = "左光纤1\r\nB2-IN1";
                     LIO_In[9].Text = "备用\r\nB2-IN2";
-                    LIO_In[10].Text = "左光纤3\r\nB2-IN4";
-                    LIO_In[11].Text = "左光纤4\r\nB2-IN5";
+                    LIO_In[10].Text = "左光纤2\r\nB2-IN4";
+                    LIO_In[11].Text = "左光纤3\r\nB2-IN5";
 
-                    LIO_In[12].Text = "右光纤2\r\nB3-IN1";
+                    LIO_In[12].Text = "右光纤1\r\nB3-IN1";
                     LIO_In[13].Text = "备用\r\nB3-IN2";
-                    LIO_In[14].Text = "右光纤3\r\nB3-IN4";
-                    LIO_In[15].Text = "右光纤4\r\nB3-IN5";
+                    LIO_In[14].Text = "右光纤2\r\nB3-IN4";
+                    LIO_In[15].Text = "右光纤3\r\nB3-IN5";
 
                     LIO_Out[0].Text = "阻板原点\r\nB0-OUT4";
                     LIO_Out[1].Text = "阻板动点\r\nB0-OUT5";
@@ -16485,33 +16420,33 @@ namespace GeneralLabelerStation
             {
                 if (rBVelNormal.Checked)
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor, false);
+                    ConveyorJog(false);
                 }
                 else
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, false);
+                    ConveyorJog(false);
                 }
             }
             if (cB_Conveyor.SelectedIndex == 1)//左轨道
             {
                 if (rBVelNormal.Checked)
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor, false);
+                    ConveyorJog(false);
                 }
                 else
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, false);
+                    ConveyorJog(false);
                 }
             }
             if (cB_Conveyor.SelectedIndex == 2)//右轨道
             {
                 if (rBVelNormal.Checked)
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor, false);
+                    ConveyorJog(false);
                 }
                 else
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, false);
+                    ConveyorJog(false);
                 }
             }
         }
@@ -16524,14 +16459,6 @@ namespace GeneralLabelerStation
                 {
                     ConveyorStop();
                 }
-                if (cB_Conveyor.SelectedIndex == 1)//左轨道
-                {
-                    //ConveyorLeftStop();
-                }
-                if (cB_Conveyor.SelectedIndex == 2)//右轨道
-                {
-                    //ConveyorRightStop();
-                }
             }
             pConveyorN.Image = GeneralLabelerStation.Properties.Resources.左1;
         }
@@ -16543,33 +16470,33 @@ namespace GeneralLabelerStation
             {
                 if (rBVelNormal.Checked)
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor, true);
+                    ConveyorJog(true);
                 }
                 else
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, true);
+                    ConveyorJog(true);
                 }
             }
             if (cB_Conveyor.SelectedIndex == 1)//左轨道
             {
                 if (rBVelNormal.Checked)
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor, true);
+                    ConveyorJog(true);
                 }
                 else
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, true);
+                    ConveyorJog(true);
                 }
             }
             if (cB_Conveyor.SelectedIndex == 2)//右轨道
             {
                 if (rBVelNormal.Checked)
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor, true);
+                    ConveyorJog(true);
                 }
                 else
                 {
-                    ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, true);
+                    ConveyorJog(true);
                 }
             }
         }
@@ -16775,15 +16702,15 @@ namespace GeneralLabelerStation
             ConveyorStop();
             if (cB_Conveyor.SelectedIndex == 0)//中轨道
             {
-                ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, true);
+                ConveyorJog(true);
             }
             if (cB_Conveyor.SelectedIndex == 1)//左轨道
             {
-                ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, true);
+                ConveyorJog(true);
             }
             if (cB_Conveyor.SelectedIndex == 2)//右轨道
             {
-                ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, true);
+                ConveyorJog(true);
             }
         }
 
@@ -16792,17 +16719,16 @@ namespace GeneralLabelerStation
             ConveyorStop();
             if (cB_Conveyor.SelectedIndex == 0)//中轨道
             {
-                ConveyorJog(VariableSys.VelMode_Conveyor, true);
+                ConveyorJog(true);
             }
             if (cB_Conveyor.SelectedIndex == 1)//左轨道
             {
-                ConveyorJog(VariableSys.VelMode_Conveyor, true);
+                ConveyorJog(true);
             }
             if (cB_Conveyor.SelectedIndex == 2)//右轨道
             {
-                ConveyorJog(VariableSys.VelMode_Conveyor, true);
+                ConveyorJog(true);
             }
-            //ConveyorChangeVel(VariableSys.VelMode_Conveyor);
         }
         #endregion
 
@@ -17513,7 +17439,7 @@ namespace GeneralLabelerStation
         public bool bSystemExit = false;
 
         /// <summary>
-        /// //0-系统初始化 1-自动运行 2-暂停 手动模式
+        /// 0-系统初始化 1-自动运行 2-暂停 手动模式 3-ByPass
         /// </summary>
         public short RunMode = 0;
 
@@ -17536,8 +17462,6 @@ namespace GeneralLabelerStation
         private bool bAlrmIgnore = false;//系统报警忽略设置
         private short Status_ScanIO = 0;//扫描IO状态 0-OK 1-NG
         public Variable.IO_IN_Parameter bArr_IO_IN_Status = new Variable.IO_IN_Parameter();
-        public Variable.IO_IN_Parameter bArr_IO_IN_Status_Work = new Variable.IO_IN_Parameter();
-        public Variable.IO_IN_Parameter bArr_IO_IN_Status_Pro = new Variable.IO_IN_Parameter();
 
         public delegate short VoidDO();//通用代理
         public delegate short VoidDO_Str(string str);//通用代理
@@ -17847,12 +17771,6 @@ namespace GeneralLabelerStation
 
                 zParam1.GoPos(zParam1.RUN_ZPos, VariableSys.VelMode_Current);
                 zParam2.GoPos(zParam2.RUN_ZPos, VariableSys.VelMode_Current);
-
-
-                if (!this.CardExceptionHandle())
-                {
-                    return false;
-                }
             }
             else
             {
@@ -18004,9 +17922,6 @@ namespace GeneralLabelerStation
                 RestartStopwatch();
                 FlowInit = true;
                 this.All_ZGoSafe(VariableSys.VelMode_Current);
-
-                if (!this.CardExceptionHandle())
-                    return false;
             }
             else
             {
@@ -18286,8 +18201,6 @@ namespace GeneralLabelerStation
                 XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
                 TurnGo(VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
                 zParam.ThrowLabelCount++;
-                if (!this.CardExceptionHandle())
-                    return false;
             }
             else
             {
@@ -18575,8 +18488,6 @@ namespace GeneralLabelerStation
                 }
 
                 FlowInit = true;
-
-                if (!this.CardExceptionHandle()) return false;
             }
             else
             {
@@ -18790,35 +18701,6 @@ namespace GeneralLabelerStation
         #endregion
 
         #region 辅助函数
-        /// <summary>
-        /// 轴卡异常处理
-        /// </summary>
-        /// <returns></returns>
-        public bool CardExceptionHandle()
-        {
-            iCommandReSendTime = 0;
-
-            if (iGG_rtn != 0)
-            {
-                FlowInit = false;
-                iCommandReSendTime++;
-                if (iCommandReSendTime > 3)//3次发送均失败
-                {
-                    if ((int)this.Invoke(new VoidDO(GG_Failed)) == 2)//退出
-                    {
-                        bSystemExit = true;
-                        return false;
-                    }
-                    else//再次交互
-                    {
-                        iCommandReSendTime = 0;
-                    }
-                }
-            }
-
-            return true;
-        }
-
         private PointF XIPOINT_ = new PointF();
 
         /// <summary>
@@ -18967,8 +18849,6 @@ namespace GeneralLabelerStation
                 FlowInit = true;
                 XYGoPos(RUN_BadMarkPoint, VariableSys.VelMode_Current);
                 this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
-                if (!this.CardExceptionHandle())
-                    return false;
             }
             else
             {
@@ -19197,9 +19077,6 @@ namespace GeneralLabelerStation
                 FlowInit = true;
                 XYGoPos(RUN_Mark1Point, VariableSys.VelMode_Current);
                 this.TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
-
-                if (!this.CardExceptionHandle())
-                    return false;
             }
             else
             {
@@ -19568,8 +19445,6 @@ namespace GeneralLabelerStation
 
                 XYGoPos(JOB.GlobalConfig.Mark[GloablIndex].CamPos, VariableSys.VelMode_Current);
                 FlowInit = true;
-                if (!this.CardExceptionHandle())
-                    return;
             }
             else
             {
@@ -19955,11 +19830,6 @@ namespace GeneralLabelerStation
                                 RestartStopwatch();
                                 FlowInit = true;
                                 this.All_ZGoSafe(VariableSys.VelMode_Current);
-
-                                if (!this.CardExceptionHandle())
-                                {
-                                    continue;
-                                }
                             }
                             else
                             {
@@ -20255,19 +20125,17 @@ namespace GeneralLabelerStation
                                         }
                                     }
 
+                                    if(CycleStop)
+                                    {
+                                        this.Invoke(new Action(() => {
+                                            this.bAutoSinglePause_Click(this, new EventArgs());
+                                        }));
+                                        break;
+                                    }
+
                                     this.panelAlarmed = false;
                                     JOB.bCalMark = false;
                                     RUN_bPasteOK = true;
-                                    //todo 在线调试功能_Fowindy
-                                    if (VariableSys.bEnableOnlineDebug)
-                                    {
-                                        frmPasteReCheck fm = new frmPasteReCheck();
-                                        if (fm.CanShow)
-                                        {
-                                            fm.ShowDialog();
-                                        }
-
-                                    }
                                     FlowInit = false;
 
                                     FlowDoneIndex = FlowIndex;
@@ -20557,8 +20425,6 @@ namespace GeneralLabelerStation
                                 {
                                     Turn.GoPos(VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
                                 }
-
-                                if (!this.CardExceptionHandle()) continue;
                             }
                             else
                             {
@@ -20718,27 +20584,9 @@ namespace GeneralLabelerStation
                                         #endregion
                                     }
 
-                                    //PointF upPt = JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints[zParam.RUN_PastePointIndex];
-                                    //upPt = GlassHelper.MachinePoint2ActPoint(upPt);
-                                    //RUN_PrePastePoint.X = upPt.X + VariableSys.pNozzle_2_Cam[zIndex].X;
-                                    //RUN_PrePastePoint.Y = upPt.Y + VariableSys.pNozzle_2_Cam[zIndex].Y;
-                                    //var cam = Nozzle2Cam((int)zIndex);
-                                    //PointF labelPt = CameraDefine.Instance[cam].ImagePt2WorldPt(VariableSys.pDownRotateCam[zIndex], VariableSys.pDownRotateCenter[zIndex]);
-                                    //PointF centerPt = VariableSys.pDownMarkCoord[zIndex];
-
-                                    ////MK:
-                                    //RUN_PrePastePoint.X += (labelPt.X - centerPt.X);
-                                    //RUN_PrePastePoint.Y += (labelPt.Y - centerPt.Y);
-                                    //RUN_PrePastePoint = GlassHelper.ActPoint2MachinePoint(RUN_PrePastePoint);
-
-                                    //XYGoPos(RUN_PrePastePoint, VariableSys.VelMode_Current);
-                                    //Turn.GoPos(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                                     this.FlowInit = false;
                                     this.FlowIndex = 20310;
                                 }
-
-                                if (!this.CardExceptionHandle())
-                                    continue;
                             }
                             else
                             {
@@ -20918,9 +20766,6 @@ namespace GeneralLabelerStation
                                 //设置飞拍
                                 this.X.SetComapreTable(Table, (short)Table.Length);
 
-                                if (!this.CardExceptionHandle())
-                                    break;
-
                                 this.FlowInit = true;
                             }
                             else
@@ -20963,9 +20808,6 @@ namespace GeneralLabelerStation
                                 }
 
                                 this.XYGoPos(RUN_GoPos, VariableSys.VelMode_UpFly);
-
-                                if (!this.CardExceptionHandle())
-                                    break;
 
                                 this.FlowInit = true;
                             }
@@ -21490,36 +21332,6 @@ namespace GeneralLabelerStation
             #endregion
         }
 
-        private bool ReIN = false;//三段式-再次进入一块板  到 待料区 true-正在进料 false-进料OK
-        private bool ProductOut = false;//三段式-出板 出板到 出板口 true-正在出料 false-出料OK
-        private bool ProductOutofMachie = false;//三段式-出板 出板到 下台设备 true-正在出料 false-出料OK
-
-        private bool bConveryDir = false;
-        private void IO_SetBefore(Variable.IO_IN_Parameter curIO, ref Variable.IO_IN_Parameter io2)
-        {
-            //1-左进右出 2-右进左出 3-左进左出 4-右进右出 5-左进右出(三段)
-            if (VariableSys.dFlowIN_OUT == 1 || VariableSys.dFlowIN_OUT == 3 || VariableSys.dFlowIN_OUT == 5)
-            {
-                io2.bIN_WorkSpace_Out = curIO.bIN_WorkSpace_Out;//轨道-出口感应=io1.bIN_WorkSpace_Out;//轨道-出口感应
-                io2.bIN_WorkSpace_IN = curIO.bIN_WorkSpace_IN;//轨道-进板感应=io1.bIN_WorkSpace_IN;//轨道-进板感应
-                bConveryDir = true;
-            }
-            else
-            {
-                io2.bIN_WorkSpace_Out = curIO.bIN_WorkSpace_IN;//轨道-出口感应=io1.bIN_WorkSpace_Out;//轨道-出口感应
-                io2.bIN_WorkSpace_IN = curIO.bIN_WorkSpace_Out;//轨道-进板感应=io1.bIN_WorkSpace_IN;//轨道-进板感应
-                bConveryDir = false;
-            }
-
-            io2.bIN_AfterRequest = curIO.bIN_AfterRequest;//后要板=io1.bIN_AfterRequest;//后要板
-            io2.bIN_WorkSpace_Reach = curIO.bIN_WorkSpace_Reach;//轨道-到位感应=io1.bIN_WorkSpace_Reach;//轨道-到位感应
-            io2.bIN_Stop_Origin = curIO.bIN_Stop_Origin;//轨道-档板原点=io1.bIN_Stop_Origin;//轨道-档板原点
-            io2.bIN_Stop_Move = curIO.bIN_Stop_Move;//轨道-档板动点=io1.bIN_Stop_Move;//轨道-档板动点
-            io2.bIN_Carry_Origin = curIO.bIN_Carry_Origin;//轨道上下夹板原点=io1.bIN_Carry_Origin;//轨道上下夹板原点
-            io2.bIN_Carry_Move = curIO.bIN_Carry_Move;//轨道上下夹板动点=io1.bIN_Carry_Move;//轨道上下夹板动点
-            io2.bIN_Conveyor_BeforeReady = curIO.bIN_Conveyor_BeforeReady;//前流水Ready=io1.bIN_Conveyor_BeforeReady;//前流水Ready
-        }
-
         /// <summary>
         /// 轨道吸/吹气
         /// </summary>
@@ -21538,175 +21350,107 @@ namespace GeneralLabelerStation
         //todo 轨道流程
         private void thread_Conveyor()//轨道流程-单轨道模式
         {
-            bool roolstatus = false;
             Stopwatch sw_StopUp = new Stopwatch();
-            bool Out = false;
-            //bool ReIN = false;//三段式-再次进入一块板  到 待料区 true-正在进料 false-进料OK
-            //bool ProductOut = false;//三段式-出板 出板到 出板口 true-正在出料 false-出料OK
-            //bool ProductOutofMachie = false;//三段式-出板 出板到 下台设备 true-正在出料 false-出料OK
-            // 1 - 左进右出 2 - 右进左出 3 - 左进左出 4 - 右进右出 5 - 左进右出(三段) 6 - 右进左出(三段)
+            bool ByPass = false;
+            // 1 - 左进右出 2 - 右进左出 3 - 左进左出 4 - 右进右出
             while (!bSystemExit)
             {
                 Thread.Sleep(5);
-
-                if (Variable.PassWordOK != 0 && Variable.PassWordOK != 1 && RunMode == 1 && VariableSys.ConveyorStyle == 0)//自动模式下
+                ByPass = RunMode == 3;
+                if (ByPass)
                 {
-                    #region 自动模式下 且 一段式轨道
+                    StopProduct_OFF();
+                    CarryProduct_OFF();
+                }
 
-                    IO_SetBefore(bArr_IO_IN_Status, ref bArr_IO_IN_Status_Work);
-
+                if (Variable.PassWordOK != 0 && Variable.PassWordOK != 1 
+                    && (RunMode == 1 || RunMode == 3))//自动模式下
+                {
                     switch (FlowIndex_Conveyor)//左进右出 左进左出
                     {
                         #region 100-等待进板
                         case 100://等待进板
-                            if (FlowInit_Conveyor == false)
+                            if (!FlowInit_Conveyor)
                             {
-                                ReIN = false;
-                                ProductOut = false;
-                                Out = false;
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    FlowIndex_ConveyorName = "wait for product";
-                                }
-                                else
-                                {
-                                    FlowIndex_ConveyorName = "等待进板";
-                                }
+                                FlowIndex_ConveyorName = "等待进板";
 
-                                RestartStopwatch_Conveyor();
                                 if (StatisticsHelper.Instance.Reoprt.CurRecordTime == TimeDefine.WaitOuputTime)
                                     StatisticsHelper.Instance.Reoprt.Start(TimeDefine.ProductTime, $"回复出板[{VariableSys.sProgramName}]");
 
-                                FlowInit_Conveyor = true;
                                 ResetInformBackTake(); // 重置向后出板
-                                iGG_rtn = InformBeforeGive();
+                                InformBeforeGive(); // 向前要板
                                 ConveyorStop();
-                                StopProduct_ON();//挡板下降
-                                //todo 阻挡动点未感应报警_Fowindy
-                                //Thread.Sleep(100);
-                                //if (!bArr_IO_IN_Status.bIN_Stop_Move.GetIO())
-                                //{
-                                //    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "阻挡动点未感应，请检查阻挡动点是否到位！" });
-                                //}
-                                if (!this.CardExceptionHandle()) continue;
+
+                                if(!ByPass)
+                                    StopProduct_ON();//挡板下降
+
+                                FlowInit_Conveyor = true;
+                                RestartStopwatch_Conveyor();
                             }
                             else
                             {
-                                if (bArr_IO_IN_Status_Work.bIN_Conveyor_BeforeReady || bArr_IO_IN_Status_Work.bIN_WorkSpace_IN)//前轨道给出Ready信号 或者 待板区进口Sensor感应到-》皮带转
+                                if (this.WrokInput)
                                 {
-                                    if (bArr_IO_IN_Status_Work.bIN_WorkSpace_IN)
-                                    {
-                                        Open_ConveyorXI();
-                                        roolstatus = true;
-                                        ConveyorJog(VariableSys.VelMode_Conveyor, bConveryDir);
-                                        Thread.Sleep(500);
-                                        ResetInformBeforeGive();
-                                        FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                        FlowInit_Conveyor = false;
-                                        FlowIndex_Conveyor = 200;
-                                        StatisticsHelper.Instance.Reoprt.Start(TimeDefine.ProductTime, $"回复进板[{VariableSys.sProgramName}]");
-                                    }
+                                    Open_ConveyorXI();
+                                    ConveryInput();
+
+                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
+                                    FlowInit_Conveyor = false;
+                                    if (ByPass)
+                                        FlowIndex_Conveyor = 550;
                                     else
-                                    {
-                                        if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000
-                                                                      && StatisticsHelper.Instance.Reoprt.CurRecordTime == TimeDefine.ProductTime)
-                                        {
-                                            StatisticsHelper.Instance.Reoprt.Start(TimeDefine.WaitInputTime, $"等待进板[{VariableSys.sProgramName}]");
-                                        }
-                                    }
+                                        FlowIndex_Conveyor = 300;
+
+                                    StatisticsHelper.Instance.Reoprt.Start(TimeDefine.ProductTime, $"回复进板[{VariableSys.sProgramName}]");
                                 }
-                                else
+
+                                if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000
+                                                              && StatisticsHelper.Instance.Reoprt.CurRecordTime == TimeDefine.ProductTime)
                                 {
-                                    if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000
-                                                                  && StatisticsHelper.Instance.Reoprt.CurRecordTime == TimeDefine.ProductTime)
-                                    {
-                                        StatisticsHelper.Instance.Reoprt.Start(TimeDefine.WaitInputTime, $"等待进板[{VariableSys.sProgramName}]");
-                                    }
+                                    StatisticsHelper.Instance.Reoprt.Start(TimeDefine.WaitInputTime, $"等待进板[{VariableSys.sProgramName}]");
                                 }
                             }
 
                             if (FlowIndex_Conveyor != 100)
                             {
-                                roolstatus = false;
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "Step[conveyor]100:wait for product time:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
-                                }
-                                else
-                                {
-                                    this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]100:等待进板时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
-                                }
-                            }
-                            break;
-                        #endregion
-
-                        #region 200-进板到减速
-                        case 200://进板到减速
-                            if (FlowInit_Conveyor == false)
-                            {
-                                Out = false;
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    FlowIndex_ConveyorName = "product to slow down";
-                                }
-                                else
-                                {
-                                    FlowIndex_ConveyorName = "进板到减速";
-                                }
-
-                                FlowInit_Conveyor = true;
-                                RestartStopwatch_Conveyor();
-                            }
-                            else
-                            {
-                                if (bArr_IO_IN_Status_Work.bIN_WorkSpace_Reach)//轨道减速sensor
-                                {
-                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                    FlowInit_Conveyor = false;
-                                    FlowIndex_Conveyor = 300;
-                                }
-                            }
-
-
-                            //todo 进板到减速超时
-                            if (FlowIndex_Conveyor != 200)
-                            {
-                                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]200:进板到减速时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
-                            }
-                            else
-                            {
-                                if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 15000)
-                                {
-                                    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]200:进板到减速超时" });//
-                                }
+                                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]100:等待进板时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
                             }
                             break;
                         #endregion
                         #region 300-减速到到位
                         case 300://减速到到位
-                            if (FlowInit_Conveyor == false)
+                            if (!FlowInit_Conveyor)
                             {
-                                Out = false;
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    FlowIndex_ConveyorName = "product to reach";
-                                }
-                                else
-                                {
-                                    FlowIndex_ConveyorName = "减速到到位";
-                                }
+                                FlowIndex_ConveyorName = "减速到到位";
 
                                 FlowInit_Conveyor = true;
                                 RestartStopwatch_Conveyor();
                             }
                             else
                             {
-                                if (bArr_IO_IN_Status_Work.bIN_WorkSpace_Reach)//轨道到位sensor
+                                if (bArr_IO_IN_Status.bIN_WorkSpace_Reach)//轨道到位sensor
                                 {
+                                    ResetInformBeforeGive();
+
                                     Close_ConveyorXI();
+
+                                    Thread.Sleep(VariableSys.iDelayReach);
+                                    ConveyorStop();
+                                    CarryProduct_ON();
+                                    Thread.Sleep(VariableSys.iDelayReached);
+                                    StopProduct_OFF();
+
+                                    Thread.Sleep(300); // 用于夹板气缸到位
+                                    if (!bArr_IO_IN_Status.bIN_Carry_Move.GetIO())
+                                    {
+                                        this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "夹板动点未感应，请检查夹板是否到位！" });
+                                        break;
+                                    }
+
+                                    RUN_bReachOK = true;
                                     FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
                                     FlowInit_Conveyor = false;
-                                    FlowIndex_Conveyor = 400;
+                                    FlowIndex_Conveyor = 500;
                                 }
                             }
 
@@ -21714,96 +21458,14 @@ namespace GeneralLabelerStation
                             {
                                 this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]300:减速到到位时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
                             }
-                            else
+
+                            if (FlowIndex_Conveyor == 300 && StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 5000)
                             {
-                                if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 15000)
-                                {
-                                    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]300:减速到到位超时" });//
-                                }
+                                this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]300:进板到位超时" });//
                             }
                             break;
                         #endregion
-                        #region 400-到位延时定位产品
-                        case 400://到位延时定位产品
-                            if (FlowInit_Conveyor == false)
-                            {
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    FlowIndex_ConveyorName = "product delay reach";
-                                }
-                                else
-                                {
-                                    FlowIndex_ConveyorName = "到位延时定位产品";
-                                }
-
-                                FlowInit_Conveyor = true;
-                                RestartStopwatch_Conveyor();
-                            }
-                            else
-                            {
-                                if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > VariableSys.iDelayReach)//轨道到位sensor
-                                {
-                                    CarryProduct_ON();
-                                    //todo 夹板动点未感应报警_Fowindy
-                                    Thread.Sleep(100);
-                                    if (!bArr_IO_IN_Status.bIN_Carry_Move.GetIO())
-                                    {
-                                        this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "夹板动点未感应，请检查夹板是否到位！" });
-                                    }
-                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                    FlowInit_Conveyor = false;
-                                    FlowIndex_Conveyor = 450;
-                                }
-                            }
-
-                            if (FlowIndex_Conveyor != 400)
-                            {
-                                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]400:到位延时定位产品时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
-                            }
-                            else
-                            {
-                                if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 15000)
-                                {
-                                    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]400:到位延时定位产品超时" });//
-                                }
-                            }
-                            break;
-                        #endregion
-                        #region 450-等待定位气缸
-                        case 450://等待定位气缸
-                            if (FlowInit_Conveyor == false)
-                            {
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    FlowIndex_ConveyorName = "wait for carry up";
-                                }
-                                else
-                                {
-                                    FlowIndex_ConveyorName = "等待定位气缸";
-                                }
-
-                                ConveyorStop();
-                                FlowInit_Conveyor = true;
-                                RestartStopwatch_Conveyor();
-                            }
-                            else
-                            {
-                                if (/*bArr_IO_IN_Status_Work.bIN_Carry_Move.GetIO() && */StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > VariableSys.iDelayReached)//贴装OK
-                                {
-                                    StopProduct_OFF();
-                                    RUN_bReachOK = true;
-                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                    FlowInit_Conveyor = false;
-                                    FlowIndex_Conveyor = 500;
-                                }
-                            }
-                            if (FlowIndex_Conveyor != 450)
-                            {
-                                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]600:等待定位气缸完成时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
-                            }
-                            break;
-                        #endregion
-                        #region 500-等待贴装完成-三段式-再次进板开始
+                        #region 500-等待贴装完成
                         case 500://等待贴装完成
                             if (FlowInit_Conveyor == false)
                             {
@@ -21814,13 +21476,11 @@ namespace GeneralLabelerStation
                                 RestartStopwatch_Conveyor();
                                 Test.Reset();
                                 Test.Start();
-                                ReIN = true;//三段式-夹板气缸抬起-再次进板开始
                             }
                             else
                             {
                                 if (RUN_bPasteOK)//贴装OK且进板OK---夹板气缸降下来-再次进板停止
                                 {
-                                    ReIN = false;
                                     Test.Stop();
 
                                     RUN_bReachOK = false;
@@ -21828,15 +21488,9 @@ namespace GeneralLabelerStation
                                     Open_ConveyorXI();
 
                                     CarryProduct_OFF();
-                                    Thread.Sleep(1000);
                                     FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
                                     FlowInit_Conveyor = false;
-                                    FlowIndex_Conveyor = 600;
-                                }
-                                else
-                                {
-                                    this.bAutoSinglePause_Click(this, new EventArgs());
-                                    RunMode = 2;
+                                    FlowIndex_Conveyor = 550;
                                 }
                             }
 
@@ -21846,408 +21500,103 @@ namespace GeneralLabelerStation
                             }
                             break;
                         #endregion
-                        #region 600-出板
-                        case 600://出板
-                            if (FlowInit_Conveyor == false)
+                        #region 550-到出板口
+                        case 550:
+                            if (!FlowInit_Conveyor)
                             {
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    FlowIndex_ConveyorName = "product out";
-                                }
-                                else
-                                {
-                                    FlowIndex_ConveyorName = "出板";
-                                }
+                                FlowIndex_ConveyorName = "等待到出板口";
+                                InformBackTake(); // 向后出板
 
+                                ConveryOutput();
                                 FlowInit_Conveyor = true;
                                 RestartStopwatch_Conveyor();
-                                InformBackTake(); // 向后出板
-                                switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
-                                {
-                                    case 1://1-左进右出
-                                        ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, bConveryDir);
-                                        break;
-                                    case 2://2-右进左出
-                                        ConveyorStop();
-                                        ConveyorJog(VariableSys.VelMode_Conveyor, bConveryDir);
-                                        break;
-                                    case 3://3-左进左出
-                                        ConveyorStop();
-                                        ConveyorJog(VariableSys.VelMode_Conveyor, !bConveryDir);
-                                        break;
-                                    case 4://4-右进右出
-                                        ConveyorJog(VariableSys.VelMode_Conveyor_SlowDown, !bConveryDir);
-                                        break;
-                                    case 5://5-左进右出
-                                        ProductOut = true;
-                                        break;
-                                }
                             }
                             else
                             {
+                                if (this.WrokOutput)
+                                {
+                                    ConveyorStop();
+                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
+                                    FlowInit_Conveyor = false;
+                                    FlowIndex_Conveyor = 600;
+                                }
+                                else
+                                {
+                                    if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 3000)
+                                        this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]550:到出板口超时,请检查轨道是否卡板" });//
+                                }
+                            }
+                            break;
+                        #endregion
+                        #region 600-检测出板信号
+                        case 600://出板
+                            if (!FlowInit_Conveyor)
+                            {
+                                FlowIndex_ConveyorName = "检测出板信号";
+                                FlowInit_Conveyor = true;
+                                RestartStopwatch_Conveyor();
+                            }
+                            else
+                            {
+                                if (!this.WrokOutput) // 手动拿掉板子 或者  离线式 到出板口暂停
+                                {
+                                    Thread.Sleep(1000);
+                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
+                                    FlowInit_Conveyor = false;
+                                    FlowIndex_Conveyor = 100;
+                                    break;
+                                }
+
                                 if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000)
                                 {
                                     StatisticsHelper.Instance.Reoprt.Start(TimeDefine.WaitOuputTime, $"等待出板{VariableSys.sProgramName}");
                                 }
 
-                                if (VariableSys.dFlowIN_OUT == 5)
+                                if (VariableSys.bSystemIsOnLine)
                                 {
-                                    if (!ProductOut)//三段式进板可以贴了
+                                    if (VariableSys.bAfterBreakEN)
                                     {
-                                        FlowInit_Conveyor = false;
-                                        FlowIndex_Conveyor = 400;
-                                    }
-                                }
-                                else
-                                {
-                                    if (VariableSys.bSystemIsOnLine)//在线式
-                                    {
-                                        #region 在线式--出板
-                                        if (VariableSys.bAfterBreakEN)//启用后出板信号
-                                        {
-                                            if (bArr_IO_IN_Status_Work.bIN_AfterRequest)//出板信号-有
-                                            {
-                                                Out = true;
-                                            }
-                                        }
+                                        if (bArr_IO_IN_Status.bIN_AfterRequest)
+                                            ConveryOutput();
                                         else
-                                        {
-                                            Out = true;
-                                        }
-
-                                        if (Out)
-                                        {
-                                            switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
-                                            {
-                                                case 1://1-左进右出
-                                                case 2:
-                                                    if (!bArr_IO_IN_Status_Work.bIN_WorkSpace_Out && bArr_IO_IN_Status_Pro.bIN_WorkSpace_Out)//出轨道sensor
-                                                    {
-                                                        Close_ConveyorXI();
-
-                                                        ConveyorStop();
-                                                        Out = false;
-                                                        FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                                        FlowInit_Conveyor = false;
-                                                        FlowIndex_Conveyor = 100;
-                                                    }
-                                                    else
-                                                    {
-                                                        ConveyorJog(VariableSys.VelMode_Conveyor, bConveryDir);
-                                                    }
-                                                    break;
-                                                case 3://3-左进左出
-                                                case 4:
-                                                    if (!bArr_IO_IN_Status_Work.bIN_WorkSpace_IN && bArr_IO_IN_Status_Pro.bIN_WorkSpace_IN)//出轨道sensor
-                                                    {
-                                                        Close_ConveyorXI();
-
-                                                        ConveyorStop();
-                                                        Out = false;
-                                                        FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                                        FlowInit_Conveyor = false;
-                                                        FlowIndex_Conveyor = 100;
-                                                    }
-                                                    else
-                                                    {
-                                                        ConveyorJog(VariableSys.VelMode_Conveyor, !bConveryDir);
-                                                    }
-                                                    break;
-                                            }
-                                        }
-                                        else//后要板信号 无
-                                        {
-                                            switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
-                                            {
-                                                case 1://1-左进右出
-                                                case 2:
-                                                    if (bArr_IO_IN_Status_Work.bIN_WorkSpace_Out)
-                                                    {
-                                                        ConveyorStop();
-                                                    }
-                                                    break;
-                                                case 3://3-左进左出
-                                                case 4:
-                                                    if (bArr_IO_IN_Status_Work.bIN_WorkSpace_IN)
-                                                    {
-                                                        ConveyorStop();
-                                                    }
-                                                    break;
-                                            }
-                                        }
-                                        #endregion
+                                            break;
                                     }
-                                    else//离线式
-                                    {
-                                        #region 离线式--出板
-                                        switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
-                                        {
-                                            case 1://1-左进右出
-                                            case 2:
-                                                if (bArr_IO_IN_Status_Work.bIN_WorkSpace_Out)//停止
-                                                {
-                                                    ConveyorStop();
-                                                }
-                                                else
-                                                {
-                                                    ConveyorJog(VariableSys.VelMode_Conveyor, bConveryDir);
-                                                }
-
-                                                if (!bArr_IO_IN_Status_Work.bIN_WorkSpace_Out && bArr_IO_IN_Status_Pro.bIN_WorkSpace_Out)//出轨道sensor
-                                                {
-                                                    Close_ConveyorXI();
-
-                                                    ConveyorStop();
-                                                    Out = false;
-                                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                                    FlowInit_Conveyor = false;
-                                                    FlowIndex_Conveyor = 100;
-                                                }
-                                                break;
-                                            case 3://3-左进左出
-                                            case 4:
-                                                if (bArr_IO_IN_Status_Work.bIN_WorkSpace_IN)
-                                                {
-                                                    ConveyorStop();
-                                                }
-                                                else
-                                                {
-                                                    ConveyorJog(VariableSys.VelMode_Conveyor, !bConveryDir);
-                                                }
-                                                if (!bArr_IO_IN_Status_Work.bIN_WorkSpace_IN && bArr_IO_IN_Status_Pro.bIN_WorkSpace_IN)//出轨道sensor
-                                                {
-                                                    Close_ConveyorXI();
-
-                                                    ConveyorStop();
-                                                    Out = false;
-                                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                                    FlowInit_Conveyor = false;
-                                                    FlowIndex_Conveyor = 100;
-                                                }
-                                                break;
-                                        }
-                                        #endregion
-                                    }
-
+                                    else
+                                        ConveryOutput();
                                 }
 
-                            }
-
-                            if (FlowIndex_Conveyor != 600)
-                            {
-                                Out = false;
-                                if (VariableSys.LanguageFlag == 1)
-                                {
-                                    this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "Step[Conveyor]600:product out time:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
-                                }
-                                else
-                                {
-                                    this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]600:出板时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
-                                }
-                            }
-                            break;
-                            #endregion
-                    }
-
-                    IO_SetBefore(bArr_IO_IN_Status_Work, ref bArr_IO_IN_Status_Pro);
-                    Thread.Sleep(5);
-                    #endregion
-                }
-                else if (Variable.PassWordOK != 0 && Variable.PassWordOK != 1 && RunMode == 3 && VariableSys.ConveyorStyle == 0)//BYPASS
-                {
-                    #region 一段式轨道BYPASS
-                    IO_SetBefore(bArr_IO_IN_Status, ref bArr_IO_IN_Status_Work);
-                    StopProduct_OFF();//挡板上升
-                    CarryProduct_OFF();//夹板上升
-                    switch (FlowIndex_Conveyor)
-                    {
-                        #region 1000-等待进板
-                        case 1000://等待进板
-                            if (FlowInit_Conveyor == false)
-                            {
-                                FlowIndex_ConveyorName = "等待进板";
-                                RestartStopwatch_Conveyor();
-                                FlowInit_Conveyor = true;
-                                iCommandReSendTime = 0;
-                                iGG_rtn = InformBeforeGive();
-                                ConveyorStop();
-                                #region 轴卡异常处理
-                                if (iGG_rtn != 0)
-                                {
-                                    FlowInit = false;
-                                    iCommandReSendTime++;
-                                    if (iCommandReSendTime > 3)//3次发送均失败
-                                    {
-                                        if ((int)this.Invoke(new VoidDO(GG_Failed)) == 2)//退出
-                                        {
-                                            bSystemExit = true;
-                                            continue;
-                                        }
-                                        else//再次交互
-                                        {
-                                            iCommandReSendTime = 0;
-                                        }
-                                    }
-                                }
-
-                                #endregion
-                            }
-                            else
-                            {
-                                if (VariableSys.dFlowIN_OUT == 1 || VariableSys.dFlowIN_OUT == 5)//1-左进右出 2-右进左出 3-左进左出 4-右进右出 5-左进右出(三段)
-                                {
-                                    if (bArr_IO_IN_Status_Work.bIN_Conveyor_BeforeReady || bArr_IO_IN_Status_Work.bIN_WorkSpace_IN)//前轨道给出Ready信号 或者 待板区进口Sensor感应到-》皮带转
-                                    {
-                                        if (bArr_IO_IN_Status_Work.bIN_WorkSpace_IN)
-                                        {
-                                            roolstatus = true;
-                                            ConveyorJog(VariableSys.VelMode_Conveyor, true);
-                                            ResetInformBeforeGive();
-                                            FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                            FlowInit_Conveyor = false;
-                                            FlowIndex_Conveyor = 1100;
-                                        }
-                                    }
-                                }
-                                if (VariableSys.dFlowIN_OUT == 2)//1-左进右出 2-右进左出 3-左进左出 4-右进右出 5-左进右出(三段)
-                                {
-                                    if (bArr_IO_IN_Status_Work.bIN_Conveyor_BeforeReady || bArr_IO_IN_Status_Work.bIN_WorkSpace_Out)//前轨道给出Ready信号 或者 工作区出口Sensor感应到-》皮带反转
-                                    {
-                                        if (bArr_IO_IN_Status_Work.bIN_WorkSpace_Out)
-                                        {
-                                            roolstatus = true;
-                                            ConveyorJog(VariableSys.VelMode_Conveyor, false);
-                                            ResetInformBeforeGive();
-                                            FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                            FlowInit_Conveyor = false;
-                                            FlowIndex_Conveyor = 1100;
-                                        }
-                                    }
-                                }
-                            }
-                            //if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > VariableSys.iTimeOut_Normal)
-                            //{
-                            //    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]100:预备进板超时" });//
-                            //}
-                            if (FlowIndex_Conveyor != 1000)
-                            {
-                                roolstatus = false;
-                                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道BYPASS]1000:等待进板时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
+                                FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
+                                FlowInit_Conveyor = false;
+                                FlowIndex_Conveyor = 650;
                             }
                             break;
                         #endregion
-
-                        #region 1100-出板
-                        case 1100://出板
-                            if (FlowInit_Conveyor == false)
+                        #region 650完全出板
+                        case 650:
+                            if (!FlowInit_Conveyor)
                             {
-                                FlowIndex_ConveyorName = "出板";
+                                FlowIndex_ConveyorName = "等待完全出板";
                                 FlowInit_Conveyor = true;
                                 RestartStopwatch_Conveyor();
                             }
                             else
                             {
-                                if (VariableSys.bAfterBreakEN)//启用后出板信号
+                                if (!this.WrokOutput)
                                 {
-                                    if (bArr_IO_IN_Status_Work.bIN_AfterRequest)//后要板信号
-                                    {
-                                        Out = true;
-                                    }
+                                    FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
+                                    FlowInit_Conveyor = false;
+                                    FlowIndex_Conveyor = 100;
                                 }
-                                else
+
+                                if (VariableSys.bSystemIsOnLine && StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 5000)
                                 {
-                                    Out = true;
+                                    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]650:轨道完全出板超时" });//
                                 }
-                                #region 在线式--出板
-                                if (Out)
-                                {
-                                    switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
-                                    {
-                                        case 1://1-左进右出
-                                            if (!bArr_IO_IN_Status_Work.bIN_WorkSpace_Out && bArr_IO_IN_Status_Pro.bIN_WorkSpace_Out)//出轨道sensor
-                                            {
-                                                ConveyorStop();
-                                                Out = false;
-                                                FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                                FlowInit_Conveyor = false;
-                                                FlowIndex_Conveyor = 1000;
-                                            }
-                                            else
-                                            {
-                                                ConveyorJog(VariableSys.VelMode_Conveyor, true);
-                                            }
-                                            break;
-                                        case 2://2-右进左出
-                                            if (!bArr_IO_IN_Status_Work.bIN_WorkSpace_IN && bArr_IO_IN_Status_Pro.bIN_WorkSpace_IN)//出轨道sensor
-                                            {
-                                                ConveyorStop();
-                                                Out = false;
-                                                FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                                FlowInit_Conveyor = false;
-                                                FlowIndex_Conveyor = 1000;
-                                            }
-                                            else
-                                            {
-                                                ConveyorJog(VariableSys.VelMode_Conveyor, false);
-                                            }
-                                            break;
-                                        case 5://5-左进右出
-                                            if (!bArr_IO_IN_Status_Work.bIN_WorkSpace_Out && bArr_IO_IN_Status_Pro.bIN_WorkSpace_Out)//出轨道sensor
-                                            {
-                                                ConveyorStop();
-                                                Out = false;
-                                                FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
-                                                FlowInit_Conveyor = false;
-                                                FlowIndex_Conveyor = 1000;
-                                            }
-                                            else
-                                            {
-                                                ConveyorJog(VariableSys.VelMode_Conveyor, true);
-                                            }
-                                            break;
-                                    }
-                                }
-                                else//后要板信号 无
-                                {
-                                    switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
-                                    {
-                                        case 1://1-左进右出
-                                            if (bArr_IO_IN_Status_Work.bIN_WorkSpace_Out)
-                                            {
-                                                ConveyorStop();
-                                            }
-                                            break;
-                                        case 2://2-右进左出
-                                            if (bArr_IO_IN_Status_Work.bIN_WorkSpace_IN)
-                                            {
-                                                ConveyorStop();
-                                            }
-                                            break;
-                                        case 5://5-左进右出
-                                            if (bArr_IO_IN_Status_Work.bIN_WorkSpace_Out)
-                                            {
-                                                ConveyorStop();
-                                            }
-                                            break;
-                                    }
-                                }
-                                #endregion
-                            }
-                            //if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > VariableSys.iTimeOut_Normal)
-                            //{
-                            //    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]100:预备进板超时" });//
-                            //}
-                            if (FlowIndex_Conveyor != 1100)
-                            {
-                                Out = false;
-                                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]1100:出板时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
                             }
                             break;
                             #endregion
                     }
-                    IO_SetBefore(bArr_IO_IN_Status_Work, ref bArr_IO_IN_Status_Pro);
                     Thread.Sleep(5);
-                    #endregion
                 }
                 else//手动模式下
                 {
@@ -22256,6 +21605,85 @@ namespace GeneralLabelerStation
             }
 
         }
+
+        #region 新轨道流程
+        /// <summary>
+        /// 进板
+        /// </summary>
+        private void ConveryInput()
+        {
+            switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
+            {
+                case 1://1-左进右出
+                case 3://3-左进左出
+                    ConveyorJog(true);
+                    break;
+                case 2://2-右进左出
+                case 4://4-右进右出
+                    ConveyorJog(false);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 出板
+        /// </summary>
+        private void ConveryOutput()
+        {
+            switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
+            {
+                case 2://2-右进左出
+                case 3://3-左进左出
+                    ConveyorJog(false);
+                    break;
+                case 1://1-左进右出
+                case 4://4-右进右出
+                    ConveyorJog(true);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 轨道进板口
+        /// </summary>
+        private bool WrokInput
+        {
+            get
+            {
+                switch(VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
+                {
+                    case 1://1-左进右出
+                    case 3:// 3-左进左出
+                        return bArr_IO_IN_Status.bIN_WorkSpace_IN;
+                    case 2:// 2-右进左出
+                    case 4://4-右进右出
+                        return bArr_IO_IN_Status.bIN_WorkSpace_Out;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 轨道出板口
+        /// </summary>
+        private bool WrokOutput
+        {
+            get
+            {
+                switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
+                {
+                    case 1://1-左进右出
+                    case 4://4-右进右出
+                        return bArr_IO_IN_Status.bIN_WorkSpace_Out;
+                    case 3:// 3-左进左出
+                    case 2:// 2-右进左出
+                        return bArr_IO_IN_Status.bIN_WorkSpace_IN;
+                }
+                return false;
+            }
+        }
+        #endregion
 
         private void thread_DryRun()
         {
@@ -23783,7 +23211,6 @@ namespace GeneralLabelerStation
                     rtn += Turn.GoPosTillStop(30000, VariableSys.dTurnXIAngle, CLEANTurnVel);
                 }
 
-
                 if (rtn == -1)
                     return;
 
@@ -23882,30 +23309,6 @@ namespace GeneralLabelerStation
                 {
                     if (RunMode == 1 || Monitor.IsEntered(this.SafeDoor))//ÔËÐÐ
                     {
-                        if (ReIN)
-                        {
-                            lReIN.BackColor = Color.Transparent;
-                        }
-                        else
-                        {
-                            lReIN.BackColor = Color.GreenYellow; ;
-                        }
-                        if (ProductOut)
-                        {
-                            lProductOut.BackColor = Color.GreenYellow;
-                        }
-                        else
-                        {
-                            lProductOut.BackColor = Color.Transparent; ;
-                        }
-                        if (ProductOutofMachie)
-                        {
-                            lOutofMachie.BackColor = Color.GreenYellow;
-                        }
-                        else
-                        {
-                            lOutofMachie.BackColor = Color.Transparent;
-                        }
                         if (RUN_AlarmInfo.Sum() == 0)
                         {
                             Three_Noise_OFF();
@@ -25431,26 +24834,17 @@ namespace GeneralLabelerStation
         {
             if (this.RunMode != 1)
             {
-                this.bInput.Enabled = false;
-                this.bOutput.Enabled = true;
                 Task.Factory.StartNew(() =>
                 {
                     StopProduct_ON();
                     CarryProduct_OFF();
                     Thread.Sleep(200);
-                    if (VariableSys.dFlowIN_OUT == 1 || VariableSys.dFlowIN_OUT == 3)
-                    {
-                        ConveyorJog(VariableSys.VelMode_Conveyor, true);
-                    }
-                    else if (VariableSys.dFlowIN_OUT == 2 || VariableSys.dFlowIN_OUT == 4)
-                    {
-                        ConveyorJog(VariableSys.VelMode_Conveyor, false);
-                    }
+                    ConveryInput();
 
                     Stopwatch a = new Stopwatch();
                     a.Start();
 
-                    while (!bArr_IO_IN_Status.bIN_WorkSpace_Reach
+                    while (!this.WrokInput
                     && a.ElapsedMilliseconds < 10000)
                     {
                         Thread.Sleep(5);
@@ -25461,11 +24855,6 @@ namespace GeneralLabelerStation
                     {
                         Thread.Sleep(200);
                         CarryProduct_ON();
-                        //todo 手动进板测试夹板动点未感应
-                        //while (!bArr_IO_IN_Status.bIN_Carry_Move.GetIO())
-                        //{
-                        //    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "夹板动点未感应，请检查夹板是否到位！" });//
-                        //}
                     }
 
                     ConveyorStop();
@@ -25477,38 +24866,22 @@ namespace GeneralLabelerStation
         {
             if (this.RunMode != 1)
             {
-                this.bInput.Enabled = true;
-
                 Task.Factory.StartNew(() =>
                 {
                     StopProduct_OFF();
                     CarryProduct_OFF();
                     Thread.Sleep(1000);
 
-                    if (VariableSys.dFlowIN_OUT == 1 || VariableSys.dFlowIN_OUT == 4)
-                    {
-                        ConveyorJog(VariableSys.VelMode_Conveyor, true);
-                    }
-                    else if (VariableSys.dFlowIN_OUT == 2 || VariableSys.dFlowIN_OUT == 3)
-                    {
-                        ConveyorJog(VariableSys.VelMode_Conveyor, false);
-                    }
+                    ConveryOutput();
 
                     Stopwatch a = new Stopwatch();
                     a.Start();
 
-                    while (a.ElapsedMilliseconds < 10000)
+                    while (a.ElapsedMilliseconds < 5000)
                     {
                         Thread.Sleep(5);
 
-                        if ((VariableSys.dFlowIN_OUT == 3 || VariableSys.dFlowIN_OUT == 4)
-                        && bArr_IO_IN_Status.bIN_WorkSpace_IN)
-                        {
-                            break;
-                        }
-
-                        if ((VariableSys.dFlowIN_OUT == 1 || VariableSys.dFlowIN_OUT == 2)
-                        && bArr_IO_IN_Status.bIN_WorkSpace_Out)
+                        if(this.WrokOutput)
                         {
                             break;
                         }
@@ -27246,7 +26619,6 @@ namespace GeneralLabelerStation
                 {
                     bCoordSorce.Text = "系统坐标:规划器";
                 }
-
             }
         }
 
@@ -27405,6 +26777,5 @@ namespace GeneralLabelerStation
 
             return realPt;
         }
-
     }
 }
