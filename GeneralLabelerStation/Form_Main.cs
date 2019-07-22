@@ -526,6 +526,7 @@ namespace GeneralLabelerStation
         /// </summary>
         private short ConveyorStop()
         {
+            ConveyorIsRun = false;
             if (VariableSys.machineVersion == 3)
             {
                 short rtn = R3.ResetIO_OUT(4);
@@ -539,6 +540,12 @@ namespace GeneralLabelerStation
             return rtn;
         }
 
+        private bool ConveyorIsRun = false;
+        private bool ConveyorRunDir = true;
+
+        private bool T_ConveyorIsRun = false;
+        private bool T_ConveyorRunDir = false;
+
         /// <summary>
         /// 轨道运动
         /// </summary>
@@ -547,31 +554,36 @@ namespace GeneralLabelerStation
         /// <returns></returns>
         private short ConveyorJog(bool dir)
         {
+            ConveyorIsRun = true;
+            ConveyorRunDir = dir;
             short rtn = 0;
             if (VariableSys.machineVersion == 3)
             {
+                rtn += R3.ResetIO_OUT(5);
+                rtn += R3.ResetIO_OUT(4);
                 if (dir)
                 {
                     rtn += R3.SetIO_OUT(4);
-                    rtn += R3.ResetIO_OUT(5);
                 }
                 else
                 {
-                    rtn += R3.SetIO_OUT(4);
                     rtn += R3.SetIO_OUT(5);
+                    rtn += R3.SetIO_OUT(4);
                 }
             }
             else
             {
+                rtn += R2.ResetIO_OUT(5);
+                rtn += R2.ResetIO_OUT(4);
+
                 if (dir)
                 {
                     rtn += R2.SetIO_OUT(4);
-                    rtn += R2.ResetIO_OUT(5);
                 }
                 else
                 {
-                    rtn += R2.SetIO_OUT(4);
                     rtn += R2.SetIO_OUT(5);
+                    rtn += R2.SetIO_OUT(4);
                 }
             }
             return rtn;
@@ -1541,7 +1553,7 @@ namespace GeneralLabelerStation
             VariableSys.LightUpVendor = (short)Ini_Sys.IniReadNum("RunOption", "LightUpVendor");
             VariableSys.LightDownVendor = (short)Ini_Sys.IniReadNum("RunOption", "LightDownVendor");
             VariableSys.bEnableAsyncXI = Ini_Sys.IniReadValue("RunOption", "EnableAsyncXI") == "False" ? false : true;
-            VariableSys.bEnableVacuumCheck = Ini_Sys.IniReadValue("RunOption", "EnableVacuumCheck") == "True" ? true : false;
+            VariableSys.bEnableVaccumCheck = Ini_Sys.IniReadValue("RunOption", "EnableVacuumCheck") == "True" ? true : false;
             VariableSys.bEnableLineOffset = Ini_Sys.IniReadBool("RunOption", "EnableLineOffset");
             VariableSys.bEnableThrowPut = Ini_Sys.IniReadBool("RunOption", "EnableThrowPut");
 
@@ -1958,7 +1970,7 @@ namespace GeneralLabelerStation
 
             this.cbxEnableAnscXI.Checked = VariableSys.bEnableAsyncXI;
             this.cb_EnableGlassOffset.Checked = VariableSys.bEnableGlassOffset;
-            this.cb_EnableCheck.Checked = VariableSys.bEnableVacuumCheck;
+            this.cb_EnableCheck.Checked = VariableSys.bEnableVaccumCheck;
             this.cbLineOffset.Checked = VariableSys.bEnableLineOffset;
             this.cbThrowPut.Checked = VariableSys.bEnableThrowPut;
 
@@ -9907,7 +9919,6 @@ namespace GeneralLabelerStation
 
             var pastePt = GlassHelper.MachinePoint2ActPoint(VariableSys.pPasteCoord[selectNz]);
             var upPt = GlassHelper.MachinePoint2ActPoint(VariableSys.pUpMarkCoord[selectNz]);
-
             var downPt = GlassHelper.MachinePoint2ActPoint(VariableSys.pDownMarkCoord[selectNz]);
             float offsetX = downPt.X - VariableSys.pReadyPoint.X;
             float offsetY = downPt.Y - VariableSys.pReadyPoint.Y;
@@ -11073,7 +11084,7 @@ namespace GeneralLabelerStation
 
             VariableSys.bEnableAsyncXI = this.cbxEnableAnscXI.Checked;
             VariableSys.bEnableGlassOffset = this.cb_EnableGlassOffset.Checked;
-            VariableSys.bEnableVacuumCheck = this.cb_EnableCheck.Checked;
+            VariableSys.bEnableVaccumCheck = this.cb_EnableCheck.Checked;
             VariableSys.bEnableLineOffset = this.cbLineOffset.Checked;
             VariableSys.bEnableThrowPut = this.cbThrowPut.Checked;
 
@@ -11125,7 +11136,7 @@ namespace GeneralLabelerStation
 
             Ini_Sys.IniWriteValue("RunOption", "EnableAsyncXI", VariableSys.bEnableAsyncXI.ToString());
             Ini_Sys.IniWriteValue("RunOption", "EnableGlassOffset", VariableSys.bEnableGlassOffset.ToString());
-            Ini_Sys.IniWriteValue("RunOption", "EnableVacuumCheck", VariableSys.bEnableVacuumCheck.ToString());
+            Ini_Sys.IniWriteValue("RunOption", "EnableVacuumCheck", VariableSys.bEnableVaccumCheck.ToString());
             Ini_Sys.IniWriteBool("RunOption", "EnableLineOffset", VariableSys.bEnableLineOffset);
             Ini_Sys.IniWriteBool("RunOption", "EnableThrowPut", VariableSys.bEnableThrowPut);
 
@@ -11510,6 +11521,10 @@ namespace GeneralLabelerStation
             }
 
             CycleStop = this.bCycleStop.Checked;
+            if(this.FlowIndex_Conveyor != 100 && this.T_ConveyorIsRun) // 继续激活轨道 根据上一次暂停前状态
+            {
+                ConveyorJog(this.T_ConveyorRunDir);
+            }
 
             RunMode = 1;
             
@@ -11527,8 +11542,13 @@ namespace GeneralLabelerStation
                     return;
                 }
 
-                FlowInit_Conveyor = false;
-                FlowIndex_Conveyor = 100;
+                if(this.FlowIndex_Conveyor != 100 && this.T_ConveyorRunDir)
+                {
+                    this.ConveyorJog(this.T_ConveyorRunDir);
+                }
+
+                //FlowInit_Conveyor = false;
+                FlowIndex_Conveyor = this.FlowIndex_Conveyor_Done;
                 RunMode = 3;
                 bExit.Enabled = true;
                 pMode_Login.Enabled = true;
@@ -11546,6 +11566,7 @@ namespace GeneralLabelerStation
                 gB_Reset.Enabled = false;
                 gB_FeederLeft.Enabled = true;
                 gB_FeederRight.Enabled = true;
+
                 GC.Collect();
             }
             else
@@ -11683,7 +11704,12 @@ namespace GeneralLabelerStation
             RunMode = 2;
             if (RUN_AlarmInfo[0] == 0)
                 StatisticsHelper.Instance.Reoprt.Start(TimeDefine.PauseTime, "暂停");
+            this.T_ConveyorIsRun = this.ConveyorIsRun;
+            this.T_ConveyorRunDir = this.ConveyorRunDir;
 
+            ConveyorStop();
+            this.ResetInformBeforeGive();
+            
             StopWatch_FlowIndex.Stop();
             StopWatch_FlowIndex_Conveyor.Stop();
             this.CloseBtnLight(3);
@@ -16219,25 +16245,25 @@ namespace GeneralLabelerStation
 
         private void pJog_XNSlow_MouseUp(object sender, MouseEventArgs e)
         {
-            X.StopAxis();
+            X.StopAxis(false);
             pJog_XNSlow.Image = GeneralLabelerStation.Properties.Resources.左1;
         }
 
         private void pJog_XNFast_MouseUp(object sender, MouseEventArgs e)
         {
-            X.StopAxis();
+            X.StopAxis(false);
             pJog_XNFast.Image = GeneralLabelerStation.Properties.Resources.左快1;
         }
 
         private void pJog_XPFast_MouseUp(object sender, MouseEventArgs e)
         {
-            X.StopAxis();
+            X.StopAxis(false);
             pJog_XPFast.Image = GeneralLabelerStation.Properties.Resources.右快1;
         }
 
         private void pJog_XPSlow_MouseUp(object sender, MouseEventArgs e)
         {
-            X.StopAxis();
+            X.StopAxis(false);
             pJog_XPSlow.Image = GeneralLabelerStation.Properties.Resources.右1;
         }
         //
@@ -16295,26 +16321,26 @@ namespace GeneralLabelerStation
         //
         private void pJog_YPSlow_MouseUp(object sender, MouseEventArgs e)
         {
-            Y.StopAxis();
+            Y.StopAxis(false);
             pJog_YPSlow.Image = GeneralLabelerStation.Properties.Resources.上1;
         }
 
         private void pJog_YPFast_MouseUp(object sender, MouseEventArgs e)
         {
-            Y.StopAxis();
+            Y.StopAxis(false);
             pJog_YPFast.Image = GeneralLabelerStation.Properties.Resources.上快1;
         }
 
         private void pJog_YNFast_MouseUp(object sender, MouseEventArgs e)
         {
-            Y.StopAxis();
+            Y.StopAxis(false);
             pJog_YNFast.Image = GeneralLabelerStation.Properties.Resources.下快1;
 
         }
 
         private void pJog_YNSlow_MouseUp(object sender, MouseEventArgs e)
         {
-            Y.StopAxis();
+            Y.StopAxis(false);
             pJog_YNSlow.Image = GeneralLabelerStation.Properties.Resources.下1;
 
         }
@@ -17664,7 +17690,7 @@ namespace GeneralLabelerStation
                     rParam1.GoPos(feeder.XI_Degree[XI_Index], VariableSys.VelMode_Current);
                     rParam2.GoPos(feeder.XI_Degree[XI_Index], VariableSys.VelMode_Current);
                     this.TurnGo(VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
-                    if (feeder.bReachXI || VariableSys.bEnableVacuumCheck)
+                    if (feeder.bReachXI || VariableSys.bEnableVaccumCheck)
                     {
                         zParam1.XI_vaccum.SetIO();
                         zParam2.XI_vaccum.SetIO();
@@ -18377,7 +18403,7 @@ namespace GeneralLabelerStation
 
                         zParam.RUN_bNozzleUse = false;
 
-                        if (VariableSys.bEnableVacuumCheck)
+                        if (VariableSys.bEnableVaccumCheck)
                         {
                             Thread.Sleep(100);
                             zParam.XI_vaccum.SetIO();
@@ -18481,12 +18507,16 @@ namespace GeneralLabelerStation
 
                 rParam.GoPos(zParam.RUN_PasteRealAngle, VariableSys.VelMode_Current);
                 uint nextZ = zIndex + 1;
-                if (nextZ < Variable.NOZZLE_NUM && this.Z_RunParamMap[nextZ].RUN_bNozzleUse)
-                {
-                    double nextangle = RUN_PASTEInfo[this.Z_RunParamMap[nextZ].RUN_PasteInfoIndex_List].PasteAngle[this.Z_RunParamMap[nextZ].RUN_PastePointIndex];
-                    this.R_RunParamMap[nextZ].GoPos(nextangle, VariableSys.VelMode_Current);
-                }
 
+                if (VariableSys.machineVersion == 2)
+                {
+                    if (nextZ < Variable.NOZZLE_NUM && this.Z_RunParamMap[nextZ].RUN_bNozzleUse)
+                    {
+                        double nextangle = RUN_PASTEInfo[this.Z_RunParamMap[nextZ].RUN_PasteInfoIndex_List].PasteAngle[this.Z_RunParamMap[nextZ].RUN_PastePointIndex];
+                        this.R_RunParamMap[nextZ].GoPos(nextangle, VariableSys.VelMode_Current);
+                    }
+                }
+            
                 FlowInit = true;
             }
             else
@@ -18542,15 +18572,6 @@ namespace GeneralLabelerStation
                 else
                 {
                     FlowIndex_Name = "Z 到贴料高度";
-                }
-
-                if (VariableSys.bEnableVacuumCheck && !zParam.Check_vaccum.GetIO())//真空未达到
-                {
-                    zParam.RUN_dNozzleDownVisionED = 4;
-                    FlowInit = false;
-                    FlowDoneIndex = FlowIndex;
-                    FlowIndex = 20310;
-                    return false;
                 }
 
                 zParam.RUN_ZPos = RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PasteHeight[zParam.RUN_PastePointIndex][(int)zIndex]
@@ -20099,7 +20120,7 @@ namespace GeneralLabelerStation
                             }
                             else
                             {
-                                if (VariableSys.bEnableVacuumCheck && CheckLabelTask != null)
+                                if (VariableSys.bEnableVaccumCheck && CheckLabelTask != null)
                                 {
                                     CheckLabelTask.Wait();
                                     if (CheckLabelTask.Result != string.Empty)
@@ -20173,7 +20194,7 @@ namespace GeneralLabelerStation
                                     break;
                                 }
 
-                                if (VariableSys.bEnableVacuumCheck && CheckLabelTask != null)
+                                if (VariableSys.bEnableVaccumCheck && CheckLabelTask != null)
                                 {
                                     CheckLabelTask.Wait();
                                     if (CheckLabelTask.Result != string.Empty)
@@ -21063,7 +21084,7 @@ namespace GeneralLabelerStation
                         //*************************************************[抛料]********************************************************************************************
                         #region 20150 - 回拍
                         case 20150: // 到回拍位置
-                            if (VariableSys.bEnableVacuumCheck)
+                            if (VariableSys.bEnableVaccumCheck)
                             {
                                 if (!FlowInit)
                                 {
@@ -21079,6 +21100,7 @@ namespace GeneralLabelerStation
                                     if (this.AxisReach(VariableSys.pReadyPoint)
                                         && this.TurnReach(VariableSys.dTurnPasteAngle))
                                     {
+                                        Thread.Sleep(VariableSys.iDownCamDelay);
                                         var image1 = new VisionImage();
                                         var image2 = new VisionImage();
                                         image1 = CameraDefine.Instance[CAM.Bottom1]._Session.Grab(null, true);
@@ -21506,6 +21528,7 @@ namespace GeneralLabelerStation
                             {
                                 FlowIndex_ConveyorName = "等待到出板口";
                                 InformBackTake(); // 向后出板
+                                this.ResetInformBeforeGive();
 
                                 ConveryOutput();
                                 FlowInit_Conveyor = true;

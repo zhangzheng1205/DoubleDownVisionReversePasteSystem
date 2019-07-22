@@ -502,11 +502,6 @@ namespace GeneralLabelerStation.Tool
                     this.ShowPasteLabel[nozzle].BackColor = System.Drawing.Color.LightGreen;
             }));
 
-            //Form_Main.Instance.BeginInvoke(new Action(() => 
-            //{
-            //    // 存储到日志
-            //}));
-
             return isAlarm;
         }
 

@@ -804,7 +804,7 @@ namespace GeneralLabelerStation
 
         public bool bEnableAsyncXI = true; // 启用吸嘴同吸功能
         public bool bEnableGlassOffset = false; // 启用玻璃杯坐标补偿
-        public bool bEnableVacuumCheck = false; // 启用真空检测
+        public bool bEnableVaccumCheck = false; // 启用真空检测
         public bool bEnableLineOffset = false; // 启用线性矫正
         public bool bEnableThrowPut = false; // 启用抛料下压功能
 
