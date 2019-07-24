@@ -11408,6 +11408,7 @@ namespace GeneralLabelerStation
         }
 
         private bool CycleStop = false;
+        private bool CycleRun = false;
 
         private void bAutoRun_Click(object sender, EventArgs e)
         {
@@ -11524,6 +11525,7 @@ namespace GeneralLabelerStation
             }
 
             CycleStop = this.bCycleStop.Checked;
+            CycleRun = this.cbCycleRun.Checked;
             if(this.FlowIndex_Conveyor != 100 && this.T_ConveyorIsRun) // 继续激活轨道 根据上一次暂停前状态
             {
                 ConveyorJog(this.T_ConveyorRunDir);
@@ -21547,7 +21549,16 @@ namespace GeneralLabelerStation
                                     ConveyorStop();
                                     FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
                                     FlowInit_Conveyor = false;
-                                    FlowIndex_Conveyor = 600;
+                                    //todo 循环运行
+                                    if (CycleRun == true)
+                                    {
+                                        Thread.Sleep(2000);
+                                        FlowIndex_Conveyor = 100;
+                                    }
+                                    else
+                                    {
+                                        FlowIndex_Conveyor = 600;
+                                    }
                                 }
                                 else
                                 {

@@ -97,6 +97,7 @@
             this.tPanelCode = new System.Windows.Forms.TextBox();
             this.lPanelCode = new System.Windows.Forms.Label();
             this.gbOpreator = new System.Windows.Forms.Panel();
+            this.cbCycleRun = new System.Windows.Forms.CheckBox();
             this.gB_Reset = new System.Windows.Forms.GroupBox();
             this.bClear = new System.Windows.Forms.Button();
             this.cB_EnableReset = new System.Windows.Forms.CheckBox();
@@ -2254,12 +2255,19 @@
             // 
             // gbOpreator
             // 
+            this.gbOpreator.Controls.Add(this.cbCycleRun);
             this.gbOpreator.Controls.Add(this.gB_Reset);
             this.gbOpreator.Controls.Add(this.bByPASS);
             this.gbOpreator.Controls.Add(this.bAutoSinglePause);
             this.gbOpreator.Controls.Add(this.bAutoRun);
             resources.ApplyResources(this.gbOpreator, "gbOpreator");
             this.gbOpreator.Name = "gbOpreator";
+            // 
+            // cbCycleRun
+            // 
+            resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
+            this.cbCycleRun.Name = "cbCycleRun";
+            this.cbCycleRun.UseVisualStyleBackColor = true;
             // 
             // gB_Reset
             // 
@@ -7563,6 +7571,7 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Z1,
             this.Menu_Z2,
@@ -10558,6 +10567,7 @@
             // 
             // R_SelectMenu
             // 
+            this.R_SelectMenu.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.R_SelectMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.toolStripMenuItem2,
@@ -12158,6 +12168,7 @@
             // statusStrip1
             // 
             resources.ApplyResources(this.statusStrip1, "statusStrip1");
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tSSL_UserStatus,
             this.tSSL_Error,
@@ -12420,6 +12431,7 @@
             this.gbPanelCode.ResumeLayout(false);
             this.gbPanelCode.PerformLayout();
             this.gbOpreator.ResumeLayout(false);
+            this.gbOpreator.PerformLayout();
             this.gB_Reset.ResumeLayout(false);
             this.gB_Reset.PerformLayout();
             this.gbFlowState.ResumeLayout(false);
@@ -14196,6 +14208,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column114;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column115;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column124;
+        private System.Windows.Forms.CheckBox cbCycleRun;
     }
 }
 
