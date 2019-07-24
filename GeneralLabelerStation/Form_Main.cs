@@ -24885,7 +24885,7 @@ namespace GeneralLabelerStation
                     a.Stop();
                     if (a.ElapsedMilliseconds < 10000)
                     {
-                        Thread.Sleep(200);
+                        Thread.Sleep(1000);
                         CarryProduct_ON();
                     }
 
