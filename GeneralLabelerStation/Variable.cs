@@ -468,6 +468,7 @@ namespace GeneralLabelerStation
             /// </summary>
             //todo BadMark编号字段
             public string[] PastePN;
+            public string[] Region;
             public bool[] PasteEN;//贴附使能
             public PointF[] PastePoints;//贴附点XY坐标
             public double[] PasteAngle;//贴附点角度

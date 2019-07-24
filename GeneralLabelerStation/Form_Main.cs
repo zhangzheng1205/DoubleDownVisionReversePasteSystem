@@ -3709,6 +3709,7 @@ namespace GeneralLabelerStation
                     row.CreateCell(12 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.IsPastePointsAbs[rowIndex] == true ? "1" : "0");//
                     row.CreateCell(13 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.OffsetX_Single[rowIndex].ToString());//
                     row.CreateCell(14 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.OffsetY_Single[rowIndex].ToString());//
+                    row.CreateCell(15 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.Region[rowIndex].ToString());//
                 }
                 #endregion
             }
@@ -5263,6 +5264,7 @@ namespace GeneralLabelerStation
                 PastePointCount = (short)(rowIndex);
                 PasteInfo.IsPastePointsAbs = new bool[PastePointCount];
                 PasteInfo.PastePN = new string[PastePointCount];
+                PasteInfo.Region = new string[PastePointCount];
                 PasteInfo.PasteEN = new bool[PastePointCount];
                 PasteInfo.PastePoints = new PointF[PastePointCount];
                 PasteInfo.PasteAngle = new double[PastePointCount];
@@ -5305,6 +5307,7 @@ namespace GeneralLabelerStation
                     {
                         PasteInfo.OffsetX_Single[i] = double.Parse(row.Cells[13 + Variable.NOZZLE_NUM].StringCellValue);
                         PasteInfo.OffsetY_Single[i] = double.Parse(row.Cells[14 + Variable.NOZZLE_NUM].StringCellValue);
+                        PasteInfo.Region[i] = row.Cells[15 + Variable.NOZZLE_NUM].StringCellValue;
                     }
                     catch { }
                 }
@@ -12542,6 +12545,10 @@ namespace GeneralLabelerStation
 
                             dGV_Paste.Rows[j].Cells[12 + Variable.NOZZLE_NUM].Value = PasteInfo.OffsetX_Single[j].ToString();
                             dGV_Paste.Rows[j].Cells[13 + Variable.NOZZLE_NUM].Value = PasteInfo.OffsetY_Single[j].ToString();
+                            if (PasteInfo.Region[j] == null)
+                                PasteInfo.Region[j] = "A";
+                            dGV_Paste.Rows[j].Cells[14 + Variable.NOZZLE_NUM].Value = PasteInfo.Region[j].ToString();
+
                         }
                         AddRowHeader(dGV_Paste);
 
@@ -13949,6 +13956,7 @@ namespace GeneralLabelerStation
                 item.Cells[11 + Variable.NOZZLE_NUM].Value = "1";
                 item.Cells[12 + Variable.NOZZLE_NUM].Value = "0";
                 item.Cells[13 + Variable.NOZZLE_NUM].Value = "0";
+                item.Cells[14 + Variable.NOZZLE_NUM].Value = "A";
 
             }
             else
@@ -13974,6 +13982,7 @@ namespace GeneralLabelerStation
                 item.Cells[11 + Variable.NOZZLE_NUM].Value = "1";
                 item.Cells[12 + Variable.NOZZLE_NUM].Value = "0";
                 item.Cells[13 + Variable.NOZZLE_NUM].Value = "0";
+                item.Cells[14 + Variable.NOZZLE_NUM].Value = "A";
             }
             //bPointADD.BackColor = Color.GreenYellow;
         }
@@ -14159,6 +14168,7 @@ namespace GeneralLabelerStation
                         dGV_Paste.Rows[dGV_Paste.Rows.Count - Points2Add.Count() + i * dGV_Paste.SelectedRows.Count + j - 1].Cells[11 + Variable.NOZZLE_NUM].Value = dGV_Paste.SelectedRows[j].Cells[11 + Variable.NOZZLE_NUM].Value.ToString();
                         dGV_Paste.Rows[dGV_Paste.Rows.Count - Points2Add.Count() + i * dGV_Paste.SelectedRows.Count + j - 1].Cells[12 + Variable.NOZZLE_NUM].Value = 0;
                         dGV_Paste.Rows[dGV_Paste.Rows.Count - Points2Add.Count() + i * dGV_Paste.SelectedRows.Count + j - 1].Cells[13 + Variable.NOZZLE_NUM].Value = 0;
+                        dGV_Paste.Rows[dGV_Paste.Rows.Count - Points2Add.Count() + i * dGV_Paste.SelectedRows.Count + j - 1].Cells[14 + Variable.NOZZLE_NUM].Value = dGV_Paste.SelectedRows[j].Cells[14 + Variable.NOZZLE_NUM].Value.ToString();
                     }
                 }
                 AddRowHeader(dGV_Paste);
@@ -14211,7 +14221,6 @@ namespace GeneralLabelerStation
             }
             bPasteEN = rBEN.Checked;
             bBadMarkEN = rBEN_BadMark.Checked;
-            bABS = rB_Abs.Checked;
             if (dGV_Paste.SelectedRows.Count > 0 && (dGV_Paste.SelectedRows[0].Index != dGV_Paste.RowCount - 1))
             {
                 for (int i_Temp = 0; i_Temp < dGV_Paste.SelectedRows.Count; i_Temp++)
@@ -14226,17 +14235,6 @@ namespace GeneralLabelerStation
                         dGV_Paste.Rows[dGV_Paste.SelectedRows[i_Temp].Index].Cells[7 + Variable.NOZZLE_NUM].Value = sDelay;
                         dGV_Paste.Rows[dGV_Paste.SelectedRows[i_Temp].Index].Cells[8 + Variable.NOZZLE_NUM].Value = (bBadMarkEN == true ? "1" : "0");
                         dGV_Paste.Rows[dGV_Paste.SelectedRows[i_Temp].Index].Cells[11 + Variable.NOZZLE_NUM].Value = (bABS == true ? "1" : "0");
-                        if (!bABS)
-                        {
-                            try
-                            {
-                                dGV_Paste.Rows[dGV_Paste.SelectedRows[i_Temp].Index].Cells[2].Value = tXLineOffset.Text;
-                                dGV_Paste.Rows[dGV_Paste.SelectedRows[i_Temp].Index].Cells[3].Value = tYLineOffset.Text;
-                            }
-                            catch
-                            {
-                            }
-                        }
                     }
                 }
             }
@@ -14295,6 +14293,8 @@ namespace GeneralLabelerStation
 
                 PasteInfo.OffsetX_Single = new double[dGV_Paste.Rows.Count - 1];
                 PasteInfo.OffsetY_Single = new double[dGV_Paste.Rows.Count - 1];
+                PasteInfo.Region = new string[dGV_Paste.Rows.Count - 1];
+
                 if (rB_ISWhite.Checked)
                 {
                     PasteInfo.ISBadMarkWhite = 0;
@@ -14336,6 +14336,7 @@ namespace GeneralLabelerStation
                     {
                         PasteInfo.OffsetX_Single[i] = double.Parse(dGV_Paste.Rows[i].Cells[12 + Variable.NOZZLE_NUM].Value.ToString());
                         PasteInfo.OffsetY_Single[i] = double.Parse(dGV_Paste.Rows[i].Cells[13 + Variable.NOZZLE_NUM].Value.ToString());
+                        PasteInfo.Region[i] = dGV_Paste.Rows[i].Cells[14 + Variable.NOZZLE_NUM].Value.ToString();
                     }
                     catch { }
                 }
@@ -19924,6 +19925,11 @@ namespace GeneralLabelerStation
                                         JOB.PASTEInfo[i].bMark2Caled = false;//上视觉Mark2拍照与否
                                         JOB.PASTEInfo[i].dPressureValue = new double[RUN_PASTEInfo[j].iPasteED.Length];//贴附的压力值
                                         JOB.PASTEInfo[i].iPasteED = new int[RUN_PASTEInfo[j].iPasteED.Length];//贴过与否
+                                        for(int kk = 0; kk < RUN_PASTEInfo[j].iPasteED.Length; ++kk)
+                                        {
+                                            JOB.PASTEInfo[i].iPasteED[kk] = RUN_PASTEInfo[j].PasteEN[kk] ? 0 : 1;
+                                        }
+
                                         JOB.PASTEInfo[i].iBadMarkED = new int[RUN_PASTEInfo[j].iPasteED.Length];//BadMark 拍照计算与否
                                         JOB.PASTEInfo[i].TransformedPoints = new PointF[RUN_PASTEInfo[j].iPasteED.Length];//修正的贴附点
                                         JOB.PASTEInfo[i].TransformedBadMarkPoints = new PointF[RUN_PASTEInfo[j].iPasteED.Length];//修正的BadMark点
@@ -23947,14 +23953,6 @@ namespace GeneralLabelerStation
             bXY_BadMARK.BackColor = Color.Transparent;
         }
 
-        private void rB_Rel_CheckedChanged(object sender, EventArgs e)
-        {
-            lXLine.Visible = rB_Rel.Checked;
-            tXLineOffset.Visible = rB_Rel.Checked;
-            lYLine.Visible = rB_Rel.Checked;
-            tYLineOffset.Visible = rB_Rel.Checked;
-        }
-
         private void rB_BadMark_Area_CheckedChanged(object sender, EventArgs e)
         {
             if (rB_BadMark_Area.Checked)
@@ -26143,6 +26141,42 @@ namespace GeneralLabelerStation
                 MessageBox.Show("相机校验成功！", "提示");
             }
             #endregion
+        }
+
+        private void bRecordRegion_Click(object sender, EventArgs e)
+        {
+            if (dGV_Paste.SelectedRows.Count > 0 && (dGV_Paste.SelectedRows[0].Index != dGV_Paste.RowCount - 1))
+            {
+                for (int i_Temp = 0; i_Temp < dGV_Paste.SelectedRows.Count; i_Temp++)
+                {
+                    if (dGV_Paste.SelectedRows[i_Temp].Index != dGV_Paste.Rows.Count - 1)
+                    {
+                        dGV_Paste.Rows[dGV_Paste.SelectedRows[i_Temp].Index].Cells[14 + Variable.NOZZLE_NUM].Value = this.tRegion.Text;
+                    }
+                }
+            }
+        }
+
+        private void cbRegionPaste_CheckedChanged(object sender, EventArgs e)
+        {
+            if (dGV_Paste.SelectedRows.Count > 0 && (dGV_Paste.SelectedRows[0].Index != dGV_Paste.RowCount - 1))
+            {
+                string reigon = dGV_Paste.Rows[dGV_Paste.SelectedRows[0].Index].Cells[14 + Variable.NOZZLE_NUM].Value.ToString();
+
+                for (int i_Temp = 0; i_Temp < dGV_Paste.Rows.Count - 1; i_Temp++)
+                {
+                    string temp = dGV_Paste.Rows[i_Temp].Cells[14 + Variable.NOZZLE_NUM].Value.ToString();
+                    if (temp == reigon)
+                    {
+                        dGV_Paste.Rows[i_Temp].Cells[1].Value = this.cbRegionPaste.Checked ? "1":"0";
+                    }
+                }
+            }
+        }
+
+        private void dGV_Paste_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
 
         private void bMoveRotateCamXY_Click(object sender, EventArgs e)

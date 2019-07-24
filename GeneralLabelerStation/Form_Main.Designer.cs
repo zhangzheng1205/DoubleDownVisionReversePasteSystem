@@ -537,6 +537,11 @@
             this.Column122 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column123 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tP_Paste = new System.Windows.Forms.TabPage();
+            this.groupBox41 = new System.Windows.Forms.GroupBox();
+            this.bRecordRegion = new System.Windows.Forms.Button();
+            this.cbRegionPaste = new System.Windows.Forms.CheckBox();
+            this.tRegion = new System.Windows.Forms.TextBox();
+            this.label246 = new System.Windows.Forms.Label();
             this.bNzOpzimte = new System.Windows.Forms.Button();
             this.tUpdateZ = new System.Windows.Forms.Button();
             this.tabControl5 = new System.Windows.Forms.TabControl();
@@ -646,25 +651,17 @@
             this.bPointADD = new System.Windows.Forms.Button();
             this.bPointDEL = new System.Windows.Forms.Button();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.tYLineOffset = new System.Windows.Forms.TextBox();
-            this.lYLine = new System.Windows.Forms.Label();
-            this.tXLineOffset = new System.Windows.Forms.TextBox();
-            this.lXLine = new System.Windows.Forms.Label();
-            this.rB_Rel = new System.Windows.Forms.RadioButton();
-            this.rB_Abs = new System.Windows.Forms.RadioButton();
-            this.label246 = new System.Windows.Forms.Label();
             this.cB_pn = new System.Windows.Forms.TextBox();
             this.panel10 = new System.Windows.Forms.Panel();
             this.rBEN_BadMark = new System.Windows.Forms.RadioButton();
             this.rBDN_BadMark = new System.Windows.Forms.RadioButton();
             this.label219 = new System.Windows.Forms.Label();
+            this.tNozzle = new System.Windows.Forms.TextBox();
+            this.label185 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.rBEN = new System.Windows.Forms.RadioButton();
             this.rBDN = new System.Windows.Forms.RadioButton();
             this.label126 = new System.Windows.Forms.Label();
-            this.tNozzle = new System.Windows.Forms.TextBox();
-            this.label185 = new System.Windows.Forms.Label();
             this.tDelay = new System.Windows.Forms.TextBox();
             this.label127 = new System.Windows.Forms.Label();
             this.bRecordPoint = new System.Windows.Forms.Button();
@@ -692,6 +689,7 @@
             this.Abs_Rel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column114 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column115 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column124 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bCancelPasteInfo = new System.Windows.Forms.Button();
             this.label37 = new System.Windows.Forms.Label();
             this.bOpenProgram = new System.Windows.Forms.Button();
@@ -1564,6 +1562,7 @@
             this.groupBox72.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGV_Mark)).BeginInit();
             this.tP_Paste.SuspendLayout();
+            this.groupBox41.SuspendLayout();
             this.tabControl5.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.gB_BadMarkPattern.SuspendLayout();
@@ -1579,7 +1578,6 @@
             this.groupBox39.SuspendLayout();
             this.groupBox36.SuspendLayout();
             this.groupBox23.SuspendLayout();
-            this.panel14.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGV_Paste)).BeginInit();
@@ -5567,6 +5565,7 @@
             // 
             // tP_Paste
             // 
+            this.tP_Paste.Controls.Add(this.groupBox41);
             this.tP_Paste.Controls.Add(this.bNzOpzimte);
             this.tP_Paste.Controls.Add(this.tUpdateZ);
             this.tP_Paste.Controls.Add(this.tabControl5);
@@ -5583,6 +5582,41 @@
             resources.ApplyResources(this.tP_Paste, "tP_Paste");
             this.tP_Paste.Name = "tP_Paste";
             this.tP_Paste.UseVisualStyleBackColor = true;
+            // 
+            // groupBox41
+            // 
+            this.groupBox41.Controls.Add(this.bRecordRegion);
+            this.groupBox41.Controls.Add(this.cbRegionPaste);
+            this.groupBox41.Controls.Add(this.tRegion);
+            this.groupBox41.Controls.Add(this.label246);
+            resources.ApplyResources(this.groupBox41, "groupBox41");
+            this.groupBox41.Name = "groupBox41";
+            this.groupBox41.TabStop = false;
+            // 
+            // bRecordRegion
+            // 
+            this.bRecordRegion.BackColor = System.Drawing.Color.GreenYellow;
+            resources.ApplyResources(this.bRecordRegion, "bRecordRegion");
+            this.bRecordRegion.Name = "bRecordRegion";
+            this.bRecordRegion.UseVisualStyleBackColor = false;
+            this.bRecordRegion.Click += new System.EventHandler(this.bRecordRegion_Click);
+            // 
+            // cbRegionPaste
+            // 
+            resources.ApplyResources(this.cbRegionPaste, "cbRegionPaste");
+            this.cbRegionPaste.Name = "cbRegionPaste";
+            this.cbRegionPaste.UseVisualStyleBackColor = true;
+            this.cbRegionPaste.CheckedChanged += new System.EventHandler(this.cbRegionPaste_CheckedChanged);
+            // 
+            // tRegion
+            // 
+            resources.ApplyResources(this.tRegion, "tRegion");
+            this.tRegion.Name = "tRegion";
+            // 
+            // label246
+            // 
+            resources.ApplyResources(this.label246, "label246");
+            this.label246.Name = "label246";
             // 
             // bNzOpzimte
             // 
@@ -6346,12 +6380,11 @@
             // 
             // groupBox23
             // 
-            this.groupBox23.Controls.Add(this.panel14);
             this.groupBox23.Controls.Add(this.cB_pn);
             this.groupBox23.Controls.Add(this.panel10);
-            this.groupBox23.Controls.Add(this.panel8);
             this.groupBox23.Controls.Add(this.tNozzle);
             this.groupBox23.Controls.Add(this.label185);
+            this.groupBox23.Controls.Add(this.panel8);
             this.groupBox23.Controls.Add(this.tDelay);
             this.groupBox23.Controls.Add(this.label127);
             this.groupBox23.Controls.Add(this.bRecordPoint);
@@ -6363,59 +6396,6 @@
             resources.ApplyResources(this.groupBox23, "groupBox23");
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.TabStop = false;
-            // 
-            // panel14
-            // 
-            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel14.Controls.Add(this.tYLineOffset);
-            this.panel14.Controls.Add(this.lYLine);
-            this.panel14.Controls.Add(this.tXLineOffset);
-            this.panel14.Controls.Add(this.lXLine);
-            this.panel14.Controls.Add(this.rB_Rel);
-            this.panel14.Controls.Add(this.rB_Abs);
-            this.panel14.Controls.Add(this.label246);
-            resources.ApplyResources(this.panel14, "panel14");
-            this.panel14.Name = "panel14";
-            // 
-            // tYLineOffset
-            // 
-            resources.ApplyResources(this.tYLineOffset, "tYLineOffset");
-            this.tYLineOffset.Name = "tYLineOffset";
-            // 
-            // lYLine
-            // 
-            resources.ApplyResources(this.lYLine, "lYLine");
-            this.lYLine.Name = "lYLine";
-            // 
-            // tXLineOffset
-            // 
-            resources.ApplyResources(this.tXLineOffset, "tXLineOffset");
-            this.tXLineOffset.Name = "tXLineOffset";
-            // 
-            // lXLine
-            // 
-            resources.ApplyResources(this.lXLine, "lXLine");
-            this.lXLine.Name = "lXLine";
-            // 
-            // rB_Rel
-            // 
-            resources.ApplyResources(this.rB_Rel, "rB_Rel");
-            this.rB_Rel.Name = "rB_Rel";
-            this.rB_Rel.UseVisualStyleBackColor = true;
-            this.rB_Rel.CheckedChanged += new System.EventHandler(this.rB_Rel_CheckedChanged);
-            // 
-            // rB_Abs
-            // 
-            resources.ApplyResources(this.rB_Abs, "rB_Abs");
-            this.rB_Abs.Checked = true;
-            this.rB_Abs.Name = "rB_Abs";
-            this.rB_Abs.TabStop = true;
-            this.rB_Abs.UseVisualStyleBackColor = true;
-            // 
-            // label246
-            // 
-            resources.ApplyResources(this.label246, "label246");
-            this.label246.Name = "label246";
             // 
             // cB_pn
             // 
@@ -6450,6 +6430,16 @@
             resources.ApplyResources(this.label219, "label219");
             this.label219.Name = "label219";
             // 
+            // tNozzle
+            // 
+            resources.ApplyResources(this.tNozzle, "tNozzle");
+            this.tNozzle.Name = "tNozzle";
+            // 
+            // label185
+            // 
+            resources.ApplyResources(this.label185, "label185");
+            this.label185.Name = "label185";
+            // 
             // panel8
             // 
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -6477,16 +6467,6 @@
             // 
             resources.ApplyResources(this.label126, "label126");
             this.label126.Name = "label126";
-            // 
-            // tNozzle
-            // 
-            resources.ApplyResources(this.tNozzle, "tNozzle");
-            this.tNozzle.Name = "tNozzle";
-            // 
-            // label185
-            // 
-            resources.ApplyResources(this.label185, "label185");
-            this.label185.Name = "label185";
             // 
             // tDelay
             // 
@@ -6553,12 +6533,14 @@
             this.Column16,
             this.Abs_Rel,
             this.Column114,
-            this.Column115});
+            this.Column115,
+            this.Column124});
             resources.ApplyResources(this.dGV_Paste, "dGV_Paste");
             this.dGV_Paste.Name = "dGV_Paste";
             this.dGV_Paste.RowTemplate.Height = 23;
             this.dGV_Paste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dGV_Paste.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGV_Paste_CellClick);
+            this.dGV_Paste.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGV_Paste_CellContentClick);
             this.dGV_Paste.SelectionChanged += new System.EventHandler(this.dGV_Paste_SelectionChanged);
             // 
             // Column5
@@ -6650,6 +6632,11 @@
             // 
             resources.ApplyResources(this.Column115, "Column115");
             this.Column115.Name = "Column115";
+            // 
+            // Column124
+            // 
+            resources.ApplyResources(this.Column124, "Column124");
+            this.Column124.Name = "Column124";
             // 
             // bCancelPasteInfo
             // 
@@ -12505,6 +12492,8 @@
             this.groupBox72.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dGV_Mark)).EndInit();
             this.tP_Paste.ResumeLayout(false);
+            this.groupBox41.ResumeLayout(false);
+            this.groupBox41.PerformLayout();
             this.tabControl5.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
@@ -12532,8 +12521,6 @@
             this.groupBox36.PerformLayout();
             this.groupBox23.ResumeLayout(false);
             this.groupBox23.PerformLayout();
-            this.panel14.ResumeLayout(false);
-            this.panel14.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.panel8.ResumeLayout(false);
@@ -13332,14 +13319,6 @@
         private System.Windows.Forms.Label label242;
         private System.Windows.Forms.TextBox tOffSetX_Paste;
         private System.Windows.Forms.Label label240;
-        private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.RadioButton rB_Rel;
-        private System.Windows.Forms.RadioButton rB_Abs;
-        private System.Windows.Forms.Label label246;
-        private System.Windows.Forms.TextBox tYLineOffset;
-        private System.Windows.Forms.Label lYLine;
-        private System.Windows.Forms.TextBox tXLineOffset;
-        private System.Windows.Forms.Label lXLine;
         private System.Windows.Forms.TabControl tabControl5;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -14017,24 +13996,6 @@
         private System.Windows.Forms.Button bMFlexMES;
         private System.Windows.Forms.TextBox tSuckAlarmTime;
         private System.Windows.Forms.Label label64;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column105;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Abs_Rel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column114;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column115;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column58;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column59;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column106;
@@ -14211,6 +14172,30 @@
         private System.Windows.Forms.PictureBox pIN1;
         private System.Windows.Forms.PictureBox pIN0;
         private System.Windows.Forms.CheckBox bCycleStop;
+        private System.Windows.Forms.GroupBox groupBox41;
+        private System.Windows.Forms.Button bRecordRegion;
+        private System.Windows.Forms.CheckBox cbRegionPaste;
+        private System.Windows.Forms.TextBox tRegion;
+        private System.Windows.Forms.Label label246;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column105;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Abs_Rel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column114;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column115;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column124;
     }
 }
 
