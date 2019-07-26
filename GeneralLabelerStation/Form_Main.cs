@@ -1046,6 +1046,7 @@ namespace GeneralLabelerStation
 
         #region 新改吸嘴校验方式
 
+        //todo 设定吸嘴孔位按钮
         /// <summary>
         /// 初始化吸嘴间关系
         /// </summary>
@@ -1053,8 +1054,10 @@ namespace GeneralLabelerStation
         /// <param name="e"></param>
         private void bInitNozzleOffset_Click(object sender, EventArgs e)
         {
-            if (this.cbNzStep4.SelectedIndex < 0) return;
-            NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
+            //if (this.cbNzStep4.SelectedIndex < 0) return;
+            //NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
+            if (this.cbNzStep1.SelectedIndex < 0) return;
+            NozzleCenterOffset[this.cbNzStep1.SelectedIndex] = this.XYPos;
             SaveNozzleOffsetConfig();
         }
 
@@ -19686,6 +19689,7 @@ namespace GeneralLabelerStation
         }
         #endregion
 
+        //todo 主流程
         #region 线程及线程使用的函数
         private void thread_Main()//主流程//自动流程
         {
@@ -26013,12 +26017,13 @@ namespace GeneralLabelerStation
                 this.SaveNozzleOffsetConfig();
             }
         }
-
+        //todo 到吸嘴孔位按钮
         private void button4_Click_1(object sender, EventArgs e)
         {
-            if (this.cbNzStep4.SelectedIndex < 0) return;
-
-            this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
+            //if (this.cbNzStep4.SelectedIndex < 0) return;
+            //this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
+            if (this.cbNzStep1.SelectedIndex < 0) return;
+            this.XYGoPos(NozzleCenterOffset[this.cbNzStep1.SelectedIndex], VariableSys.VelMode_Current_Manual);
         }
 
         private void button10_Click(object sender, EventArgs e)

@@ -240,6 +240,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage27 = new System.Windows.Forms.TabPage();
             this.gB_Nz2Read = new System.Windows.Forms.GroupBox();
+            this.label275 = new System.Windows.Forms.Label();
+            this.label274 = new System.Windows.Forms.Label();
+            this.cbNzStep1 = new System.Windows.Forms.ComboBox();
+            this.label261 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.cbNzStep4 = new System.Windows.Forms.ComboBox();
             this.label213 = new System.Windows.Forms.Label();
@@ -3366,6 +3370,10 @@
             // 
             // gB_Nz2Read
             // 
+            this.gB_Nz2Read.Controls.Add(this.label275);
+            this.gB_Nz2Read.Controls.Add(this.label274);
+            this.gB_Nz2Read.Controls.Add(this.cbNzStep1);
+            this.gB_Nz2Read.Controls.Add(this.label261);
             this.gB_Nz2Read.Controls.Add(this.button4);
             this.gB_Nz2Read.Controls.Add(this.cbNzStep4);
             this.gB_Nz2Read.Controls.Add(this.label213);
@@ -3400,6 +3408,37 @@
             resources.ApplyResources(this.gB_Nz2Read, "gB_Nz2Read");
             this.gB_Nz2Read.Name = "gB_Nz2Read";
             this.gB_Nz2Read.TabStop = false;
+            // 
+            // label275
+            // 
+            resources.ApplyResources(this.label275, "label275");
+            this.label275.BackColor = System.Drawing.Color.Red;
+            this.label275.ForeColor = System.Drawing.Color.Black;
+            this.label275.Name = "label275";
+            // 
+            // label274
+            // 
+            resources.ApplyResources(this.label274, "label274");
+            this.label274.BackColor = System.Drawing.Color.Red;
+            this.label274.ForeColor = System.Drawing.Color.Black;
+            this.label274.Name = "label274";
+            // 
+            // cbNzStep1
+            // 
+            this.cbNzStep1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbNzStep1.FormattingEnabled = true;
+            this.cbNzStep1.Items.AddRange(new object[] {
+            resources.GetString("cbNzStep1.Items"),
+            resources.GetString("cbNzStep1.Items1"),
+            resources.GetString("cbNzStep1.Items2"),
+            resources.GetString("cbNzStep1.Items3")});
+            resources.ApplyResources(this.cbNzStep1, "cbNzStep1");
+            this.cbNzStep1.Name = "cbNzStep1";
+            // 
+            // label261
+            // 
+            resources.ApplyResources(this.label261, "label261");
+            this.label261.Name = "label261";
             // 
             // button4
             // 
@@ -14209,6 +14248,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column115;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column124;
         private System.Windows.Forms.CheckBox cbCycleRun;
+        private System.Windows.Forms.Label label275;
+        private System.Windows.Forms.Label label274;
+        private System.Windows.Forms.ComboBox cbNzStep1;
+        private System.Windows.Forms.Label label261;
     }
 }
 
