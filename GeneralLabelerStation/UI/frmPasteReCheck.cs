@@ -38,6 +38,7 @@ namespace GeneralLabelerStation.UI
         }
 
         private Variable.PASTAE[] PasteInfoList = null;
+        
         public bool CanShow
         {
             get
@@ -45,7 +46,7 @@ namespace GeneralLabelerStation.UI
                 return this.PasteInfoList != null && this.PasteInfoList.Length > 0;
             }
         }
-
+        
         //todo 上视觉校正加载贴附点
         private void frmPasteReCheck_Load(object sender, EventArgs e)
         {
@@ -120,6 +121,7 @@ namespace GeneralLabelerStation.UI
                     }
 
                     Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
+                    Form_Main.Instance.LightON_RedU();
                 }
                 catch { }
             }
@@ -144,6 +146,7 @@ namespace GeneralLabelerStation.UI
                     }
 
                     Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
+                    Form_Main.Instance.LightON_RedU();
                 }
                 catch { }
             }
@@ -286,9 +289,16 @@ namespace GeneralLabelerStation.UI
                 PointF need = new PointF();
                 real = Form_Main.Instance.Point2CCDCenter(cur, this.RealPt, CAM.Top);
                 need = Form_Main.Instance.Point2CCDCenter(cur, this.NeedPt, CAM.Top);
-
-                this.tOffsetX.Text = (need.X - real.X).ToString("f3");
-                this.tOffsetY.Text = (need.Y - real.Y).ToString("f3");
+                if (cbEnPasteOffset.Checked)
+                {
+                    this.tOffsetX.Text = (need.X - real.X + double.Parse(tPasteOffsetX.Text)).ToString("f3");
+                    this.tOffsetY.Text = (need.Y - real.Y + double.Parse(tPasteOffsetY.Text)).ToString("f3");
+                }
+                else
+                {
+                    this.tOffsetX.Text = (need.X - real.X).ToString("f3");
+                    this.tOffsetY.Text = (need.Y - real.Y).ToString("f3");
+                }
             }
         }
 

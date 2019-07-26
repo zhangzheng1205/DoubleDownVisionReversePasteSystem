@@ -17672,12 +17672,12 @@ namespace GeneralLabelerStation
                         feeder.NeedWaitReach = true;
                     }
                 }
-
-                if (Label_Status[feeder.ReachSensorIndex[XI_Index]] != 1)
-                {
-                    XI_Index++;
-                }
-                else
+                //todo 屏蔽Feeder出标到位信号取料
+                //if (Label_Status[feeder.ReachSensorIndex[XI_Index]] != 1)
+                //{
+                //    XI_Index++;
+                //}
+                //else
                 {
                     XIPOINT_ = this.GetNewXIPos(zIndex1, XI_Index, ref feeder);
 

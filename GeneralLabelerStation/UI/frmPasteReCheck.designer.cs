@@ -55,6 +55,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.bRealPaste = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbEnPasteOffset = new System.Windows.Forms.CheckBox();
+            this.tPasteOffsetY = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tPasteOffsetX = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.btnRevoke = new System.Windows.Forms.Button();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.bSetAll = new System.Windows.Forms.Button();
@@ -78,6 +84,7 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.panel4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -368,6 +375,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.groupBox3);
             this.panel4.Controls.Add(this.btnRevoke);
             this.panel4.Controls.Add(this.splitter1);
             this.panel4.Controls.Add(this.bSetAll);
@@ -385,9 +393,68 @@
             this.panel4.Size = new System.Drawing.Size(133, 624);
             this.panel4.TabIndex = 3;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cbEnPasteOffset);
+            this.groupBox3.Controls.Add(this.tPasteOffsetY);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.tPasteOffsetX);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.ForeColor = System.Drawing.Color.DarkViolet;
+            this.groupBox3.Location = new System.Drawing.Point(7, 476);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(126, 114);
+            this.groupBox3.TabIndex = 23;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "贴附无标记时用";
+            // 
+            // cbEnPasteOffset
+            // 
+            this.cbEnPasteOffset.AutoSize = true;
+            this.cbEnPasteOffset.Location = new System.Drawing.Point(12, 21);
+            this.cbEnPasteOffset.Name = "cbEnPasteOffset";
+            this.cbEnPasteOffset.Size = new System.Drawing.Size(112, 24);
+            this.cbEnPasteOffset.TabIndex = 10;
+            this.cbEnPasteOffset.Text = "启用贴附偏差";
+            this.cbEnPasteOffset.UseVisualStyleBackColor = true;
+            // 
+            // tPasteOffsetY
+            // 
+            this.tPasteOffsetY.Location = new System.Drawing.Point(38, 82);
+            this.tPasteOffsetY.Name = "tPasteOffsetY";
+            this.tPasteOffsetY.Size = new System.Drawing.Size(68, 26);
+            this.tPasteOffsetY.TabIndex = 9;
+            this.tPasteOffsetY.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 85);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(20, 20);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Y:";
+            // 
+            // tPasteOffsetX
+            // 
+            this.tPasteOffsetX.Location = new System.Drawing.Point(38, 49);
+            this.tPasteOffsetX.Name = "tPasteOffsetX";
+            this.tPasteOffsetX.Size = new System.Drawing.Size(68, 26);
+            this.tPasteOffsetX.TabIndex = 7;
+            this.tPasteOffsetX.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 52);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(21, 20);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "X:";
+            // 
             // btnRevoke
             // 
-            this.btnRevoke.Location = new System.Drawing.Point(9, 498);
+            this.btnRevoke.Location = new System.Drawing.Point(9, 440);
             this.btnRevoke.Name = "btnRevoke";
             this.btnRevoke.Size = new System.Drawing.Size(49, 30);
             this.btnRevoke.TabIndex = 22;
@@ -406,7 +473,7 @@
             // bSetAll
             // 
             this.bSetAll.BackColor = System.Drawing.Color.Red;
-            this.bSetAll.Location = new System.Drawing.Point(3, 432);
+            this.bSetAll.Location = new System.Drawing.Point(7, 384);
             this.bSetAll.Name = "bSetAll";
             this.bSetAll.Size = new System.Drawing.Size(126, 50);
             this.bSetAll.TabIndex = 20;
@@ -417,7 +484,7 @@
             // bSetLike
             // 
             this.bSetLike.BackColor = System.Drawing.Color.Red;
-            this.bSetLike.Location = new System.Drawing.Point(3, 297);
+            this.bSetLike.Location = new System.Drawing.Point(4, 249);
             this.bSetLike.Name = "bSetLike";
             this.bSetLike.Size = new System.Drawing.Size(127, 73);
             this.bSetLike.TabIndex = 18;
@@ -438,9 +505,9 @@
             // bUpdateToFlow
             // 
             this.bUpdateToFlow.BackColor = System.Drawing.Color.Yellow;
-            this.bUpdateToFlow.Location = new System.Drawing.Point(4, 573);
+            this.bUpdateToFlow.Location = new System.Drawing.Point(4, 590);
             this.bUpdateToFlow.Name = "bUpdateToFlow";
-            this.bUpdateToFlow.Size = new System.Drawing.Size(126, 46);
+            this.bUpdateToFlow.Size = new System.Drawing.Size(126, 29);
             this.bUpdateToFlow.TabIndex = 16;
             this.bUpdateToFlow.Text = "更新到程式";
             this.bUpdateToFlow.UseVisualStyleBackColor = false;
@@ -471,7 +538,7 @@
             // bSetToSelect
             // 
             this.bSetToSelect.BackColor = System.Drawing.Color.Red;
-            this.bSetToSelect.Location = new System.Drawing.Point(4, 376);
+            this.bSetToSelect.Location = new System.Drawing.Point(4, 328);
             this.bSetToSelect.Name = "bSetToSelect";
             this.bSetToSelect.Size = new System.Drawing.Size(126, 50);
             this.bSetToSelect.TabIndex = 13;
@@ -485,7 +552,7 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.tOffsetX);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(4, 194);
+            this.groupBox2.Location = new System.Drawing.Point(7, 148);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(126, 95);
             this.groupBox2.TabIndex = 8;
@@ -565,6 +632,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -615,5 +684,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox tPasteOffsetY;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tPasteOffsetX;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox cbEnPasteOffset;
     }
 }
