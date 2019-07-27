@@ -462,33 +462,7 @@ namespace GeneralLabelerStation.Tools
                 result.Y1 = Math.Abs(th.Y - c2.Y);
                 result.X2 = Math.Abs(l.X - c3.X);
                 result.Y2 = Math.Abs(r.Y - c4.Y);
-                try
-                {
-                    double valueX = (double)cpkIni.IniReadNum("main", "valueX");
-                    double valueY = (double)cpkIni.IniReadNum("main", "valueY");
-                    if (cpkIni.IniReadValue("main", "userCPK") == "true")
-                    {
-                        if (result.X1 >= 1)
-                            result.X1 = result.X1 - (result.X1 - 1) / valueX;
-                        else
-                            result.X1 = result.X1 + (1 - result.X1) / valueX;
-                        if (result.Y1 >= 1)
-                            result.Y1 = result.Y1 - (result.Y1 - 1) / valueY;
-                        else
-                            result.Y1 = result.Y1 + (1 - result.Y1) / valueY;
-                        if (result.X2 >= 1)
-                            result.X2 = result.X2 - (result.X2 - 1) / valueX;
-                        else
-                            result.X2 = result.X2 + (1 - result.X2) / valueX;
-                        if (result.Y2 >= 1)
-                            result.Y2 = result.Y2 - (result.Y2 - 1) / valueY;
-                        else
-                            result.Y2 = result.Y2 + (1 - result.Y2) / valueY;
-                    }
-                }
-                catch
-                {
-                }
+
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross1, topV));
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross2, topH));
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross3, leftBottom));
