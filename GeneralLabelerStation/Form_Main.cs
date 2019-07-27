@@ -25739,7 +25739,20 @@ namespace GeneralLabelerStation
         {
 
         }
+        //todo 点位计算器
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            this.tBA_X.Text = (Double.Parse(this.tTest2X.Text) - Double.Parse(this.tTest1X.Text)).ToString();
+            this.tBA_Y.Text = (Double.Parse(this.tTest2Y.Text) - Double.Parse(this.tTest1Y.Text)).ToString();
 
+            this.tDC_X.Text = (Double.Parse(this.tTest4X.Text) - Double.Parse(this.tTest3X.Text)).ToString();
+            this.tDC_Y.Text = (Double.Parse(this.tTest4Y.Text) - Double.Parse(this.tTest3Y.Text)).ToString();
+        }
+
+        private void groupBox61_Enter(object sender, EventArgs e)
+        {
+
+        }
 
         private void bMoveRotateCamXY_Click(object sender, EventArgs e)
         {

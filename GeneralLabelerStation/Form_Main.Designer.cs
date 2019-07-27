@@ -1472,6 +1472,17 @@
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
             this.cbCycleRun = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label179 = new System.Windows.Forms.Label();
+            this.tBA_Y = new System.Windows.Forms.TextBox();
+            this.label261 = new System.Windows.Forms.Label();
+            this.tBA_X = new System.Windows.Forms.TextBox();
+            this.label274 = new System.Windows.Forms.Label();
+            this.tDC_Y = new System.Windows.Forms.TextBox();
+            this.label275 = new System.Windows.Forms.Label();
+            this.tDC_X = new System.Windows.Forms.TextBox();
+            this.label284 = new System.Windows.Forms.Label();
+            this.label285 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -2496,9 +2507,9 @@
             // 
             // SetCalibration
             // 
+            resources.ApplyResources(this.SetCalibration, "SetCalibration");
             this.SetCalibration.Controls.Add(this.tabCalib);
             this.SetCalibration.Controls.Add(this.cB_Cali);
-            resources.ApplyResources(this.SetCalibration, "SetCalibration");
             this.SetCalibration.Name = "SetCalibration";
             this.SetCalibration.UseVisualStyleBackColor = true;
             // 
@@ -11418,6 +11429,17 @@
             // 
             // groupBox61
             // 
+            this.groupBox61.Controls.Add(this.label285);
+            this.groupBox61.Controls.Add(this.label284);
+            this.groupBox61.Controls.Add(this.label274);
+            this.groupBox61.Controls.Add(this.tDC_Y);
+            this.groupBox61.Controls.Add(this.label275);
+            this.groupBox61.Controls.Add(this.tDC_X);
+            this.groupBox61.Controls.Add(this.label179);
+            this.groupBox61.Controls.Add(this.tBA_Y);
+            this.groupBox61.Controls.Add(this.label261);
+            this.groupBox61.Controls.Add(this.tBA_X);
+            this.groupBox61.Controls.Add(this.button5);
             this.groupBox61.Controls.Add(this.bTestPathON);
             this.groupBox61.Controls.Add(this.bTestOFF);
             this.groupBox61.Controls.Add(this.bTestON);
@@ -11448,6 +11470,7 @@
             resources.ApplyResources(this.groupBox61, "groupBox61");
             this.groupBox61.Name = "groupBox61";
             this.groupBox61.TabStop = false;
+            this.groupBox61.Enter += new System.EventHandler(this.groupBox61_Enter);
             // 
             // bTestPathON
             // 
@@ -12201,6 +12224,67 @@
             resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
             this.cbCycleRun.Name = "cbCycleRun";
             this.cbCycleRun.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            resources.ApplyResources(this.button5, "button5");
+            this.button5.Name = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            // 
+            // label179
+            // 
+            resources.ApplyResources(this.label179, "label179");
+            this.label179.Name = "label179";
+            // 
+            // tBA_Y
+            // 
+            resources.ApplyResources(this.tBA_Y, "tBA_Y");
+            this.tBA_Y.Name = "tBA_Y";
+            this.tBA_Y.ReadOnly = true;
+            // 
+            // label261
+            // 
+            resources.ApplyResources(this.label261, "label261");
+            this.label261.Name = "label261";
+            // 
+            // tBA_X
+            // 
+            resources.ApplyResources(this.tBA_X, "tBA_X");
+            this.tBA_X.Name = "tBA_X";
+            this.tBA_X.ReadOnly = true;
+            // 
+            // label274
+            // 
+            resources.ApplyResources(this.label274, "label274");
+            this.label274.Name = "label274";
+            // 
+            // tDC_Y
+            // 
+            resources.ApplyResources(this.tDC_Y, "tDC_Y");
+            this.tDC_Y.Name = "tDC_Y";
+            this.tDC_Y.ReadOnly = true;
+            // 
+            // label275
+            // 
+            resources.ApplyResources(this.label275, "label275");
+            this.label275.Name = "label275";
+            // 
+            // tDC_X
+            // 
+            resources.ApplyResources(this.tDC_X, "tDC_X");
+            this.tDC_X.Name = "tDC_X";
+            this.tDC_X.ReadOnly = true;
+            // 
+            // label284
+            // 
+            resources.ApplyResources(this.label284, "label284");
+            this.label284.Name = "label284";
+            // 
+            // label285
+            // 
+            resources.ApplyResources(this.label285, "label285");
+            this.label285.Name = "label285";
             // 
             // Form_Main
             // 
@@ -14000,6 +14084,17 @@
         private System.Windows.Forms.NumericUpDown nCycle;
         private System.Windows.Forms.Label label178;
         private System.Windows.Forms.CheckBox cbCycleRun;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label285;
+        private System.Windows.Forms.Label label284;
+        private System.Windows.Forms.Label label274;
+        private System.Windows.Forms.TextBox tDC_Y;
+        private System.Windows.Forms.Label label275;
+        private System.Windows.Forms.TextBox tDC_X;
+        private System.Windows.Forms.Label label179;
+        private System.Windows.Forms.TextBox tBA_Y;
+        private System.Windows.Forms.Label label261;
+        private System.Windows.Forms.TextBox tBA_X;
     }
 }
 

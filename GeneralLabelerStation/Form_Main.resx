@@ -3309,6 +3309,9 @@
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="SetCalibration.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
   <data name="bAutoStart.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt, style=Bold</value>
   </data>
@@ -58107,7 +58110,7 @@
     <value>3, 30</value>
   </data>
   <data name="panel14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 180</value>
+    <value>200, 139</value>
   </data>
   <data name="panel14.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -58131,7 +58134,7 @@
     <value>9, 3</value>
   </data>
   <data name="groupBox43.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 213</value>
+    <value>243, 172</value>
   </data>
   <data name="groupBox43.TabIndex" type="System.Int32, mscorlib">
     <value>767</value>
@@ -58150,6 +58153,348 @@
   </data>
   <data name="&gt;&gt;groupBox43.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="label285.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label285.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 12pt, style=Bold</value>
+  </data>
+  <data name="label285.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label285.Location" type="System.Drawing.Point, System.Drawing">
+    <value>227, 164</value>
+  </data>
+  <data name="label285.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 16</value>
+  </data>
+  <data name="label285.TabIndex" type="System.Int32, mscorlib">
+    <value>115</value>
+  </data>
+  <data name="label285.Text" xml:space="preserve">
+    <value>(D-C)</value>
+  </data>
+  <data name="&gt;&gt;label285.Name" xml:space="preserve">
+    <value>label285</value>
+  </data>
+  <data name="&gt;&gt;label285.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label285.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;label285.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label284.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label284.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 12pt, style=Bold</value>
+  </data>
+  <data name="label284.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label284.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 159</value>
+  </data>
+  <data name="label284.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 16</value>
+  </data>
+  <data name="label284.TabIndex" type="System.Int32, mscorlib">
+    <value>114</value>
+  </data>
+  <data name="label284.Text" xml:space="preserve">
+    <value>(B-A)</value>
+  </data>
+  <data name="&gt;&gt;label284.Name" xml:space="preserve">
+    <value>label284</value>
+  </data>
+  <data name="&gt;&gt;label284.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label284.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;label284.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label274.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label274.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 12pt, style=Bold</value>
+  </data>
+  <data name="label274.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label274.Location" type="System.Drawing.Point, System.Drawing">
+    <value>286, 176</value>
+  </data>
+  <data name="label274.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 16</value>
+  </data>
+  <data name="label274.TabIndex" type="System.Int32, mscorlib">
+    <value>113</value>
+  </data>
+  <data name="label274.Text" xml:space="preserve">
+    <value>Y偏差</value>
+  </data>
+  <data name="&gt;&gt;label274.Name" xml:space="preserve">
+    <value>label274</value>
+  </data>
+  <data name="&gt;&gt;label274.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label274.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;label274.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tDC_Y.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 10.5pt</value>
+  </data>
+  <data name="tDC_Y.Location" type="System.Drawing.Point, System.Drawing">
+    <value>343, 175</value>
+  </data>
+  <data name="tDC_Y.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
+  </data>
+  <data name="tDC_Y.TabIndex" type="System.Int32, mscorlib">
+    <value>112</value>
+  </data>
+  <data name="tDC_Y.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tDC_Y.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;tDC_Y.Name" xml:space="preserve">
+    <value>tDC_Y</value>
+  </data>
+  <data name="&gt;&gt;tDC_Y.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tDC_Y.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;tDC_Y.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label275.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label275.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 12pt, style=Bold</value>
+  </data>
+  <data name="label275.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label275.Location" type="System.Drawing.Point, System.Drawing">
+    <value>286, 148</value>
+  </data>
+  <data name="label275.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 16</value>
+  </data>
+  <data name="label275.TabIndex" type="System.Int32, mscorlib">
+    <value>111</value>
+  </data>
+  <data name="label275.Text" xml:space="preserve">
+    <value>X偏差</value>
+  </data>
+  <data name="&gt;&gt;label275.Name" xml:space="preserve">
+    <value>label275</value>
+  </data>
+  <data name="&gt;&gt;label275.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label275.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;label275.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tDC_X.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 10.5pt</value>
+  </data>
+  <data name="tDC_X.Location" type="System.Drawing.Point, System.Drawing">
+    <value>343, 145</value>
+  </data>
+  <data name="tDC_X.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
+  </data>
+  <data name="tDC_X.TabIndex" type="System.Int32, mscorlib">
+    <value>110</value>
+  </data>
+  <data name="tDC_X.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tDC_X.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;tDC_X.Name" xml:space="preserve">
+    <value>tDC_X</value>
+  </data>
+  <data name="&gt;&gt;tDC_X.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tDC_X.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;tDC_X.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label179.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label179.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 12pt, style=Bold</value>
+  </data>
+  <data name="label179.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label179.Location" type="System.Drawing.Point, System.Drawing">
+    <value>61, 176</value>
+  </data>
+  <data name="label179.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 16</value>
+  </data>
+  <data name="label179.TabIndex" type="System.Int32, mscorlib">
+    <value>109</value>
+  </data>
+  <data name="label179.Text" xml:space="preserve">
+    <value>Y偏差</value>
+  </data>
+  <data name="&gt;&gt;label179.Name" xml:space="preserve">
+    <value>label179</value>
+  </data>
+  <data name="&gt;&gt;label179.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label179.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;label179.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="tBA_Y.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 10.5pt</value>
+  </data>
+  <data name="tBA_Y.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 175</value>
+  </data>
+  <data name="tBA_Y.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
+  </data>
+  <data name="tBA_Y.TabIndex" type="System.Int32, mscorlib">
+    <value>108</value>
+  </data>
+  <data name="tBA_Y.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tBA_Y.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;tBA_Y.Name" xml:space="preserve">
+    <value>tBA_Y</value>
+  </data>
+  <data name="&gt;&gt;tBA_Y.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tBA_Y.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;tBA_Y.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label261.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label261.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 12pt, style=Bold</value>
+  </data>
+  <data name="label261.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label261.Location" type="System.Drawing.Point, System.Drawing">
+    <value>61, 148</value>
+  </data>
+  <data name="label261.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 16</value>
+  </data>
+  <data name="label261.TabIndex" type="System.Int32, mscorlib">
+    <value>107</value>
+  </data>
+  <data name="label261.Text" xml:space="preserve">
+    <value>X偏差</value>
+  </data>
+  <data name="&gt;&gt;label261.Name" xml:space="preserve">
+    <value>label261</value>
+  </data>
+  <data name="&gt;&gt;label261.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label261.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;label261.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="tBA_X.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun-ExtB, 10.5pt</value>
+  </data>
+  <data name="tBA_X.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 145</value>
+  </data>
+  <data name="tBA_X.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
+  </data>
+  <data name="tBA_X.TabIndex" type="System.Int32, mscorlib">
+    <value>106</value>
+  </data>
+  <data name="tBA_X.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tBA_X.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;tBA_X.Name" xml:space="preserve">
+    <value>tBA_X</value>
+  </data>
+  <data name="&gt;&gt;tBA_X.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tBA_X.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;tBA_X.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="button5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>422, 171</value>
+  </data>
+  <data name="button5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 32</value>
+  </data>
+  <data name="button5.TabIndex" type="System.Int32, mscorlib">
+    <value>105</value>
+  </data>
+  <data name="button5.Text" xml:space="preserve">
+    <value>计算点距</value>
+  </data>
+  <data name="&gt;&gt;button5.Name" xml:space="preserve">
+    <value>button5</value>
+  </data>
+  <data name="&gt;&gt;button5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button5.Parent" xml:space="preserve">
+    <value>groupBox61</value>
+  </data>
+  <data name="&gt;&gt;button5.ZOrder" xml:space="preserve">
+    <value>10</value>
   </data>
   <data name="bTestPathON.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58179,7 +58524,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;bTestPathON.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>11</value>
   </data>
   <data name="bTestOFF.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58209,7 +58554,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;bTestOFF.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>12</value>
   </data>
   <data name="bTestON.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58239,7 +58584,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;bTestON.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>13</value>
   </data>
   <data name="bSet4.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58269,7 +58614,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;bSet4.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>14</value>
   </data>
   <data name="bSet3.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58299,7 +58644,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;bSet3.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>15</value>
   </data>
   <data name="bSet2.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58329,7 +58674,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;bSet2.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>16</value>
   </data>
   <data name="label266.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58362,7 +58707,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label266.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>17</value>
   </data>
   <data name="label265.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58395,7 +58740,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label265.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>18</value>
   </data>
   <data name="label264.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58428,7 +58773,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label264.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>19</value>
   </data>
   <data name="label257.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58461,7 +58806,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label257.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>20</value>
   </data>
   <data name="label255.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58494,7 +58839,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label255.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>21</value>
   </data>
   <data name="tTest4Y.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58507,6 +58852,9 @@
   </data>
   <data name="tTest4Y.TabIndex" type="System.Int32, mscorlib">
     <value>92</value>
+  </data>
+  <data name="tTest4Y.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest4Y.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58521,7 +58869,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest4Y.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>22</value>
   </data>
   <data name="label256.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58554,7 +58902,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label256.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>23</value>
   </data>
   <data name="tTest4X.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58567,6 +58915,9 @@
   </data>
   <data name="tTest4X.TabIndex" type="System.Int32, mscorlib">
     <value>90</value>
+  </data>
+  <data name="tTest4X.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest4X.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58581,7 +58932,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest4X.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>24</value>
   </data>
   <data name="label252.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58614,19 +58965,22 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label252.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>25</value>
   </data>
   <data name="tTest3Y.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
   </data>
   <data name="tTest3Y.Location" type="System.Drawing.Point, System.Drawing">
-    <value>248, 77</value>
+    <value>249, 76</value>
   </data>
   <data name="tTest3Y.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 21</value>
   </data>
   <data name="tTest3Y.TabIndex" type="System.Int32, mscorlib">
     <value>88</value>
+  </data>
+  <data name="tTest3Y.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest3Y.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58641,7 +58995,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest3Y.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>26</value>
   </data>
   <data name="label253.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58674,19 +59028,22 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label253.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>27</value>
   </data>
   <data name="tTest3X.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
   </data>
   <data name="tTest3X.Location" type="System.Drawing.Point, System.Drawing">
-    <value>248, 47</value>
+    <value>249, 47</value>
   </data>
   <data name="tTest3X.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 21</value>
   </data>
   <data name="tTest3X.TabIndex" type="System.Int32, mscorlib">
     <value>86</value>
+  </data>
+  <data name="tTest3X.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest3X.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58701,7 +59058,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest3X.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>28</value>
   </data>
   <data name="label248.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58734,7 +59091,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label248.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>29</value>
   </data>
   <data name="tTest2Y.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58747,6 +59104,9 @@
   </data>
   <data name="tTest2Y.TabIndex" type="System.Int32, mscorlib">
     <value>84</value>
+  </data>
+  <data name="tTest2Y.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest2Y.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58761,7 +59121,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest2Y.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>30</value>
   </data>
   <data name="label251.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58794,7 +59154,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label251.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>31</value>
   </data>
   <data name="tTest2X.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58807,6 +59167,9 @@
   </data>
   <data name="tTest2X.TabIndex" type="System.Int32, mscorlib">
     <value>82</value>
+  </data>
+  <data name="tTest2X.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest2X.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58821,7 +59184,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest2X.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>32</value>
   </data>
   <data name="label249.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58854,7 +59217,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label249.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>33</value>
   </data>
   <data name="tTest1Y.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58867,6 +59230,9 @@
   </data>
   <data name="tTest1Y.TabIndex" type="System.Int32, mscorlib">
     <value>80</value>
+  </data>
+  <data name="tTest1Y.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest1Y.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58881,7 +59247,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest1Y.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>34</value>
   </data>
   <data name="label250.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -58914,7 +59280,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;label250.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>35</value>
   </data>
   <data name="bSet1.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58944,7 +59310,7 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;bSet1.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>36</value>
   </data>
   <data name="tTest1X.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 10.5pt</value>
@@ -58957,6 +59323,9 @@
   </data>
   <data name="tTest1X.TabIndex" type="System.Int32, mscorlib">
     <value>77</value>
+  </data>
+  <data name="tTest1X.Text" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tTest1X.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -58971,16 +59340,16 @@
     <value>groupBox61</value>
   </data>
   <data name="&gt;&gt;tTest1X.ZOrder" xml:space="preserve">
-    <value>26</value>
+    <value>37</value>
   </data>
   <data name="groupBox61.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun-ExtB, 15pt</value>
   </data>
   <data name="groupBox61.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 222</value>
+    <value>12, 181</value>
   </data>
   <data name="groupBox61.Size" type="System.Drawing.Size, System.Drawing">
-    <value>525, 147</value>
+    <value>524, 209</value>
   </data>
   <data name="groupBox61.TabIndex" type="System.Int32, mscorlib">
     <value>92</value>
