@@ -1357,6 +1357,11 @@
             this.trackBar_RedU = new System.Windows.Forms.TrackBar();
             this.Operate3 = new System.Windows.Forms.TabPage();
             this.groupBox43 = new System.Windows.Forms.GroupBox();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.bStopTurnTest = new System.Windows.Forms.Button();
+            this.bStartTurnTest = new System.Windows.Forms.Button();
+            this.nCycle = new System.Windows.Forms.NumericUpDown();
+            this.label178 = new System.Windows.Forms.Label();
             this.groupBox61 = new System.Windows.Forms.GroupBox();
             this.bTestPathON = new System.Windows.Forms.Button();
             this.bTestOFF = new System.Windows.Forms.Button();
@@ -1466,11 +1471,7 @@
             this.pMode_Run = new System.Windows.Forms.PictureBox();
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.label178 = new System.Windows.Forms.Label();
-            this.nCycle = new System.Windows.Forms.NumericUpDown();
-            this.bStartTurnTest = new System.Windows.Forms.Button();
-            this.bStopTurnTest = new System.Windows.Forms.Button();
+            this.cbCycleRun = new System.Windows.Forms.CheckBox();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -1703,6 +1704,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_RedU)).BeginInit();
             this.Operate3.SuspendLayout();
             this.groupBox43.SuspendLayout();
+            this.panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nCycle)).BeginInit();
             this.groupBox61.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPageTool.SuspendLayout();
@@ -1721,8 +1724,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).BeginInit();
             this.panel23.SuspendLayout();
-            this.panel14.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nCycle)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl_Main
@@ -2244,6 +2245,7 @@
             // 
             // gbOpreator
             // 
+            this.gbOpreator.Controls.Add(this.cbCycleRun);
             this.gbOpreator.Controls.Add(this.gB_Reset);
             this.gbOpreator.Controls.Add(this.bByPASS);
             this.gbOpreator.Controls.Add(this.bAutoSinglePause);
@@ -11374,6 +11376,46 @@
             this.groupBox43.Name = "groupBox43";
             this.groupBox43.TabStop = false;
             // 
+            // panel14
+            // 
+            this.panel14.Controls.Add(this.bStopTurnTest);
+            this.panel14.Controls.Add(this.bStartTurnTest);
+            this.panel14.Controls.Add(this.nCycle);
+            this.panel14.Controls.Add(this.label178);
+            resources.ApplyResources(this.panel14, "panel14");
+            this.panel14.Name = "panel14";
+            // 
+            // bStopTurnTest
+            // 
+            resources.ApplyResources(this.bStopTurnTest, "bStopTurnTest");
+            this.bStopTurnTest.Name = "bStopTurnTest";
+            this.bStopTurnTest.UseVisualStyleBackColor = true;
+            this.bStopTurnTest.Click += new System.EventHandler(this.bStopTurnTest_Click);
+            // 
+            // bStartTurnTest
+            // 
+            this.bStartTurnTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.bStartTurnTest, "bStartTurnTest");
+            this.bStartTurnTest.Name = "bStartTurnTest";
+            this.bStartTurnTest.UseVisualStyleBackColor = false;
+            this.bStartTurnTest.Click += new System.EventHandler(this.bStartTurnTest_Click);
+            // 
+            // nCycle
+            // 
+            resources.ApplyResources(this.nCycle, "nCycle");
+            this.nCycle.Name = "nCycle";
+            this.nCycle.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label178
+            // 
+            this.label178.BackColor = System.Drawing.Color.Orange;
+            resources.ApplyResources(this.label178, "label178");
+            this.label178.Name = "label178";
+            // 
             // groupBox61
             // 
             this.groupBox61.Controls.Add(this.bTestPathON);
@@ -12154,45 +12196,11 @@
             resources.ApplyResources(this.panel23, "panel23");
             this.panel23.Name = "panel23";
             // 
-            // panel14
+            // cbCycleRun
             // 
-            this.panel14.Controls.Add(this.bStopTurnTest);
-            this.panel14.Controls.Add(this.bStartTurnTest);
-            this.panel14.Controls.Add(this.nCycle);
-            this.panel14.Controls.Add(this.label178);
-            resources.ApplyResources(this.panel14, "panel14");
-            this.panel14.Name = "panel14";
-            // 
-            // label178
-            // 
-            this.label178.BackColor = System.Drawing.Color.Orange;
-            resources.ApplyResources(this.label178, "label178");
-            this.label178.Name = "label178";
-            // 
-            // nCycle
-            // 
-            resources.ApplyResources(this.nCycle, "nCycle");
-            this.nCycle.Name = "nCycle";
-            this.nCycle.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
-            // bStartTurnTest
-            // 
-            this.bStartTurnTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.bStartTurnTest, "bStartTurnTest");
-            this.bStartTurnTest.Name = "bStartTurnTest";
-            this.bStartTurnTest.UseVisualStyleBackColor = false;
-            this.bStartTurnTest.Click += new System.EventHandler(this.bStartTurnTest_Click);
-            // 
-            // bStopTurnTest
-            // 
-            resources.ApplyResources(this.bStopTurnTest, "bStopTurnTest");
-            this.bStopTurnTest.Name = "bStopTurnTest";
-            this.bStopTurnTest.UseVisualStyleBackColor = true;
-            this.bStopTurnTest.Click += new System.EventHandler(this.bStopTurnTest_Click);
+            resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
+            this.cbCycleRun.Name = "cbCycleRun";
+            this.cbCycleRun.UseVisualStyleBackColor = true;
             // 
             // Form_Main
             // 
@@ -12236,6 +12244,7 @@
             this.gbPanelCode.ResumeLayout(false);
             this.gbPanelCode.PerformLayout();
             this.gbOpreator.ResumeLayout(false);
+            this.gbOpreator.PerformLayout();
             this.gB_Reset.ResumeLayout(false);
             this.gB_Reset.PerformLayout();
             this.gbFlowState.ResumeLayout(false);
@@ -12518,6 +12527,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_RedU)).EndInit();
             this.Operate3.ResumeLayout(false);
             this.groupBox43.ResumeLayout(false);
+            this.panel14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nCycle)).EndInit();
             this.groupBox61.ResumeLayout(false);
             this.groupBox61.PerformLayout();
             this.tabPage7.ResumeLayout(false);
@@ -12539,8 +12550,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).EndInit();
             this.panel23.ResumeLayout(false);
-            this.panel14.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nCycle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -13990,6 +13999,7 @@
         private System.Windows.Forms.Button bStartTurnTest;
         private System.Windows.Forms.NumericUpDown nCycle;
         private System.Windows.Forms.Label label178;
+        private System.Windows.Forms.CheckBox cbCycleRun;
     }
 }
 
