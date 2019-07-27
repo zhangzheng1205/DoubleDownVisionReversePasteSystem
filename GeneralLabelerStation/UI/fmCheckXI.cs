@@ -54,8 +54,8 @@ namespace GeneralLabelerStation.UI
 
             if (cam.IsOK)
             {
-                PointF temp = parent.Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), CAM.Bottom1);
-                PointF rotateCenter = parent.Point2CCDCenter(curPos, Form_Main.VariableSys.pDownRotateCenter[0], CAM.Bottom1);
+                PointF temp = parent.Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), CAM.Bottom1, 0);
+                PointF rotateCenter = parent.Point2CCDCenter(curPos, Form_Main.VariableSys.pDownRotateCenter[0], CAM.Bottom1, 0);
                 suckPos.X = temp.X - rotateCenter.X;
                 suckPos.Y = temp.Y - rotateCenter.Y;
                 this.nSuckPosX.Value = (decimal)suckPos.X;
@@ -127,26 +127,30 @@ namespace GeneralLabelerStation.UI
                 zParam.XI_vaccum.SetIO();
                 Thread.Sleep(Form_Main.VariableSys.iDelay_BeforeXI);
 
-                CAM camera = Form_Main.Nozzle2Cam(this.Nozzle);
+                var camera = Form_Main.Nozzle2Cam(this.Nozzle);
 
                 parent.LightON_Down_PASTE1(ref this.Feeder.Label);
-                parent.SetShutter((int)this.Feeder.Label.Shutter1, camera);
+                parent.SetShutter((int)this.Feeder.Label.Shutter1, camera.Item1);
                 parent.All_ZGoSafeTillStop(5000, vel);
+                if(!parent.All_ZReachOrg())
+                {
+                    return;
+                }
                 parent.XYGoPosTillStop(5000, Form_Main.VariableSys.pReadyPoint, vel);
                 parent.Turn.GoPosTillStop(5000, Form_Main.VariableSys.dTurnPasteAngle, vel);
 
                 // 拍照
                 Thread.Sleep(Form_Main.VariableSys.iDownCamDelay);
                 PointF curPos = Form_Main.VariableSys.pReadyPoint;
-                CameraDefine.Instance[camera]._Session.Snap(parent.imageSet.Image);
+                CameraDefine.Instance[camera.Item1]._Session.Snap(parent.imageSet.Image);
 
-                Variable.CamReturn cam = Form_Main.Instance.Auto_Detect1(ref this.Feeder.Label, parent.imageSet.Image, camera, this.Nozzle);
+                Variable.CamReturn cam = Form_Main.Instance.Auto_Detect1(ref this.Feeder.Label, parent.imageSet.Image, camera.Item1, this.Nozzle);
 
                 if (cam.IsOK)
                 {
                     // 识别出来的位置
-                    PointF temp = parent.Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), camera);
-                    PointF rotateCenter = parent.Point2CCDCenter(curPos, Form_Main.VariableSys.pDownRotateCenter[0], camera);
+                    PointF temp = parent.Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), camera.Item1, camera.Item2);
+                    PointF rotateCenter = parent.Point2CCDCenter(curPos, Form_Main.VariableSys.pDownRotateCenter[0], camera.Item1, camera.Item2);
 
                     /// 识别与吸嘴旋转中心的误差
                     PointF offset = new PointF();

@@ -924,7 +924,7 @@ namespace GeneralLabelerStation
         //public bool bKeyboardMove_ZP = false;
         //public bool bKeyboardMove_ZN = false;
 
-        public static string sPath_CaliPath = System.AppDomain.CurrentDomain.BaseDirectory + "Configure\\CalibResult\\Cam{0}";
+        public static string sPath_CaliPath = System.AppDomain.CurrentDomain.BaseDirectory + "Configure\\CalibResult\\Cam{0}_{1}";
         public static string sPath_ImageBackGround = "\\background.bmp";
         public static string sPath_CaliImage = "\\cali.png";
 

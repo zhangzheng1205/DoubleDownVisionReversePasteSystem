@@ -250,7 +250,7 @@ namespace GeneralLabelerStation
 
             var cam = Nozzle2Cam((int)zIndex);
             // label 矫正之后在下视觉中的坐标
-            PointF labelPt = this.Point2CCDCenter(VariableSys.pReadyPoint, temp, cam);
+            PointF labelPt = this.Point2CCDCenter(VariableSys.pReadyPoint, temp, cam.Item1, cam.Item2);
             PointF centerPt = VariableSys.pReadyPoint;
             // 计算出 label距离相机 到下视觉中心的偏差
 
@@ -860,9 +860,9 @@ namespace GeneralLabelerStation
         /// <param name="pixel"></param>
         /// <param name="camera"></param>
         /// <returns></returns>
-        public PointF Point2CCDCenter(PointF captrue, PointContour pixel, CAM camera)
+        public PointF Point2CCDCenter(PointF captrue, PointContour pixel, CAM camera, int calib)
         {
-            return CameraDefine.Instance[camera].ImagePt2WorldPt(captrue, pixel);
+            return CameraDefine.Instance[camera].ImagePt2WorldPt(captrue, pixel, calib);
         }
 
         /// <summary>
@@ -870,9 +870,11 @@ namespace GeneralLabelerStation
         /// </summary>
         /// <param name="nozzle"></param>
         /// <returns></returns>
-        public static CAM Nozzle2Cam(int nozzle)
+        public static Tuple<CAM,int> Nozzle2Cam(int nozzle)
         {
-            return (CAM)(nozzle / 2 + 1);
+            CAM cam = (CAM)(nozzle / 2 + 1);
+            int calib = nozzle % 2;
+            return new Tuple<CAM, int>(cam, calib);
         }
         #endregion
 
@@ -1046,7 +1048,6 @@ namespace GeneralLabelerStation
 
         #region 新改吸嘴校验方式
 
-        //todo 设定吸嘴孔位按钮
         /// <summary>
         /// 初始化吸嘴间关系
         /// </summary>
@@ -1054,10 +1055,8 @@ namespace GeneralLabelerStation
         /// <param name="e"></param>
         private void bInitNozzleOffset_Click(object sender, EventArgs e)
         {
-            //if (this.cbNzStep4.SelectedIndex < 0) return;
-            //NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
-            if (this.cbNzStep1.SelectedIndex < 0) return;
-            NozzleCenterOffset[this.cbNzStep1.SelectedIndex] = this.XYPos;
+            if (this.cbNzStep4.SelectedIndex < 0) return;
+            NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
             SaveNozzleOffsetConfig();
         }
 
@@ -1124,6 +1123,75 @@ namespace GeneralLabelerStation
         }
         #endregion
 
+        #region 勾选贴附功能
+        private void LoadPasteRegion()
+        {
+            string tt = Ini_Sys.IniReadValue("PasteRegion", "DisRegions");
+            if (tt == string.Empty) return;
+            var tts = tt.Split(',');
+            if (tts != null)
+                RUN_DisPasteRegion = tts.ToList();
+        }
+
+        private void SavePasteRegion()
+        {
+            string tt = string.Empty;
+            for (int i = 0; i < RUN_DisPasteRegion.Count; ++i)
+            {
+                tt += RUN_DisPasteRegion[i];
+                if (i != (RUN_DisPasteRegion.Count - 1))
+                    tt += ',';
+            }
+
+            Ini_Sys.IniWriteValue("PasteRegion", "DisRegions", tt);
+        }
+
+        public List<string> RUN_DisPasteRegion = new List<string>();
+
+        private void bSelectPasteRegion_Click(object sender, EventArgs e)
+        {
+            fmSelectPasteRegion fm = new fmSelectPasteRegion();
+            fm.DisRegions = RUN_DisPasteRegion.ToList();
+            if (fm.ShowDialog() == DialogResult.OK)
+            {
+                RUN_DisPasteRegion = fm.DisRegions.ToList();
+                SavePasteRegion();
+            }
+        }
+        #endregion
+
+        #region 翻转轴空跑测试功能
+        public bool IsTurnTest = false;
+        public int TurnCycle = 10;
+        private void bStartTurnTest_Click(object sender, EventArgs e)
+        {
+            this.All_ZGoSafeTillStop(3000, VariableSys.VelMode_Current);
+            Thread.Sleep(500);
+            TurnCycle = (int)this.nCycle.Value;
+            if (this.All_ZReachOrg())
+            {
+                IsTurnTest = true;
+                Task.Factory.StartNew(() =>
+                {
+                    for(int i = 0; i < TurnCycle; ++i)
+                    {
+                        if (!IsTurnTest || this.Turn.bAxisServoWarning) break;
+                        this.Turn.GoPosTillStop(5000, VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
+                        Thread.Sleep(300);
+                        this.Turn.GoPosTillStop(5000, VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
+                        Thread.Sleep(300);
+                    }
+                });
+            }
+        }
+
+        private void bStopTurnTest_Click(object sender, EventArgs e)
+        {
+            IsTurnTest = false;
+        }
+        #endregion
+
+
         public Form_Main()
         {
             AxisOffsetItem.VisionDetect += AxisOffsetItem_VisionDetect;
@@ -1160,6 +1228,7 @@ namespace GeneralLabelerStation
                 return;
             }
 
+            this.LoadPasteRegion();
             StatisticsHelper.Instance.Refresh();
             StatisticsHelper.Instance.SetGridView(StatisticsHelper.Instance.Reoprt, this.dGV_Statics, true);
             frm_AddModel.GetImage += Frm_AddModel_GetImage;
@@ -1223,7 +1292,7 @@ namespace GeneralLabelerStation
                 Debug.WriteLine("抓取失败!!");
                 return new Tuple<PointF, double>(this.XYPos, 0);
             }
-            PointF wrold = this.Point2CCDCenter(this.XYPos, center, CAM.Top);
+            PointF wrold = this.Point2CCDCenter(this.XYPos, center, CAM.Top, 0);
             return new Tuple<PointF, double>(wrold, r);
         }
 
@@ -3712,6 +3781,8 @@ namespace GeneralLabelerStation
                     row.CreateCell(12 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.IsPastePointsAbs[rowIndex] == true ? "1" : "0");//
                     row.CreateCell(13 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.OffsetX_Single[rowIndex].ToString());//
                     row.CreateCell(14 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.OffsetY_Single[rowIndex].ToString());//
+                    if (PasteInfo.Region[rowIndex] == null)
+                        PasteInfo.Region[rowIndex] = "A";
                     row.CreateCell(15 + Variable.NOZZLE_NUM).SetCellValue(PasteInfo.Region[rowIndex].ToString());//
                 }
                 #endregion
@@ -4547,7 +4618,8 @@ namespace GeneralLabelerStation
                 row.CreateCell(8).SetCellValue(PasteInfo.GrabLine_Enable2.ToString());
                 #endregion
 
-                HalconHelper.SaveModel(PasteNamePath, PasteInfo.Model1ID);
+                if (PasteInfo.AlinIndex1 == 13)
+                    HalconHelper.SaveModel(PasteNamePath, PasteInfo.Model1ID);
             }
             catch
             {
@@ -6133,7 +6205,7 @@ namespace GeneralLabelerStation
                     ImageCapture_Up2.Overlays.Default.AddText(Yoffset.ToString("F2"), new PointContour(500, 400), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
 
                     NewPoint = Algorithms.FindIntersectionPoint(Lx, Ly);
-                    ReturnPoints[i] = Point2CCDCenter(JOB.Cam_Mark1Point[this.Z_RunParamMap[this.RUN_PasteNozzle].RUN_PasteInfoIndex], NewPoint, 0);
+                    ReturnPoints[i] = Point2CCDCenter(JOB.Cam_Mark1Point[this.Z_RunParamMap[this.RUN_PasteNozzle].RUN_PasteInfoIndex], NewPoint, 0, 0);
 
                     ImageCapture_Up2.Overlays.Default.AddLine(new LineContour(new PointContour(NewPoint.X - 50, NewPoint.Y), new PointContour(NewPoint.X + 50, NewPoint.Y)), Rgb32Value.RedColor);
                     ImageCapture_Up2.Overlays.Default.AddLine(new LineContour(new PointContour(NewPoint.X, NewPoint.Y - 50), new PointContour(NewPoint.X, NewPoint.Y + 50)), Rgb32Value.RedColor);
@@ -7132,7 +7204,7 @@ namespace GeneralLabelerStation
                             }
 
                             Z_RunParamMap[i].StopAxis();
-                            Z_RunParamMap[i].CleSts();
+                            Z_RunParamMap[i].CleSts(true);
                             Thread.Sleep(100);
                             i -= 2;
                             continue;
@@ -9436,334 +9508,6 @@ namespace GeneralLabelerStation
         #endregion
 
         #region 基础校验
-        private void bCamCaliClear_Click(object sender, EventArgs e)
-        {
-            CalibrationImageIndex[0] = 0;
-            CalibrationImageIndex[1] = 0;
-            CalibrationImageIndex[2] = 0;
-            CalibrationImageIndex[3] = 0;
-            CalibrationImageIndex[4] = 0;
-            CalibrationImageIndex[5] = 0;
-            CalibrationImageIndex[6] = 0;
-            CalibrationImageIndex[7] = 0;
-            CalibrationImageIndex[8] = 0;
-            bCamCali1.BackColor = Color.Transparent;
-            bCamCali2.BackColor = Color.Transparent;
-            bCamCali3.BackColor = Color.Transparent;
-            bCamCali4.BackColor = Color.Transparent;
-            bCamCali5.BackColor = Color.Transparent;
-            bCamCali6.BackColor = Color.Transparent;
-            bCamCali7.BackColor = Color.Transparent;
-            bCamCali8.BackColor = Color.Transparent;
-            bCamCali9.BackColor = Color.Transparent;
-        }
-
-        private void bCamCali1_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint1 = new PointContour();
-            PixelPoint1.X = CamReturnInfo.X;
-            PixelPoint1.Y = CamReturnInfo.Y;
-
-            WorldPoint1 = this.XYImage;
-
-            CalibrationImageIndex[0] = 1;
-            bCamCali1.BackColor = Color.Violet;
-        }
-
-        private void bCamCali2_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint2 = new PointContour();
-            PixelPoint2.X = CamReturnInfo.X;
-            PixelPoint2.Y = CamReturnInfo.Y;
-
-            WorldPoint2 = this.XYImage;
-            CalibrationImageIndex[1] = 1;
-            bCamCali2.BackColor = Color.Violet;
-        }
-
-        private void bCamCali3_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint3 = new PointContour();
-            PixelPoint3.X = CamReturnInfo.X;
-            PixelPoint3.Y = CamReturnInfo.Y;
-
-            WorldPoint3 = this.XYImage;
-            CalibrationImageIndex[2] = 1;
-            bCamCali3.BackColor = Color.Violet;
-        }
-
-        private void bCamCali4_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint4 = new PointContour();
-            PixelPoint4.X = CamReturnInfo.X;
-            PixelPoint4.Y = CamReturnInfo.Y;
-
-            WorldPoint4 = this.XYImage;
-            CalibrationImageIndex[3] = 1;
-            bCamCali4.BackColor = Color.Violet;
-        }
-
-        private void bCamCali5_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint5 = new PointContour();
-            PixelPoint5.X = CamReturnInfo.X;
-            PixelPoint5.Y = CamReturnInfo.Y;
-
-            WorldPoint5 = this.XYImage;
-            CalibrationImageIndex[4] = 1;
-            bCamCali5.BackColor = Color.Violet;
-        }
-
-        private void bCamCali6_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint6 = new PointContour();
-            PixelPoint6.X = CamReturnInfo.X;
-            PixelPoint6.Y = CamReturnInfo.Y;
-
-            WorldPoint6 = this.XYImage;
-
-            CalibrationImageIndex[5] = 1;
-            bCamCali6.BackColor = Color.Violet;
-        }
-
-        private void bCamCali7_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint7 = new PointContour();
-            PixelPoint7.X = CamReturnInfo.X;
-            PixelPoint7.Y = CamReturnInfo.Y;
-
-            WorldPoint7 = this.XYImage;
-
-            CalibrationImageIndex[6] = 1;
-            bCamCali7.BackColor = Color.Violet;
-        }
-
-        private void bCamCali8_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint8 = new PointContour();
-            PixelPoint8.X = CamReturnInfo.X;
-            PixelPoint8.Y = CamReturnInfo.Y;
-
-            WorldPoint8 = this.XYImage;
-
-            CalibrationImageIndex[7] = 1;
-            bCamCali8.BackColor = Color.Violet;
-        }
-
-        private void bCamCali9_Click(object sender, EventArgs e)
-        {
-            //计算Mark1点在图像中的坐标
-            short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
-            if (rtn != 0)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    MessageBox.Show("Detect Fail!", "Info");
-                }
-                else
-                {
-                    MessageBox.Show("特征获取失败!", "提示");
-                }
-                return;
-            }
-            PixelPoint9 = new PointContour();
-            PixelPoint9.X = CamReturnInfo.X;
-            PixelPoint9.Y = CamReturnInfo.Y;
-
-            WorldPoint9 = this.XYImage;
-
-            CalibrationImageIndex[8] = 1;
-            bCamCali9.BackColor = Color.Violet;
-        }
-
-        private void bCamCali_Click(object sender, EventArgs e)
-        {
-            if (CalibrationImageIndex.Sum() == CalibrationImageIndex.Length)//四点都校验OK
-            {
-                if (bSet_CamLive)
-                {
-                    bCamLive_Click(sender, e);
-                }
-                //进行四点校验
-                #region Add Points
-                PixelCoordPoints = new Collection<PointContour>();
-                PixelCoordPoints.Clear();
-                PixelCoordPoints.Add(PixelPoint1);
-                PixelCoordPoints.Add(PixelPoint2);
-                PixelCoordPoints.Add(PixelPoint3);
-                PixelCoordPoints.Add(PixelPoint4);
-                PixelCoordPoints.Add(PixelPoint5);
-                PixelCoordPoints.Add(PixelPoint6);
-                PixelCoordPoints.Add(PixelPoint7);
-                PixelCoordPoints.Add(PixelPoint8);
-                PixelCoordPoints.Add(PixelPoint9);
-                WorldCoordPoints = new Collection<PointContour>();
-                WorldCoordPoints.Clear();
-                WorldCoordPoints.Add(WorldPoint1);
-                WorldCoordPoints.Add(WorldPoint2);
-                WorldCoordPoints.Add(WorldPoint3);
-                WorldCoordPoints.Add(WorldPoint4);
-                WorldCoordPoints.Add(WorldPoint5);
-                WorldCoordPoints.Add(WorldPoint6);
-                WorldCoordPoints.Add(WorldPoint7);
-                WorldCoordPoints.Add(WorldPoint8);
-                WorldCoordPoints.Add(WorldPoint9);
-                #endregion
-                double rtn = 0;
-                try
-                {
-                    rtn = Algorithms.LearnCalibrationPoints(imageSet.Image, PixelCoordPoints, WorldCoordPoints); //四点校验函数
-                }
-                catch
-                {
-                    MessageBox.Show("相机校验失败！", "提示");
-                    return;
-                }
-                if (rtn < 999)
-                {
-                    MessageBox.Show("相机校验失败！", "提示");
-                    return;
-                }
-                else
-                {
-                    int selectCam = this.cbxSelectCam.SelectedIndex;
-                    string direct = string.Format(Variable.sPath_CaliPath, selectCam);
-                    if (!Directory.Exists(direct))
-                    {
-                        Directory.CreateDirectory(direct);
-                    }
-
-                    try
-                    {
-                        imageSet.Image.WriteVisionFile(direct + Variable.sPath_CaliImage);
-                        CameraDefine.Instance[(CAM)selectCam].LoadCalibImage((CAM)selectCam);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("相机校验失败！", "提示");
-                        return;
-                    }
-                    MessageBox.Show("相机校验成功！", "提示");
-                }
-            }
-            else
-            {
-                MessageBox.Show("校验未全部完成！", "提示");
-            }
-        }
-
         private void bLearnPattern_Cali_Click(object sender, EventArgs e)
         {
             Extract_LearnPttern(imageSet.Image, image_Calibration.Image);
@@ -9840,8 +9584,8 @@ namespace GeneralLabelerStation
                 b.X = float.Parse(tRotateCamX_Temp.Text);
                 b.Y = float.Parse(tRotateCamY_Temp.Text);
 
-                CAM camera = (CAM)(cB_NozzleIndex3.SelectedIndex / 2 + 1);
-                PointF worldP = Point2CCDCenter(b, a, camera);
+                var camera = Nozzle2Cam(cB_NozzleIndex3.SelectedIndex);
+                PointF worldP = Point2CCDCenter(b, a, camera.Item1, camera.Item2);
 
                 XYGoPos(worldP, VariableSys.VelMode_Current_Manual);
             }
@@ -11411,7 +11155,6 @@ namespace GeneralLabelerStation
         }
 
         private bool CycleStop = false;
-        private bool CycleRun = false;
 
         private void bAutoRun_Click(object sender, EventArgs e)
         {
@@ -11528,7 +11271,6 @@ namespace GeneralLabelerStation
             }
 
             CycleStop = this.bCycleStop.Checked;
-            CycleRun = this.cbCycleRun.Checked;
             if(this.FlowIndex_Conveyor != 100 && this.T_ConveyorIsRun) // 继续激活轨道 根据上一次暂停前状态
             {
                 ConveyorJog(this.T_ConveyorRunDir);
@@ -11671,7 +11413,7 @@ namespace GeneralLabelerStation
                 RUN_bPasteOK = false;
                 RUN_bReachOK = false;
                 JOB.bCalMark = false;
-
+                this.ResetInformBeforeGive();
                 for (uint i = 0; i < Variable.NOZZLE_NUM; ++i)
                 {
                     this.Z_RunParamMap[i].ResetAutoRunParam();
@@ -11716,7 +11458,8 @@ namespace GeneralLabelerStation
             this.T_ConveyorRunDir = this.ConveyorRunDir;
 
             ConveyorStop();
-            this.ResetInformBeforeGive();
+
+            //this.ResetInformBeforeGive();
             
             StopWatch_FlowIndex.Stop();
             StopWatch_FlowIndex_Conveyor.Stop();
@@ -13579,15 +13322,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark1 = new PointF();
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 6 || PasteInfo.AlinIndex1 == 7 || PasteInfo.AlinIndex1 == 8)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 9 || PasteInfo.AlinIndex1 == 10)
             {
@@ -13618,14 +13361,14 @@ namespace GeneralLabelerStation
                 campoint_v2.X = float.Parse(dGV_Mark.Rows[0].Cells[112].Value.ToString());
                 campoint_v2.Y = float.Parse(dGV_Mark.Rows[0].Cells[113].Value.ToString());
 
-                h1.X = Point2CCDCenter(campoint_h1, h1, 0).X;
-                h1.Y = Point2CCDCenter(campoint_h1, h1, 0).Y;
-                h2.X = Point2CCDCenter(campoint_h2, h2, 0).X;
-                h2.Y = Point2CCDCenter(campoint_h2, h2, 0).Y;
-                v1.X = Point2CCDCenter(campoint_v1, v1, 0).X;
-                v1.Y = Point2CCDCenter(campoint_v1, v1, 0).Y;
-                v2.X = Point2CCDCenter(campoint_v2, v2, 0).X;
-                v2.Y = Point2CCDCenter(campoint_v2, v2, 0).Y;
+                h1.X = Point2CCDCenter(campoint_h1, h1, 0, 0).X;
+                h1.Y = Point2CCDCenter(campoint_h1, h1, 0, 0).Y;
+                h2.X = Point2CCDCenter(campoint_h2, h2, 0, 0).X;
+                h2.Y = Point2CCDCenter(campoint_h2, h2, 0, 0).Y;
+                v1.X = Point2CCDCenter(campoint_v1, v1, 0, 0).X;
+                v1.Y = Point2CCDCenter(campoint_v1, v1, 0, 0).Y;
+                v2.X = Point2CCDCenter(campoint_v2, v2, 0, 0).X;
+                v2.Y = Point2CCDCenter(campoint_v2, v2, 0, 0).Y;
                 PasteInfo.Mark1.X = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).X;
                 PasteInfo.Mark1.Y = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).Y;
             }
@@ -13641,15 +13384,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark2 = new PointF();
             if (PasteInfo.AlinIndex2 == 1 || PasteInfo.AlinIndex2 == 2)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0,0);
             }
             if (PasteInfo.AlinIndex2 == 3 || PasteInfo.AlinIndex2 == 4 || PasteInfo.AlinIndex2 == 5)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0,0);
             }
             if (PasteInfo.AlinIndex2 == 6 || PasteInfo.AlinIndex2 == 7 || PasteInfo.AlinIndex2 == 8)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), 0,0);
             }
             if (PasteInfo.AlinIndex2 == 9 || PasteInfo.AlinIndex2 == 10)
             {
@@ -13680,14 +13423,14 @@ namespace GeneralLabelerStation
                 campoint_v2.X = float.Parse(dGV_Mark.Rows[1].Cells[112].Value.ToString());
                 campoint_v2.Y = float.Parse(dGV_Mark.Rows[1].Cells[113].Value.ToString());
 
-                h1.X = Point2CCDCenter(campoint_h1, h1, 0).X;
-                h1.Y = Point2CCDCenter(campoint_h1, h1, 0).Y;
-                h2.X = Point2CCDCenter(campoint_h2, h2, 0).X;
-                h2.Y = Point2CCDCenter(campoint_h2, h2, 0).Y;
-                v1.X = Point2CCDCenter(campoint_v1, v1, 0).X;
-                v1.Y = Point2CCDCenter(campoint_v1, v1, 0).Y;
-                v2.X = Point2CCDCenter(campoint_v2, v2, 0).X;
-                v2.Y = Point2CCDCenter(campoint_v2, v2, 0).Y;
+                h1.X = Point2CCDCenter(campoint_h1, h1, 0,0).X;
+                h1.Y = Point2CCDCenter(campoint_h1, h1, 0,0).Y;
+                h2.X = Point2CCDCenter(campoint_h2, h2, 0,0).X;
+                h2.Y = Point2CCDCenter(campoint_h2, h2, 0,0).Y;
+                v1.X = Point2CCDCenter(campoint_v1, v1, 0,0).X;
+                v1.Y = Point2CCDCenter(campoint_v1, v1, 0,0).Y;
+                v2.X = Point2CCDCenter(campoint_v2, v2, 0,0).X;
+                v2.Y = Point2CCDCenter(campoint_v2, v2, 0,0).Y;
                 PasteInfo.Mark2.X = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).X;
                 PasteInfo.Mark2.Y = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).Y;
             }
@@ -14904,15 +14647,15 @@ namespace GeneralLabelerStation
             CAM camera = (CAM)(CamIndexSelected - 1);
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), camera);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), camera,0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), camera);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), camera,0);
             }
             if (PasteInfo.AlinIndex1 == 6 || PasteInfo.AlinIndex1 == 7 || PasteInfo.AlinIndex1 == 8 || PasteInfo.AlinIndex1 == 9 || PasteInfo.AlinIndex1 == 10)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), camera);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), camera,0);
             }
 
             dGV_Mark.Rows[0].Cells[4].Value = PasteInfo.Mark1.X.ToString();
@@ -14921,15 +14664,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark2 = new PointF();
             if (PasteInfo.AlinIndex2 == 1 || PasteInfo.AlinIndex2 == 2)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), camera);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), camera,0);
             }
             if (PasteInfo.AlinIndex2 == 3 || PasteInfo.AlinIndex2 == 4 || PasteInfo.AlinIndex2 == 5)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), camera);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), camera,0);
             }
             if (PasteInfo.AlinIndex2 == 6 || PasteInfo.AlinIndex2 == 7 || PasteInfo.AlinIndex2 == 8 || PasteInfo.AlinIndex2 == 9 || PasteInfo.AlinIndex2 == 10)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), camera);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), camera,0);
             }
             dGV_Mark.Rows[1].Cells[4].Value = PasteInfo.Mark2.X.ToString();
             dGV_Mark.Rows[1].Cells[5].Value = PasteInfo.Mark2.Y.ToString();
@@ -15031,11 +14774,11 @@ namespace GeneralLabelerStation
             PasteInfo.Mark1 = new PointF();
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0,0);
             }
             dGV_Mark.Rows[0].Cells[4].Value = PasteInfo.Mark1.X.ToString();
             dGV_Mark.Rows[0].Cells[5].Value = PasteInfo.Mark1.Y.ToString();
@@ -15043,11 +14786,11 @@ namespace GeneralLabelerStation
             PasteInfo.Mark2 = new PointF();
             if (PasteInfo.AlinIndex2 == 1 || PasteInfo.AlinIndex2 == 2)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0, 0);
             }
             dGV_Mark.Rows[1].Cells[4].Value = PasteInfo.Mark2.X.ToString();
             dGV_Mark.Rows[1].Cells[5].Value = PasteInfo.Mark2.Y.ToString();
@@ -16569,7 +16312,7 @@ namespace GeneralLabelerStation
                     temp_Point.Y = e.Point.Y;
                     PointF xy = this.XYPos;
 
-                    xy = CameraDefine.Instance[(CAM)(CamIndexSelected - 1)].ImagePt2WorldPt(xy, temp_Point);
+                    xy = Point2CCDCenter(xy, temp_Point, (CAM)(CamIndexSelected - 1), 0);
 
                     if (this.All_ZGoSafeTillStop(2000, VariableSys.VelMode_Debug_Manual))
                     {
@@ -17672,7 +17415,7 @@ namespace GeneralLabelerStation
                         feeder.NeedWaitReach = true;
                     }
                 }
-                //todo 屏蔽Feeder出标到位信号取料
+
                 if (Label_Status[feeder.ReachSensorIndex[XI_Index]] != 1)
                 {
                     XI_Index++;
@@ -19186,7 +18929,7 @@ namespace GeneralLabelerStation
                         {
                             UpCCDResult[markIndex] = Auto_Detect2(ref RUN_PASTEInfo[runPasteIndex], ImageCapture_Up1);
                             var pt = this.Point2CCDCenter(JOB.Cam_Mark2Point[pasteIndex],
-                                new PointContour(UpCCDResult[markIndex].X, UpCCDResult[markIndex].Y), CAM.Top);
+                                new PointContour(UpCCDResult[markIndex].X, UpCCDResult[markIndex].Y), CAM.Top,0);
                             JOB.UpCCDResult2[pasteIndex] = UpCCDResult[markIndex]; ;
                         }
 
@@ -19559,7 +19302,7 @@ namespace GeneralLabelerStation
 
                         if (rtn == 0)
                         {
-                            PointF mark = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(JOB.GlobalConfig.Mark[GloablIndex].CamPos, A);
+                            PointF mark = Point2CCDCenter(JOB.GlobalConfig.Mark[GloablIndex].CamPos, A, CAM.Top ,0);
                             GlobalMark[GloablIndex].X = mark.X;
                             GlobalMark[GloablIndex].Y = mark.Y;
                             GlobalMark[GloablIndex].IsOK = true;
@@ -19689,7 +19432,6 @@ namespace GeneralLabelerStation
         }
         #endregion
 
-        //todo 主流程
         #region 线程及线程使用的函数
         private void thread_Main()//主流程//自动流程
         {
@@ -19931,10 +19673,13 @@ namespace GeneralLabelerStation
                                         JOB.PASTEInfo[i].bMark2Caled = false;//上视觉Mark2拍照与否
                                         JOB.PASTEInfo[i].dPressureValue = new double[RUN_PASTEInfo[j].iPasteED.Length];//贴附的压力值
                                         JOB.PASTEInfo[i].iPasteED = new int[RUN_PASTEInfo[j].iPasteED.Length];//贴过与否
-                                        for(int kk = 0; kk < RUN_PASTEInfo[j].iPasteED.Length; ++kk)
+
+                                        for (int kk = 0; kk < RUN_PASTEInfo[j].Region.Length; ++kk)
                                         {
-                                            JOB.PASTEInfo[i].iPasteED[kk] = RUN_PASTEInfo[j].PasteEN[kk] ? 0 : 1;
+                                            if (this.RUN_DisPasteRegion.Contains(RUN_PASTEInfo[j].Region[kk]))
+                                                JOB.PASTEInfo[i].iPasteED[kk] = 1;
                                         }
+
 
                                         JOB.PASTEInfo[i].iBadMarkED = new int[RUN_PASTEInfo[j].iPasteED.Length];//BadMark 拍照计算与否
                                         JOB.PASTEInfo[i].TransformedPoints = new PointF[RUN_PASTEInfo[j].iPasteED.Length];//修正的贴附点
@@ -20599,7 +20344,7 @@ namespace GeneralLabelerStation
                                             UpCCDResult[0].Angle = RUN_GloablAngle;
                                         }
 
-                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0);
+                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0,0);
                                         if (RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].AlinIndex2 == 0)
                                         {
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsFormMarkAndAngle_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, newMark1, UpCCDResult[0].Angle, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
@@ -20607,7 +20352,7 @@ namespace GeneralLabelerStation
                                         else
                                         {
                                             UpCCDResult[1] = JOB.UpCCDResult2[zParam.RUN_PasteInfoIndex];
-                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0);
+                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0,0);
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsForm2Mark_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2, newMark1, newMark2, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
                                         }
 
@@ -21250,7 +20995,7 @@ namespace GeneralLabelerStation
                                             UpCCDResult[0].Angle = RUN_GloablAngle;
                                         }
 
-                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0);
+                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0,0);
                                         if (RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].AlinIndex2 == 0)
                                         {
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsFormMarkAndAngle_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, newMark1, UpCCDResult[0].Angle, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
@@ -21258,7 +21003,7 @@ namespace GeneralLabelerStation
                                         else
                                         {
                                             UpCCDResult[1] = JOB.UpCCDResult2[zParam.RUN_PasteInfoIndex];
-                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0);
+                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0,0);
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsForm2Mark_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2, newMark1, newMark2, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
                                         }
 
@@ -21553,16 +21298,7 @@ namespace GeneralLabelerStation
                                     ConveyorStop();
                                     FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
                                     FlowInit_Conveyor = false;
-                                    //todo 循环运行
-                                    if (CycleRun == true)
-                                    {
-                                        Thread.Sleep(2000);
-                                        FlowIndex_Conveyor = 100;
-                                    }
-                                    else
-                                    {
-                                        FlowIndex_Conveyor = 600;
-                                    }
+                                    FlowIndex_Conveyor = 600;
                                 }
                                 else
                                 {
@@ -22060,12 +21796,14 @@ namespace GeneralLabelerStation
 
             RectangleContour Init = new RectangleContour(LabelInfo.Init_ROI_Left1, LabelInfo.Init_ROI_Top1, LabelInfo.Init_ROI_Width1, LabelInfo.Init_ROI_Height1);
 
+            int calib = 0;
             // 推算出新的Init区域
             if (camera != CAM.Top)
             {
                 Init = VariableSys.rDownROI[nozzle];
                 if (nozzle == 0 || nozzle == 2)
                     dist = 500;
+                calib = nozzle % 2;
             }
 
             CoordinateSystem oldCoord = new CoordinateSystem();
@@ -22378,111 +22116,6 @@ namespace GeneralLabelerStation
                 else
                 {
                     camreturn.State = Variable.VisionState.FindLineFial;
-                }
-            }
-            #endregion
-
-            #region MultiCorner-Cal 9 10
-            if (rtn == 0 && (LabelInfo.AlinIndex1 == 9 || LabelInfo.AlinIndex1 == 10))//MultiCorner-Cal
-            {
-                //P_Mid_H1 P_Mid_H2 P_Mid_V1 P_Mid_V2 已经计算 求交点 及角度
-                #region 求交点
-                PointF TempPoint = new PointF();
-                PointContour TEMPBase = new PointContour();//标准--辅助算角度边 点
-                PointContour TEMP = new PointContour();//辅助算角度边 点
-                PointContour P_Mid_H1Base = new PointContour(LabelInfo.Corner_H1_Point1.X, LabelInfo.Corner_H1_Point1.Y);
-                PointContour P_Mid_H2Base = new PointContour(LabelInfo.Corner_H2_Point1.X, LabelInfo.Corner_H2_Point1.Y);
-                PointContour P_Mid_V1Base = new PointContour(LabelInfo.Corner_V1_Point1.X, LabelInfo.Corner_V1_Point1.Y);
-                PointContour P_Mid_V2Base = new PointContour(LabelInfo.Corner_V2_Point1.X, LabelInfo.Corner_V2_Point1.Y);
-                PointF BaseCrossPoint = new PointF();
-
-                P_Mid_H1Base.X = Point2CCDCenter(RUN_MarkPointH1, P_Mid_H1Base, camera).X;
-                P_Mid_H1Base.Y = Point2CCDCenter(RUN_MarkPointH1, P_Mid_H1Base, camera).Y;
-                P_Mid_H2Base.X = Point2CCDCenter(RUN_MarkPointH2, P_Mid_H2Base, camera).X;
-                P_Mid_H2Base.Y = Point2CCDCenter(RUN_MarkPointH2, P_Mid_H2Base, camera).Y;
-                P_Mid_V1Base.X = Point2CCDCenter(RUN_MarkPointV1, P_Mid_V1Base, camera).X;
-                P_Mid_V1Base.Y = Point2CCDCenter(RUN_MarkPointV1, P_Mid_V1Base, camera).Y;
-                P_Mid_V2Base.X = Point2CCDCenter(RUN_MarkPointV2, P_Mid_V2Base, camera).X;
-                P_Mid_V2Base.Y = Point2CCDCenter(RUN_MarkPointV2, P_Mid_V2Base, camera).Y;
-                P_Mid_H1.X = Point2CCDCenter(RUN_MarkPointH1, P_Mid_H1, camera).X;
-                P_Mid_H1.Y = Point2CCDCenter(RUN_MarkPointH1, P_Mid_H1, camera).Y;
-                P_Mid_H2.X = Point2CCDCenter(RUN_MarkPointH2, P_Mid_H2, camera).X;
-                P_Mid_H2.Y = Point2CCDCenter(RUN_MarkPointH2, P_Mid_H2, camera).Y;
-                P_Mid_V1.X = Point2CCDCenter(RUN_MarkPointV1, P_Mid_V1, camera).X;
-                P_Mid_V1.Y = Point2CCDCenter(RUN_MarkPointV1, P_Mid_V1, camera).Y;
-                P_Mid_V2.X = Point2CCDCenter(RUN_MarkPointV2, P_Mid_V2, camera).X;
-                P_Mid_V2.Y = Point2CCDCenter(RUN_MarkPointV2, P_Mid_V2, camera).Y;
-
-                BaseCrossPoint.X = (float)Algorithms.FindIntersectionPoint(new LineContour(P_Mid_H1Base, P_Mid_H2Base), new LineContour(P_Mid_V1Base, P_Mid_V2Base)).X;
-                BaseCrossPoint.Y = (float)Algorithms.FindIntersectionPoint(new LineContour(P_Mid_H1Base, P_Mid_H2Base), new LineContour(P_Mid_V1Base, P_Mid_V2Base)).Y;
-                camreturn.X = Algorithms.FindIntersectionPoint(new LineContour(P_Mid_H1, P_Mid_H2), new LineContour(P_Mid_V1, P_Mid_V2)).X;
-                camreturn.Y = Algorithms.FindIntersectionPoint(new LineContour(P_Mid_H1, P_Mid_H2), new LineContour(P_Mid_V1, P_Mid_V2)).Y;
-
-                #endregion
-                //计算角度
-                if (LabelInfo.AlinIndex2 == 0)//只拍一次
-                {
-                    if (LabelInfo.CornerAngleIndex1 == 0)//H1算
-                    {
-                        TEMPBase.X = P_Mid_H1Base.X;
-                        TEMPBase.Y = P_Mid_H1Base.Y;
-                        TEMP.X = P_Mid_H1.X;
-                        TEMP.Y = P_Mid_H1.Y;
-                        if (camreturn.X >= TEMP.X)
-                        {
-                            TempPoint.X = (float)camreturn.X;
-                            TempPoint.Y = (float)camreturn.Y;
-                            camreturn.X = TEMP.X;
-                            camreturn.Y = TEMP.Y;
-                            TEMP.X = TempPoint.X;
-                            TEMP.Y = TempPoint.Y;
-                            //
-                            TempPoint.X = BaseCrossPoint.X;
-                            TempPoint.Y = BaseCrossPoint.Y;
-                            BaseCrossPoint.X = (float)TEMPBase.X;
-                            BaseCrossPoint.Y = (float)TEMPBase.Y;
-                            TEMPBase.X = TempPoint.X;
-                            TEMPBase.Y = TempPoint.Y;
-                        }
-                    }
-                    if (LabelInfo.CornerAngleIndex1 == 1)//H2算
-                    {
-                        TEMPBase.X = P_Mid_H2Base.X;
-                        TEMPBase.Y = P_Mid_H2Base.Y;
-                        TEMP.X = P_Mid_H2.X;
-                        TEMP.Y = P_Mid_H2.Y;
-                        if (camreturn.X >= TEMP.X)
-                        {
-                            TempPoint.X = (float)camreturn.X;
-                            TempPoint.Y = (float)camreturn.Y;
-                            camreturn.X = TEMP.X;
-                            camreturn.Y = TEMP.Y;
-                            TEMP.X = TempPoint.X;
-                            TEMP.Y = TempPoint.Y;
-                            //
-                            TempPoint.X = BaseCrossPoint.X;
-                            TempPoint.Y = BaseCrossPoint.Y;
-                            BaseCrossPoint.X = (float)TEMPBase.X;
-                            BaseCrossPoint.Y = (float)TEMPBase.Y;
-                            TEMPBase.X = TempPoint.X;
-                            TEMPBase.Y = TempPoint.Y;
-                        }
-                    }
-                    if (LabelInfo.CornerAngleIndex1 == 2)//V1算
-                    {
-                        TEMPBase.X = P_Mid_V1Base.X;
-                        TEMPBase.Y = P_Mid_V1Base.Y;
-                        TEMP.X = P_Mid_V1.X;
-                        TEMP.Y = P_Mid_V1.Y;
-                    }
-                    if (LabelInfo.CornerAngleIndex1 == 3)//V2算
-                    {
-                        TEMPBase.X = P_Mid_V2Base.X;
-                        TEMPBase.Y = P_Mid_V2Base.Y;
-                        TEMP.X = P_Mid_V2.X;
-                        TEMP.Y = P_Mid_V2.Y;
-                    }
-                    camreturn.Angle = getAngle(camreturn.X, camreturn.Y, TEMP.X, TEMP.Y) - getAngle(BaseCrossPoint.X, BaseCrossPoint.Y, P_Mid_V1Base.X, P_Mid_V1Base.Y);
                 }
             }
             #endregion
@@ -22834,26 +22467,7 @@ namespace GeneralLabelerStation
                     camreturn.State = Variable.VisionState.FindLineFial;
             }
             #endregion
-
-            #region MultiCorner-Cal 9 10
-            if (rtn == 0 && (LabelInfo.AlinIndex2 == 9 || LabelInfo.AlinIndex2 == 10))//MultiCorner-Cal
-            {
-                //P_Mid_H1 P_Mid_H2 P_Mid_V1 P_Mid_V2 已经计算 求交点 及角度
-
-                P_Mid_H1.X = Point2CCDCenter(RUN_MarkPointH1, P_Mid_H1, 0).X;
-                P_Mid_H1.Y = Point2CCDCenter(RUN_MarkPointH1, P_Mid_H1, 0).Y;
-                P_Mid_H2.X = Point2CCDCenter(RUN_MarkPointH2, P_Mid_H2, 0).X;
-                P_Mid_H2.Y = Point2CCDCenter(RUN_MarkPointH2, P_Mid_H2, 0).Y;
-                P_Mid_V1.X = Point2CCDCenter(RUN_MarkPointV1, P_Mid_V1, 0).X;
-                P_Mid_V1.Y = Point2CCDCenter(RUN_MarkPointV1, P_Mid_V1, 0).Y;
-                P_Mid_V2.X = Point2CCDCenter(RUN_MarkPointV2, P_Mid_V2, 0).X;
-                P_Mid_V2.Y = Point2CCDCenter(RUN_MarkPointV2, P_Mid_V2, 0).Y;
-
-                camreturn.X = Algorithms.FindIntersectionPoint(new LineContour(P_Mid_H1, P_Mid_H2), new LineContour(P_Mid_V1, P_Mid_V2)).X;
-                camreturn.Y = Algorithms.FindIntersectionPoint(new LineContour(P_Mid_H1, P_Mid_H2), new LineContour(P_Mid_V1, P_Mid_V2)).Y;
-            }
-            #endregion
-
+           
             if (rtn == 0 && LabelInfo.GrabLine_Enable2)
             {
                 try
@@ -22964,7 +22578,7 @@ namespace GeneralLabelerStation
             else
             {
                 camreturn.IsOK = true;
-                PointF result = Point2CCDCenter(camPt, new PointContour(camreturn.X, camreturn.Y), 0);
+                PointF result = Point2CCDCenter(camPt, new PointContour(camreturn.X, camreturn.Y), 0, 0);
                 Image.Overlays.Default.AddPoint(new PointContour(camreturn.X, camreturn.Y));
                 Image.Overlays.Default.AddText("X:" + camreturn.X.ToString("F3"), new PointContour(100, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
                 Image.Overlays.Default.AddText("Y:" + camreturn.Y.ToString("F3"), new PointContour(100, 200), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 125));
@@ -22978,7 +22592,7 @@ namespace GeneralLabelerStation
         /// </summary>
         /// <param name="nozzleIndex">吸嘴序号</param>
         /// <returns></returns>
-        public short CalNozzle(uint nozzleIndex, CAM camera)
+        public short CalNozzle(uint nozzleIndex, CAM camera, int calib)
         {
             Z_RunParam zParam = this.Z_RunParamMap[nozzleIndex];
 
@@ -22999,8 +22613,8 @@ namespace GeneralLabelerStation
                 else
                     zParam.Nozzle_Down_Angle = zParam.CamResult.Angle;
 
-                PointF rotatePt = this.Point2CCDCenter(VariableSys.pReadyPoint, VariableSys.pDownRotateCenter[nozzleIndex], camera);
-                PointF suckPos = this.Point2CCDCenter(VariableSys.pReadyPoint, zParam.Nozzle_DownXY_Pos, camera);
+                PointF rotatePt = this.Point2CCDCenter(VariableSys.pReadyPoint, VariableSys.pDownRotateCenter[nozzleIndex], camera, calib);
+                PointF suckPos = this.Point2CCDCenter(VariableSys.pReadyPoint, zParam.Nozzle_DownXY_Pos, camera, calib);
 
                 PointF offset = new PointF();
                 offset.X = suckPos.X - rotatePt.X;
@@ -23635,7 +23249,8 @@ namespace GeneralLabelerStation
                 return -1;
             }
 
-            CameraDefine.Instance[Nozzle2Cam(this.cB_NozzleIndex3.SelectedIndex)]._Session.Snap(imageSet.Image);
+            var cam = Nozzle2Cam(this.cB_NozzleIndex3.SelectedIndex);
+            CameraDefine.Instance[cam.Item1]._Session.Snap(imageSet.Image);
             short rtn = CamDetect_SearchGeometric(imageSet.Image, VariableSys.imageCali_Gemetric, imageSet.Roi, 600, 1, -180, 180, 100, 100, 0, 25, ref a, 0, 0);
             if (rtn != 0)
             {
@@ -23786,7 +23401,7 @@ namespace GeneralLabelerStation
                 camreturn.X = A.X;
                 camreturn.Y = A.Y;
             }
-            newMark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(camreturn.X, camreturn.Y), 0);
+            newMark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(camreturn.X, camreturn.Y), 0,0);
             return rtn;
         }
         private short Manual_Detect2()
@@ -23835,7 +23450,7 @@ namespace GeneralLabelerStation
                 camreturn.X = A.X;
                 camreturn.Y = A.Y;
             }
-            newMark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(camreturn.X, camreturn.Y), 0);
+            newMark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(camreturn.X, camreturn.Y), 0, 0);
             return rtn;
         }
 
@@ -24445,99 +24060,6 @@ namespace GeneralLabelerStation
             }
         }
 
-        private void bBarcode_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                #region Barcode
-                switch (cB_BarcodeType.SelectedIndex)
-                {
-                    case 0://1维码
-                        BarcodeReport barcodereport = new BarcodeReport();
-                        bool bAutoDetect = cB_AutoDetect1D.Checked;
-                        BarcodeTypes barcodetype = BarcodeTypes.Unknown;
-                        bool bValiData = cB_ErrorResult1D.Checked;
-                        if (bAutoDetect)
-                        {
-                            barcodereport = Algorithms.ReadBarcode(imageSet.Image);
-                        }
-                        else
-                        {
-                            switch (cB_BarcodeType1D.SelectedIndex)
-                            {
-                                case 0:
-                                    barcodetype = BarcodeTypes.Codabar;
-                                    break;
-                                case 1:
-                                    barcodetype = BarcodeTypes.Code39;
-                                    break;
-                                case 2:
-                                    barcodetype = BarcodeTypes.Code93;
-                                    break;
-                                case 3:
-                                    barcodetype = BarcodeTypes.Code128;
-                                    break;
-                                case 4:
-                                    barcodetype = BarcodeTypes.Ean8;
-                                    break;
-                                case 5:
-                                    barcodetype = BarcodeTypes.Ean13;
-                                    break;
-                                case 6:
-                                    barcodetype = BarcodeTypes.I2Of5;
-                                    break;
-                                case 7:
-                                    barcodetype = BarcodeTypes.Msi;
-                                    break;
-                                case 8:
-                                    barcodetype = BarcodeTypes.UpcA;
-                                    break;
-                                case 9:
-                                    barcodetype = BarcodeTypes.Pharmacode;
-                                    break;
-                                case 10:
-                                    barcodetype = BarcodeTypes.RssLimited;
-                                    break;
-                            }
-                            barcodereport = Algorithms.ReadBarcode(imageSet.Image, barcodetype, imageSet.Roi, bValiData);
-                        }
-                        imageSet.Image.Overlays.Default.AddText(barcodereport.Text, new PointContour(0, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 35));
-                        break;
-
-                    case 1://2维码-DataMtrix
-                        DataMatrixReport datamatrixreport = new DataMatrixReport();
-                        datamatrixreport = Algorithms.ReadDataMatrixBarcode(imageSet.Image, imageSet.Roi);
-                        imageSet.Image.Overlays.Default.AddText(datamatrixreport.StringData, new PointContour(0, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 35));
-                        break;
-
-                    case 2://2维码-PDF 417
-                        Collection<Pdf417Report> pdf417report = new Collection<Pdf417Report>();
-                        pdf417report = Algorithms.ReadPdf417Barcode(imageSet.Image, imageSet.Roi);
-                        if (pdf417report.Count > 0)
-                        {
-                            imageSet.Image.Overlays.Default.AddText(pdf417report[0].StringData, new PointContour(0, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 35));
-                        }
-                        else
-                        {
-                            imageSet.Image.Overlays.Default.AddText("Fail", new PointContour(0, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 35));
-                        }
-                        break;
-
-                    case 3://2维码-QR Code
-                        QRReport qrreport = new QRReport();
-                        qrreport = Algorithms.ReadQRCode(imageSet.Image, imageSet.Roi);
-                        System.Text.ASCIIEncoding vaASCIIEncoding = new System.Text.ASCIIEncoding();
-                        imageSet.Image.Overlays.Default.AddText(vaASCIIEncoding.GetString(qrreport.GetData()), new PointContour(0, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 35));
-                        break;
-                }
-                #endregion
-            }
-            catch
-            {
-                imageSet.Image.Overlays.Default.AddText("读取条码失败", new PointContour(0, 100), Rgb32Value.BlueColor, new OverlayTextOptions("Consolas", 35));
-            }
-        }
-
         private void pLanguage_Click(object sender, EventArgs e)
         {
             if (VariableSys.LanguageFlag == 0)
@@ -24874,13 +24396,13 @@ namespace GeneralLabelerStation
                 {
                     StopProduct_ON();
                     CarryProduct_OFF();
-                    Thread.Sleep(200);
+                    Thread.Sleep(1000);
                     ConveryInput();
 
                     Stopwatch a = new Stopwatch();
                     a.Start();
 
-                    while (!this.WrokInput
+                    while (!this.bArr_IO_IN_Status.bIN_WorkSpace_Reach
                     && a.ElapsedMilliseconds < 10000)
                     {
                         Thread.Sleep(5);
@@ -24889,7 +24411,7 @@ namespace GeneralLabelerStation
                     a.Stop();
                     if (a.ElapsedMilliseconds < 10000)
                     {
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
                         CarryProduct_ON();
                     }
 
@@ -25574,14 +25096,14 @@ namespace GeneralLabelerStation
                 {
                     var rect = (RectangleContour)imageSet.Roi[0].Shape;
                     PointF cur = this.XYPos;
-                    return Point2CCDCenter(cur, new PointContour(rect.Left, rect.Top), 0);
+                    return Point2CCDCenter(cur, new PointContour(rect.Left, rect.Top), 0, 0);
                 }
                 else if (imageSet.Roi.Count == 2 && imageSet.Roi[0].Shape.GetType() == typeof(LineContour)
                     && imageSet.Roi[1].Shape.GetType() == typeof(LineContour))
                 {
                     var p1 = Algorithms.FindIntersectionPoint((LineContour)imageSet.Roi[0].Shape, (LineContour)imageSet.Roi[1].Shape);
                     PointF cur = this.XYPos;
-                    return Point2CCDCenter(cur, p1, 0);
+                    return Point2CCDCenter(cur, p1, 0, 0);
                 }
                 else
                 {
@@ -25622,9 +25144,9 @@ namespace GeneralLabelerStation
             if (!readOK) return;
             // 去拍照
             int selectNz = this.cB_NozzleIndex2.SelectedIndex;
-            CAM cam = Nozzle2Cam(selectNz);
-            CameraDefine.Instance[cam]._Session.Acquisition.Unconfigure();
-            this.SetShutter((int)label.Shutter1, cam);
+            var cam = Nozzle2Cam(selectNz);
+            CameraDefine.Instance[cam.Item1]._Session.Acquisition.Unconfigure();
+            this.SetShutter((int)label.Shutter1, cam.Item1);
 
             bool rtn = this.All_ZGoSafeTillStop(3000, VariableSys.VelMode_Current_Manual);
             if (!rtn) return;
@@ -25635,13 +25157,13 @@ namespace GeneralLabelerStation
             result = this.Turn.GoPosTillStop(3000, VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current_Manual);
             if (result != 0) return;
 
-            CameraDefine.Instance[cam]._Session.Snap(imageSet.Image);
-            var camresult = this.Auto_Detect1(ref label, imageSet.Image, cam, selectNz);
+            CameraDefine.Instance[cam.Item1]._Session.Snap(imageSet.Image);
+            var camresult = this.Auto_Detect1(ref label, imageSet.Image, cam.Item1, selectNz);
             if (camresult.IsOK)
             {
                 PointContour rotated = this.PtRotateDown(new PointContour(camresult.X, camresult.Y), VariableSys.pDownRotateCenter[selectNz], camresult.Angle + angle);
 
-                PointF labelPt = CameraDefine.Instance[cam].ImagePt2WorldPt(VariableSys.pDownRotateCam[selectNz], rotated);
+                PointF labelPt = Point2CCDCenter(VariableSys.pDownRotateCam[selectNz], rotated, cam.Item1, cam.Item2);
                 this.downMark = labelPt;
 
                 PointF centerPt = VariableSys.pReadyPoint;
@@ -25977,8 +25499,8 @@ namespace GeneralLabelerStation
             if (!readOK) return new PointF(0, 0);
 
             this.LightON_Down_PASTE1(ref label);
-            CAM camera = Nozzle2Cam(nz);
-            this.SetShutter((int)label.Shutter1, camera);
+            var camera = Nozzle2Cam(nz);
+            this.SetShutter((int)label.Shutter1, camera.Item1);
 
             this.All_ZGoSafeTillStop(3000, VariableSys.VelMode_Current_Manual);
             this.XYGoPosTillStop(5000, Form_Main.VariableSys.pReadyPoint, VariableSys.VelMode_Current_Manual);
@@ -25986,13 +25508,13 @@ namespace GeneralLabelerStation
 
             PointF curPos = VariableSys.pReadyPoint;
             Thread.Sleep(1000);
-            CameraDefine.Instance[camera]._Session.Snap(imageSet.Image);
+            CameraDefine.Instance[camera.Item1]._Session.Snap(imageSet.Image);
 
-            Variable.CamReturn cam = Auto_Detect1(ref label, imageSet.Image, camera, nz);
+            Variable.CamReturn cam = Auto_Detect1(ref label, imageSet.Image, camera.Item1, nz);
             if (cam.IsOK)
             {
-                var rotatePt = Point2CCDCenter(curPos, VariableSys.pDownRotateCenter[nz], camera);
-                PointF result = Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), camera);
+                var rotatePt = Point2CCDCenter(curPos, VariableSys.pDownRotateCenter[nz], camera.Item1, camera.Item2);
+                PointF result = Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), camera.Item1, camera.Item2);
                 return new PointF(result.X - rotatePt.X, result.Y - rotatePt.Y);
             }
             else
@@ -26017,13 +25539,12 @@ namespace GeneralLabelerStation
                 this.SaveNozzleOffsetConfig();
             }
         }
-        //todo 到吸嘴孔位按钮
+
         private void button4_Click_1(object sender, EventArgs e)
         {
-            //if (this.cbNzStep4.SelectedIndex < 0) return;
-            //this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
-            if (this.cbNzStep1.SelectedIndex < 0) return;
-            this.XYGoPos(NozzleCenterOffset[this.cbNzStep1.SelectedIndex], VariableSys.VelMode_Current_Manual);
+            if (this.cbNzStep4.SelectedIndex < 0) return;
+
+            this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -26072,6 +25593,20 @@ namespace GeneralLabelerStation
             this.cliabEnd = this.XYPos;
         }
 
+        public static Tuple<CAM, int> GetCalib(int index)
+        {
+            CAM cam = CAM.Top;
+            int calib = 0;
+            if (index >= 1 && index <= 4)
+            {
+                calib = (index - 1) % 2;
+                cam = (CAM)((index + 1) / 2);
+            }
+            else if (index > 4)
+                cam = CAM.Label;
+            return new Tuple<CAM, int>(cam, calib);
+        }
+
         private void bAutoStart_Click(object sender, EventArgs e)
         {
             if (cbxSelectCam.SelectedIndex < 0) return;
@@ -26080,10 +25615,10 @@ namespace GeneralLabelerStation
             int col = (int)this.numCol.Value;
             float dx = (this.cliabEnd.X - this.cliabStart.X) / (col - 1);
             float dy = (this.cliabEnd.Y - this.cliabStart.Y) / (row - 1);
-            CAM cam = (CAM)this.cbxSelectCam.SelectedIndex;
+            Tuple<CAM, int> cam = GetCalib(this.cbxSelectCam.SelectedIndex);
             PixelCoordPoints = new Collection<PointContour>();
             WorldCoordPoints = new Collection<PointContour>();
-
+            
             #region 自动寻找
             for (int rowIndex = 0; rowIndex < row; rowIndex++)
             {
@@ -26096,7 +25631,7 @@ namespace GeneralLabelerStation
                     this.XYGoPosTillStop(3000, wrold, VariableSys.VelMode_Current_Manual);
                     Thread.Sleep(200);
 
-                    CameraDefine.Instance[cam]._Session.Snap(imageSet.Image);
+                    CameraDefine.Instance[cam.Item1]._Session.Snap(imageSet.Image);
                     //计算Mark1点在图像中的坐标
                     short rtn = CamDetect_PatternMatch(imageSet.Image, VariableSys.imageCali_Template, (float)480, 1, 0f, 0f, imageSet.Roi, ref CamReturnInfo, 0, 0);
                     if (rtn != 0)
@@ -26138,7 +25673,7 @@ namespace GeneralLabelerStation
             }
             else
             {
-                string direct = string.Format(Variable.sPath_CaliPath, (int)cam);
+                string direct = string.Format(Variable.sPath_CaliPath, (int)cam.Item1, cam.Item2);
                 if (!Directory.Exists(direct))
                 {
                     Directory.CreateDirectory(direct);
@@ -26147,7 +25682,7 @@ namespace GeneralLabelerStation
                 try
                 {
                     imageSet.Image.WriteVisionFile(direct + Variable.sPath_CaliImage);
-                    CameraDefine.Instance[cam].LoadCalibImage(cam);
+                    CameraDefine.Instance[cam.Item1].LoadCalibImage(cam.Item1);
                 }
                 catch
                 {
@@ -26194,6 +25729,7 @@ namespace GeneralLabelerStation
         {
 
         }
+
 
         private void bMoveRotateCamXY_Click(object sender, EventArgs e)
         {
@@ -26278,7 +25814,7 @@ namespace GeneralLabelerStation
             {
                 Task.Factory.StartNew(() =>
                 {
-                    this.R_RunParamMap[(uint)RAxisIndex - 1].CleSts();
+                    this.R_RunParamMap[(uint)RAxisIndex - 1].CleSts(true);
                     this.R_RunParamMap[(uint)RAxisIndex - 1].StopAxis();
                     short rtn = this.R_RunParamMap[(uint)RAxisIndex - 1].GoHome(Axis_Advantech.HomeMode.MODE7_AbsSearch, new Variable.VelMode(0, 20, 50, 50), true);
                     Thread.Sleep(100);
@@ -26751,16 +26287,16 @@ namespace GeneralLabelerStation
         private void bDetectLabel1_Click(object sender, EventArgs e)
         {
             PointF curPos = this.XYPos;
-            CAM camera = Nozzle2Cam(ZAxisIndex - 1);
-            CameraDefine.Instance[camera]._Session.Snap(imageSet.Image);
+            var camera = Nozzle2Cam(ZAxisIndex - 1);
+            CameraDefine.Instance[camera.Item1]._Session.Snap(imageSet.Image);
 
-            Variable.CamReturn cam = Auto_Detect1(ref Feeder[this.cbSelectFeeder.SelectedIndex].Label, imageSet.Image, camera, ZAxisIndex - 1);
+            Variable.CamReturn cam = Auto_Detect1(ref Feeder[this.cbSelectFeeder.SelectedIndex].Label, imageSet.Image, camera.Item1, ZAxisIndex - 1);
 
             if (cam.IsOK)
             {
                 PointContour result = new PointContour();
                 result = this.PtRotateDown(new PointContour(cam.X, cam.Y), VariableSys.pDownRotateCenter[ZAxisIndex - 1], cam.Angle);
-                PointF temp = Point2CCDCenter(curPos, result, camera);
+                PointF temp = Point2CCDCenter(curPos, result, camera.Item1, camera.Item2);
                 XYGoPos(temp, VariableSys.VelMode_Current_Manual);
                 this.R_RunParamMap[(uint)ZAxisIndex - 1].GoPos(this.R_RunParamMap[(uint)ZAxisIndex - 1].Pos + cam.Angle, VariableSys.VelMode_Current_Manual);
             }
@@ -26785,7 +26321,7 @@ namespace GeneralLabelerStation
                 {
                     if (MessageBox.Show("是否移动到mark 点", "Tips", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        PointF temp = Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), 0);
+                        PointF temp = Point2CCDCenter(curPos, new PointContour(cam.X, cam.Y), 0, 0);
                         XYGoPos(temp, VariableSys.VelMode_Debug);
                         if (MessageBox.Show("是否移动到 贴附位 点", "Tips", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {

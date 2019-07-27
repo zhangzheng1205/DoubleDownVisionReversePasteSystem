@@ -450,7 +450,7 @@ namespace GeneralLabelerStation.Param
 
             if (uCode == (ushort)AxisState.STA_AX_ERROR_STOP)
             {
-                rtn += CleSts();
+                rtn += CleSts(true);
             }
 
             return rtn;

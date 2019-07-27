@@ -294,6 +294,12 @@
     <Compile Include="UI\fmCheckXI.Designer.cs">
       <DependentUpon>fmCheckXI.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\fmSelectPasteRegion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\fmSelectPasteRegion.Designer.cs">
+      <DependentUpon>fmSelectPasteRegion.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frmPasteReCheck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -406,6 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\fmCheckXI.resx">
       <DependentUpon>fmCheckXI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\fmSelectPasteRegion.resx">
+      <DependentUpon>fmSelectPasteRegion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmPasteReCheck.resx">
       <DependentUpon>frmPasteReCheck.cs</DependentUpon>

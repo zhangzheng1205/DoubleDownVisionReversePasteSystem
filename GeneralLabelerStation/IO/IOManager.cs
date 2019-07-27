@@ -42,10 +42,9 @@ namespace GeneralLabelerStation.IO
         {
             foreach (var card in Card.Values)
             {
-                card.CleSts();
                 card.StopAxis();
                 Thread.Sleep(100);
-                card.CleSts();
+                card.CleSts(true);
             }
         }
 

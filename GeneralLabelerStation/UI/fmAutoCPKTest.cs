@@ -681,7 +681,7 @@ namespace GeneralLabelerStation.UI
                                 {
                                     item.Image_CircleCenter.X = (float)center.X;
                                     item.Image_CircleCenter.Y = (float)center.Y;
-                                    item.Real_CircleCenter = Camera.CameraDefine.Instance[Camera.CAM.Top].ImagePt2WorldPt(item.MachinePos, center);
+                                    item.Real_CircleCenter = Camera.CameraDefine.Instance[Camera.CAM.Top].ImagePt2WorldPt(item.MachinePos, center, 0);
                                 }
 
                                 image.Dispose();
@@ -899,7 +899,7 @@ namespace GeneralLabelerStation.UI
                                     cam.Y = centr.Y;
                                     cam.IsOK = true;
                                     VisionHelper.ShowResult(Form_Main.Instance.imageSet, cam);
-                                    Pt_Machine = Form_Main.Instance.Point2CCDCenter(this.chkPoint_Jig[i], new PointContour(cam.X, cam.Y), 0);
+                                    Pt_Machine = Form_Main.Instance.Point2CCDCenter(this.chkPoint_Jig[i], new PointContour(cam.X, cam.Y), 0, 0);
                                 }
                                 else
                                 {

@@ -488,7 +488,10 @@ namespace GeneralLabelerStation.Tool
         public bool ShowPastePress(int nozzle, int pcbIndex, int pcsIndex)
         {
             double press = Math.Abs(this.PastePress[nozzle] - this.NozzlePress[nozzle]);
+            if (press > this.AlarmLimit)
+                press /= 8;
             bool isAlarm = press > this.AlarmLimit;
+
             Form_Main.Instance.Invoke(new Action(() =>
             {
                 this.ShowPasteLabel[nozzle].Text = $"Z{nozzle + 1}压力:[{press:N1}]g";

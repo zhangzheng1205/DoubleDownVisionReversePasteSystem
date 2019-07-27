@@ -63,12 +63,12 @@ namespace GeneralLabelerStation.Camera
         /// <summary>
         /// 相机中心位置
         /// </summary>
-        public PointContour CenterPt = new PointContour();
+        public PointContour[] CenterPt = null;
 
         /// <summary>
         /// 标定文件
         /// </summary>
-        public VisionImage CalibImage = null;
+        public VisionImage[] CalibImage = null;
 
         /// <summary>
         /// 该相机是否进行过标定
@@ -115,20 +115,30 @@ namespace GeneralLabelerStation.Camera
         {
             try
             {
+                int len = 1;
+                if (camera == CAM.Bottom1 || camera == CAM.Bottom2)
+                    len = 2;
                 // 读取标定文件
-                this.CalibImage = new VisionImage();
-                string direct = string.Format(Variable.sPath_CaliPath, (int)camera);
-                this.CalibImage.ReadVisionFile(direct + Variable.sPath_CaliImage);
-                // 中心点像素坐标 
-                this.CenterPt.X = this.Config.FOV.Width / 2;
-                this.CenterPt.Y = this.Config.FOV.Height / 2;
-
-                var coordreport = Algorithms.ConvertPixelToRealWorldCoordinates(this.CalibImage, this.CenterPt);
-                if(coordreport.Points.Count > 0)
-                {
-                    this.CenterPt = coordreport.Points[0];
-                }
+                this.CalibImage = new VisionImage[len];
+                this.CenterPt = new PointContour[len];
                 this.IsCailb = true;
+
+                for (int i = 0; i < len; ++i)
+                {
+                    this.CalibImage[i] = new VisionImage();
+                    this.CenterPt[i] = new PointContour();
+                    string direct = string.Format(Variable.sPath_CaliPath, (int)camera,i);
+                    this.CalibImage[i].ReadVisionFile(direct + Variable.sPath_CaliImage);
+                    // 中心点像素坐标 
+                    this.CenterPt[i].X = this.Config.FOV.Width / 2;
+                    this.CenterPt[i].Y = this.Config.FOV.Height / 2;
+
+                    var coordreport = Algorithms.ConvertPixelToRealWorldCoordinates(this.CalibImage[i], this.CenterPt[i]);
+                    if (coordreport.Points.Count > 0)
+                        this.CenterPt[i] = coordreport.Points[0];
+                    else
+                        this.IsCailb = false;
+                }
             }
             catch { this.IsCailb = false; }
             return this.IsCailb;
@@ -141,17 +151,17 @@ namespace GeneralLabelerStation.Camera
         /// <param name="capturePt"></param>
         /// <param name="pixelPt"></param>
         /// <returns></returns>
-        public PointF ImagePt2WorldPt(PointF capturePt, PointContour pixelPt)
+        public PointF ImagePt2WorldPt(PointF capturePt, PointContour pixelPt, int calib)
         {
             PointF pos = new PointF();
-            var coordreport = Algorithms.ConvertPixelToRealWorldCoordinates(this.CalibImage, pixelPt);
+            var coordreport = Algorithms.ConvertPixelToRealWorldCoordinates(this.CalibImage[calib], pixelPt);
             if (coordreport.Points.Count == 0)
             {
                 return pos;
             }
 
-            pos.X = (float)(capturePt.X - (coordreport.Points[0].X - this.CenterPt.X));
-            pos.Y = (float)(capturePt.Y - (coordreport.Points[0].Y - this.CenterPt.Y));
+            pos.X = (float)(capturePt.X - (coordreport.Points[0].X - this.CenterPt[calib].X));
+            pos.Y = (float)(capturePt.Y - (coordreport.Points[0].Y - this.CenterPt[calib].Y));
             return pos;
         }
 

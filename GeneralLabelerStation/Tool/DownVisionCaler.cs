@@ -119,12 +119,12 @@ namespace GeneralLabelerStation.Tool
                             // 如果已有该吸嘴得计算结果顶替掉
                             Z_RunParam zParam = Form_Main.Instance.Z_RunParamMap[item.Nozzle];
 
-                            CAM camera = Form_Main.Nozzle2Cam((int)item.Nozzle);
+                            var camera = Form_Main.Nozzle2Cam((int)item.Nozzle);
 
                             // 算法
-                            zParam.CamResult = Form_Main.Instance.Auto_Detect1(ref Form_Main.Instance.Feeder[zParam.RUN_Nozzle_FeederIndex - 1].Label, zParam.CaptureImage, camera, (int)item.Nozzle);
+                            zParam.CamResult = Form_Main.Instance.Auto_Detect1(ref Form_Main.Instance.Feeder[zParam.RUN_Nozzle_FeederIndex - 1].Label, zParam.CaptureImage, camera.Item1, (int)item.Nozzle);
 
-                            Form_Main.Instance.CalNozzle(item.Nozzle, camera);
+                            Form_Main.Instance.CalNozzle(item.Nozzle, camera.Item1, camera.Item2);
                             zParam.CalFinished = true;
 
                             Form_Main.Instance.ShowVisionStatus((int)(item.Nozzle + 1), zParam.CamResult, zParam.CaptureImage);

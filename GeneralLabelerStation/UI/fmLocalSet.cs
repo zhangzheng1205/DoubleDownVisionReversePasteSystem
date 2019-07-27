@@ -114,7 +114,7 @@ namespace GeneralLabelerStation.UI
                     xy.X = (float)Form_Main.Instance.X.Pos;
                     xy.Y = (float)Form_Main.Instance.Y.Pos;
 
-                    temp.MarkXY = Camera.CameraDefine.Instance[Camera.CAM.Top].ImagePt2WorldPt(xy, a);
+                    temp.MarkXY = Form_Main.Instance.Point2CCDCenter(xy, a, Camera.CAM.Top, 0);// Camera.CameraDefine.Instance[Camera.CAM.Top].ImagePt2WorldPt(xy, a, 0);
 
                     ViewModel.BaseAngle = Form_Main.Instance.getAngle(ViewModel.Mark[0].MarkXY.X, ViewModel.Mark[0].MarkXY.Y,
                         ViewModel.Mark[1].MarkXY.X, ViewModel.Mark[1].MarkXY.Y);

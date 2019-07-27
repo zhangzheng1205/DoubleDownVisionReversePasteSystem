@@ -1,0 +1,91 @@
+{
+  "$type": "System.Collections.Generic.Dictionary`2[[System.UInt32, mscorlib],[GeneralLabelerStation.Tool.NozzleOffsetShceme, GeneralLabelerStation]], mscorlib",
+  "0": {
+    "$type": "GeneralLabelerStation.Tool.NozzleOffsetShceme, GeneralLabelerStation",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation]], mscorlib",
+      "$values": [
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": 26.0,
+          "Offset": 22.5,
+          "OffsetX": -1.77,
+          "OffsetY": 10.83
+        },
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": -155.0,
+          "Offset": 20.0,
+          "OffsetX": 3.25,
+          "OffsetY": 4.4
+        }
+      ]
+    }
+  },
+  "1": {
+    "$type": "GeneralLabelerStation.Tool.NozzleOffsetShceme, GeneralLabelerStation",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation]], mscorlib",
+      "$values": [
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": 26.0,
+          "Offset": 22.5,
+          "OffsetX": -5.09,
+          "OffsetY": 10.19
+        },
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": -155.0,
+          "Offset": 20.0,
+          "OffsetX": 4.71,
+          "OffsetY": -10.29
+        }
+      ]
+    }
+  },
+  "2": {
+    "$type": "GeneralLabelerStation.Tool.NozzleOffsetShceme, GeneralLabelerStation",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation]], mscorlib",
+      "$values": [
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": 26.0,
+          "Offset": 22.5,
+          "OffsetX": -5.5,
+          "OffsetY": 10.49
+        },
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": -155.0,
+          "Offset": 20.0,
+          "OffsetX": 5.84,
+          "OffsetY": -9.11
+        }
+      ]
+    }
+  },
+  "3": {
+    "$type": "GeneralLabelerStation.Tool.NozzleOffsetShceme, GeneralLabelerStation",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation]], mscorlib",
+      "$values": [
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": 26.0,
+          "Offset": 22.5,
+          "OffsetX": -5.79,
+          "OffsetY": 9.92
+        },
+        {
+          "$type": "GeneralLabelerStation.Tool.NozzleOffsetItem, GeneralLabelerStation",
+          "PasteAngle": -155.0,
+          "Offset": 20.0,
+          "OffsetX": 5.4,
+          "OffsetY": -9.45
+        }
+      ]
+    }
+  }
+}

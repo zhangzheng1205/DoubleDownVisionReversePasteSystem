@@ -449,20 +449,19 @@ namespace GeneralLabelerStation.Tools
                 xy.X = (float)Form_Main.Instance.X.Pos;
                 xy.Y = (float)Form_Main.Instance.Y.Pos;
 
-                PointF tv = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, topV);
-                PointF th = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, topH);
-                PointF l = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, leftBottom);
-                PointF r = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, rightTop);
-                PointF c1 = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, cross1);
-                PointF c2 = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, cross2);
-                PointF c3 = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, cross3);
-                PointF c4 = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(xy, cross4);
+                PointF tv = Form_Main.Instance.Point2CCDCenter(xy, topV, CAM.Top, 0);
+                PointF th = Form_Main.Instance.Point2CCDCenter(xy, topH, CAM.Top, 0);
+                PointF l =  Form_Main.Instance.Point2CCDCenter(xy, leftBottom, CAM.Top, 0);
+                PointF r =  Form_Main.Instance.Point2CCDCenter(xy, rightTop, CAM.Top, 0);
+                PointF c1 = Form_Main.Instance.Point2CCDCenter(xy, cross1, CAM.Top, 0);
+                PointF c2 = Form_Main.Instance.Point2CCDCenter(xy, cross2, CAM.Top, 0);
+                PointF c3 = Form_Main.Instance.Point2CCDCenter(xy, cross3, CAM.Top, 0);
+                PointF c4 = Form_Main.Instance.Point2CCDCenter(xy, cross4, CAM.Top, 0);
 
                 result.X1 = Math.Abs(tv.X - c1.X);
                 result.Y1 = Math.Abs(th.Y - c2.Y);
                 result.X2 = Math.Abs(l.X - c3.X);
                 result.Y2 = Math.Abs(r.Y - c4.Y);
-
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross1, topV));
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross2, topH));
                 Form_Main.Instance.imageSet.Image.Overlays.Default.AddLine(new LineContour(cross3, leftBottom));

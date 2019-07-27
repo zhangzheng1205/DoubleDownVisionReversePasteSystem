@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.tabControl_Main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.bSelectPasteRegion = new System.Windows.Forms.Button();
             this.gbMachineState = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tSSL_AirPressure = new System.Windows.Forms.Label();
@@ -97,7 +98,6 @@
             this.tPanelCode = new System.Windows.Forms.TextBox();
             this.lPanelCode = new System.Windows.Forms.Label();
             this.gbOpreator = new System.Windows.Forms.Panel();
-            this.cbCycleRun = new System.Windows.Forms.CheckBox();
             this.gB_Reset = new System.Windows.Forms.GroupBox();
             this.bClear = new System.Windows.Forms.Button();
             this.cB_EnableReset = new System.Windows.Forms.CheckBox();
@@ -148,18 +148,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cbxSelectCam = new System.Windows.Forms.ComboBox();
             this.bLearnPattern_Cali = new System.Windows.Forms.Button();
-            this.groupBox44 = new System.Windows.Forms.GroupBox();
-            this.bCamCali6 = new System.Windows.Forms.Button();
-            this.bCamCali5 = new System.Windows.Forms.Button();
-            this.bCamCali9 = new System.Windows.Forms.Button();
-            this.bCamCali8 = new System.Windows.Forms.Button();
-            this.bCamCali7 = new System.Windows.Forms.Button();
-            this.bCamCaliClear = new System.Windows.Forms.Button();
-            this.bCamCali = new System.Windows.Forms.Button();
-            this.bCamCali4 = new System.Windows.Forms.Button();
-            this.bCamCali3 = new System.Windows.Forms.Button();
-            this.bCamCali2 = new System.Windows.Forms.Button();
-            this.bCamCali1 = new System.Windows.Forms.Button();
             this.image_Calibration = new NationalInstruments.Vision.WindowsForms.ImageViewer();
             this.tabPage13 = new System.Windows.Forms.TabPage();
             this.gB_Rotate = new System.Windows.Forms.GroupBox();
@@ -240,10 +228,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage27 = new System.Windows.Forms.TabPage();
             this.gB_Nz2Read = new System.Windows.Forms.GroupBox();
-            this.label275 = new System.Windows.Forms.Label();
-            this.label274 = new System.Windows.Forms.Label();
-            this.cbNzStep1 = new System.Windows.Forms.ComboBox();
-            this.label261 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.cbNzStep4 = new System.Windows.Forms.ComboBox();
             this.label213 = new System.Windows.Forms.Label();
@@ -1372,21 +1356,7 @@
             this.cB_Red_U = new System.Windows.Forms.CheckBox();
             this.trackBar_RedU = new System.Windows.Forms.TrackBar();
             this.Operate3 = new System.Windows.Forms.TabPage();
-            this.tOffsetLine = new System.Windows.Forms.TextBox();
-            this.tabControl9 = new System.Windows.Forms.TabControl();
-            this.tabPage17 = new System.Windows.Forms.TabPage();
-            this.cB_ErrorResult1D = new System.Windows.Forms.CheckBox();
-            this.cB_BarcodeType1D = new System.Windows.Forms.ComboBox();
-            this.cB_AutoDetect1D = new System.Windows.Forms.CheckBox();
-            this.tabPage18 = new System.Windows.Forms.TabPage();
-            this.tabPage19 = new System.Windows.Forms.TabPage();
-            this.tabPage20 = new System.Windows.Forms.TabPage();
-            this.label179 = new System.Windows.Forms.Label();
-            this.label341 = new System.Windows.Forms.Label();
-            this.label178 = new System.Windows.Forms.Label();
-            this.tGainLine = new System.Windows.Forms.TextBox();
-            this.cB_BarcodeType = new System.Windows.Forms.ComboBox();
-            this.bBarcode = new System.Windows.Forms.Button();
+            this.groupBox43 = new System.Windows.Forms.GroupBox();
             this.groupBox61 = new System.Windows.Forms.GroupBox();
             this.bTestPathON = new System.Windows.Forms.Button();
             this.bTestOFF = new System.Windows.Forms.Button();
@@ -1496,6 +1466,11 @@
             this.pMode_Run = new System.Windows.Forms.PictureBox();
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.label178 = new System.Windows.Forms.Label();
+            this.nCycle = new System.Windows.Forms.NumericUpDown();
+            this.bStartTurnTest = new System.Windows.Forms.Button();
+            this.bStopTurnTest = new System.Windows.Forms.Button();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -1532,7 +1507,6 @@
             this.groupBox34.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCol)).BeginInit();
-            this.groupBox44.SuspendLayout();
             this.tabPage13.SuspendLayout();
             this.gB_Rotate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRotateStep)).BeginInit();
@@ -1728,8 +1702,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_GreenU)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_RedU)).BeginInit();
             this.Operate3.SuspendLayout();
-            this.tabControl9.SuspendLayout();
-            this.tabPage17.SuspendLayout();
+            this.groupBox43.SuspendLayout();
             this.groupBox61.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPageTool.SuspendLayout();
@@ -1748,6 +1721,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).BeginInit();
             this.panel23.SuspendLayout();
+            this.panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nCycle)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl_Main
@@ -1762,6 +1737,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.bSelectPasteRegion);
             this.tabPage1.Controls.Add(this.gbMachineState);
             this.tabPage1.Controls.Add(this.panel29);
             this.tabPage1.Controls.Add(this.panel28);
@@ -1770,6 +1746,14 @@
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // bSelectPasteRegion
+            // 
+            this.bSelectPasteRegion.BackColor = System.Drawing.Color.Red;
+            resources.ApplyResources(this.bSelectPasteRegion, "bSelectPasteRegion");
+            this.bSelectPasteRegion.Name = "bSelectPasteRegion";
+            this.bSelectPasteRegion.UseVisualStyleBackColor = false;
+            this.bSelectPasteRegion.Click += new System.EventHandler(this.bSelectPasteRegion_Click);
             // 
             // gbMachineState
             // 
@@ -1856,9 +1840,10 @@
             // 
             // bUpVisionCheck
             // 
+            this.bUpVisionCheck.BackColor = System.Drawing.Color.Yellow;
             resources.ApplyResources(this.bUpVisionCheck, "bUpVisionCheck");
             this.bUpVisionCheck.Name = "bUpVisionCheck";
-            this.bUpVisionCheck.UseVisualStyleBackColor = true;
+            this.bUpVisionCheck.UseVisualStyleBackColor = false;
             this.bUpVisionCheck.Click += new System.EventHandler(this.bUpVisionCheck_Click);
             // 
             // panel28
@@ -2259,19 +2244,12 @@
             // 
             // gbOpreator
             // 
-            this.gbOpreator.Controls.Add(this.cbCycleRun);
             this.gbOpreator.Controls.Add(this.gB_Reset);
             this.gbOpreator.Controls.Add(this.bByPASS);
             this.gbOpreator.Controls.Add(this.bAutoSinglePause);
             this.gbOpreator.Controls.Add(this.bAutoRun);
             resources.ApplyResources(this.gbOpreator, "gbOpreator");
             this.gbOpreator.Name = "gbOpreator";
-            // 
-            // cbCycleRun
-            // 
-            resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
-            this.cbCycleRun.Name = "cbCycleRun";
-            this.cbCycleRun.UseVisualStyleBackColor = true;
             // 
             // gB_Reset
             // 
@@ -2545,7 +2523,6 @@
             this.gB_Four.Controls.Add(this.label5);
             this.gB_Four.Controls.Add(this.cbxSelectCam);
             this.gB_Four.Controls.Add(this.bLearnPattern_Cali);
-            this.gB_Four.Controls.Add(this.groupBox44);
             this.gB_Four.Controls.Add(this.image_Calibration);
             resources.ApplyResources(this.gB_Four, "gB_Four");
             this.gB_Four.Name = "gB_Four";
@@ -2650,7 +2627,9 @@
             resources.GetString("cbxSelectCam.Items"),
             resources.GetString("cbxSelectCam.Items1"),
             resources.GetString("cbxSelectCam.Items2"),
-            resources.GetString("cbxSelectCam.Items3")});
+            resources.GetString("cbxSelectCam.Items3"),
+            resources.GetString("cbxSelectCam.Items4"),
+            resources.GetString("cbxSelectCam.Items5")});
             this.cbxSelectCam.Name = "cbxSelectCam";
             // 
             // bLearnPattern_Cali
@@ -2659,111 +2638,6 @@
             this.bLearnPattern_Cali.Name = "bLearnPattern_Cali";
             this.bLearnPattern_Cali.UseVisualStyleBackColor = true;
             this.bLearnPattern_Cali.Click += new System.EventHandler(this.bLearnPattern_Cali_Click);
-            // 
-            // groupBox44
-            // 
-            this.groupBox44.Controls.Add(this.bCamCali6);
-            this.groupBox44.Controls.Add(this.bCamCali5);
-            this.groupBox44.Controls.Add(this.bCamCali9);
-            this.groupBox44.Controls.Add(this.bCamCali8);
-            this.groupBox44.Controls.Add(this.bCamCali7);
-            this.groupBox44.Controls.Add(this.bCamCaliClear);
-            this.groupBox44.Controls.Add(this.bCamCali);
-            this.groupBox44.Controls.Add(this.bCamCali4);
-            this.groupBox44.Controls.Add(this.bCamCali3);
-            this.groupBox44.Controls.Add(this.bCamCali2);
-            this.groupBox44.Controls.Add(this.bCamCali1);
-            resources.ApplyResources(this.groupBox44, "groupBox44");
-            this.groupBox44.Name = "groupBox44";
-            this.groupBox44.TabStop = false;
-            // 
-            // bCamCali6
-            // 
-            this.bCamCali6.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali6, "bCamCali6");
-            this.bCamCali6.Name = "bCamCali6";
-            this.bCamCali6.UseVisualStyleBackColor = false;
-            this.bCamCali6.Click += new System.EventHandler(this.bCamCali6_Click);
-            // 
-            // bCamCali5
-            // 
-            this.bCamCali5.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali5, "bCamCali5");
-            this.bCamCali5.Name = "bCamCali5";
-            this.bCamCali5.UseVisualStyleBackColor = false;
-            this.bCamCali5.Click += new System.EventHandler(this.bCamCali5_Click);
-            // 
-            // bCamCali9
-            // 
-            this.bCamCali9.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali9, "bCamCali9");
-            this.bCamCali9.Name = "bCamCali9";
-            this.bCamCali9.UseVisualStyleBackColor = false;
-            this.bCamCali9.Click += new System.EventHandler(this.bCamCali9_Click);
-            // 
-            // bCamCali8
-            // 
-            this.bCamCali8.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali8, "bCamCali8");
-            this.bCamCali8.Name = "bCamCali8";
-            this.bCamCali8.UseVisualStyleBackColor = false;
-            this.bCamCali8.Click += new System.EventHandler(this.bCamCali8_Click);
-            // 
-            // bCamCali7
-            // 
-            this.bCamCali7.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali7, "bCamCali7");
-            this.bCamCali7.Name = "bCamCali7";
-            this.bCamCali7.UseVisualStyleBackColor = false;
-            this.bCamCali7.Click += new System.EventHandler(this.bCamCali7_Click);
-            // 
-            // bCamCaliClear
-            // 
-            this.bCamCaliClear.BackColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.bCamCaliClear, "bCamCaliClear");
-            this.bCamCaliClear.Name = "bCamCaliClear";
-            this.bCamCaliClear.UseVisualStyleBackColor = false;
-            this.bCamCaliClear.Click += new System.EventHandler(this.bCamCaliClear_Click);
-            // 
-            // bCamCali
-            // 
-            this.bCamCali.BackColor = System.Drawing.Color.GreenYellow;
-            resources.ApplyResources(this.bCamCali, "bCamCali");
-            this.bCamCali.Name = "bCamCali";
-            this.bCamCali.UseVisualStyleBackColor = false;
-            this.bCamCali.Click += new System.EventHandler(this.bCamCali_Click);
-            // 
-            // bCamCali4
-            // 
-            this.bCamCali4.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali4, "bCamCali4");
-            this.bCamCali4.Name = "bCamCali4";
-            this.bCamCali4.UseVisualStyleBackColor = false;
-            this.bCamCali4.Click += new System.EventHandler(this.bCamCali4_Click);
-            // 
-            // bCamCali3
-            // 
-            this.bCamCali3.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali3, "bCamCali3");
-            this.bCamCali3.Name = "bCamCali3";
-            this.bCamCali3.UseVisualStyleBackColor = false;
-            this.bCamCali3.Click += new System.EventHandler(this.bCamCali3_Click);
-            // 
-            // bCamCali2
-            // 
-            this.bCamCali2.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali2, "bCamCali2");
-            this.bCamCali2.Name = "bCamCali2";
-            this.bCamCali2.UseVisualStyleBackColor = false;
-            this.bCamCali2.Click += new System.EventHandler(this.bCamCali2_Click);
-            // 
-            // bCamCali1
-            // 
-            this.bCamCali1.BackColor = System.Drawing.Color.Violet;
-            resources.ApplyResources(this.bCamCali1, "bCamCali1");
-            this.bCamCali1.Name = "bCamCali1";
-            this.bCamCali1.UseVisualStyleBackColor = false;
-            this.bCamCali1.Click += new System.EventHandler(this.bCamCali1_Click);
             // 
             // image_Calibration
             // 
@@ -3370,10 +3244,6 @@
             // 
             // gB_Nz2Read
             // 
-            this.gB_Nz2Read.Controls.Add(this.label275);
-            this.gB_Nz2Read.Controls.Add(this.label274);
-            this.gB_Nz2Read.Controls.Add(this.cbNzStep1);
-            this.gB_Nz2Read.Controls.Add(this.label261);
             this.gB_Nz2Read.Controls.Add(this.button4);
             this.gB_Nz2Read.Controls.Add(this.cbNzStep4);
             this.gB_Nz2Read.Controls.Add(this.label213);
@@ -3408,37 +3278,6 @@
             resources.ApplyResources(this.gB_Nz2Read, "gB_Nz2Read");
             this.gB_Nz2Read.Name = "gB_Nz2Read";
             this.gB_Nz2Read.TabStop = false;
-            // 
-            // label275
-            // 
-            resources.ApplyResources(this.label275, "label275");
-            this.label275.BackColor = System.Drawing.Color.Red;
-            this.label275.ForeColor = System.Drawing.Color.Black;
-            this.label275.Name = "label275";
-            // 
-            // label274
-            // 
-            resources.ApplyResources(this.label274, "label274");
-            this.label274.BackColor = System.Drawing.Color.Red;
-            this.label274.ForeColor = System.Drawing.Color.Black;
-            this.label274.Name = "label274";
-            // 
-            // cbNzStep1
-            // 
-            this.cbNzStep1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbNzStep1.FormattingEnabled = true;
-            this.cbNzStep1.Items.AddRange(new object[] {
-            resources.GetString("cbNzStep1.Items"),
-            resources.GetString("cbNzStep1.Items1"),
-            resources.GetString("cbNzStep1.Items2"),
-            resources.GetString("cbNzStep1.Items3")});
-            resources.ApplyResources(this.cbNzStep1, "cbNzStep1");
-            this.cbNzStep1.Name = "cbNzStep1";
-            // 
-            // label261
-            // 
-            resources.ApplyResources(this.label261, "label261");
-            this.label261.Name = "label261";
             // 
             // button4
             // 
@@ -7610,7 +7449,6 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Z1,
             this.Menu_Z2,
@@ -10606,7 +10444,6 @@
             // 
             // R_SelectMenu
             // 
-            this.R_SelectMenu.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.R_SelectMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.toolStripMenuItem2,
@@ -11523,129 +11360,19 @@
             // 
             // Operate3
             // 
-            this.Operate3.Controls.Add(this.tOffsetLine);
-            this.Operate3.Controls.Add(this.tabControl9);
-            this.Operate3.Controls.Add(this.label179);
-            this.Operate3.Controls.Add(this.label341);
-            this.Operate3.Controls.Add(this.label178);
-            this.Operate3.Controls.Add(this.tGainLine);
-            this.Operate3.Controls.Add(this.cB_BarcodeType);
-            this.Operate3.Controls.Add(this.bBarcode);
+            this.Operate3.Controls.Add(this.groupBox43);
             this.Operate3.Controls.Add(this.groupBox61);
             this.Operate3.Controls.Add(this.label312);
             resources.ApplyResources(this.Operate3, "Operate3");
             this.Operate3.Name = "Operate3";
             this.Operate3.UseVisualStyleBackColor = true;
             // 
-            // tOffsetLine
+            // groupBox43
             // 
-            resources.ApplyResources(this.tOffsetLine, "tOffsetLine");
-            this.tOffsetLine.Name = "tOffsetLine";
-            // 
-            // tabControl9
-            // 
-            this.tabControl9.Controls.Add(this.tabPage17);
-            this.tabControl9.Controls.Add(this.tabPage18);
-            this.tabControl9.Controls.Add(this.tabPage19);
-            this.tabControl9.Controls.Add(this.tabPage20);
-            resources.ApplyResources(this.tabControl9, "tabControl9");
-            this.tabControl9.Name = "tabControl9";
-            this.tabControl9.SelectedIndex = 0;
-            // 
-            // tabPage17
-            // 
-            this.tabPage17.Controls.Add(this.cB_ErrorResult1D);
-            this.tabPage17.Controls.Add(this.cB_BarcodeType1D);
-            this.tabPage17.Controls.Add(this.cB_AutoDetect1D);
-            resources.ApplyResources(this.tabPage17, "tabPage17");
-            this.tabPage17.Name = "tabPage17";
-            this.tabPage17.UseVisualStyleBackColor = true;
-            // 
-            // cB_ErrorResult1D
-            // 
-            resources.ApplyResources(this.cB_ErrorResult1D, "cB_ErrorResult1D");
-            this.cB_ErrorResult1D.Name = "cB_ErrorResult1D";
-            this.cB_ErrorResult1D.UseVisualStyleBackColor = true;
-            // 
-            // cB_BarcodeType1D
-            // 
-            resources.ApplyResources(this.cB_BarcodeType1D, "cB_BarcodeType1D");
-            this.cB_BarcodeType1D.FormattingEnabled = true;
-            this.cB_BarcodeType1D.Items.AddRange(new object[] {
-            resources.GetString("cB_BarcodeType1D.Items"),
-            resources.GetString("cB_BarcodeType1D.Items1"),
-            resources.GetString("cB_BarcodeType1D.Items2"),
-            resources.GetString("cB_BarcodeType1D.Items3"),
-            resources.GetString("cB_BarcodeType1D.Items4"),
-            resources.GetString("cB_BarcodeType1D.Items5"),
-            resources.GetString("cB_BarcodeType1D.Items6"),
-            resources.GetString("cB_BarcodeType1D.Items7"),
-            resources.GetString("cB_BarcodeType1D.Items8"),
-            resources.GetString("cB_BarcodeType1D.Items9")});
-            this.cB_BarcodeType1D.Name = "cB_BarcodeType1D";
-            // 
-            // cB_AutoDetect1D
-            // 
-            resources.ApplyResources(this.cB_AutoDetect1D, "cB_AutoDetect1D");
-            this.cB_AutoDetect1D.Name = "cB_AutoDetect1D";
-            this.cB_AutoDetect1D.UseVisualStyleBackColor = true;
-            // 
-            // tabPage18
-            // 
-            resources.ApplyResources(this.tabPage18, "tabPage18");
-            this.tabPage18.Name = "tabPage18";
-            this.tabPage18.UseVisualStyleBackColor = true;
-            // 
-            // tabPage19
-            // 
-            resources.ApplyResources(this.tabPage19, "tabPage19");
-            this.tabPage19.Name = "tabPage19";
-            this.tabPage19.UseVisualStyleBackColor = true;
-            // 
-            // tabPage20
-            // 
-            resources.ApplyResources(this.tabPage20, "tabPage20");
-            this.tabPage20.Name = "tabPage20";
-            this.tabPage20.UseVisualStyleBackColor = true;
-            // 
-            // label179
-            // 
-            resources.ApplyResources(this.label179, "label179");
-            this.label179.Name = "label179";
-            // 
-            // label341
-            // 
-            resources.ApplyResources(this.label341, "label341");
-            this.label341.Name = "label341";
-            // 
-            // label178
-            // 
-            resources.ApplyResources(this.label178, "label178");
-            this.label178.Name = "label178";
-            // 
-            // tGainLine
-            // 
-            resources.ApplyResources(this.tGainLine, "tGainLine");
-            this.tGainLine.Name = "tGainLine";
-            // 
-            // cB_BarcodeType
-            // 
-            resources.ApplyResources(this.cB_BarcodeType, "cB_BarcodeType");
-            this.cB_BarcodeType.FormattingEnabled = true;
-            this.cB_BarcodeType.Items.AddRange(new object[] {
-            resources.GetString("cB_BarcodeType.Items"),
-            resources.GetString("cB_BarcodeType.Items1"),
-            resources.GetString("cB_BarcodeType.Items2"),
-            resources.GetString("cB_BarcodeType.Items3")});
-            this.cB_BarcodeType.Name = "cB_BarcodeType";
-            // 
-            // bBarcode
-            // 
-            this.bBarcode.BackColor = System.Drawing.Color.GreenYellow;
-            resources.ApplyResources(this.bBarcode, "bBarcode");
-            this.bBarcode.Name = "bBarcode";
-            this.bBarcode.UseVisualStyleBackColor = false;
-            this.bBarcode.Click += new System.EventHandler(this.bBarcode_Click);
+            this.groupBox43.Controls.Add(this.panel14);
+            resources.ApplyResources(this.groupBox43, "groupBox43");
+            this.groupBox43.Name = "groupBox43";
+            this.groupBox43.TabStop = false;
             // 
             // groupBox61
             // 
@@ -12207,7 +11934,6 @@
             // statusStrip1
             // 
             resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tSSL_UserStatus,
             this.tSSL_Error,
@@ -12428,6 +12154,46 @@
             resources.ApplyResources(this.panel23, "panel23");
             this.panel23.Name = "panel23";
             // 
+            // panel14
+            // 
+            this.panel14.Controls.Add(this.bStopTurnTest);
+            this.panel14.Controls.Add(this.bStartTurnTest);
+            this.panel14.Controls.Add(this.nCycle);
+            this.panel14.Controls.Add(this.label178);
+            resources.ApplyResources(this.panel14, "panel14");
+            this.panel14.Name = "panel14";
+            // 
+            // label178
+            // 
+            this.label178.BackColor = System.Drawing.Color.Orange;
+            resources.ApplyResources(this.label178, "label178");
+            this.label178.Name = "label178";
+            // 
+            // nCycle
+            // 
+            resources.ApplyResources(this.nCycle, "nCycle");
+            this.nCycle.Name = "nCycle";
+            this.nCycle.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // bStartTurnTest
+            // 
+            this.bStartTurnTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.bStartTurnTest, "bStartTurnTest");
+            this.bStartTurnTest.Name = "bStartTurnTest";
+            this.bStartTurnTest.UseVisualStyleBackColor = false;
+            this.bStartTurnTest.Click += new System.EventHandler(this.bStartTurnTest_Click);
+            // 
+            // bStopTurnTest
+            // 
+            resources.ApplyResources(this.bStopTurnTest, "bStopTurnTest");
+            this.bStopTurnTest.Name = "bStopTurnTest";
+            this.bStopTurnTest.UseVisualStyleBackColor = true;
+            this.bStopTurnTest.Click += new System.EventHandler(this.bStopTurnTest_Click);
+            // 
             // Form_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -12470,7 +12236,6 @@
             this.gbPanelCode.ResumeLayout(false);
             this.gbPanelCode.PerformLayout();
             this.gbOpreator.ResumeLayout(false);
-            this.gbOpreator.PerformLayout();
             this.gB_Reset.ResumeLayout(false);
             this.gB_Reset.PerformLayout();
             this.gbFlowState.ResumeLayout(false);
@@ -12490,7 +12255,6 @@
             this.groupBox34.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCol)).EndInit();
-            this.groupBox44.ResumeLayout(false);
             this.tabPage13.ResumeLayout(false);
             this.gB_Rotate.ResumeLayout(false);
             this.gB_Rotate.PerformLayout();
@@ -12753,10 +12517,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_GreenU)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_RedU)).EndInit();
             this.Operate3.ResumeLayout(false);
-            this.Operate3.PerformLayout();
-            this.tabControl9.ResumeLayout(false);
-            this.tabPage17.ResumeLayout(false);
-            this.tabPage17.PerformLayout();
+            this.groupBox43.ResumeLayout(false);
             this.groupBox61.ResumeLayout(false);
             this.groupBox61.PerformLayout();
             this.tabPage7.ResumeLayout(false);
@@ -12778,6 +12539,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pMode_Run)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pMode_PASTE)).EndInit();
             this.panel23.ResumeLayout(false);
+            this.panel14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nCycle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12915,13 +12678,6 @@
         private ZedGraph.ZedGraphControl ChartPane;
         private System.Windows.Forms.GroupBox gB_UpDown;
         private System.Windows.Forms.GroupBox gB_Four;
-        private System.Windows.Forms.GroupBox groupBox44;
-        private System.Windows.Forms.Button bCamCaliClear;
-        private System.Windows.Forms.Button bCamCali;
-        private System.Windows.Forms.Button bCamCali4;
-        private System.Windows.Forms.Button bCamCali3;
-        private System.Windows.Forms.Button bCamCali2;
-        private System.Windows.Forms.Button bCamCali1;
         private System.Windows.Forms.Button bLearnPattern_Cali;
         private NationalInstruments.Vision.WindowsForms.ImageViewer image_Calibration;
         private System.Windows.Forms.Label label2;
@@ -13391,11 +13147,6 @@
         private System.Windows.Forms.Button bRecodeShutter;
         private System.Windows.Forms.Label label254;
         private System.Windows.Forms.TextBox tShutter_BadMark;
-        private System.Windows.Forms.Button bCamCali6;
-        private System.Windows.Forms.Button bCamCali5;
-        private System.Windows.Forms.Button bCamCali9;
-        private System.Windows.Forms.Button bCamCali8;
-        private System.Windows.Forms.Button bCamCali7;
         private System.Windows.Forms.TextBox tThrowTime;
         private System.Windows.Forms.Label label280;
         private System.Windows.Forms.Label label281;
@@ -13440,26 +13191,11 @@
         private System.Windows.Forms.GroupBox groupBox56;
         private System.Windows.Forms.Button bReadPlaneC;
         private System.Windows.Forms.Button bSetOffset;
-        private System.Windows.Forms.Button bBarcode;
-        private System.Windows.Forms.Label label341;
-        private System.Windows.Forms.ComboBox cB_BarcodeType;
-        private System.Windows.Forms.TabControl tabControl9;
-        private System.Windows.Forms.TabPage tabPage17;
-        private System.Windows.Forms.TabPage tabPage18;
-        private System.Windows.Forms.TabPage tabPage19;
-        private System.Windows.Forms.TabPage tabPage20;
-        private System.Windows.Forms.CheckBox cB_AutoDetect1D;
-        private System.Windows.Forms.ComboBox cB_BarcodeType1D;
-        private System.Windows.Forms.CheckBox cB_ErrorResult1D;
         private System.Windows.Forms.Label label342;
         private System.Windows.Forms.TextBox tFeederDelay1;
         private System.IO.Ports.SerialPort serialPort_DownLight;
         private System.Windows.Forms.ComboBox cB_PasteType;
         private System.IO.Ports.SerialPort serialPort_UpLight;
-        private System.Windows.Forms.TextBox tOffsetLine;
-        private System.Windows.Forms.Label label179;
-        private System.Windows.Forms.Label label178;
-        private System.Windows.Forms.TextBox tGainLine;
         private System.Windows.Forms.PictureBox pLanguage;
         private System.Windows.Forms.Label label180;
         private System.Windows.Forms.TextBox tCircleR;
@@ -13701,7 +13437,6 @@
         private System.Windows.Forms.RadioButton rB_ROI_V1;
         private System.Windows.Forms.CheckBox cb_EnableGrabLine;
         private System.Windows.Forms.Button bGrabLine;
-        private System.Windows.Forms.Button bUpVisionCheck;
         private System.Windows.Forms.TextBox tMinArea;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tMaxArea;
@@ -14247,11 +13982,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column114;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column115;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column124;
-        private System.Windows.Forms.CheckBox cbCycleRun;
-        private System.Windows.Forms.Label label275;
-        private System.Windows.Forms.Label label274;
-        private System.Windows.Forms.ComboBox cbNzStep1;
-        private System.Windows.Forms.Label label261;
+        private System.Windows.Forms.Button bSelectPasteRegion;
+        private System.Windows.Forms.Button bUpVisionCheck;
+        private System.Windows.Forms.GroupBox groupBox43;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Button bStopTurnTest;
+        private System.Windows.Forms.Button bStartTurnTest;
+        private System.Windows.Forms.NumericUpDown nCycle;
+        private System.Windows.Forms.Label label178;
     }
 }
 

@@ -89,7 +89,7 @@ namespace GeneralLabelerStation.UI
                 PointF cur = new PointF();
                 cur.X = (float)Form_Main.Instance.X.Pos;
                 cur.Y = (float)Form_Main.Instance.Y.Pos;
-                PointF circle = Camera.CameraDefine.Instance[Camera.CAM.Top].ImagePt2WorldPt(cur, a);
+                PointF circle = Camera.CameraDefine.Instance[Camera.CAM.Top].ImagePt2WorldPt(cur, a, 0);
                 this.tCircleX.Text = circle.X.ToString("f3");
                 this.tCircleY.Text = circle.Y.ToString("f3");
             }
@@ -121,7 +121,7 @@ namespace GeneralLabelerStation.UI
                 PointF cur = new PointF();
                 cur.X = (float)Form_Main.Instance.X.Pos;
                 cur.Y = (float)Form_Main.Instance.Y.Pos;
-                PointF circle = Camera.CameraDefine.Instance[Camera.CAM.Bottom1].ImagePt2WorldPt(cur, a);
+                PointF circle = Camera.CameraDefine.Instance[Camera.CAM.Bottom1].ImagePt2WorldPt(cur, a, 0);
                 this.tD_Org1X.Text = circle.X.ToString("f3");
                 this.tD_Org1Y.Text = circle.Y.ToString("f3");
             }
@@ -143,7 +143,7 @@ namespace GeneralLabelerStation.UI
                 PointF cur = new PointF();
                 cur.X = (float)Form_Main.Instance.X.Pos;
                 cur.Y = (float)Form_Main.Instance.Y.Pos;
-                PointF circle = Camera.CameraDefine.Instance[Camera.CAM.Bottom1].ImagePt2WorldPt(cur, a);
+                PointF circle = Camera.CameraDefine.Instance[Camera.CAM.Bottom1].ImagePt2WorldPt(cur, a, 0);
                 this.tD_Org2X.Text = circle.X.ToString("f3");
                 this.tD_Org2Y.Text = circle.Y.ToString("f3");
             }
@@ -221,7 +221,7 @@ namespace GeneralLabelerStation.UI
 
                     if (rtn != 0) throw new Exception("抓取XY机械原点失败");
 
-                    circle = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(MachineCFG.OrgXY, center);
+                    circle = CameraDefine.Instance[CAM.Top].ImagePt2WorldPt(MachineCFG.OrgXY, center, 0);
                     offsetX = circle.X - MachineCFG.OrgXY.X;
                     offsetY = circle.Y - MachineCFG.OrgXY.Y;
 
@@ -251,7 +251,7 @@ namespace GeneralLabelerStation.UI
 
                     if (rtn != 0) throw new Exception("抓取翻转头1机械原点失败");
 
-                    circle = CameraDefine.Instance[CAM.Bottom1].ImagePt2WorldPt(MachineCFG.D_Org1XY, center);
+                    circle = CameraDefine.Instance[CAM.Bottom1].ImagePt2WorldPt(MachineCFG.D_Org1XY, center, 0);
                     offsetX = circle.X - MachineCFG.D_Org1XY.X;
                     offsetY = circle.Y - MachineCFG.D_Org1XY.Y;
 
@@ -278,7 +278,7 @@ namespace GeneralLabelerStation.UI
 
                     if (rtn != 0) throw new Exception("抓取翻转头2机械原点失败");
 
-                    circle = CameraDefine.Instance[CAM.Bottom1].ImagePt2WorldPt(MachineCFG.D_Org2XY, center);
+                    circle = CameraDefine.Instance[CAM.Bottom1].ImagePt2WorldPt(MachineCFG.D_Org2XY, center, 0);
                     offsetX = circle.X - MachineCFG.D_Org2XY.X;
                     offsetY = circle.Y - MachineCFG.D_Org2XY.Y;
 
