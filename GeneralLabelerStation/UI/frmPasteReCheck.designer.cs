@@ -631,7 +631,6 @@
             // 
             this.tOffsetY.Location = new System.Drawing.Point(38, 58);
             this.tOffsetY.Name = "tOffsetY";
-            this.tOffsetY.ReadOnly = true;
             this.tOffsetY.Size = new System.Drawing.Size(68, 26);
             this.tOffsetY.TabIndex = 9;
             this.tOffsetY.Text = "0";
@@ -649,7 +648,6 @@
             // 
             this.tOffsetX.Location = new System.Drawing.Point(38, 25);
             this.tOffsetX.Name = "tOffsetX";
-            this.tOffsetX.ReadOnly = true;
             this.tOffsetX.Size = new System.Drawing.Size(68, 26);
             this.tOffsetX.TabIndex = 7;
             this.tOffsetX.Text = "0";
