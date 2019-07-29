@@ -11261,9 +11261,10 @@ namespace GeneralLabelerStation
             }
 
             StatisticsHelper.Instance.Reoprt.Start(TimeDefine.ProductTime, $"生产[{VariableSys.sProgramName}]");
+            //todo 屏蔽Label相机来解决相机过多造成内存不足
             foreach (CAM cam in Enum.GetValues(typeof(CAM)))
             {
-                if (cam == CAM.Bottom1 || cam == CAM.Bottom2)
+                if (cam != CAM.Label)
                 {
                     if (CameraDefine.Instance.Config.ContainsKey(cam))
                     {
@@ -11272,7 +11273,7 @@ namespace GeneralLabelerStation
                     }
                 }
             }
-
+            Thread.Sleep(500);
             CycleStop = this.bCycleStop.Checked;
             CycleRun = this.cbCycleRun.Checked;
             if (this.FlowIndex_Conveyor != 100 && this.T_ConveyorIsRun) // 继续激活轨道 根据上一次暂停前状态
@@ -11451,6 +11452,7 @@ namespace GeneralLabelerStation
         {
             bReset.Enabled = cB_EnableReset.Checked;
             bClear.Enabled = cB_EnableReset.Checked;
+            cbCycleRun.Enabled = cB_EnableReset.Checked;
         }
         //todo 暂停按钮
         private void bAutoSinglePause_Click(object sender, EventArgs e)

@@ -98,8 +98,8 @@
             this.tPanelCode = new System.Windows.Forms.TextBox();
             this.lPanelCode = new System.Windows.Forms.Label();
             this.gbOpreator = new System.Windows.Forms.Panel();
-            this.cbCycleRun = new System.Windows.Forms.CheckBox();
             this.gB_Reset = new System.Windows.Forms.GroupBox();
+            this.cbCycleRun = new System.Windows.Forms.CheckBox();
             this.bClear = new System.Windows.Forms.Button();
             this.cB_EnableReset = new System.Windows.Forms.CheckBox();
             this.bReset = new System.Windows.Forms.Button();
@@ -2260,7 +2260,6 @@
             // 
             // gbOpreator
             // 
-            this.gbOpreator.Controls.Add(this.cbCycleRun);
             this.gbOpreator.Controls.Add(this.gB_Reset);
             this.gbOpreator.Controls.Add(this.bByPASS);
             this.gbOpreator.Controls.Add(this.bAutoSinglePause);
@@ -2268,20 +2267,21 @@
             resources.ApplyResources(this.gbOpreator, "gbOpreator");
             this.gbOpreator.Name = "gbOpreator";
             // 
-            // cbCycleRun
-            // 
-            resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
-            this.cbCycleRun.Name = "cbCycleRun";
-            this.cbCycleRun.UseVisualStyleBackColor = true;
-            // 
             // gB_Reset
             // 
+            this.gB_Reset.Controls.Add(this.cbCycleRun);
             this.gB_Reset.Controls.Add(this.bClear);
             this.gB_Reset.Controls.Add(this.cB_EnableReset);
             this.gB_Reset.Controls.Add(this.bReset);
             resources.ApplyResources(this.gB_Reset, "gB_Reset");
             this.gB_Reset.Name = "gB_Reset";
             this.gB_Reset.TabStop = false;
+            // 
+            // cbCycleRun
+            // 
+            resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
+            this.cbCycleRun.Name = "cbCycleRun";
+            this.cbCycleRun.UseVisualStyleBackColor = true;
             // 
             // bClear
             // 
@@ -7492,14 +7492,15 @@
             // 
             // SetSystemPrams
             // 
+            resources.ApplyResources(this.SetSystemPrams, "SetSystemPrams");
             this.SetSystemPrams.ContextMenuStrip = this.contextMenuStrip1;
             this.SetSystemPrams.Controls.Add(this.tabControl4);
-            resources.ApplyResources(this.SetSystemPrams, "SetSystemPrams");
             this.SetSystemPrams.Name = "SetSystemPrams";
             this.SetSystemPrams.UseVisualStyleBackColor = true;
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Z1,
             this.Menu_Z2,
@@ -7979,7 +7980,6 @@
             // 
             resources.ApplyResources(this.tPasteHeight, "tPasteHeight");
             this.tPasteHeight.Name = "tPasteHeight";
-            this.tPasteHeight.ReadOnly = true;
             // 
             // label272
             // 
@@ -8016,7 +8016,6 @@
             // 
             resources.ApplyResources(this.tCamZPos, "tCamZPos");
             this.tCamZPos.Name = "tCamZPos";
-            this.tCamZPos.ReadOnly = true;
             // 
             // label54
             // 
@@ -10495,6 +10494,7 @@
             // 
             // R_SelectMenu
             // 
+            this.R_SelectMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.R_SelectMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.toolStripMenuItem2,
@@ -12098,6 +12098,7 @@
             // statusStrip1
             // 
             resources.ApplyResources(this.statusStrip1, "statusStrip1");
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tSSL_UserStatus,
             this.tSSL_Error,
@@ -12360,7 +12361,6 @@
             this.gbPanelCode.ResumeLayout(false);
             this.gbPanelCode.PerformLayout();
             this.gbOpreator.ResumeLayout(false);
-            this.gbOpreator.PerformLayout();
             this.gB_Reset.ResumeLayout(false);
             this.gB_Reset.PerformLayout();
             this.gbFlowState.ResumeLayout(false);
