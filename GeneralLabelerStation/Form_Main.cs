@@ -11239,6 +11239,10 @@ namespace GeneralLabelerStation
             bAutoSinglePause.Enabled = true;
             bByPASS.Enabled = false;
             bByPASS.BackColor = Color.Transparent;
+            if (cbCycleRun.Checked)
+            {
+                cB_EnableReset.Checked = false;
+            }
             RestartStopwatch();
 
             StopWatch_FlowIndex.Start();
@@ -11465,8 +11469,6 @@ namespace GeneralLabelerStation
 
             ConveyorStop();
 
-            //this.ResetInformBeforeGive();
-            
             StopWatch_FlowIndex.Stop();
             StopWatch_FlowIndex_Conveyor.Stop();
             this.CloseBtnLight(3);
@@ -11493,21 +11495,21 @@ namespace GeneralLabelerStation
             gB_FeederLeft.Enabled = true;
             gB_FeederRight.Enabled = true;
 
-            foreach (CAM camera in Enum.GetValues(typeof(CAM)))
-            {
-                if (CameraDefine.Instance.Config.ContainsKey(camera))
-                {
-                    this.SetTrigger(false, camera);
-                    CameraDefine.Instance[camera]._Session.Acquisition.Unconfigure();
-                }
-            }
+            //foreach (CAM camera in Enum.GetValues(typeof(CAM)))
+            //{
+            //    if (CameraDefine.Instance.Config.ContainsKey(camera))
+            //    {
+            //        this.SetTrigger(false, camera);
+            //        CameraDefine.Instance[camera]._Session.Acquisition.Unconfigure();
+            //    }
+            //}
 
-            GC.Collect();
+            //GC.Collect();
 
-            this.OpenBtnLight(0);
+            //this.OpenBtnLight(0);
 
-            X.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
-            Y.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
+            //X.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
+            //Y.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
         }
 
         private void bLabelLeftClear_Click(object sender, EventArgs e)
