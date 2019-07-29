@@ -1053,10 +1053,13 @@ namespace GeneralLabelerStation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        //todo 设定吸嘴孔位
         private void bInitNozzleOffset_Click(object sender, EventArgs e)
         {
-            if (this.cbNzStep4.SelectedIndex < 0) return;
-            NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
+            //if (this.cbNzStep4.SelectedIndex < 0) return;
+            //NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
+            if (this.cbNzStep1.SelectedIndex < 0) return;
+            NozzleCenterOffset[this.cbNzStep1.SelectedIndex] = this.XYPos;
             SaveNozzleOffsetConfig();
         }
 
@@ -25550,11 +25553,13 @@ namespace GeneralLabelerStation
             }
         }
 
+        //todo 到吸嘴孔位按钮
         private void button4_Click_1(object sender, EventArgs e)
         {
-            if (this.cbNzStep4.SelectedIndex < 0) return;
-
-            this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
+            //if (this.cbNzStep4.SelectedIndex < 0) return;
+            //this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
+            if (this.cbNzStep1.SelectedIndex < 0) return;
+            this.XYGoPos(NozzleCenterOffset[this.cbNzStep1.SelectedIndex], VariableSys.VelMode_Current_Manual);
         }
 
         private void button10_Click(object sender, EventArgs e)

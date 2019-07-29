@@ -98,6 +98,7 @@
             this.tPanelCode = new System.Windows.Forms.TextBox();
             this.lPanelCode = new System.Windows.Forms.Label();
             this.gbOpreator = new System.Windows.Forms.Panel();
+            this.cbCycleRun = new System.Windows.Forms.CheckBox();
             this.gB_Reset = new System.Windows.Forms.GroupBox();
             this.bClear = new System.Windows.Forms.Button();
             this.cB_EnableReset = new System.Windows.Forms.CheckBox();
@@ -228,7 +229,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage27 = new System.Windows.Forms.TabPage();
             this.gB_Nz2Read = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.label89 = new System.Windows.Forms.Label();
+            this.label170 = new System.Windows.Forms.Label();
+            this.cbNzStep1 = new System.Windows.Forms.ComboBox();
+            this.label206 = new System.Windows.Forms.Label();
             this.cbNzStep4 = new System.Windows.Forms.ComboBox();
             this.label213 = new System.Windows.Forms.Label();
             this.bChangeNzOffset = new System.Windows.Forms.Button();
@@ -242,12 +246,11 @@
             this.bRefreshVisionList = new System.Windows.Forms.Button();
             this.cbVisionList = new System.Windows.Forms.ComboBox();
             this.label207 = new System.Windows.Forms.Label();
-            this.label206 = new System.Windows.Forms.Label();
+            this.label260 = new System.Windows.Forms.Label();
             this.tStandardY = new System.Windows.Forms.TextBox();
             this.tStandardX = new System.Windows.Forms.TextBox();
             this.bDetectNz1 = new System.Windows.Forms.Button();
-            this.label170 = new System.Windows.Forms.Label();
-            this.bInitNozzleOffset = new System.Windows.Forms.Button();
+            this.label292 = new System.Windows.Forms.Label();
             this.tLabel2NZY = new System.Windows.Forms.TextBox();
             this.tLabel2NZX = new System.Windows.Forms.TextBox();
             this.bCalLabel2Nz = new System.Windows.Forms.Button();
@@ -257,8 +260,10 @@
             this.tNZ1PosY = new System.Windows.Forms.TextBox();
             this.tNZ1PosX = new System.Windows.Forms.TextBox();
             this.bSet4_1 = new System.Windows.Forms.Button();
-            this.label260 = new System.Windows.Forms.Label();
-            this.label89 = new System.Windows.Forms.Label();
+            this.label295 = new System.Windows.Forms.Label();
+            this.label296 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.bInitNozzleOffset = new System.Windows.Forms.Button();
             this.cB_Cali = new System.Windows.Forms.CheckBox();
             this.SetPasteInfo = new System.Windows.Forms.TabPage();
             this.cB_PasteType = new System.Windows.Forms.ComboBox();
@@ -1363,6 +1368,17 @@
             this.nCycle = new System.Windows.Forms.NumericUpDown();
             this.label178 = new System.Windows.Forms.Label();
             this.groupBox61 = new System.Windows.Forms.GroupBox();
+            this.label285 = new System.Windows.Forms.Label();
+            this.label284 = new System.Windows.Forms.Label();
+            this.label274 = new System.Windows.Forms.Label();
+            this.tDC_Y = new System.Windows.Forms.TextBox();
+            this.label275 = new System.Windows.Forms.Label();
+            this.tDC_X = new System.Windows.Forms.TextBox();
+            this.label179 = new System.Windows.Forms.Label();
+            this.tBA_Y = new System.Windows.Forms.TextBox();
+            this.label261 = new System.Windows.Forms.Label();
+            this.tBA_X = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.bTestPathON = new System.Windows.Forms.Button();
             this.bTestOFF = new System.Windows.Forms.Button();
             this.bTestON = new System.Windows.Forms.Button();
@@ -1471,18 +1487,6 @@
             this.pMode_Run = new System.Windows.Forms.PictureBox();
             this.pMode_PASTE = new System.Windows.Forms.PictureBox();
             this.panel23 = new System.Windows.Forms.Panel();
-            this.cbCycleRun = new System.Windows.Forms.CheckBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.label179 = new System.Windows.Forms.Label();
-            this.tBA_Y = new System.Windows.Forms.TextBox();
-            this.label261 = new System.Windows.Forms.Label();
-            this.tBA_X = new System.Windows.Forms.TextBox();
-            this.label274 = new System.Windows.Forms.Label();
-            this.tDC_Y = new System.Windows.Forms.TextBox();
-            this.label275 = new System.Windows.Forms.Label();
-            this.tDC_X = new System.Windows.Forms.TextBox();
-            this.label284 = new System.Windows.Forms.Label();
-            this.label285 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbMachineState.SuspendLayout();
@@ -2263,6 +2267,12 @@
             this.gbOpreator.Controls.Add(this.bAutoRun);
             resources.ApplyResources(this.gbOpreator, "gbOpreator");
             this.gbOpreator.Name = "gbOpreator";
+            // 
+            // cbCycleRun
+            // 
+            resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
+            this.cbCycleRun.Name = "cbCycleRun";
+            this.cbCycleRun.UseVisualStyleBackColor = true;
             // 
             // gB_Reset
             // 
@@ -3257,7 +3267,10 @@
             // 
             // gB_Nz2Read
             // 
-            this.gB_Nz2Read.Controls.Add(this.button4);
+            this.gB_Nz2Read.Controls.Add(this.label89);
+            this.gB_Nz2Read.Controls.Add(this.label170);
+            this.gB_Nz2Read.Controls.Add(this.cbNzStep1);
+            this.gB_Nz2Read.Controls.Add(this.label206);
             this.gB_Nz2Read.Controls.Add(this.cbNzStep4);
             this.gB_Nz2Read.Controls.Add(this.label213);
             this.gB_Nz2Read.Controls.Add(this.bChangeNzOffset);
@@ -3271,12 +3284,11 @@
             this.gB_Nz2Read.Controls.Add(this.bRefreshVisionList);
             this.gB_Nz2Read.Controls.Add(this.cbVisionList);
             this.gB_Nz2Read.Controls.Add(this.label207);
-            this.gB_Nz2Read.Controls.Add(this.label206);
+            this.gB_Nz2Read.Controls.Add(this.label260);
             this.gB_Nz2Read.Controls.Add(this.tStandardY);
             this.gB_Nz2Read.Controls.Add(this.tStandardX);
             this.gB_Nz2Read.Controls.Add(this.bDetectNz1);
-            this.gB_Nz2Read.Controls.Add(this.label170);
-            this.gB_Nz2Read.Controls.Add(this.bInitNozzleOffset);
+            this.gB_Nz2Read.Controls.Add(this.label292);
             this.gB_Nz2Read.Controls.Add(this.tLabel2NZY);
             this.gB_Nz2Read.Controls.Add(this.tLabel2NZX);
             this.gB_Nz2Read.Controls.Add(this.bCalLabel2Nz);
@@ -3286,19 +3298,44 @@
             this.gB_Nz2Read.Controls.Add(this.tNZ1PosY);
             this.gB_Nz2Read.Controls.Add(this.tNZ1PosX);
             this.gB_Nz2Read.Controls.Add(this.bSet4_1);
-            this.gB_Nz2Read.Controls.Add(this.label260);
-            this.gB_Nz2Read.Controls.Add(this.label89);
+            this.gB_Nz2Read.Controls.Add(this.label295);
+            this.gB_Nz2Read.Controls.Add(this.label296);
+            this.gB_Nz2Read.Controls.Add(this.button4);
+            this.gB_Nz2Read.Controls.Add(this.bInitNozzleOffset);
             resources.ApplyResources(this.gB_Nz2Read, "gB_Nz2Read");
             this.gB_Nz2Read.Name = "gB_Nz2Read";
             this.gB_Nz2Read.TabStop = false;
             // 
-            // button4
+            // label89
             // 
-            this.button4.BackColor = System.Drawing.Color.Yellow;
-            resources.ApplyResources(this.button4, "button4");
-            this.button4.Name = "button4";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click_1);
+            resources.ApplyResources(this.label89, "label89");
+            this.label89.BackColor = System.Drawing.Color.Yellow;
+            this.label89.ForeColor = System.Drawing.Color.Black;
+            this.label89.Name = "label89";
+            // 
+            // label170
+            // 
+            resources.ApplyResources(this.label170, "label170");
+            this.label170.BackColor = System.Drawing.Color.Red;
+            this.label170.ForeColor = System.Drawing.Color.Black;
+            this.label170.Name = "label170";
+            // 
+            // cbNzStep1
+            // 
+            this.cbNzStep1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbNzStep1.FormattingEnabled = true;
+            this.cbNzStep1.Items.AddRange(new object[] {
+            resources.GetString("cbNzStep1.Items"),
+            resources.GetString("cbNzStep1.Items1"),
+            resources.GetString("cbNzStep1.Items2"),
+            resources.GetString("cbNzStep1.Items3")});
+            resources.ApplyResources(this.cbNzStep1, "cbNzStep1");
+            this.cbNzStep1.Name = "cbNzStep1";
+            // 
+            // label206
+            // 
+            resources.ApplyResources(this.label206, "label206");
+            this.label206.Name = "label206";
             // 
             // cbNzStep4
             // 
@@ -3323,7 +3360,6 @@
             resources.ApplyResources(this.bChangeNzOffset, "bChangeNzOffset");
             this.bChangeNzOffset.Name = "bChangeNzOffset";
             this.bChangeNzOffset.UseVisualStyleBackColor = false;
-            this.bChangeNzOffset.Click += new System.EventHandler(this.bChangeNzOffset_Click);
             // 
             // bDetectOtherNz
             // 
@@ -3331,7 +3367,6 @@
             resources.ApplyResources(this.bDetectOtherNz, "bDetectOtherNz");
             this.bDetectOtherNz.Name = "bDetectOtherNz";
             this.bDetectOtherNz.UseVisualStyleBackColor = false;
-            this.bDetectOtherNz.Click += new System.EventHandler(this.bDetectOtherNz_Click);
             // 
             // label210
             // 
@@ -3370,7 +3405,6 @@
             resources.ApplyResources(this.bRefreshVisionList, "bRefreshVisionList");
             this.bRefreshVisionList.Name = "bRefreshVisionList";
             this.bRefreshVisionList.UseVisualStyleBackColor = true;
-            this.bRefreshVisionList.Click += new System.EventHandler(this.bRefreshVisionList_Click);
             // 
             // cbVisionList
             // 
@@ -3384,10 +3418,10 @@
             resources.ApplyResources(this.label207, "label207");
             this.label207.Name = "label207";
             // 
-            // label206
+            // label260
             // 
-            resources.ApplyResources(this.label206, "label206");
-            this.label206.Name = "label206";
+            resources.ApplyResources(this.label260, "label260");
+            this.label260.Name = "label260";
             // 
             // tStandardY
             // 
@@ -3407,22 +3441,13 @@
             resources.ApplyResources(this.bDetectNz1, "bDetectNz1");
             this.bDetectNz1.Name = "bDetectNz1";
             this.bDetectNz1.UseVisualStyleBackColor = false;
-            this.bDetectNz1.Click += new System.EventHandler(this.bDetectNz1_Click);
             // 
-            // label170
+            // label292
             // 
-            resources.ApplyResources(this.label170, "label170");
-            this.label170.BackColor = System.Drawing.Color.Yellow;
-            this.label170.ForeColor = System.Drawing.Color.Black;
-            this.label170.Name = "label170";
-            // 
-            // bInitNozzleOffset
-            // 
-            this.bInitNozzleOffset.BackColor = System.Drawing.Color.Red;
-            resources.ApplyResources(this.bInitNozzleOffset, "bInitNozzleOffset");
-            this.bInitNozzleOffset.Name = "bInitNozzleOffset";
-            this.bInitNozzleOffset.UseVisualStyleBackColor = false;
-            this.bInitNozzleOffset.Click += new System.EventHandler(this.bInitNozzleOffset_Click);
+            resources.ApplyResources(this.label292, "label292");
+            this.label292.BackColor = System.Drawing.Color.Yellow;
+            this.label292.ForeColor = System.Drawing.Color.Black;
+            this.label292.Name = "label292";
             // 
             // tLabel2NZY
             // 
@@ -3442,7 +3467,6 @@
             resources.ApplyResources(this.bCalLabel2Nz, "bCalLabel2Nz");
             this.bCalLabel2Nz.Name = "bCalLabel2Nz";
             this.bCalLabel2Nz.UseVisualStyleBackColor = false;
-            this.bCalLabel2Nz.Click += new System.EventHandler(this.bCalLabel2Nz_Click);
             // 
             // tCamLabelPosY
             // 
@@ -3462,7 +3486,6 @@
             resources.ApplyResources(this.bSet4_2, "bSet4_2");
             this.bSet4_2.Name = "bSet4_2";
             this.bSet4_2.UseVisualStyleBackColor = false;
-            this.bSet4_2.Click += new System.EventHandler(this.bSet4_2_Click);
             // 
             // tNZ1PosY
             // 
@@ -3482,21 +3505,36 @@
             resources.ApplyResources(this.bSet4_1, "bSet4_1");
             this.bSet4_1.Name = "bSet4_1";
             this.bSet4_1.UseVisualStyleBackColor = false;
-            this.bSet4_1.Click += new System.EventHandler(this.bSet4_1_Click);
             // 
-            // label260
+            // label295
             // 
-            resources.ApplyResources(this.label260, "label260");
-            this.label260.BackColor = System.Drawing.Color.Yellow;
-            this.label260.ForeColor = System.Drawing.Color.Black;
-            this.label260.Name = "label260";
+            resources.ApplyResources(this.label295, "label295");
+            this.label295.BackColor = System.Drawing.Color.Yellow;
+            this.label295.ForeColor = System.Drawing.Color.Black;
+            this.label295.Name = "label295";
             // 
-            // label89
+            // label296
             // 
-            resources.ApplyResources(this.label89, "label89");
-            this.label89.BackColor = System.Drawing.Color.Yellow;
-            this.label89.ForeColor = System.Drawing.Color.Black;
-            this.label89.Name = "label89";
+            resources.ApplyResources(this.label296, "label296");
+            this.label296.BackColor = System.Drawing.Color.Yellow;
+            this.label296.ForeColor = System.Drawing.Color.Black;
+            this.label296.Name = "label296";
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.Yellow;
+            resources.ApplyResources(this.button4, "button4");
+            this.button4.Name = "button4";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
+            // 
+            // bInitNozzleOffset
+            // 
+            this.bInitNozzleOffset.BackColor = System.Drawing.Color.Red;
+            resources.ApplyResources(this.bInitNozzleOffset, "bInitNozzleOffset");
+            this.bInitNozzleOffset.Name = "bInitNozzleOffset";
+            this.bInitNozzleOffset.UseVisualStyleBackColor = false;
+            this.bInitNozzleOffset.Click += new System.EventHandler(this.bInitNozzleOffset_Click);
             // 
             // cB_Cali
             // 
@@ -11472,6 +11510,67 @@
             this.groupBox61.TabStop = false;
             this.groupBox61.Enter += new System.EventHandler(this.groupBox61_Enter);
             // 
+            // label285
+            // 
+            resources.ApplyResources(this.label285, "label285");
+            this.label285.Name = "label285";
+            // 
+            // label284
+            // 
+            resources.ApplyResources(this.label284, "label284");
+            this.label284.Name = "label284";
+            // 
+            // label274
+            // 
+            resources.ApplyResources(this.label274, "label274");
+            this.label274.Name = "label274";
+            // 
+            // tDC_Y
+            // 
+            resources.ApplyResources(this.tDC_Y, "tDC_Y");
+            this.tDC_Y.Name = "tDC_Y";
+            this.tDC_Y.ReadOnly = true;
+            // 
+            // label275
+            // 
+            resources.ApplyResources(this.label275, "label275");
+            this.label275.Name = "label275";
+            // 
+            // tDC_X
+            // 
+            resources.ApplyResources(this.tDC_X, "tDC_X");
+            this.tDC_X.Name = "tDC_X";
+            this.tDC_X.ReadOnly = true;
+            // 
+            // label179
+            // 
+            resources.ApplyResources(this.label179, "label179");
+            this.label179.Name = "label179";
+            // 
+            // tBA_Y
+            // 
+            resources.ApplyResources(this.tBA_Y, "tBA_Y");
+            this.tBA_Y.Name = "tBA_Y";
+            this.tBA_Y.ReadOnly = true;
+            // 
+            // label261
+            // 
+            resources.ApplyResources(this.label261, "label261");
+            this.label261.Name = "label261";
+            // 
+            // tBA_X
+            // 
+            resources.ApplyResources(this.tBA_X, "tBA_X");
+            this.tBA_X.Name = "tBA_X";
+            this.tBA_X.ReadOnly = true;
+            // 
+            // button5
+            // 
+            resources.ApplyResources(this.button5, "button5");
+            this.button5.Name = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            // 
             // bTestPathON
             // 
             resources.ApplyResources(this.bTestPathON, "bTestPathON");
@@ -12218,73 +12317,6 @@
             this.panel23.Controls.Add(this.pMode_Login);
             resources.ApplyResources(this.panel23, "panel23");
             this.panel23.Name = "panel23";
-            // 
-            // cbCycleRun
-            // 
-            resources.ApplyResources(this.cbCycleRun, "cbCycleRun");
-            this.cbCycleRun.Name = "cbCycleRun";
-            this.cbCycleRun.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            resources.ApplyResources(this.button5, "button5");
-            this.button5.Name = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click_1);
-            // 
-            // label179
-            // 
-            resources.ApplyResources(this.label179, "label179");
-            this.label179.Name = "label179";
-            // 
-            // tBA_Y
-            // 
-            resources.ApplyResources(this.tBA_Y, "tBA_Y");
-            this.tBA_Y.Name = "tBA_Y";
-            this.tBA_Y.ReadOnly = true;
-            // 
-            // label261
-            // 
-            resources.ApplyResources(this.label261, "label261");
-            this.label261.Name = "label261";
-            // 
-            // tBA_X
-            // 
-            resources.ApplyResources(this.tBA_X, "tBA_X");
-            this.tBA_X.Name = "tBA_X";
-            this.tBA_X.ReadOnly = true;
-            // 
-            // label274
-            // 
-            resources.ApplyResources(this.label274, "label274");
-            this.label274.Name = "label274";
-            // 
-            // tDC_Y
-            // 
-            resources.ApplyResources(this.tDC_Y, "tDC_Y");
-            this.tDC_Y.Name = "tDC_Y";
-            this.tDC_Y.ReadOnly = true;
-            // 
-            // label275
-            // 
-            resources.ApplyResources(this.label275, "label275");
-            this.label275.Name = "label275";
-            // 
-            // tDC_X
-            // 
-            resources.ApplyResources(this.tDC_X, "tDC_X");
-            this.tDC_X.Name = "tDC_X";
-            this.tDC_X.ReadOnly = true;
-            // 
-            // label284
-            // 
-            resources.ApplyResources(this.label284, "label284");
-            this.label284.Name = "label284";
-            // 
-            // label285
-            // 
-            resources.ApplyResources(this.label285, "label285");
-            this.label285.Name = "label285";
             // 
             // Form_Main
             // 
@@ -13463,17 +13495,6 @@
         private System.Windows.Forms.TextBox tZSafeHeight;
         private System.Windows.Forms.Label label88;
         private System.Windows.Forms.GroupBox gB_Nz2Read;
-        private System.Windows.Forms.Label label260;
-        private System.Windows.Forms.Label label89;
-        private System.Windows.Forms.TextBox tLabel2NZY;
-        private System.Windows.Forms.TextBox tLabel2NZX;
-        private System.Windows.Forms.Button bCalLabel2Nz;
-        private System.Windows.Forms.TextBox tCamLabelPosY;
-        private System.Windows.Forms.TextBox tCamLabelPosX;
-        private System.Windows.Forms.Button bSet4_2;
-        private System.Windows.Forms.TextBox tNZ1PosY;
-        private System.Windows.Forms.TextBox tNZ1PosX;
-        private System.Windows.Forms.Button bSet4_1;
         private System.Windows.Forms.Button bTurnCailb;
         private System.Windows.Forms.Button bNZAutoHeight;
         private System.Windows.Forms.Button bRecrodCamZPos;
@@ -13885,24 +13906,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column113;
         private System.Windows.Forms.Button bAutoSuck;
         private System.Windows.Forms.Button bInitNozzleOffset;
-        private System.Windows.Forms.ComboBox cbNzStep4;
-        private System.Windows.Forms.Label label213;
-        private System.Windows.Forms.Button bChangeNzOffset;
-        private System.Windows.Forms.Button bDetectOtherNz;
-        private System.Windows.Forms.Label label210;
-        private System.Windows.Forms.Label label212;
-        private System.Windows.Forms.TextBox tNzCenterOffsetY;
-        private System.Windows.Forms.TextBox tNzCenterOffsetX;
-        private System.Windows.Forms.Label label209;
-        private System.Windows.Forms.Label label208;
-        private System.Windows.Forms.Button bRefreshVisionList;
-        private System.Windows.Forms.ComboBox cbVisionList;
-        private System.Windows.Forms.Label label207;
-        private System.Windows.Forms.Label label206;
-        private System.Windows.Forms.TextBox tStandardY;
-        private System.Windows.Forms.TextBox tStandardX;
-        private System.Windows.Forms.Button bDetectNz1;
-        private System.Windows.Forms.Label label170;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TabPage Operate0;
         private System.Windows.Forms.Button bOperVaccum;
@@ -14095,6 +14098,39 @@
         private System.Windows.Forms.TextBox tBA_Y;
         private System.Windows.Forms.Label label261;
         private System.Windows.Forms.TextBox tBA_X;
+        private System.Windows.Forms.Label label89;
+        private System.Windows.Forms.Label label170;
+        private System.Windows.Forms.ComboBox cbNzStep1;
+        private System.Windows.Forms.Label label206;
+        private System.Windows.Forms.ComboBox cbNzStep4;
+        private System.Windows.Forms.Label label213;
+        private System.Windows.Forms.Button bChangeNzOffset;
+        private System.Windows.Forms.Button bDetectOtherNz;
+        private System.Windows.Forms.Label label210;
+        private System.Windows.Forms.Label label212;
+        private System.Windows.Forms.TextBox tNzCenterOffsetY;
+        private System.Windows.Forms.TextBox tNzCenterOffsetX;
+        private System.Windows.Forms.Label label209;
+        private System.Windows.Forms.Label label208;
+        private System.Windows.Forms.Button bRefreshVisionList;
+        private System.Windows.Forms.ComboBox cbVisionList;
+        private System.Windows.Forms.Label label207;
+        private System.Windows.Forms.Label label260;
+        private System.Windows.Forms.TextBox tStandardY;
+        private System.Windows.Forms.TextBox tStandardX;
+        private System.Windows.Forms.Button bDetectNz1;
+        private System.Windows.Forms.Label label292;
+        private System.Windows.Forms.TextBox tLabel2NZY;
+        private System.Windows.Forms.TextBox tLabel2NZX;
+        private System.Windows.Forms.Button bCalLabel2Nz;
+        private System.Windows.Forms.TextBox tCamLabelPosY;
+        private System.Windows.Forms.TextBox tCamLabelPosX;
+        private System.Windows.Forms.Button bSet4_2;
+        private System.Windows.Forms.TextBox tNZ1PosY;
+        private System.Windows.Forms.TextBox tNZ1PosX;
+        private System.Windows.Forms.Button bSet4_1;
+        private System.Windows.Forms.Label label295;
+        private System.Windows.Forms.Label label296;
     }
 }
 
