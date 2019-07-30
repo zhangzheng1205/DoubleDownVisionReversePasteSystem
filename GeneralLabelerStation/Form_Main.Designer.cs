@@ -3360,6 +3360,7 @@
             resources.ApplyResources(this.bChangeNzOffset, "bChangeNzOffset");
             this.bChangeNzOffset.Name = "bChangeNzOffset";
             this.bChangeNzOffset.UseVisualStyleBackColor = false;
+            this.bChangeNzOffset.Click += new System.EventHandler(this.bChangeNzOffset_Click);
             // 
             // bDetectOtherNz
             // 
@@ -3367,6 +3368,7 @@
             resources.ApplyResources(this.bDetectOtherNz, "bDetectOtherNz");
             this.bDetectOtherNz.Name = "bDetectOtherNz";
             this.bDetectOtherNz.UseVisualStyleBackColor = false;
+            this.bDetectOtherNz.Click += new System.EventHandler(this.bDetectOtherNz_Click);
             // 
             // label210
             // 
@@ -3441,6 +3443,7 @@
             resources.ApplyResources(this.bDetectNz1, "bDetectNz1");
             this.bDetectNz1.Name = "bDetectNz1";
             this.bDetectNz1.UseVisualStyleBackColor = false;
+            this.bDetectNz1.Click += new System.EventHandler(this.bDetectNz1_Click);
             // 
             // label292
             // 
@@ -3467,6 +3470,7 @@
             resources.ApplyResources(this.bCalLabel2Nz, "bCalLabel2Nz");
             this.bCalLabel2Nz.Name = "bCalLabel2Nz";
             this.bCalLabel2Nz.UseVisualStyleBackColor = false;
+            this.bCalLabel2Nz.Click += new System.EventHandler(this.bCalLabel2Nz_Click);
             // 
             // tCamLabelPosY
             // 
@@ -3486,6 +3490,7 @@
             resources.ApplyResources(this.bSet4_2, "bSet4_2");
             this.bSet4_2.Name = "bSet4_2";
             this.bSet4_2.UseVisualStyleBackColor = false;
+            this.bSet4_2.Click += new System.EventHandler(this.bSet4_2_Click);
             // 
             // tNZ1PosY
             // 
@@ -3505,6 +3510,7 @@
             resources.ApplyResources(this.bSet4_1, "bSet4_1");
             this.bSet4_1.Name = "bSet4_1";
             this.bSet4_1.UseVisualStyleBackColor = false;
+            this.bSet4_1.Click += new System.EventHandler(this.bSet4_1_Click);
             // 
             // label295
             // 
