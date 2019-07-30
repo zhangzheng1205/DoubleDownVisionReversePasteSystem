@@ -7980,6 +7980,7 @@
             // 
             resources.ApplyResources(this.tPasteHeight, "tPasteHeight");
             this.tPasteHeight.Name = "tPasteHeight";
+            this.tPasteHeight.ReadOnly = true;
             // 
             // label272
             // 
@@ -8016,6 +8017,7 @@
             // 
             resources.ApplyResources(this.tCamZPos, "tCamZPos");
             this.tCamZPos.Name = "tCamZPos";
+            this.tCamZPos.ReadOnly = true;
             // 
             // label54
             // 

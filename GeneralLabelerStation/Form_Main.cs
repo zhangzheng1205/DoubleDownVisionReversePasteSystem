@@ -11159,6 +11159,7 @@ namespace GeneralLabelerStation
 
         private bool CycleStop = false;
         private bool CycleRun = false;
+        //todo 运行按钮
         private void bAutoRun_Click(object sender, EventArgs e)
         {
             this.CloseBtnLight(0);
@@ -19441,6 +19442,7 @@ namespace GeneralLabelerStation
         #endregion
 
         #region 线程及线程使用的函数
+        //todo 自动流程
         private void thread_Main()//主流程//自动流程
         {
             string alarm = string.Empty;
