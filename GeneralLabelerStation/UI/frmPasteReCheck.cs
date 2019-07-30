@@ -120,6 +120,7 @@ namespace GeneralLabelerStation.UI
                     }
 
                     Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
+                    Form_Main.Instance.LightON_RedU();
                 }
                 catch { }
             }
@@ -144,6 +145,7 @@ namespace GeneralLabelerStation.UI
                     }
 
                     Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
+                    Form_Main.Instance.LightON_RedU();
                 }
                 catch { }
             }
