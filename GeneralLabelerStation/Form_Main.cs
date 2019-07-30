@@ -21321,7 +21321,7 @@ namespace GeneralLabelerStation
                                 }
                                 else
                                 {
-                                    if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 3000)
+                                    if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000)
                                         this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]550:到出板口超时,请检查轨道是否卡板" });//
                                 }
                             }
