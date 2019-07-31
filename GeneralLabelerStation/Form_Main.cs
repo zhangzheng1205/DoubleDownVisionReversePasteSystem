@@ -870,7 +870,7 @@ namespace GeneralLabelerStation
         /// </summary>
         /// <param name="nozzle"></param>
         /// <returns></returns>
-        public static Tuple<CAM,int> Nozzle2Cam(int nozzle)
+        public static Tuple<CAM, int> Nozzle2Cam(int nozzle)
         {
             CAM cam = (CAM)(nozzle / 2 + 1);
             int calib = nozzle % 2;
@@ -1069,6 +1069,11 @@ namespace GeneralLabelerStation
         public PointF[] NozzleCenterOffset = null;
 
         /// <summary>
+        /// 辅助吸料偏移调整
+        /// </summary>
+        public PointF[] NozzleManualOffset = null;
+
+        /// <summary>
         /// 读取吸嘴偏移配置
         /// </summary>
         public void ReadNozzleOffsetCofing()
@@ -1077,11 +1082,15 @@ namespace GeneralLabelerStation
             try
             {
                 NozzleCenterOffset = new PointF[Variable.NOZZLE_NUM];
+                NozzleManualOffset = new PointF[Variable.NOZZLE_NUM];
                 PointF[] temp = new PointF[Variable.NOZZLE_NUM];
                 for (int i = 0; i < Variable.NOZZLE_NUM; ++i)
                 {
                     NozzleCenterOffset[i].X = (float)ini.IniReadNum("app", $"Nozzle{i + 1}OffsetX");
                     NozzleCenterOffset[i].Y = (float)ini.IniReadNum("app", $"Nozzle{i + 1}OffsetY");
+
+                    NozzleManualOffset[i].X = (float)ini.IniReadNum("app", $"Nozzle{i + 1}ManualOffsetX");
+                    NozzleManualOffset[i].Y = (float)ini.IniReadNum("app", $"Nozzle{i + 1}ManualOffsetY");
                 }
             }
             catch { }
@@ -1097,6 +1106,16 @@ namespace GeneralLabelerStation
             }
         }
 
+        public void SaveNozzleManualOffsetConfig()
+        {
+            IniFile ini = new IniFile(Variable.sPath_Configure + "NozzleOffset.ini");
+            for (int i = 0; i < Variable.NOZZLE_NUM; ++i)
+            {
+                ini.IniWriteNumber("app", $"Nozzle{i + 1}ManualOffsetX", NozzleManualOffset[i].X);
+                ini.IniWriteNumber("app", $"Nozzle{i + 1}ManualOffsetY", NozzleManualOffset[i].Y);
+            }
+        }
+
         /// <summary>
         /// 通过吸嘴1得到其他位置
         /// </summary>
@@ -1105,9 +1124,9 @@ namespace GeneralLabelerStation
         /// <returns></returns>
         public PointF Nz1ToOther(PointF nz1, int selectNz)
         {
-            float dx = NozzleCenterOffset[selectNz].X - NozzleCenterOffset[0].X;
-            float dy = NozzleCenterOffset[selectNz].Y - NozzleCenterOffset[0].Y;
-
+            //todo 加入辅助吸料偏移调整
+            float dx = NozzleCenterOffset[selectNz].X - NozzleCenterOffset[0].X + NozzleManualOffset[selectNz].X;
+            float dy = NozzleCenterOffset[selectNz].Y - NozzleCenterOffset[0].Y + NozzleManualOffset[selectNz].Y;
             return new PointF(nz1.X - dx, nz1.Y + dy);
         }
 
@@ -1176,7 +1195,7 @@ namespace GeneralLabelerStation
                 IsTurnTest = true;
                 Task.Factory.StartNew(() =>
                 {
-                    for(int i = 0; i < TurnCycle; ++i)
+                    for (int i = 0; i < TurnCycle; ++i)
                     {
                         if (!IsTurnTest || this.Turn.bAxisServoWarning) break;
                         this.Turn.GoPosTillStop(5000, VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
@@ -11223,7 +11242,7 @@ namespace GeneralLabelerStation
                 MessageBox.Show("待 Z1Z2 复位到安全位置停止后再启动", "提示");
                 return;
             }
-           
+
             gB_FeederLeft.Enabled = false;
             gB_FeederRight.Enabled = false;
             gB_Reset.Enabled = false;
@@ -11287,7 +11306,7 @@ namespace GeneralLabelerStation
             }
 
             RunMode = 1;
-            
+
             this.OpenBtnLight(3);
         }
 
@@ -11302,7 +11321,7 @@ namespace GeneralLabelerStation
                     return;
                 }
 
-                if(this.FlowIndex_Conveyor != 100 && this.T_ConveyorRunDir)
+                if (this.FlowIndex_Conveyor != 100 && this.T_ConveyorRunDir)
                 {
                     this.ConveyorJog(this.T_ConveyorRunDir);
                 }
@@ -13331,15 +13350,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark1 = new PointF();
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex1 == 6 || PasteInfo.AlinIndex1 == 7 || PasteInfo.AlinIndex1 == 8)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), 0,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex1 == 9 || PasteInfo.AlinIndex1 == 10)
             {
@@ -13393,15 +13412,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark2 = new PointF();
             if (PasteInfo.AlinIndex2 == 1 || PasteInfo.AlinIndex2 == 2)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0,0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex2 == 3 || PasteInfo.AlinIndex2 == 4 || PasteInfo.AlinIndex2 == 5)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0,0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex2 == 6 || PasteInfo.AlinIndex2 == 7 || PasteInfo.AlinIndex2 == 8)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), 0,0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex2 == 9 || PasteInfo.AlinIndex2 == 10)
             {
@@ -13432,14 +13451,14 @@ namespace GeneralLabelerStation
                 campoint_v2.X = float.Parse(dGV_Mark.Rows[1].Cells[112].Value.ToString());
                 campoint_v2.Y = float.Parse(dGV_Mark.Rows[1].Cells[113].Value.ToString());
 
-                h1.X = Point2CCDCenter(campoint_h1, h1, 0,0).X;
-                h1.Y = Point2CCDCenter(campoint_h1, h1, 0,0).Y;
-                h2.X = Point2CCDCenter(campoint_h2, h2, 0,0).X;
-                h2.Y = Point2CCDCenter(campoint_h2, h2, 0,0).Y;
-                v1.X = Point2CCDCenter(campoint_v1, v1, 0,0).X;
-                v1.Y = Point2CCDCenter(campoint_v1, v1, 0,0).Y;
-                v2.X = Point2CCDCenter(campoint_v2, v2, 0,0).X;
-                v2.Y = Point2CCDCenter(campoint_v2, v2, 0,0).Y;
+                h1.X = Point2CCDCenter(campoint_h1, h1, 0, 0).X;
+                h1.Y = Point2CCDCenter(campoint_h1, h1, 0, 0).Y;
+                h2.X = Point2CCDCenter(campoint_h2, h2, 0, 0).X;
+                h2.Y = Point2CCDCenter(campoint_h2, h2, 0, 0).Y;
+                v1.X = Point2CCDCenter(campoint_v1, v1, 0, 0).X;
+                v1.Y = Point2CCDCenter(campoint_v1, v1, 0, 0).Y;
+                v2.X = Point2CCDCenter(campoint_v2, v2, 0, 0).X;
+                v2.Y = Point2CCDCenter(campoint_v2, v2, 0, 0).Y;
                 PasteInfo.Mark2.X = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).X;
                 PasteInfo.Mark2.Y = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).Y;
             }
@@ -14656,15 +14675,15 @@ namespace GeneralLabelerStation
             CAM camera = (CAM)(CamIndexSelected - 1);
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), camera,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), camera, 0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), camera,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), camera, 0);
             }
             if (PasteInfo.AlinIndex1 == 6 || PasteInfo.AlinIndex1 == 7 || PasteInfo.AlinIndex1 == 8 || PasteInfo.AlinIndex1 == 9 || PasteInfo.AlinIndex1 == 10)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), camera,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), camera, 0);
             }
 
             dGV_Mark.Rows[0].Cells[4].Value = PasteInfo.Mark1.X.ToString();
@@ -14673,15 +14692,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark2 = new PointF();
             if (PasteInfo.AlinIndex2 == 1 || PasteInfo.AlinIndex2 == 2)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), camera,0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), camera, 0);
             }
             if (PasteInfo.AlinIndex2 == 3 || PasteInfo.AlinIndex2 == 4 || PasteInfo.AlinIndex2 == 5)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), camera,0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), camera, 0);
             }
             if (PasteInfo.AlinIndex2 == 6 || PasteInfo.AlinIndex2 == 7 || PasteInfo.AlinIndex2 == 8 || PasteInfo.AlinIndex2 == 9 || PasteInfo.AlinIndex2 == 10)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), camera,0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), camera, 0);
             }
             dGV_Mark.Rows[1].Cells[4].Value = PasteInfo.Mark2.X.ToString();
             dGV_Mark.Rows[1].Cells[5].Value = PasteInfo.Mark2.Y.ToString();
@@ -14783,11 +14802,11 @@ namespace GeneralLabelerStation
             PasteInfo.Mark1 = new PointF();
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0, 0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0,0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0, 0);
             }
             dGV_Mark.Rows[0].Cells[4].Value = PasteInfo.Mark1.X.ToString();
             dGV_Mark.Rows[0].Cells[5].Value = PasteInfo.Mark1.Y.ToString();
@@ -18274,7 +18293,7 @@ namespace GeneralLabelerStation
                         this.R_RunParamMap[nextZ].GoPos(nextangle, VariableSys.VelMode_Current);
                     }
                 }
-            
+
                 FlowInit = true;
             }
             else
@@ -18938,7 +18957,7 @@ namespace GeneralLabelerStation
                         {
                             UpCCDResult[markIndex] = Auto_Detect2(ref RUN_PASTEInfo[runPasteIndex], ImageCapture_Up1);
                             var pt = this.Point2CCDCenter(JOB.Cam_Mark2Point[pasteIndex],
-                                new PointContour(UpCCDResult[markIndex].X, UpCCDResult[markIndex].Y), CAM.Top,0);
+                                new PointContour(UpCCDResult[markIndex].X, UpCCDResult[markIndex].Y), CAM.Top, 0);
                             JOB.UpCCDResult2[pasteIndex] = UpCCDResult[markIndex]; ;
                         }
 
@@ -19311,7 +19330,7 @@ namespace GeneralLabelerStation
 
                         if (rtn == 0)
                         {
-                            PointF mark = Point2CCDCenter(JOB.GlobalConfig.Mark[GloablIndex].CamPos, A, CAM.Top ,0);
+                            PointF mark = Point2CCDCenter(JOB.GlobalConfig.Mark[GloablIndex].CamPos, A, CAM.Top, 0);
                             GlobalMark[GloablIndex].X = mark.X;
                             GlobalMark[GloablIndex].Y = mark.Y;
                             GlobalMark[GloablIndex].IsOK = true;
@@ -19913,9 +19932,10 @@ namespace GeneralLabelerStation
                                         }
                                     }
 
-                                    if(CycleStop)
+                                    if (CycleStop)
                                     {
-                                        this.Invoke(new Action(() => {
+                                        this.Invoke(new Action(() =>
+                                        {
                                             this.bAutoSinglePause_Click(this, new EventArgs());
                                         }));
                                         break;
@@ -20354,7 +20374,7 @@ namespace GeneralLabelerStation
                                             UpCCDResult[0].Angle = RUN_GloablAngle;
                                         }
 
-                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0,0);
+                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0, 0);
                                         if (RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].AlinIndex2 == 0)
                                         {
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsFormMarkAndAngle_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, newMark1, UpCCDResult[0].Angle, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
@@ -20362,7 +20382,7 @@ namespace GeneralLabelerStation
                                         else
                                         {
                                             UpCCDResult[1] = JOB.UpCCDResult2[zParam.RUN_PasteInfoIndex];
-                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0,0);
+                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0, 0);
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsForm2Mark_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2, newMark1, newMark2, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
                                         }
 
@@ -21005,7 +21025,7 @@ namespace GeneralLabelerStation
                                             UpCCDResult[0].Angle = RUN_GloablAngle;
                                         }
 
-                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0,0);
+                                        newMark1 = Point2CCDCenter(JOB.Cam_Mark1Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[0].X, UpCCDResult[0].Y), 0, 0);
                                         if (RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].AlinIndex2 == 0)
                                         {
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsFormMarkAndAngle_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, newMark1, UpCCDResult[0].Angle, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
@@ -21013,7 +21033,7 @@ namespace GeneralLabelerStation
                                         else
                                         {
                                             UpCCDResult[1] = JOB.UpCCDResult2[zParam.RUN_PasteInfoIndex];
-                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0,0);
+                                            newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0, 0);
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsForm2Mark_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2, newMark1, newMark2, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
                                         }
 
@@ -21152,7 +21172,7 @@ namespace GeneralLabelerStation
                     CarryProduct_OFF();
                 }
 
-                if (Variable.PassWordOK != 0 && Variable.PassWordOK != 1 
+                if (Variable.PassWordOK != 0 && Variable.PassWordOK != 1
                     && (RunMode == 1 || RunMode == 3))//自动模式下
                 {
                     switch (FlowIndex_Conveyor)//左进右出 左进左出
@@ -21170,7 +21190,7 @@ namespace GeneralLabelerStation
                                 InformBeforeGive(); // 向前要板
                                 ConveyorStop();
 
-                                if(!ByPass)
+                                if (!ByPass)
                                     StopProduct_ON();//挡板下降
 
                                 FlowInit_Conveyor = true;
@@ -21449,7 +21469,7 @@ namespace GeneralLabelerStation
         {
             get
             {
-                switch(VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
+                switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
                 {
                     case 1://1-左进右出
                     case 3:// 3-左进左出
@@ -22486,7 +22506,7 @@ namespace GeneralLabelerStation
                     camreturn.State = Variable.VisionState.FindLineFial;
             }
             #endregion
-           
+
             if (rtn == 0 && LabelInfo.GrabLine_Enable2)
             {
                 try
@@ -23420,7 +23440,7 @@ namespace GeneralLabelerStation
                 camreturn.X = A.X;
                 camreturn.Y = A.Y;
             }
-            newMark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(camreturn.X, camreturn.Y), 0,0);
+            newMark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(camreturn.X, camreturn.Y), 0, 0);
             return rtn;
         }
         private short Manual_Detect2()
@@ -24458,7 +24478,7 @@ namespace GeneralLabelerStation
                     {
                         Thread.Sleep(5);
 
-                        if(this.WrokOutput)
+                        if (this.WrokOutput)
                         {
                             break;
                         }
@@ -25639,7 +25659,7 @@ namespace GeneralLabelerStation
             Tuple<CAM, int> cam = GetCalib(this.cbxSelectCam.SelectedIndex);
             PixelCoordPoints = new Collection<PointContour>();
             WorldCoordPoints = new Collection<PointContour>();
-            
+
             #region 自动寻找
             for (int rowIndex = 0; rowIndex < row; rowIndex++)
             {
@@ -25740,7 +25760,7 @@ namespace GeneralLabelerStation
                     string temp = dGV_Paste.Rows[i_Temp].Cells[14 + Variable.NOZZLE_NUM].Value.ToString();
                     if (temp == reigon)
                     {
-                        dGV_Paste.Rows[i_Temp].Cells[1].Value = this.cbRegionPaste.Checked ? "1":"0";
+                        dGV_Paste.Rows[i_Temp].Cells[1].Value = this.cbRegionPaste.Checked ? "1" : "0";
                     }
                 }
             }
@@ -25763,6 +25783,24 @@ namespace GeneralLabelerStation
         private void groupBox61_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void bNzMannualOffset_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否需要保存手动取料位置偏移值? Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                NozzleManualOffset[this.cbNzStep5.SelectedIndex].X += float.Parse(this.tNzMannualOffsetX.Text);
+                NozzleManualOffset[this.cbNzStep5.SelectedIndex].Y += float.Parse(this.tNzMannualOffsetY.Text);
+                this.SaveNozzleManualOffsetConfig();
+                this.tNzMannualOffsetX.Text = "0";
+                this.tNzMannualOffsetY.Text = "0";
+                this.bNzMannualOffset.BackColor = Color.GreenYellow;
+            }
+        }
+
+        private void cbNzStep5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.bNzMannualOffset.BackColor = Color.Yellow;
         }
 
         private void bMoveRotateCamXY_Click(object sender, EventArgs e)
