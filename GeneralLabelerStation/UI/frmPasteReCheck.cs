@@ -118,9 +118,9 @@ namespace GeneralLabelerStation.UI
                     {
                         mark = Form_Main.Instance.JOB.Cam_Mark1Point[pcbIndex];
                     }
-
-                    Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
                     Form_Main.Instance.LightON_RedU();
+                    Form_Main.Instance.XYGoPosTillStop(5000,mark, Form_Main.VariableSys.VelMode_Current_Manual);
+                    CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
                 }
                 catch { }
             }
@@ -143,9 +143,9 @@ namespace GeneralLabelerStation.UI
                     {
                         mark = Form_Main.Instance.JOB.Cam_Mark2Point[pcbIndex];
                     }
-
-                    Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
                     Form_Main.Instance.LightON_RedU();
+                    Form_Main.Instance.XYGoPosTillStop(5000,mark, Form_Main.VariableSys.VelMode_Current_Manual);
+                    CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
                 }
                 catch { }
             }
@@ -165,12 +165,6 @@ namespace GeneralLabelerStation.UI
                 this.GoTo();
             }
         }
-
-        private void bUpGrab_Click(object sender, EventArgs e)
-        {
-            CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
-        }
-
         private int curPcbIndex = 0;
         private int curPcsIndex = 0;
         private void bPrev_Click(object sender, EventArgs e)

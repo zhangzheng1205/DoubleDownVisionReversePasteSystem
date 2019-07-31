@@ -55,7 +55,6 @@
             this.bPrev = new System.Windows.Forms.Button();
             this.bFull = new System.Windows.Forms.Button();
             this.bNext = new System.Windows.Forms.Button();
-            this.bUpGrab = new System.Windows.Forms.Button();
             this.nAngle = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -150,10 +149,10 @@
             this.panel2.Controls.Add(this.bGoPaste);
             this.panel2.Controls.Add(this.dGVPaste);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(4, 225);
+            this.panel2.Location = new System.Drawing.Point(4, 230);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(387, 499);
+            this.panel2.Size = new System.Drawing.Size(387, 494);
             this.panel2.TabIndex = 3;
             // 
             // bGoPaste
@@ -189,7 +188,7 @@
             this.dGVPaste.RowHeadersVisible = false;
             this.dGVPaste.RowTemplate.Height = 23;
             this.dGVPaste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dGVPaste.Size = new System.Drawing.Size(326, 499);
+            this.dGVPaste.Size = new System.Drawing.Size(326, 494);
             this.dGVPaste.TabIndex = 1;
             this.dGVPaste.SelectionChanged += new System.EventHandler(this.dGVPaste_SelectionChanged);
             // 
@@ -255,7 +254,7 @@
             this.panel1.Controls.Add(this.bGoMark1);
             this.panel1.Controls.Add(this.dGVMark);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(4, 24);
+            this.panel1.Location = new System.Drawing.Point(4, 29);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(387, 201);
@@ -295,7 +294,6 @@
             this.panel3.Controls.Add(this.bPrev);
             this.panel3.Controls.Add(this.bFull);
             this.panel3.Controls.Add(this.bNext);
-            this.panel3.Controls.Add(this.bUpGrab);
             this.panel3.Controls.Add(this.nAngle);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -329,7 +327,7 @@
             0,
             0});
             this.nShutter.Name = "nShutter";
-            this.nShutter.Size = new System.Drawing.Size(73, 26);
+            this.nShutter.Size = new System.Drawing.Size(73, 31);
             this.nShutter.TabIndex = 23;
             this.nShutter.Value = new decimal(new int[] {
             200,
@@ -361,7 +359,7 @@
             this.cbShowCross.AutoSize = true;
             this.cbShowCross.Location = new System.Drawing.Point(608, 48);
             this.cbShowCross.Name = "cbShowCross";
-            this.cbShowCross.Size = new System.Drawing.Size(98, 24);
+            this.cbShowCross.Size = new System.Drawing.Size(122, 28);
             this.cbShowCross.TabIndex = 26;
             this.cbShowCross.Text = "显示十字架";
             this.cbShowCross.UseVisualStyleBackColor = true;
@@ -398,16 +396,6 @@
             this.bNext.UseVisualStyleBackColor = true;
             this.bNext.Click += new System.EventHandler(this.bNext_Click);
             // 
-            // bUpGrab
-            // 
-            this.bUpGrab.Location = new System.Drawing.Point(181, 9);
-            this.bUpGrab.Name = "bUpGrab";
-            this.bUpGrab.Size = new System.Drawing.Size(91, 29);
-            this.bUpGrab.TabIndex = 18;
-            this.bUpGrab.Text = "上视觉拍照";
-            this.bUpGrab.UseVisualStyleBackColor = true;
-            this.bUpGrab.Click += new System.EventHandler(this.bUpGrab_Click);
-            // 
             // nAngle
             // 
             this.nAngle.DecimalPlaces = 1;
@@ -423,7 +411,7 @@
             0,
             -2147483648});
             this.nAngle.Name = "nAngle";
-            this.nAngle.Size = new System.Drawing.Size(73, 26);
+            this.nAngle.Size = new System.Drawing.Size(73, 31);
             this.nAngle.TabIndex = 17;
             // 
             // label1
@@ -486,7 +474,7 @@
             0,
             -2147483648});
             this.nStandardY.Name = "nStandardY";
-            this.nStandardY.Size = new System.Drawing.Size(70, 26);
+            this.nStandardY.Size = new System.Drawing.Size(70, 31);
             this.nStandardY.TabIndex = 10;
             // 
             // nStandardX
@@ -509,7 +497,7 @@
             0,
             -2147483648});
             this.nStandardX.Name = "nStandardX";
-            this.nStandardX.Size = new System.Drawing.Size(70, 26);
+            this.nStandardX.Size = new System.Drawing.Size(70, 31);
             this.nStandardX.TabIndex = 9;
             // 
             // label5
@@ -517,7 +505,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(11, 61);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(20, 20);
+            this.label5.Size = new System.Drawing.Size(25, 24);
             this.label5.TabIndex = 8;
             this.label5.Text = "Y:";
             // 
@@ -526,7 +514,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(11, 28);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(21, 20);
+            this.label6.Size = new System.Drawing.Size(26, 24);
             this.label6.TabIndex = 6;
             this.label6.Text = "X:";
             // 
@@ -631,7 +619,7 @@
             // 
             this.tOffsetY.Location = new System.Drawing.Point(38, 58);
             this.tOffsetY.Name = "tOffsetY";
-            this.tOffsetY.Size = new System.Drawing.Size(68, 26);
+            this.tOffsetY.Size = new System.Drawing.Size(68, 31);
             this.tOffsetY.TabIndex = 9;
             this.tOffsetY.Text = "0";
             // 
@@ -640,7 +628,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(11, 61);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(20, 20);
+            this.label3.Size = new System.Drawing.Size(25, 24);
             this.label3.TabIndex = 8;
             this.label3.Text = "Y:";
             // 
@@ -648,7 +636,7 @@
             // 
             this.tOffsetX.Location = new System.Drawing.Point(38, 25);
             this.tOffsetX.Name = "tOffsetX";
-            this.tOffsetX.Size = new System.Drawing.Size(68, 26);
+            this.tOffsetX.Size = new System.Drawing.Size(68, 31);
             this.tOffsetX.TabIndex = 7;
             this.tOffsetX.Text = "0";
             // 
@@ -657,7 +645,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(11, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(21, 20);
+            this.label2.Size = new System.Drawing.Size(26, 24);
             this.label2.TabIndex = 6;
             this.label2.Text = "X:";
             // 
@@ -679,7 +667,7 @@
             // 
             // frmPasteReCheck
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1117, 729);
             this.Controls.Add(this.imageSet);
@@ -753,7 +741,6 @@
         private System.Windows.Forms.Button bPrev;
         private System.Windows.Forms.Button bFull;
         private System.Windows.Forms.Button bNext;
-        private System.Windows.Forms.Button bUpGrab;
         private System.Windows.Forms.NumericUpDown nAngle;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;

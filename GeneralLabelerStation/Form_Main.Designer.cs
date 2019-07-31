@@ -3407,6 +3407,7 @@
             resources.ApplyResources(this.bRefreshVisionList, "bRefreshVisionList");
             this.bRefreshVisionList.Name = "bRefreshVisionList";
             this.bRefreshVisionList.UseVisualStyleBackColor = true;
+            this.bRefreshVisionList.Click += new System.EventHandler(this.bRefreshVisionList_Click);
             // 
             // cbVisionList
             // 
@@ -3429,13 +3430,11 @@
             // 
             resources.ApplyResources(this.tStandardY, "tStandardY");
             this.tStandardY.Name = "tStandardY";
-            this.tStandardY.ReadOnly = true;
             // 
             // tStandardX
             // 
             resources.ApplyResources(this.tStandardX, "tStandardX");
             this.tStandardX.Name = "tStandardX";
-            this.tStandardX.ReadOnly = true;
             // 
             // bDetectNz1
             // 
