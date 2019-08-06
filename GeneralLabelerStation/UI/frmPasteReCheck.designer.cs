@@ -43,6 +43,7 @@
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bGoMark2 = new System.Windows.Forms.Button();
             this.bGoMark1 = new System.Windows.Forms.Button();
@@ -55,6 +56,7 @@
             this.bPrev = new System.Windows.Forms.Button();
             this.bFull = new System.Windows.Forms.Button();
             this.bNext = new System.Windows.Forms.Button();
+            this.bUpGrab = new System.Windows.Forms.Button();
             this.nAngle = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -109,7 +111,7 @@
             this.dGVMark.RowHeadersVisible = false;
             this.dGVMark.RowTemplate.Height = 23;
             this.dGVMark.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dGVMark.Size = new System.Drawing.Size(300, 201);
+            this.dGVMark.Size = new System.Drawing.Size(385, 201);
             this.dGVMark.TabIndex = 0;
             // 
             // Column1
@@ -139,7 +141,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(395, 729);
+            this.groupBox1.Size = new System.Drawing.Size(491, 730);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "识别点位";
@@ -149,19 +151,19 @@
             this.panel2.Controls.Add(this.bGoPaste);
             this.panel2.Controls.Add(this.dGVPaste);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(4, 230);
+            this.panel2.Location = new System.Drawing.Point(4, 225);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(387, 494);
+            this.panel2.Size = new System.Drawing.Size(483, 500);
             this.panel2.TabIndex = 3;
             // 
             // bGoPaste
             // 
             this.bGoPaste.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bGoPaste.Location = new System.Drawing.Point(326, 0);
+            this.bGoPaste.Location = new System.Drawing.Point(385, 0);
             this.bGoPaste.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.bGoPaste.Name = "bGoPaste";
-            this.bGoPaste.Size = new System.Drawing.Size(61, 38);
+            this.bGoPaste.Size = new System.Drawing.Size(98, 38);
             this.bGoPaste.TabIndex = 2;
             this.bGoPaste.Text = "到贴附点";
             this.bGoPaste.UseVisualStyleBackColor = true;
@@ -179,7 +181,8 @@
             this.Column6,
             this.Column7,
             this.Column8,
-            this.Column9});
+            this.Column9,
+            this.column10});
             this.dGVPaste.Dock = System.Windows.Forms.DockStyle.Left;
             this.dGVPaste.Location = new System.Drawing.Point(0, 0);
             this.dGVPaste.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -188,7 +191,7 @@
             this.dGVPaste.RowHeadersVisible = false;
             this.dGVPaste.RowTemplate.Height = 23;
             this.dGVPaste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dGVPaste.Size = new System.Drawing.Size(326, 494);
+            this.dGVPaste.Size = new System.Drawing.Size(385, 500);
             this.dGVPaste.TabIndex = 1;
             this.dGVPaste.SelectionChanged += new System.EventHandler(this.dGVPaste_SelectionChanged);
             // 
@@ -248,25 +251,31 @@
             this.Column9.ReadOnly = true;
             this.Column9.Width = 55;
             // 
+            // column10
+            // 
+            this.column10.HeaderText = "区域";
+            this.column10.Name = "column10";
+            this.column10.ReadOnly = true;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.bGoMark2);
             this.panel1.Controls.Add(this.bGoMark1);
             this.panel1.Controls.Add(this.dGVMark);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(4, 29);
+            this.panel1.Location = new System.Drawing.Point(4, 24);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(387, 201);
+            this.panel1.Size = new System.Drawing.Size(483, 201);
             this.panel1.TabIndex = 2;
             // 
             // bGoMark2
             // 
             this.bGoMark2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bGoMark2.Location = new System.Drawing.Point(300, 38);
+            this.bGoMark2.Location = new System.Drawing.Point(385, 38);
             this.bGoMark2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.bGoMark2.Name = "bGoMark2";
-            this.bGoMark2.Size = new System.Drawing.Size(87, 38);
+            this.bGoMark2.Size = new System.Drawing.Size(98, 38);
             this.bGoMark2.TabIndex = 2;
             this.bGoMark2.Text = "到Mark2";
             this.bGoMark2.UseVisualStyleBackColor = true;
@@ -275,10 +284,10 @@
             // bGoMark1
             // 
             this.bGoMark1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bGoMark1.Location = new System.Drawing.Point(300, 0);
+            this.bGoMark1.Location = new System.Drawing.Point(385, 0);
             this.bGoMark1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.bGoMark1.Name = "bGoMark1";
-            this.bGoMark1.Size = new System.Drawing.Size(87, 38);
+            this.bGoMark1.Size = new System.Drawing.Size(98, 38);
             this.bGoMark1.TabIndex = 1;
             this.bGoMark1.Text = "到Mark1";
             this.bGoMark1.UseVisualStyleBackColor = true;
@@ -294,12 +303,13 @@
             this.panel3.Controls.Add(this.bPrev);
             this.panel3.Controls.Add(this.bFull);
             this.panel3.Controls.Add(this.bNext);
+            this.panel3.Controls.Add(this.bUpGrab);
             this.panel3.Controls.Add(this.nAngle);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(395, 0);
+            this.panel3.Location = new System.Drawing.Point(491, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(722, 87);
+            this.panel3.Size = new System.Drawing.Size(859, 87);
             this.panel3.TabIndex = 2;
             // 
             // bSet
@@ -327,7 +337,7 @@
             0,
             0});
             this.nShutter.Name = "nShutter";
-            this.nShutter.Size = new System.Drawing.Size(73, 31);
+            this.nShutter.Size = new System.Drawing.Size(73, 26);
             this.nShutter.TabIndex = 23;
             this.nShutter.Value = new decimal(new int[] {
             200,
@@ -359,7 +369,7 @@
             this.cbShowCross.AutoSize = true;
             this.cbShowCross.Location = new System.Drawing.Point(608, 48);
             this.cbShowCross.Name = "cbShowCross";
-            this.cbShowCross.Size = new System.Drawing.Size(122, 28);
+            this.cbShowCross.Size = new System.Drawing.Size(98, 24);
             this.cbShowCross.TabIndex = 26;
             this.cbShowCross.Text = "显示十字架";
             this.cbShowCross.UseVisualStyleBackColor = true;
@@ -396,22 +406,27 @@
             this.bNext.UseVisualStyleBackColor = true;
             this.bNext.Click += new System.EventHandler(this.bNext_Click);
             // 
+            // bUpGrab
+            // 
+            this.bUpGrab.Location = new System.Drawing.Point(181, 9);
+            this.bUpGrab.Name = "bUpGrab";
+            this.bUpGrab.Size = new System.Drawing.Size(91, 29);
+            this.bUpGrab.TabIndex = 18;
+            this.bUpGrab.Text = "上视觉拍照";
+            this.bUpGrab.UseVisualStyleBackColor = true;
+            this.bUpGrab.Click += new System.EventHandler(this.bUpGrab_Click);
+            // 
             // nAngle
             // 
             this.nAngle.DecimalPlaces = 1;
             this.nAngle.Location = new System.Drawing.Point(102, 10);
             this.nAngle.Maximum = new decimal(new int[] {
-            180,
+            90,
             0,
             0,
             0});
-            this.nAngle.Minimum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            -2147483648});
             this.nAngle.Name = "nAngle";
-            this.nAngle.Size = new System.Drawing.Size(73, 31);
+            this.nAngle.Size = new System.Drawing.Size(73, 26);
             this.nAngle.TabIndex = 17;
             // 
             // label1
@@ -436,9 +451,9 @@
             this.panel4.Controls.Add(this.bSetToSelect);
             this.panel4.Controls.Add(this.groupBox2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(984, 87);
+            this.panel4.Location = new System.Drawing.Point(1217, 87);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(133, 642);
+            this.panel4.Size = new System.Drawing.Size(133, 643);
             this.panel4.TabIndex = 3;
             // 
             // groupBox3
@@ -474,7 +489,7 @@
             0,
             -2147483648});
             this.nStandardY.Name = "nStandardY";
-            this.nStandardY.Size = new System.Drawing.Size(70, 31);
+            this.nStandardY.Size = new System.Drawing.Size(70, 26);
             this.nStandardY.TabIndex = 10;
             // 
             // nStandardX
@@ -497,7 +512,7 @@
             0,
             -2147483648});
             this.nStandardX.Name = "nStandardX";
-            this.nStandardX.Size = new System.Drawing.Size(70, 31);
+            this.nStandardX.Size = new System.Drawing.Size(70, 26);
             this.nStandardX.TabIndex = 9;
             // 
             // label5
@@ -505,7 +520,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(11, 61);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(25, 24);
+            this.label5.Size = new System.Drawing.Size(20, 20);
             this.label5.TabIndex = 8;
             this.label5.Text = "Y:";
             // 
@@ -514,7 +529,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(11, 28);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 24);
+            this.label6.Size = new System.Drawing.Size(21, 20);
             this.label6.TabIndex = 6;
             this.label6.Text = "X:";
             // 
@@ -544,7 +559,7 @@
             // 
             this.btnRevoke.Location = new System.Drawing.Point(6, 538);
             this.btnRevoke.Name = "btnRevoke";
-            this.btnRevoke.Size = new System.Drawing.Size(69, 30);
+            this.btnRevoke.Size = new System.Drawing.Size(87, 30);
             this.btnRevoke.TabIndex = 22;
             this.btnRevoke.Text = "撤销";
             this.btnRevoke.UseVisualStyleBackColor = true;
@@ -554,7 +569,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 642);
+            this.splitter1.Size = new System.Drawing.Size(3, 643);
             this.splitter1.TabIndex = 21;
             this.splitter1.TabStop = false;
             // 
@@ -619,7 +634,8 @@
             // 
             this.tOffsetY.Location = new System.Drawing.Point(38, 58);
             this.tOffsetY.Name = "tOffsetY";
-            this.tOffsetY.Size = new System.Drawing.Size(68, 31);
+            this.tOffsetY.ReadOnly = true;
+            this.tOffsetY.Size = new System.Drawing.Size(68, 26);
             this.tOffsetY.TabIndex = 9;
             this.tOffsetY.Text = "0";
             // 
@@ -628,7 +644,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(11, 61);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(25, 24);
+            this.label3.Size = new System.Drawing.Size(20, 20);
             this.label3.TabIndex = 8;
             this.label3.Text = "Y:";
             // 
@@ -636,7 +652,8 @@
             // 
             this.tOffsetX.Location = new System.Drawing.Point(38, 25);
             this.tOffsetX.Name = "tOffsetX";
-            this.tOffsetX.Size = new System.Drawing.Size(68, 31);
+            this.tOffsetX.ReadOnly = true;
+            this.tOffsetX.Size = new System.Drawing.Size(68, 26);
             this.tOffsetX.TabIndex = 7;
             this.tOffsetX.Text = "0";
             // 
@@ -645,7 +662,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(11, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(26, 24);
+            this.label2.Size = new System.Drawing.Size(21, 20);
             this.label2.TabIndex = 6;
             this.label2.Text = "X:";
             // 
@@ -653,12 +670,12 @@
             // 
             this.imageSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.imageSet.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageSet.Location = new System.Drawing.Point(395, 87);
+            this.imageSet.Location = new System.Drawing.Point(491, 87);
             this.imageSet.Margin = new System.Windows.Forms.Padding(0);
             this.imageSet.Name = "imageSet";
             this.imageSet.ShowImageInfo = true;
             this.imageSet.ShowToolbar = true;
-            this.imageSet.Size = new System.Drawing.Size(589, 642);
+            this.imageSet.Size = new System.Drawing.Size(726, 643);
             this.imageSet.TabIndex = 295;
             this.imageSet.ZoomToFit = true;
             this.imageSet.ImageMouseDown += new System.EventHandler<NationalInstruments.Vision.WindowsForms.ImageMouseEventArgs>(this.imageSet_ImageMouseDown);
@@ -667,9 +684,9 @@
             // 
             // frmPasteReCheck
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1117, 729);
+            this.ClientSize = new System.Drawing.Size(1350, 730);
             this.Controls.Add(this.imageSet);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
@@ -726,13 +743,6 @@
         private System.Windows.Forms.Button bMultSelect;
         private System.Windows.Forms.Button btnRevoke;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.Button bSet;
         private System.Windows.Forms.NumericUpDown nShutter;
         private System.Windows.Forms.Label label4;
@@ -741,6 +751,7 @@
         private System.Windows.Forms.Button bPrev;
         private System.Windows.Forms.Button bFull;
         private System.Windows.Forms.Button bNext;
+        private System.Windows.Forms.Button bUpGrab;
         private System.Windows.Forms.NumericUpDown nAngle;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -750,5 +761,13 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button bNeedPaste;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn column10;
     }
 }

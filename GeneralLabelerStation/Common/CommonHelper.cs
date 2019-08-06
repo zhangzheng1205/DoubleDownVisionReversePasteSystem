@@ -478,5 +478,12 @@ namespace GeneralLabelerStation.Common
             }
         }
 
+
+        public static double GetDist(PointF p1, PointF p2)
+        {
+            double dx = p2.X - p1.X;
+            double dy = p2.Y - p1.Y;
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
     }
 }

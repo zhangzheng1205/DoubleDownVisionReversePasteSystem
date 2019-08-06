@@ -76,34 +76,29 @@ namespace GeneralLabelerStation.IO
                 Form_Main.Instance.bArr_IO_IN_Status.bIN_WorkSpace_Reach = Card[1].bArrIO_In[2];
                 Form_Main.Instance.bArr_IO_IN_Status.bIN_WorkSpace_Reach = Card[1].bArrIO_In[2];
 
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[0] = Card[1].bArrIO_In[0] == true ? 1 : 0;
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[1] = Card[6].bArrIO_In[0] == true ? 1 : 0;
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[2] = Card[6].bArrIO_In[2] == true ? 1 : 0;
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[3] = Card[6].bArrIO_In[3] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[0] = Card[1].bArrIO_In[0] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[1] = Card[6].bArrIO_In[0] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[2] = Card[6].bArrIO_In[2] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[3] = Card[6].bArrIO_In[3] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[4] = Card[2].bArrIO_In[0] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[5] = Card[7].bArrIO_In[0] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[6] = Card[7].bArrIO_In[2] == true ? 1 : 0;
+                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[7] = Card[7].bArrIO_In[3] == true ? 1 : 0;
 
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[0] = Card[2].bArrIO_In[0] == true ? 1 : 0;
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[1] = Card[7].bArrIO_In[0] == true ? 1 : 0;
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[2] = Card[7].bArrIO_In[2] == true ? 1 : 0;
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[3] = Card[7].bArrIO_In[3] == true ? 1 : 0;
-
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[4] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[0];
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[5] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[1];
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[6] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[2];
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[7] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[3];
-
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[4] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[0];
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[5] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[1];
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[6] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[2];
-                Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right[7] = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left[3];
-
-                //if (Form_Main.Instance.FlowIndex > 10000 && Form_Main.Instance.FlowIndex < 10100)
-                //{
-                //    if (!Form_Main.Instance.Feeder[0].NeedWaitReach)
-                //        Form_Main.Instance.Feeder[0].NeedWaitReach = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Left.Sum() == 0;
-
-                //    if (!Form_Main.Instance.Feeder[1].NeedWaitReach)
-                //        Form_Main.Instance.Feeder[1].NeedWaitReach = Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach_Right.Sum() == 0;
-                //}
+                // Feeder 出料时间监控
+                for (int i = 0; i < 2;++i)
+                {
+                    FDExitLabel[i] = false;
+                    for (int j = 0; j < 4;++j)
+                    {
+                        if (Form_Main.Instance.bArr_IO_IN_Status.bIN_LabelReach[i * 4 + j] > 0)
+                        {
+                            this.FDMonitor[i] = DateTime.Now;
+                            FDExitLabel[i] = true;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -150,9 +145,8 @@ namespace GeneralLabelerStation.IO
             return Card[axisNo].bArrIO_Out[output];
         }
 
-        /// <summary>
-        /// UI 刷新
-        /// </summary>
-        public event EventHandler UIRefresh;
+        public DateTime[] FDMonitor = new DateTime[2];
+        public bool[] FDExitLabel = new bool[2];
+
     }
 }

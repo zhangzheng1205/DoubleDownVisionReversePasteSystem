@@ -53,28 +53,29 @@ namespace GeneralLabelerStation.Tool
         /// <returns></returns>
         public static PointF MachinePoint2ActPoint(PointF machinePos)
         {
-            if (Form_Main.VariableSys.bEnableGlassOffset)
-            {
-                bool IsOk = false;
-                machinePos.X = (int)(machinePos.X * 100) / 100.0f;
-                machinePos.Y = (int)(machinePos.Y * 100) / 100.0f;
+            return machinePos;
+            //if (Form_Main.VariableSys.bEnableGlassOffset)
+            //{
+            //    bool IsOk = false;
+            //    machinePos.X = (int)(machinePos.X * 100) / 100.0f;
+            //    machinePos.Y = (int)(machinePos.Y * 100) / 100.0f;
 
-                PointF temp = galcali.MachinePoint2ActPoint(machinePos, out IsOk);
-                if (IsOk)
-                {
-                    temp.X = (float)(temp.X * galcali.Jig_XDist);
-                    temp.Y = (float)(temp.Y * galcali.Jig_YDist);
-                    return temp;
-                }
-                else
-                {
-                    return machinePos;
-                }
-            }
-            else
-            {
-                return machinePos;
-            }
+            //    PointF temp = galcali.MachinePoint2ActPoint(machinePos, out IsOk);
+            //    if (IsOk)
+            //    {
+            //        temp.X = (float)(temp.X * galcali.Jig_XDist);
+            //        temp.Y = (float)(temp.Y * galcali.Jig_YDist);
+            //        return temp;
+            //    }
+            //    else
+            //    {
+            //        return machinePos;
+            //    }
+            //}
+            //else
+            //{
+            //    return machinePos;
+            //}
         }
 
         /// <summary>
@@ -84,26 +85,27 @@ namespace GeneralLabelerStation.Tool
         /// <returns></returns>
         public static PointF ActPoint2MachinePoint(PointF actPos)
         {
-            if (Form_Main.VariableSys.bEnableGlassOffset && IsLoaded)
-            {
-                bool IsOk = false;
-                actPos.X = (float)(actPos.X / galcali.Jig_XDist); // 获得在那一行那一列
-                actPos.Y = (float)(actPos.Y / galcali.Jig_YDist);
-                PointF temp = galcali.ActPoint2MachinePoint(actPos, out IsOk);
+            return actPos;
+            //if (Form_Main.VariableSys.bEnableGlassOffset && IsLoaded)
+            //{
+            //    bool IsOk = false;
+            //    actPos.X = (float)(actPos.X / galcali.Jig_XDist); // 获得在那一行那一列
+            //    actPos.Y = (float)(actPos.Y / galcali.Jig_YDist);
+            //    PointF temp = galcali.ActPoint2MachinePoint(actPos, out IsOk);
 
-                if (IsOk)
-                {
-                    return temp;
-                }
-                else
-                {
-                    return actPos;
-                }
-            }
-            else
-            {
-                return actPos;
-            }
+            //    if (IsOk)
+            //    {
+            //        return temp;
+            //    }
+            //    else
+            //    {
+            //        return actPos;
+            //    }
+            //}
+            //else
+            //{
+            //    return actPos;
+            //}
         }
 
         public static void LoadJigData()

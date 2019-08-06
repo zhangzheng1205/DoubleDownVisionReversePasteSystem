@@ -559,31 +559,28 @@ namespace GeneralLabelerStation
             short rtn = 0;
             if (VariableSys.machineVersion == 3)
             {
-                rtn += R3.ResetIO_OUT(5);
-                rtn += R3.ResetIO_OUT(4);
                 if (dir)
                 {
                     rtn += R3.SetIO_OUT(4);
+                    rtn += R3.ResetIO_OUT(5);
                 }
                 else
                 {
-                    rtn += R3.SetIO_OUT(5);
                     rtn += R3.SetIO_OUT(4);
+                    rtn += R3.SetIO_OUT(5);
                 }
             }
             else
             {
-                rtn += R2.ResetIO_OUT(5);
-                rtn += R2.ResetIO_OUT(4);
-
                 if (dir)
                 {
                     rtn += R2.SetIO_OUT(4);
+                    rtn += R2.ResetIO_OUT(5);
                 }
                 else
                 {
-                    rtn += R2.SetIO_OUT(5);
                     rtn += R2.SetIO_OUT(4);
+                    rtn += R2.SetIO_OUT(5);
                 }
             }
             return rtn;
@@ -870,7 +867,7 @@ namespace GeneralLabelerStation
         /// </summary>
         /// <param name="nozzle"></param>
         /// <returns></returns>
-        public static Tuple<CAM, int> Nozzle2Cam(int nozzle)
+        public static Tuple<CAM,int> Nozzle2Cam(int nozzle)
         {
             CAM cam = (CAM)(nozzle / 2 + 1);
             int calib = nozzle % 2;
@@ -1053,13 +1050,10 @@ namespace GeneralLabelerStation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        //todo 设定吸嘴孔位
         private void bInitNozzleOffset_Click(object sender, EventArgs e)
         {
-            //if (this.cbNzStep4.SelectedIndex < 0) return;
-            //NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
-            if (this.cbNzStep1.SelectedIndex < 0) return;
-            NozzleCenterOffset[this.cbNzStep1.SelectedIndex] = this.XYPos;
+            if (this.cbNzStep4.SelectedIndex < 0) return;
+            NozzleCenterOffset[this.cbNzStep4.SelectedIndex] = this.XYPos;
             SaveNozzleOffsetConfig();
         }
 
@@ -1067,11 +1061,6 @@ namespace GeneralLabelerStation
         /// 吸标偏移值
         /// </summary>
         public PointF[] NozzleCenterOffset = null;
-
-        /// <summary>
-        /// 辅助吸料偏移调整
-        /// </summary>
-        public PointF[] NozzleManualOffset = null;
 
         /// <summary>
         /// 读取吸嘴偏移配置
@@ -1082,15 +1071,11 @@ namespace GeneralLabelerStation
             try
             {
                 NozzleCenterOffset = new PointF[Variable.NOZZLE_NUM];
-                NozzleManualOffset = new PointF[Variable.NOZZLE_NUM];
                 PointF[] temp = new PointF[Variable.NOZZLE_NUM];
                 for (int i = 0; i < Variable.NOZZLE_NUM; ++i)
                 {
                     NozzleCenterOffset[i].X = (float)ini.IniReadNum("app", $"Nozzle{i + 1}OffsetX");
                     NozzleCenterOffset[i].Y = (float)ini.IniReadNum("app", $"Nozzle{i + 1}OffsetY");
-
-                    NozzleManualOffset[i].X = (float)ini.IniReadNum("app", $"Nozzle{i + 1}ManualOffsetX");
-                    NozzleManualOffset[i].Y = (float)ini.IniReadNum("app", $"Nozzle{i + 1}ManualOffsetY");
                 }
             }
             catch { }
@@ -1106,16 +1091,6 @@ namespace GeneralLabelerStation
             }
         }
 
-        public void SaveNozzleManualOffsetConfig()
-        {
-            IniFile ini = new IniFile(Variable.sPath_Configure + "NozzleOffset.ini");
-            for (int i = 0; i < Variable.NOZZLE_NUM; ++i)
-            {
-                ini.IniWriteNumber("app", $"Nozzle{i + 1}ManualOffsetX", NozzleManualOffset[i].X);
-                ini.IniWriteNumber("app", $"Nozzle{i + 1}ManualOffsetY", NozzleManualOffset[i].Y);
-            }
-        }
-
         /// <summary>
         /// 通过吸嘴1得到其他位置
         /// </summary>
@@ -1124,9 +1099,9 @@ namespace GeneralLabelerStation
         /// <returns></returns>
         public PointF Nz1ToOther(PointF nz1, int selectNz)
         {
-            //todo 加入辅助吸料偏移调整
-            float dx = NozzleCenterOffset[selectNz].X - NozzleCenterOffset[0].X + NozzleManualOffset[selectNz].X;
-            float dy = NozzleCenterOffset[selectNz].Y - NozzleCenterOffset[0].Y + NozzleManualOffset[selectNz].Y;
+            float dx = NozzleCenterOffset[selectNz].X - NozzleCenterOffset[0].X;
+            float dy = NozzleCenterOffset[selectNz].Y - NozzleCenterOffset[0].Y;
+
             return new PointF(nz1.X - dx, nz1.Y + dy);
         }
 
@@ -1195,7 +1170,7 @@ namespace GeneralLabelerStation
                 IsTurnTest = true;
                 Task.Factory.StartNew(() =>
                 {
-                    for (int i = 0; i < TurnCycle; ++i)
+                    for(int i = 0; i < TurnCycle; ++i)
                     {
                         if (!IsTurnTest || this.Turn.bAxisServoWarning) break;
                         this.Turn.GoPosTillStop(5000, VariableSys.dTurnXIAngle, VariableSys.VelMode_Current);
@@ -1213,6 +1188,12 @@ namespace GeneralLabelerStation
         }
         #endregion
 
+        #region FD屏蔽功能
+        /// <summary>
+        /// 是否屏蔽FD
+        /// </summary>
+        public bool[] ClosedFD = new bool[2];
+        #endregion
 
         public Form_Main()
         {
@@ -1382,8 +1363,7 @@ namespace GeneralLabelerStation
         {
             short RTNN_Program = 0;
             #region 到位Sensor数量
-            bArr_IO_IN_Status.bIN_LabelReach_Left = new int[8];
-            bArr_IO_IN_Status.bIN_LabelReach_Right = new int[8];
+            bArr_IO_IN_Status.bIN_LabelReach = new int[16];
             #endregion
             #region 系统文件产生
 
@@ -1766,8 +1746,8 @@ namespace GeneralLabelerStation
             VariableSys.dMaxOffsetX = Ini_Sys.IniReadNum("RunOption", "MaxOffsetX");
             VariableSys.dMaxOffsetY = Ini_Sys.IniReadNum("RunOption", "MaxOffsetY");
             VariableSys.dMaxOffsetR = Ini_Sys.IniReadNum("RunOption", "MaxOffsetR");
-            XI_LeftIndex = (short)Ini_Sys.IniReadNum("RunOption", "XI_LeftIndex");
-            XI_RightIndex = (short)Ini_Sys.IniReadNum("RunOption", "XI_RightIndex");
+            XI_IndexG[0] = (short)Ini_Sys.IniReadNum("RunOption", "XI_LeftIndex");
+            XI_IndexG[1] = (short)Ini_Sys.IniReadNum("RunOption", "XI_RightIndex");
             //机台坐标
             VariableSys.iAxisSource = (short)Ini_Sys.IniReadNum("RunOption", "AxisPosSource");
             //压力传感器
@@ -6894,6 +6874,7 @@ namespace GeneralLabelerStation
                 Z2.iAxisSource = 0;
                 Z3.iAxisSource = 0;
                 Z4.iAxisSource = 0;
+                Turn.MinDiff = 0.05;
 
                 this.R_RunParamMap.Clear();
                 this.Z_RunParamMap.Clear();
@@ -7044,6 +7025,9 @@ namespace GeneralLabelerStation
             bArr_IO_IN_Status.bIN_SafeGrant = new IO.IOInput(3, 4);
             bArr_IO_IN_Status.bIN_Stop_Move = new IO.IOInput(5, 5);
             bArr_IO_IN_Status.bIN_Stop_Origin = new IO.IOInput(5, 4);
+
+            IO.IOManager.Instance.FDMonitor[0] = DateTime.Now;
+            IO.IOManager.Instance.FDMonitor[1] = DateTime.Now;
 
             // 开始监控轴状态
             Task Thread_IO = new Task(IO.IOManager.Instance.updateIO);
@@ -8341,73 +8325,56 @@ namespace GeneralLabelerStation
             return rtn;
         }
 
+        private double GetRate(double dist)
+        {
+            double rate = 1;
+
+            if (dist < 10)
+            {
+                rate = 0.3;
+            }
+            else if (dist < 20)
+            {
+                rate = 0.4;
+            }
+            else if (dist < 30)
+            {
+                rate = 0.5;
+            }
+            else if (dist < 40)
+            {
+                rate = 0.6;
+            }
+            else if (dist < 60)
+            {
+                rate = 0.7;
+            }
+            else if (dist < 80)
+            {
+                rate = 0.8;
+            }
+            return rate;
+        }
+
         private void DistVel(PointF x_y_mm, Variable.VelMode velMode, ref Variable.VelMode XvelMode, ref Variable.VelMode YvelMode)
         {
             //分段加速
             XvelMode = new Variable.VelMode(velMode.LowVel, velMode.HighVel, velMode.Acc, velMode.Dec);
-            double DistX = Math.Abs(x_y_mm.X - X.Pos);
-            double DistY = Math.Abs(x_y_mm.Y - Y.Pos);
-
-            //double Dist = Math.Sqrt(Math.Pow((x_y_mm.X - X.Pos), 2) + Math.Pow((x_y_mm.Y - Y.Pos), 2));
-            for (int i = 0; i < VariableSys.DistVelCount; i++)
-            {
-                if (DistX >= VariableSys.DistVel_MinDist[i] && DistX <= VariableSys.DistVel_MaxDist[i])
-                {
-                    #region 比对速度
-                    if (XvelMode.LowVel >= VariableSys.DistVel_Ratio_LowVel[i])
-                    {
-                        XvelMode.LowVel = VariableSys.DistVel_Ratio_LowVel[i];
-                    }
-
-                    if (XvelMode.HighVel >= VariableSys.DistVel_Ratio_HighVel[i])
-                    {
-                        XvelMode.HighVel = VariableSys.DistVel_Ratio_HighVel[i];
-                    }
-
-                    if (XvelMode.Acc >= VariableSys.DistVel_Ratio_Acc[i])
-                    {
-                        XvelMode.Acc = VariableSys.DistVel_Ratio_Acc[i];
-                    }
-
-                    if (XvelMode.Dec >= VariableSys.DistVel_Ratio_Dec[i])
-                    {
-                        XvelMode.Dec = VariableSys.DistVel_Ratio_Dec[i];
-                    }
-                    #endregion
-                    break;
-                }
-            }
-
             YvelMode = new Variable.VelMode(velMode.LowVel, velMode.HighVel, velMode.Acc, velMode.Dec);
 
-            for (int i = 0; i < VariableSys.DistVelCount; i++)
-            {
-                if (DistY >= VariableSys.DistVel_MinDist[i] && DistY <= VariableSys.DistVel_MaxDist[i])
-                {
-                    #region 比对速度
-                    if (YvelMode.LowVel >= VariableSys.DistVel_Ratio_LowVel[i])
-                    {
-                        YvelMode.LowVel = VariableSys.DistVel_Ratio_LowVel[i];
-                    }
+            double DistX = Math.Abs(x_y_mm.X - X.Pos);
+            double DistY = Math.Abs(x_y_mm.Y - Y.Pos);
+            double xRate = GetRate(DistX);
+            double yRate = GetRate(DistY);
+            XvelMode.LowVel *= xRate;
+            XvelMode.HighVel *= xRate;
+            XvelMode.Acc *= xRate;
+            XvelMode.Dec *= xRate;
 
-                    if (YvelMode.HighVel >= VariableSys.DistVel_Ratio_HighVel[i])
-                    {
-                        YvelMode.HighVel = VariableSys.DistVel_Ratio_HighVel[i];
-                    }
-
-                    if (YvelMode.Acc >= VariableSys.DistVel_Ratio_Acc[i])
-                    {
-                        YvelMode.Acc = VariableSys.DistVel_Ratio_Acc[i];
-                    }
-
-                    if (YvelMode.Dec >= VariableSys.DistVel_Ratio_Dec[i])
-                    {
-                        YvelMode.Dec = VariableSys.DistVel_Ratio_Dec[i];
-                    }
-                    #endregion
-                    break;
-                }
-            }
+            YvelMode.LowVel *= yRate;
+            YvelMode.HighVel *= yRate;
+            YvelMode.Acc *= yRate;
+            YvelMode.Dec *= yRate;
         }
 
         private short XYChangePos(PointF x_y_mm, Variable.VelMode velMode)
@@ -11132,8 +11099,8 @@ namespace GeneralLabelerStation
             }
             bSystemExit = true;
             Thread.Sleep(200);
-            Ini_Sys.IniWriteNumber("RunOption", "XI_LeftIndex", XI_LeftIndex);
-            Ini_Sys.IniWriteNumber("RunOption", "XI_RightIndex", XI_RightIndex);
+            Ini_Sys.IniWriteNumber("RunOption", "XI_LeftIndex", XI_IndexG[0]);
+            Ini_Sys.IniWriteNumber("RunOption", "XI_RightIndex", XI_IndexG[1]);
             try
             {
                 LightOFF_D();
@@ -11177,8 +11144,7 @@ namespace GeneralLabelerStation
         }
 
         private bool CycleStop = false;
-        private bool CycleRun = false;
-        //todo 运行按钮
+
         private void bAutoRun_Click(object sender, EventArgs e)
         {
             this.CloseBtnLight(0);
@@ -11193,6 +11159,9 @@ namespace GeneralLabelerStation
                 MessageBox.Show("请等待机械校验数据加载完成再运行!!!");
                 return;
             }
+
+            this.ClosedFD[0] = this.cbLeftFD.Checked;
+            this.ClosedFD[1] = this.cbRightFD.Checked;
 
             VariableSys.bSafeDoorEN = true;
 
@@ -11242,7 +11211,7 @@ namespace GeneralLabelerStation
                 MessageBox.Show("待 Z1Z2 复位到安全位置停止后再启动", "提示");
                 return;
             }
-
+           
             gB_FeederLeft.Enabled = false;
             gB_FeederRight.Enabled = false;
             gB_Reset.Enabled = false;
@@ -11252,17 +11221,14 @@ namespace GeneralLabelerStation
             pMode_PASTE.Enabled = false;
             pMode_Manual.Enabled = false;
             pMode_SysSet.Enabled = false;
-
+            this.panel29.Enabled = false;
+            this.bSelectPasteRegion.Enabled = false;
             bAutoRun.BackColor = Color.Green;
             bAutoSinglePause.BackColor = Color.Transparent;
             bAutoRun.Enabled = false;
             bAutoSinglePause.Enabled = true;
             bByPASS.Enabled = false;
             bByPASS.BackColor = Color.Transparent;
-            if (cbCycleRun.Checked)
-            {
-                cB_EnableReset.Checked = false;
-            }
             RestartStopwatch();
 
             StopWatch_FlowIndex.Start();
@@ -11285,10 +11251,9 @@ namespace GeneralLabelerStation
             }
 
             StatisticsHelper.Instance.Reoprt.Start(TimeDefine.ProductTime, $"生产[{VariableSys.sProgramName}]");
-            //todo 屏蔽Label相机来解决相机过多造成内存不足
             foreach (CAM cam in Enum.GetValues(typeof(CAM)))
             {
-                if (cam != CAM.Label)
+                if (cam == CAM.Bottom1 || cam == CAM.Bottom2)
                 {
                     if (CameraDefine.Instance.Config.ContainsKey(cam))
                     {
@@ -11297,16 +11262,20 @@ namespace GeneralLabelerStation
                     }
                 }
             }
-            Thread.Sleep(500);
+
             CycleStop = this.bCycleStop.Checked;
-            CycleRun = this.cbCycleRun.Checked;
-            if (this.FlowIndex_Conveyor != 100 && this.T_ConveyorIsRun) // 继续激活轨道 根据上一次暂停前状态
+            if(this.FlowIndex_Conveyor == 100)
+            {
+                this.InformBeforeGive();
+            }
+
+            if(this.FlowIndex_Conveyor != 100 && this.T_ConveyorIsRun) // 继续激活轨道 根据上一次暂停前状态
             {
                 ConveyorJog(this.T_ConveyorRunDir);
             }
 
             RunMode = 1;
-
+            
             this.OpenBtnLight(3);
         }
 
@@ -11321,7 +11290,7 @@ namespace GeneralLabelerStation
                     return;
                 }
 
-                if (this.FlowIndex_Conveyor != 100 && this.T_ConveyorRunDir)
+                if(this.FlowIndex_Conveyor != 100 && this.T_ConveyorRunDir)
                 {
                     this.ConveyorJog(this.T_ConveyorRunDir);
                 }
@@ -11404,8 +11373,9 @@ namespace GeneralLabelerStation
 
                         this.All_ZResetVaccm();
                         this.All_ZReachOrg();
-                        XI_LeftIndex = 0;
-                        XI_RightIndex = 0;
+                        XI_IndexG[0] = 0;
+                        XI_IndexG[1] = 0;
+
                         RUN_bPasteOK = false;
                         RUN_bReachOK = false;
 
@@ -11476,7 +11446,6 @@ namespace GeneralLabelerStation
         {
             bReset.Enabled = cB_EnableReset.Checked;
             bClear.Enabled = cB_EnableReset.Checked;
-            cbCycleRun.Enabled = cB_EnableReset.Checked;
         }
         //todo 暂停按钮
         private void bAutoSinglePause_Click(object sender, EventArgs e)
@@ -11489,6 +11458,8 @@ namespace GeneralLabelerStation
 
             ConveyorStop();
 
+           this.ResetInformBeforeGive();
+            
             StopWatch_FlowIndex.Stop();
             StopWatch_FlowIndex_Conveyor.Stop();
             this.CloseBtnLight(3);
@@ -11514,34 +11485,36 @@ namespace GeneralLabelerStation
             gB_Reset.Enabled = true;
             gB_FeederLeft.Enabled = true;
             gB_FeederRight.Enabled = true;
+            this.panel29.Enabled = true;
+            this.bSelectPasteRegion.Enabled = true;
 
-            //foreach (CAM camera in Enum.GetValues(typeof(CAM)))
-            //{
-            //    if (CameraDefine.Instance.Config.ContainsKey(camera))
-            //    {
-            //        this.SetTrigger(false, camera);
-            //        CameraDefine.Instance[camera]._Session.Acquisition.Unconfigure();
-            //    }
-            //}
+            foreach (CAM camera in Enum.GetValues(typeof(CAM)))
+            {
+                if (CameraDefine.Instance.Config.ContainsKey(camera))
+                {
+                    this.SetTrigger(false, camera);
+                    CameraDefine.Instance[camera]._Session.Acquisition.Unconfigure();
+                }
+            }
 
-            //GC.Collect();
+            GC.Collect();
 
-            //this.OpenBtnLight(0);
+            this.OpenBtnLight(0);
 
-            //X.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
-            //Y.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
+            X.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
+            Y.SetComapreData(0, 1, 0, 0, 0, 5);//取消飞拍
         }
 
         private void bLabelLeftClear_Click(object sender, EventArgs e)
         {
-            XI_LeftIndex = 0;
-            Ini_Sys.IniWriteNumber("RunOption", "XI_LeftIndex", XI_LeftIndex);
+            XI_IndexG[0] = 0;
+            Ini_Sys.IniWriteNumber("RunOption", "XI_LeftIndex", XI_IndexG[0]);
         }
 
         private void bLabelRightClear_Click(object sender, EventArgs e)
         {
-            XI_RightIndex = 0;
-            Ini_Sys.IniWriteNumber("RunOption", "XI_RightIndex", XI_RightIndex);
+            XI_IndexG[1] = 0;
+            Ini_Sys.IniWriteNumber("RunOption", "XI_RightIndex", XI_IndexG[1]);
         }
 
         private void bLabelLeftSet_Click(object sender, EventArgs e)
@@ -11562,7 +11535,7 @@ namespace GeneralLabelerStation
             }
             else
             {
-                XI_LeftIndex = (short)a;
+                XI_IndexG[0] = (short)a;
                 tLabelLeftIndex.BackColor = Color.White;
             }
         }
@@ -11585,7 +11558,7 @@ namespace GeneralLabelerStation
             }
             else
             {
-                XI_RightIndex = (short)a;
+                XI_IndexG[1] = (short)a;
                 tLabelRightIndex.BackColor = Color.White;
             }
         }
@@ -13350,15 +13323,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark1 = new PointF();
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 6 || PasteInfo.AlinIndex1 == 7 || PasteInfo.AlinIndex1 == 8)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), 0, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 9 || PasteInfo.AlinIndex1 == 10)
             {
@@ -13412,15 +13385,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark2 = new PointF();
             if (PasteInfo.AlinIndex2 == 1 || PasteInfo.AlinIndex2 == 2)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0, 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), 0,0);
             }
             if (PasteInfo.AlinIndex2 == 3 || PasteInfo.AlinIndex2 == 4 || PasteInfo.AlinIndex2 == 5)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0, 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), 0,0);
             }
             if (PasteInfo.AlinIndex2 == 6 || PasteInfo.AlinIndex2 == 7 || PasteInfo.AlinIndex2 == 8)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), 0, 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), 0,0);
             }
             if (PasteInfo.AlinIndex2 == 9 || PasteInfo.AlinIndex2 == 10)
             {
@@ -13451,14 +13424,14 @@ namespace GeneralLabelerStation
                 campoint_v2.X = float.Parse(dGV_Mark.Rows[1].Cells[112].Value.ToString());
                 campoint_v2.Y = float.Parse(dGV_Mark.Rows[1].Cells[113].Value.ToString());
 
-                h1.X = Point2CCDCenter(campoint_h1, h1, 0, 0).X;
-                h1.Y = Point2CCDCenter(campoint_h1, h1, 0, 0).Y;
-                h2.X = Point2CCDCenter(campoint_h2, h2, 0, 0).X;
-                h2.Y = Point2CCDCenter(campoint_h2, h2, 0, 0).Y;
-                v1.X = Point2CCDCenter(campoint_v1, v1, 0, 0).X;
-                v1.Y = Point2CCDCenter(campoint_v1, v1, 0, 0).Y;
-                v2.X = Point2CCDCenter(campoint_v2, v2, 0, 0).X;
-                v2.Y = Point2CCDCenter(campoint_v2, v2, 0, 0).Y;
+                h1.X = Point2CCDCenter(campoint_h1, h1, 0,0).X;
+                h1.Y = Point2CCDCenter(campoint_h1, h1, 0,0).Y;
+                h2.X = Point2CCDCenter(campoint_h2, h2, 0,0).X;
+                h2.Y = Point2CCDCenter(campoint_h2, h2, 0,0).Y;
+                v1.X = Point2CCDCenter(campoint_v1, v1, 0,0).X;
+                v1.Y = Point2CCDCenter(campoint_v1, v1, 0,0).Y;
+                v2.X = Point2CCDCenter(campoint_v2, v2, 0,0).X;
+                v2.Y = Point2CCDCenter(campoint_v2, v2, 0,0).Y;
                 PasteInfo.Mark2.X = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).X;
                 PasteInfo.Mark2.Y = (float)Algorithms.FindIntersectionPoint(new LineContour(h1, h2), new LineContour(v1, v2)).Y;
             }
@@ -14675,15 +14648,15 @@ namespace GeneralLabelerStation
             CAM camera = (CAM)(CamIndexSelected - 1);
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), camera, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), camera,0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), camera, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), camera,0);
             }
             if (PasteInfo.AlinIndex1 == 6 || PasteInfo.AlinIndex1 == 7 || PasteInfo.AlinIndex1 == 8 || PasteInfo.AlinIndex1 == 9 || PasteInfo.AlinIndex1 == 10)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), camera, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Corner_Point1.X, PasteInfo.Corner_Point1.Y), camera,0);
             }
 
             dGV_Mark.Rows[0].Cells[4].Value = PasteInfo.Mark1.X.ToString();
@@ -14692,15 +14665,15 @@ namespace GeneralLabelerStation
             PasteInfo.Mark2 = new PointF();
             if (PasteInfo.AlinIndex2 == 1 || PasteInfo.AlinIndex2 == 2)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), camera, 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Init_Point2.X, PasteInfo.Init_Point2.Y), camera,0);
             }
             if (PasteInfo.AlinIndex2 == 3 || PasteInfo.AlinIndex2 == 4 || PasteInfo.AlinIndex2 == 5)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), camera, 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.S_Center2.X, PasteInfo.S_Center2.Y), camera,0);
             }
             if (PasteInfo.AlinIndex2 == 6 || PasteInfo.AlinIndex2 == 7 || PasteInfo.AlinIndex2 == 8 || PasteInfo.AlinIndex2 == 9 || PasteInfo.AlinIndex2 == 10)
             {
-                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), camera, 0);
+                PasteInfo.Mark2 = Point2CCDCenter(PasteInfo.CamPoint2, new PointContour(PasteInfo.Corner_Point2.X, PasteInfo.Corner_Point2.Y), camera,0);
             }
             dGV_Mark.Rows[1].Cells[4].Value = PasteInfo.Mark2.X.ToString();
             dGV_Mark.Rows[1].Cells[5].Value = PasteInfo.Mark2.Y.ToString();
@@ -14802,11 +14775,11 @@ namespace GeneralLabelerStation
             PasteInfo.Mark1 = new PointF();
             if (PasteInfo.AlinIndex1 == 1 || PasteInfo.AlinIndex1 == 2)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.Init_Point1.X, PasteInfo.Init_Point1.Y), 0,0);
             }
             if (PasteInfo.AlinIndex1 == 3 || PasteInfo.AlinIndex1 == 4 || PasteInfo.AlinIndex1 == 5)
             {
-                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0, 0);
+                PasteInfo.Mark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(PasteInfo.S_Center1.X, PasteInfo.S_Center1.Y), 0,0);
             }
             dGV_Mark.Rows[0].Cells[4].Value = PasteInfo.Mark1.X.ToString();
             dGV_Mark.Rows[0].Cells[5].Value = PasteInfo.Mark1.Y.ToString();
@@ -17272,8 +17245,7 @@ namespace GeneralLabelerStation
         private short iCommandReSendTime = 0;//轴卡指令连续发送次数
         private short iGG_rtn = 0;//轴卡反馈
         private short SuckTime = 0;//吸取次数
-        private short XI_LeftIndex = 0;//吸取次序1
-        private short XI_RightIndex = 0;//吸取次序2
+        private short[] XI_IndexG = new short[2];//吸取次序1
         private short iCamReconnectTime = 0;//相机重连次数
 
         private bool RUN_Init = false;//贴附初次执行
@@ -17433,7 +17405,7 @@ namespace GeneralLabelerStation
                     RestartStopwatch();
                 }
 
-                FlowIndex_Name = "吸嘴1XY到左Feeder位置";
+                FlowIndex_Name = "吸嘴XY到Feeder位置";
 
                 if (XI_Index >= feeder.PointCount)
                 {
@@ -17444,8 +17416,22 @@ namespace GeneralLabelerStation
                     }
                 }
 
+                int i_fd = (int)(XI_Index / 4 % 2);
+
+                if(this.ClosedFD[i_fd]) // 是否屏蔽
+                {
+                    XI_Index++;
+                    return false;
+                }
+
                 if (Label_Status[feeder.ReachSensorIndex[XI_Index]] != 1)
                 {
+                    if ((DateTime.Now - IO.IOManager.Instance.FDMonitor[i_fd]).TotalMilliseconds > VariableSys.iTimeOut_Feeder)
+                    {
+                        string tt = i_fd > 0 ? "右Feeder" : "左Feeder";
+                        this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { $"步骤[贴标]10010:{tt} 上无料或者卡料请检查!!!" });
+                        return false;
+                    }
                     XI_Index++;
                 }
                 else
@@ -17454,6 +17440,7 @@ namespace GeneralLabelerStation
 
                     if (XIPOINT_.X < VariableSys.dXSafeMinX || XIPOINT_.X > VariableSys.dXSafeMaxX) // 超出吸标区域直接不去吸
                     {
+                        this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[贴标]10010:吸标区域超出安全区域,请检查行程是否足够!!" });//
                         FlowInit = false;
                         FlowDoneIndex = FlowIndex;
                         this.FlowIndex = 10015;
@@ -17511,11 +17498,9 @@ namespace GeneralLabelerStation
                 #endregion
             }
 
-            //"NZ1 Go to left feeder"
             if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iTimeOut_Feeder)
             {
-                this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[贴标]10010:出标到位且XY到Feeder吸料位置超时" });//
-                this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { $"X:{X.AxisEncPos - X.AxisPrfPos:N2} Y:{Y.AxisEncPos - Y.AxisPrfPos:N2} Z1{Z1.AxisEncPos - Z1.AxisEncPos:N2} Z2{Z4.AxisEncPos - Z4.AxisPrfPos:N2} R1{R1.AxisEncPos - R1.AxisPrfPos:N2} R2{R2.AxisEncPos - R2.AxisPrfPos:N2}" });
+                this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[贴标]10010:请检查Feeder是否卡料或者无料!!!" });//
             }
 
             if (FlowIndex != 10010)
@@ -17581,13 +17566,15 @@ namespace GeneralLabelerStation
                 {
                     FlowInit = false;
                     FlowDoneIndex = FlowIndex;
+                    this.FlowIndex = 10013;
+
                     if (!feeder.bReachXI)
                     {
                         zParam1.XI_vaccum.SetIO();
                         zParam2.XI_vaccum.SetIO();
                     }
 
-                    FlowIndex = 10012;
+                    Thread.Sleep(VariableSys.iDelay_BeforeXI);
                 }
                 else
                 {
@@ -17608,89 +17595,6 @@ namespace GeneralLabelerStation
         }
 
         /// <summary>
-        /// 吸料
-        /// </summary>
-        /// <param name="zIndex"></param>
-        /// <param name="zParam"></param>
-        /// <param name="rParam"></param>
-        /// <param name="feeder"></param>
-        /// <param name="XI_Index"></param>
-        /// <returns></returns>
-        private bool DoXIStep_XI(uint zIndex1, uint zIndex2, ref Variable.FEEDER feeder, ref short XI_Index)
-        {
-            //10012
-            if (!Z_RunParamMap[zIndex2].RUN_bNozzleUse)
-            {
-                zIndex2 = zIndex1;
-            }
-            else if (!Z_RunParamMap[zIndex1].RUN_bNozzleUse)
-            {
-                zIndex1 = zIndex2;
-            }
-
-            //10012
-            if (FlowInit == false)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    FlowIndex_Name = "NZ Suck Label";
-                }
-                else
-                {
-                    FlowIndex_Name = "吸料";
-                }
-
-                RestartStopwatch();
-                FlowInit = true;
-            }
-            else
-            {
-                if (Z_RunParamMap[zIndex1].Check_vaccum.GetIO()
-                    && Z_RunParamMap[zIndex2].Check_vaccum.GetIO())//真空达到
-                {
-                    if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iDelay_XIOK)
-                    {
-                        FlowInit = false;
-                        FlowDoneIndex = FlowIndex;
-                        FlowIndex = 10013;
-                    }
-                }
-                else
-                {
-                    if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iDelay_BeforeXI)
-                    {
-                        FlowInit = false;
-                        FlowDoneIndex = FlowIndex;
-                        FlowIndex = 10013;
-                    }
-                }
-            }
-            if (StopWatch_FlowIndex.ElapsedMilliseconds > VariableSys.iTimeOut_Normal)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "Step[Labeler]10013:NZ1 Suck Label timeout" });//
-                }
-                else
-                {
-                    this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[贴标]10013:Z1 吸料超时" });//
-                }
-            }
-            if (FlowIndex != 10012)
-            {
-                if (VariableSys.LanguageFlag == 1)
-                {
-                    this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "Step[Labeler]10013:NZ1 Suck Label time:" + StopWatch_FlowIndex.ElapsedMilliseconds.ToString() + "ms" });//
-                }
-                else
-                {
-                    this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[贴标]10013:Z1 吸料时间:" + StopWatch_FlowIndex.ElapsedMilliseconds.ToString() + "ms" });//
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
         /// Z 轴到 安全高度
         /// </summary>
         /// <param name="zIndex"></param>
@@ -17699,7 +17603,7 @@ namespace GeneralLabelerStation
         /// <param name="feeder"></param>
         /// <param name="XI_Index"></param>
         /// <returns></returns>
-        private bool DoXIStep_GOSafeHeight(uint zIndex1, uint zIndex2, ref short XI_Index)
+        private bool DoXIStep_GOSafeHeight(uint zIndex1, uint zIndex2)
         {
             if (!Z_RunParamMap[zIndex2].RUN_bNozzleUse)
             {
@@ -18242,7 +18146,6 @@ namespace GeneralLabelerStation
         }
         #endregion
 
-        //todo 贴标动作
         #region 贴标动作
         /// <summary>
         /// 贴标-到贴标位
@@ -18277,8 +18180,8 @@ namespace GeneralLabelerStation
                 }
                 else
                 {
-                    PressSensorHelper.Instance.SendZeroAll();
                     XYGoPos(RUN_PastePoint, VariableSys.VelMode_Current);
+                    PressSensorHelper.Instance.SendZeroAll();
                     TurnGo(VariableSys.dTurnPasteAngle, VariableSys.VelMode_Current);
                 }
 
@@ -18293,7 +18196,7 @@ namespace GeneralLabelerStation
                         this.R_RunParamMap[nextZ].GoPos(nextangle, VariableSys.VelMode_Current);
                     }
                 }
-
+            
                 FlowInit = true;
             }
             else
@@ -18957,7 +18860,7 @@ namespace GeneralLabelerStation
                         {
                             UpCCDResult[markIndex] = Auto_Detect2(ref RUN_PASTEInfo[runPasteIndex], ImageCapture_Up1);
                             var pt = this.Point2CCDCenter(JOB.Cam_Mark2Point[pasteIndex],
-                                new PointContour(UpCCDResult[markIndex].X, UpCCDResult[markIndex].Y), CAM.Top, 0);
+                                new PointContour(UpCCDResult[markIndex].X, UpCCDResult[markIndex].Y), CAM.Top,0);
                             JOB.UpCCDResult2[pasteIndex] = UpCCDResult[markIndex]; ;
                         }
 
@@ -19330,7 +19233,7 @@ namespace GeneralLabelerStation
 
                         if (rtn == 0)
                         {
-                            PointF mark = Point2CCDCenter(JOB.GlobalConfig.Mark[GloablIndex].CamPos, A, CAM.Top, 0);
+                            PointF mark = Point2CCDCenter(JOB.GlobalConfig.Mark[GloablIndex].CamPos, A, CAM.Top ,0);
                             GlobalMark[GloablIndex].X = mark.X;
                             GlobalMark[GloablIndex].Y = mark.Y;
                             GlobalMark[GloablIndex].IsOK = true;
@@ -19460,29 +19363,29 @@ namespace GeneralLabelerStation
         }
         #endregion
 
+        private int RUN_FeedrIndex = 0;
         #region 线程及线程使用的函数
-        //todo 自动流程
         private void thread_Main()//主流程//自动流程
         {
             string alarm = string.Empty;
             while (!bSystemExit)
             {
+                Thread.Sleep(1);
+                // 未登陆状态
+                if (Variable.PassWordOK == 0 || Variable.PassWordOK == 1)
+                {
+                    continue;
+                }
+
+                // 暂停状态
+                if (this.RunMode != 1)
+                {
+                    Thread.Sleep(100);
+                    continue;
+                }
+
                 try
                 {
-                    Thread.Sleep(1);
-                    // 未登陆状态
-                    if (Variable.PassWordOK == 0 || Variable.PassWordOK == 1)
-                    {
-                        continue;
-                    }
-
-                    // 暂停状态
-                    if (this.RunMode != 1)
-                    {
-                        Thread.Sleep(100);
-                        continue;
-                    }
-
                     #region 检测伺服报警
                     if (alarm != string.Empty)
                     {
@@ -19541,7 +19444,7 @@ namespace GeneralLabelerStation
                             this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { string.Format("{0} 轴到达极限,请重新复位...", alarm) });
                         }
 
-                        Thread.Sleep(5000);
+                        Thread.Sleep(1000);
                         continue;
                     }
                     #endregion
@@ -19561,7 +19464,7 @@ namespace GeneralLabelerStation
                             }
                             FlowIndex = FlowDoneIndex;
                             FlowInit = false;
-                            Thread.Sleep(2000);
+                            Thread.Sleep(500);
                             continue;
                         }
                     }
@@ -20023,11 +19926,7 @@ namespace GeneralLabelerStation
                                 }
                                 else
                                 {
-                                    //xiLeft = OpmiztionXI(ref XI_LeftIndex, ref bArr_IO_IN_Status.bIN_LabelReach_Left, ref Feeder_Left, 1);
-                                    //xiRight = OpmiztionXI(ref XI_RightIndex, ref bArr_IO_IN_Status.bIN_LabelReach_Right, ref Feeder_Right, 2);
-                                    ////else // 吸嘴单个吸标
-                                    //{
-                                    //#region 吸嘴单吸分配
+                                    #region 吸嘴单吸分配
                                     for (uint i = 0; i < Variable.NOZZLE_NUM; ++i)
                                     {
                                         if (this.Z_RunParamMap[i].RUN_bNozzleUse)
@@ -20044,8 +19943,7 @@ namespace GeneralLabelerStation
                                             }
                                         }
                                     }
-                                    //#endregion
-                                    //}
+                                    #endregion
                                 }
 
                                 // 先吸左Feeder 再吸 右Feeder
@@ -20068,7 +19966,6 @@ namespace GeneralLabelerStation
                                     this.FlowDoneIndex = this.FlowIndex;
                                     this.FlowIndex = 10000;
                                     this.FlowInit = false;
-                                    //this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[吸标]10009: 没有找到可吸取得吸嘴 请检查流程是否正确" });//
                                 }
                             }
                             break;
@@ -20077,59 +19974,29 @@ namespace GeneralLabelerStation
 
                         #region 10010-吸嘴 XY到 Feeder位置且出标到位后立马吸
                         case 10010://吸嘴 XY 到 Feeder位置且出标到位后立马吸
-                            Z_RunParam zParam0 = Z_RunParamMap[this.RUN_XIList[this.RUN_XIIndex]];
-
-                            if (zParam0.RUN_Nozzle_FeederIndex == 1)
-                            {
-                                if (!this.DoXIStep_GoXIPos(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref Feeder[0], ref XI_LeftIndex, ref bArr_IO_IN_Status.bIN_LabelReach_Left))
-                                {
-                                    continue;
-                                }
-                            }
-                            else
-                            {
-                                if (!this.DoXIStep_GoXIPos(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref Feeder[1], ref XI_RightIndex, ref bArr_IO_IN_Status.bIN_LabelReach_Right))
-                                {
-                                    continue;
-                                }
-                            }
-
+                            this.RUN_FeedrIndex = Z_RunParamMap[this.RUN_XIList[this.RUN_XIIndex]].RUN_Nozzle_FeederIndex - 1;
+                            this.DoXIStep_GoXIPos(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1]
+                                , ref Feeder[this.RUN_FeedrIndex], ref XI_IndexG[this.RUN_FeedrIndex], ref bArr_IO_IN_Status.bIN_LabelReach);
                             break;
                         #endregion
 
                         #region 10011-Z 到吸料高度
                         case 10011://Z 到吸料高度 
-                            Z_RunParam zParam1 = Z_RunParamMap[this.RUN_XIList[this.RUN_XIIndex]];
-
-                            if (zParam1.RUN_Nozzle_FeederIndex == 1)
-                                this.DoXIStep_GoXIHeigh(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref Feeder[0], ref XI_LeftIndex);
-                            else
-                                this.DoXIStep_GoXIHeigh(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref Feeder[1], ref XI_RightIndex);
-
-                            break;
-                        #endregion
-
-                        #region 10012-Z 吸料时间判断
-                        case 10012://Z 吸料时间判断
-                            this.DoXIStep_XI(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref Feeder[0], ref XI_LeftIndex);
+                            this.DoXIStep_GoXIHeigh(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1]
+                                , ref Feeder[this.RUN_FeedrIndex], ref XI_IndexG[this.RUN_FeedrIndex]);
                             break;
                         #endregion
 
                         #region 10013-Z 到安全高度
                         case 10013://Z 到安全高度
-                            this.DoXIStep_GOSafeHeight(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref XI_LeftIndex);
+                            this.DoXIStep_GOSafeHeight(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1]);
                             break;
                         #endregion
 
                         #region 10014-检测真空是否达到
                         case 10014://检测真空是否达到
-                            Z_RunParam zParam2 = Z_RunParamMap[this.RUN_XIList[this.RUN_XIIndex]];
-
-                            if (zParam2.RUN_Nozzle_FeederIndex == 1)
-                                this.DoXIStep_CheckVaccum(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref XI_LeftIndex);
-                            else
-                                this.DoXIStep_CheckVaccum(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1], ref XI_RightIndex);
-
+                            this.DoXIStep_CheckVaccum(this.RUN_XIList[this.RUN_XIIndex], this.RUN_XIList[this.RUN_XIIndex + 1]
+                                , ref XI_IndexG[this.RUN_FeedrIndex]);
                             break;
                         #endregion
 
@@ -20383,6 +20250,16 @@ namespace GeneralLabelerStation
                                         {
                                             UpCCDResult[1] = JOB.UpCCDResult2[zParam.RUN_PasteInfoIndex];
                                             newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0, 0);
+
+                                            #region 比较Mark 距离,是否抓错
+                                            var len1 = CommonHelper.GetDist(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2);
+                                            var len2 = CommonHelper.GetDist(newMark1, newMark2);
+                                            if (Math.Abs(len2 - len1) >= 0.5)
+                                            {
+                                                this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "软板Mark点识别超管控 误差>0.5mm,请检查Mark点是否抓错,重新清料再开始程序" });//
+                                            }
+                                            #endregion
+
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsForm2Mark_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2, newMark1, newMark2, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
                                         }
 
@@ -20488,11 +20365,6 @@ namespace GeneralLabelerStation
                                         {
                                             if (JOB.PasteName[i] == RUN_PASTEInfo[j].PasteName)
                                             {
-                                                //// 统计各个吸嘴 需要贴标的个数
-                                                //for (int k = 0; k < JOB.PASTEInfo[i].iPasteED.Length; ++k)
-                                                //{
-                                                //    JOB.PASTEInfo[i].iPasteED[k] = 0; // 清空各个贴服标记
-                                                //}
                                                 if (RUN_PASTEInfo[j].AlinIndex2 == 0)// 只拍一次 只需要计算一个Mark
                                                 {
                                                     this.RUN_MarkList.Add(new Tuple<int, int>(i, 0));
@@ -21034,6 +20906,15 @@ namespace GeneralLabelerStation
                                         {
                                             UpCCDResult[1] = JOB.UpCCDResult2[zParam.RUN_PasteInfoIndex];
                                             newMark2 = Point2CCDCenter(JOB.Cam_Mark2Point[zParam.RUN_PasteInfoIndex], new PointContour(UpCCDResult[1].X, UpCCDResult[1].Y), 0, 0);
+
+                                            #region 比较Mark 距离,是否抓错
+                                            var len1 = CommonHelper.GetDist(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2);
+                                            var len2 = CommonHelper.GetDist(newMark1, newMark2);
+                                            if (Math.Abs(len2 - len1) >= 0.5)
+                                            {
+                                                this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "软板Mark点识别超管控 误差>0.5mm,请检查Mark点是否抓错,重新清料再开始程序" });//
+                                            }
+                                            #endregion
                                             JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].TransformedPoints = TransformPointsForm2Mark_IsPaste(RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].PastePoints, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark1, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].Mark2, newMark1, newMark2, ref JOB.PASTEInfo[zParam.RUN_PasteInfoIndex].Rotation, RUN_PASTEInfo[zParam.RUN_PasteInfoIndex_List].IsPastePointsAbs);
                                         }
 
@@ -21067,7 +20948,8 @@ namespace GeneralLabelerStation
                 }
                 catch (Exception ex)
                 {
-                    this.BeginInvoke(new Action(() => { this.PutInLog($"软件异常: {ex.StackTrace}"); }));
+                    Form_Main.Instance.PutInLog("D://异常//", "软件异常", $"软件异常:{ex.Message}\r\n {ex.Source}\r\n {ex.StackTrace}\r\n");
+                    Thread.Sleep(10);
                 }
             }
         }//
@@ -21172,7 +21054,7 @@ namespace GeneralLabelerStation
                     CarryProduct_OFF();
                 }
 
-                if (Variable.PassWordOK != 0 && Variable.PassWordOK != 1
+                if (Variable.PassWordOK != 0 && Variable.PassWordOK != 1 
                     && (RunMode == 1 || RunMode == 3))//自动模式下
                 {
                     switch (FlowIndex_Conveyor)//左进右出 左进左出
@@ -21190,7 +21072,7 @@ namespace GeneralLabelerStation
                                 InformBeforeGive(); // 向前要板
                                 ConveyorStop();
 
-                                if (!ByPass)
+                                if(!ByPass)
                                     StopProduct_ON();//挡板下降
 
                                 FlowInit_Conveyor = true;
@@ -21206,7 +21088,11 @@ namespace GeneralLabelerStation
                                     FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
                                     FlowInit_Conveyor = false;
                                     if (ByPass)
+                                    {
+                                        Thread.Sleep(1000);
+                                        Thread.Sleep(VariableSys.iDelayReach);
                                         FlowIndex_Conveyor = 550;
+                                    }
                                     else
                                         FlowIndex_Conveyor = 300;
 
@@ -21268,7 +21154,7 @@ namespace GeneralLabelerStation
                                 this.BeginInvoke(new VoidDO_Str(PutInLog), new object[] { "步骤[轨道]300:减速到到位时间:" + StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds.ToString() + "ms" });//
                             }
 
-                            if (FlowIndex_Conveyor == 300 && StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 5000)
+                            if (FlowIndex_Conveyor == 300 && StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000)
                             {
                                 this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]300:进板到位超时" });//
                             }
@@ -21280,6 +21166,7 @@ namespace GeneralLabelerStation
                             {
                                 if (VariableSys.LanguageFlag == 1)
                                     FlowIndex_ConveyorName = "等待贴装完成";
+                                this.ResetInformBeforeGive();
 
                                 FlowInit_Conveyor = true;
                                 RestartStopwatch_Conveyor();
@@ -21316,7 +21203,7 @@ namespace GeneralLabelerStation
                                 FlowIndex_ConveyorName = "等待到出板口";
                                 InformBackTake(); // 向后出板
                                 this.ResetInformBeforeGive();
-
+                                Thread.Sleep(200);
                                 ConveryOutput();
                                 FlowInit_Conveyor = true;
                                 RestartStopwatch_Conveyor();
@@ -21328,21 +21215,15 @@ namespace GeneralLabelerStation
                                     ConveyorStop();
                                     FlowIndex_Conveyor_Done = FlowIndex_Conveyor;
                                     FlowInit_Conveyor = false;
-                                    //todo 循环运行
-                                    if (CycleRun == true)
-                                    {
-                                        Thread.Sleep(2000);
-                                        FlowIndex_Conveyor = 100;
-                                    }
-                                    else
-                                    {
-                                        FlowIndex_Conveyor = 600;
-                                    }
+                                    FlowIndex_Conveyor = 600;
                                 }
                                 else
                                 {
                                     if (StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000)
+                                    {
+                                        ConveyorStop();
                                         this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]550:到出板口超时,请检查轨道是否卡板" });//
+                                    }
                                 }
                             }
                             break;
@@ -21407,7 +21288,7 @@ namespace GeneralLabelerStation
                                     FlowIndex_Conveyor = 100;
                                 }
 
-                                if (VariableSys.bSystemIsOnLine && StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 5000)
+                                if (VariableSys.bSystemIsOnLine && StopWatch_FlowIndex_Conveyor.ElapsedMilliseconds > 10000)
                                 {
                                     this.Invoke(new VoidDO_Str(AlarmInfo), new object[] { "步骤[轨道]650:轨道完全出板超时" });//
                                 }
@@ -21469,7 +21350,7 @@ namespace GeneralLabelerStation
         {
             get
             {
-                switch (VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
+                switch(VariableSys.dFlowIN_OUT)//1-左进右出 2-右进左出 3-左进左出 4-右进右出
                 {
                     case 1://1-左进右出
                     case 3:// 3-左进左出
@@ -22506,7 +22387,7 @@ namespace GeneralLabelerStation
                     camreturn.State = Variable.VisionState.FindLineFial;
             }
             #endregion
-
+           
             if (rtn == 0 && LabelInfo.GrabLine_Enable2)
             {
                 try
@@ -23049,8 +22930,8 @@ namespace GeneralLabelerStation
                         ShowChart();
                     }
 
-                    lLabelLeftIndex.Text = XI_LeftIndex.ToString();
-                    lLabelRightIndex.Text = XI_RightIndex.ToString();
+                    lLabelLeftIndex.Text = XI_IndexG[0].ToString();
+                    lLabelRightIndex.Text = XI_IndexG[1].ToString();
 
                     StatisticsHelper.Instance.SetGridView(StatisticsHelper.Instance.Reoprt, this.dGV_Statics, true);
                     PressSensorHelper.Instance.ShowXIPress();
@@ -23233,10 +23114,34 @@ namespace GeneralLabelerStation
             //**************************************[Sensor]****************************************************
             tSSL_AirPressure.BackColor = (bArr_IO_IN_Status.bIN_AirPressure.GetIO() == true) ? Color.Red : Color.White;
             tSSL_SaftyGrating.BackColor = (bArr_IO_IN_Status.bIN_SafeGrant.GetIO() == true) ? Color.Red : Color.White;
-            lLabel1.BackColor = (bArr_IO_IN_Status.bIN_LabelReach_Left.Sum() > 0) ? Color.Green : Color.White;
-            lLabel2.BackColor = (bArr_IO_IN_Status.bIN_LabelReach_Right.Sum() > 0) ? Color.Green : Color.White;
+            lLabel1.BackColor = IO.IOManager.Instance.FDExitLabel[0]  ? Color.Green : Color.White;
+            lLabel2.BackColor = IO.IOManager.Instance.FDExitLabel[1]  ? Color.Green : Color.White;
+
             lFeeder1.BackColor = (bArr_IO_IN_Status.bIN_FeederOK_Left.GetIO() == true) ? Color.Green : Color.White;
             lFeeder2.BackColor = (bArr_IO_IN_Status.bIN_FeederOK_Right.GetIO() == true) ? Color.Green : Color.White;
+
+            if((DateTime.Now - IO.IOManager.Instance.FDMonitor[0]).TotalMilliseconds > VariableSys.iTimeOut_Feeder)
+            {
+                this.lLeftState.Text = "Feeder缺料";
+                this.lLeftState.BackColor = Color.Red;
+            }
+            else
+            {
+                this.lLeftState.Text = "Feeder有料";
+                this.lLeftState.BackColor = Color.LightGreen;
+            }
+
+            if ((DateTime.Now - IO.IOManager.Instance.FDMonitor[1]).TotalMilliseconds > VariableSys.iTimeOut_Feeder)
+            {
+                this.lRightState.Text = "Feeder缺料";
+                this.lRightState.BackColor = Color.Red;
+            }
+            else
+            {
+                this.lRightState.Text = "Feeder有料";
+                this.lRightState.BackColor = Color.LightGreen;
+            }
+
             //**************************************[IO_Status]****************************************************
             return 0;
         }
@@ -23440,7 +23345,7 @@ namespace GeneralLabelerStation
                 camreturn.X = A.X;
                 camreturn.Y = A.Y;
             }
-            newMark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(camreturn.X, camreturn.Y), 0, 0);
+            newMark1 = Point2CCDCenter(PasteInfo.CamPoint1, new PointContour(camreturn.X, camreturn.Y), 0,0);
             return rtn;
         }
         private short Manual_Detect2()
@@ -24478,7 +24383,7 @@ namespace GeneralLabelerStation
                     {
                         Thread.Sleep(5);
 
-                        if (this.WrokOutput)
+                        if(this.WrokOutput)
                         {
                             break;
                         }
@@ -25574,18 +25479,16 @@ namespace GeneralLabelerStation
             if (MessageBox.Show("是否需要补偿取料位置? Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 NozzleCenterOffset[this.cbNzStep4.SelectedIndex].X -= (this.nzOffsetPos.X - this.standardPos.X);
-                NozzleCenterOffset[this.cbNzStep4.SelectedIndex].Y -= (this.nzOffsetPos.Y - this.standardPos.Y);
+                NozzleCenterOffset[this.cbNzStep4.SelectedIndex].Y += (this.nzOffsetPos.Y - this.standardPos.Y);
                 this.SaveNozzleOffsetConfig();
             }
         }
 
-        //todo 到吸嘴孔位按钮
         private void button4_Click_1(object sender, EventArgs e)
         {
-            //if (this.cbNzStep4.SelectedIndex < 0) return;
-            //this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
-            if (this.cbNzStep1.SelectedIndex < 0) return;
-            this.XYGoPos(NozzleCenterOffset[this.cbNzStep1.SelectedIndex], VariableSys.VelMode_Current_Manual);
+            if (this.cbNzStep4.SelectedIndex < 0) return;
+
+            this.XYGoPos(NozzleCenterOffset[this.cbNzStep4.SelectedIndex], VariableSys.VelMode_Current_Manual);
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -25659,7 +25562,7 @@ namespace GeneralLabelerStation
             Tuple<CAM, int> cam = GetCalib(this.cbxSelectCam.SelectedIndex);
             PixelCoordPoints = new Collection<PointContour>();
             WorldCoordPoints = new Collection<PointContour>();
-
+            
             #region 自动寻找
             for (int rowIndex = 0; rowIndex < row; rowIndex++)
             {
@@ -25760,7 +25663,7 @@ namespace GeneralLabelerStation
                     string temp = dGV_Paste.Rows[i_Temp].Cells[14 + Variable.NOZZLE_NUM].Value.ToString();
                     if (temp == reigon)
                     {
-                        dGV_Paste.Rows[i_Temp].Cells[1].Value = this.cbRegionPaste.Checked ? "1" : "0";
+                        dGV_Paste.Rows[i_Temp].Cells[1].Value = this.cbRegionPaste.Checked ? "1":"0";
                     }
                 }
             }
@@ -25770,38 +25673,7 @@ namespace GeneralLabelerStation
         {
 
         }
-        //todo 点位计算器
-        private void button5_Click_1(object sender, EventArgs e)
-        {
-            this.tBA_X.Text = (Double.Parse(this.tTest2X.Text) - Double.Parse(this.tTest1X.Text)).ToString();
-            this.tBA_Y.Text = (Double.Parse(this.tTest2Y.Text) - Double.Parse(this.tTest1Y.Text)).ToString();
 
-            this.tDC_X.Text = (Double.Parse(this.tTest4X.Text) - Double.Parse(this.tTest3X.Text)).ToString();
-            this.tDC_Y.Text = (Double.Parse(this.tTest4Y.Text) - Double.Parse(this.tTest3Y.Text)).ToString();
-        }
-
-        private void groupBox61_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void bNzMannualOffset_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("是否需要保存手动取料位置偏移值? Y/N", "警告", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                NozzleManualOffset[this.cbNzStep5.SelectedIndex].X += float.Parse(this.tNzMannualOffsetX.Text);
-                NozzleManualOffset[this.cbNzStep5.SelectedIndex].Y += float.Parse(this.tNzMannualOffsetY.Text);
-                this.SaveNozzleManualOffsetConfig();
-                this.tNzMannualOffsetX.Text = "0";
-                this.tNzMannualOffsetY.Text = "0";
-                this.bNzMannualOffset.BackColor = Color.GreenYellow;
-            }
-        }
-
-        private void cbNzStep5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.bNzMannualOffset.BackColor = Color.Yellow;
-        }
 
         private void bMoveRotateCamXY_Click(object sender, EventArgs e)
         {

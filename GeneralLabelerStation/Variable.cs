@@ -77,7 +77,8 @@ namespace GeneralLabelerStation
             public bool bHaveLabel; // 计算出来的面积是否有料
             public VisionState State; // 视觉状态
         }//相机侦测结果返回结构体
-        public struct PASTAE:IDisposable
+
+        public struct PASTAE
         {
             public string PasteName;//贴附信息名称
 
@@ -730,8 +731,7 @@ namespace GeneralLabelerStation
             public IO.IOInput bIN_Stop_Move;//轨道-档板动点
             public IO.IOInput bIN_Carry_Origin;//轨道上下夹板原点
             public IO.IOInput bIN_Carry_Move;//轨道上下夹板动点
-            public int[] bIN_LabelReach_Left;//左Label到位
-            public int[] bIN_LabelReach_Right;//右Label到位
+            public int[] bIN_LabelReach;//左Label到位
             public bool bIN_Conveyor_BeforeReady;//前流水Ready
             public bool bIN_AfterRequest;//后要板
             public bool bIN_WorkSpace_Out;//轨道-出口感应

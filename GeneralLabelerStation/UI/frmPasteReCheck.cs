@@ -37,7 +37,19 @@ namespace GeneralLabelerStation.UI
             }
         }
 
-        private Variable.PASTAE[] PasteInfoList = null;
+        protected override void OnClosed(EventArgs e)
+        {
+            this.imageSet.Image?.Dispose();
+
+            for (int i = 0; i < this.PasteInfoList.Length; ++i)
+            {
+                this.PasteInfoList[i].Dispose();
+            }
+            this.PasteInfoList = null;
+            base.OnClosed(e);
+        }
+
+        public Variable.PASTAE[] PasteInfoList = null;
         public bool CanShow
         {
             get
@@ -64,7 +76,6 @@ namespace GeneralLabelerStation.UI
                 PointF mark1 = new PointF();
                 PointF mark2 = new PointF();
 
-                bool isMarked = false;
                 if (Form_Main.Instance.JOB.UpCCDResult1 != null && Form_Main.Instance.JOB.UpCCDResult1.Length == Form_Main.Instance.JOB.PasteCount)
                 {
                     mark1 = Form_Main.Instance.Point2CCDCenter(Form_Main.Instance.JOB.Cam_Mark1Point[pcbIndex],
@@ -72,8 +83,6 @@ namespace GeneralLabelerStation.UI
 
                     mark2 = Form_Main.Instance.Point2CCDCenter(Form_Main.Instance.JOB.Cam_Mark2Point[pcbIndex],
                new PointContour(Form_Main.Instance.JOB.UpCCDResult2[pcbIndex].X, Form_Main.Instance.JOB.UpCCDResult2[pcbIndex].Y), 0, 0);
-
-                    isMarked = true;
                 }
                 else
                 {
@@ -98,6 +107,7 @@ namespace GeneralLabelerStation.UI
                     this.dGVPaste.Rows[rowIndex].Cells[4].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].PasteAngle[pcsIndex].ToString();
                     this.dGVPaste.Rows[rowIndex].Cells[5].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].OffsetX_Single[pcsIndex].ToString();
                     this.dGVPaste.Rows[rowIndex].Cells[6].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].OffsetY_Single[pcsIndex].ToString();
+                    this.dGVPaste.Rows[rowIndex].Cells[7].Value = Form_Main.Instance.RUN_PASTEInfo[pcbIndex].Region[pcsIndex];
                 }
             }
         }
@@ -118,9 +128,8 @@ namespace GeneralLabelerStation.UI
                     {
                         mark = Form_Main.Instance.JOB.Cam_Mark1Point[pcbIndex];
                     }
-                    Form_Main.Instance.LightON_RedU();
-                    Form_Main.Instance.XYGoPosTillStop(5000,mark, Form_Main.VariableSys.VelMode_Current_Manual);
-                    CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
+
+                    Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
                 }
                 catch { }
             }
@@ -143,9 +152,8 @@ namespace GeneralLabelerStation.UI
                     {
                         mark = Form_Main.Instance.JOB.Cam_Mark2Point[pcbIndex];
                     }
-                    Form_Main.Instance.LightON_RedU();
-                    Form_Main.Instance.XYGoPosTillStop(5000,mark, Form_Main.VariableSys.VelMode_Current_Manual);
-                    CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
+
+                    Form_Main.Instance.XYGoPos(mark, Form_Main.VariableSys.VelMode_Current_Manual);
                 }
                 catch { }
             }
@@ -165,6 +173,12 @@ namespace GeneralLabelerStation.UI
                 this.GoTo();
             }
         }
+
+        private void bUpGrab_Click(object sender, EventArgs e)
+        {
+            CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
+        }
+
         private int curPcbIndex = 0;
         private int curPcsIndex = 0;
         private void bPrev_Click(object sender, EventArgs e)
@@ -186,7 +200,7 @@ namespace GeneralLabelerStation.UI
         {
             Form_Main.Instance.XYGoPosTillStop(5000, Form_Main.Instance.JOB.PASTEInfo[curPcbIndex].TransformedPoints[curPcsIndex], Form_Main.VariableSys.VelMode_Current_Manual);
             Thread.Sleep(200);
-            var image = CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
+            CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
             this.lCur.Text = $"当前第 [{curPcbIndex + 1}] 板第 [{curPcsIndex + 1}] 个";
             if (bShowCross)
             {
@@ -209,7 +223,6 @@ namespace GeneralLabelerStation.UI
                 if (curPcbIndex >= Form_Main.Instance.JOB.PasteCount)
                     curPcbIndex--;
             }
-            this.dGVPaste.Rows[curPcsIndex].DefaultCellStyle.BackColor = Color.Blue;
             this.GoTo();
         }
 
@@ -327,6 +340,7 @@ namespace GeneralLabelerStation.UI
         private void bSet_Click(object sender, EventArgs e)
         {
             CameraDefine.Instance[CAM.Top].Shutter = (int)this.nShutter.Value;
+            CameraDefine.Instance[CAM.Top]._Session.Snap(this.imageSet.Image);
         }
 
         private void bFull_Click(object sender, EventArgs e)

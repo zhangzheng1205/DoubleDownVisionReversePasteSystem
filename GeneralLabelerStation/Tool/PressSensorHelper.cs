@@ -305,42 +305,45 @@ namespace GeneralLabelerStation.Tool
 
         public void SendZeroAll()
         {
-            if (this.Socket == null || !this.Socket.Connected)
-                return;
-            byte[] sendByte = null;
-            if (VariableSys.PressSensorVersion == 1)
+            try
             {
-                sendByte = new byte[11];
-                sendByte[0] = 0X01;
-                sendByte[1] = 0X10;
-                sendByte[2] = 0X03;
-                sendByte[3] = 0XEF;
-                sendByte[4] = 0X00;
-                sendByte[5] = 0X01;
-                sendByte[6] = 0X02;
-                sendByte[7] = 0X00;
-                sendByte[8] = 0X20;
-                sendByte[9] = 0X82;
-                sendByte[10] = 0X17;
-            }
-            else
-            {
-                sendByte = new byte[9];
-                sendByte[0] = 0X01;
-                sendByte[1] = 0X11;
-                sendByte[2] = 0X00;
-                sendByte[3] = 0XC8;
-                sendByte[4] = 0X00;
-                sendByte[5] = 0X01;
-                sendByte[6] = 0X02;
-                sendByte[7] = 0XB6;
-                sendByte[8] = 0XB0;
-            }
-            lock (this.sendLock)
-            {
+                if (this.Socket == null || !this.Socket.Connected)
+                    return;
+                byte[] sendByte = null;
+                if (VariableSys.PressSensorVersion == 1)
+                {
+                    sendByte = new byte[11];
+                    sendByte[0] = 0X01;
+                    sendByte[1] = 0X10;
+                    sendByte[2] = 0X03;
+                    sendByte[3] = 0XEF;
+                    sendByte[4] = 0X00;
+                    sendByte[5] = 0X01;
+                    sendByte[6] = 0X02;
+                    sendByte[7] = 0X00;
+                    sendByte[8] = 0X20;
+                    sendByte[9] = 0X82;
+                    sendByte[10] = 0X17;
+                }
+                else
+                {
+                    sendByte = new byte[9];
+                    sendByte[0] = 0X01;
+                    sendByte[1] = 0X11;
+                    sendByte[2] = 0X00;
+                    sendByte[3] = 0XC8;
+                    sendByte[4] = 0X00;
+                    sendByte[5] = 0X01;
+                    sendByte[6] = 0X02;
+                    sendByte[7] = 0XB6;
+                    sendByte[8] = 0XB0;
+                }
+                lock (this.sendLock)
+                {
                     this.Socket.Send(sendByte);
-                    Thread.Sleep(20);
+                }
             }
+            catch { }
         }
 
         /// <summary>
